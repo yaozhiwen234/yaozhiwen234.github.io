@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>智翁</title>
+  
+  
+  <link href="https://yaozw.top/atom.xml" rel="self"/>
+  
+  <link href="https://yaozw.top/"/>
+  <updated>2021-02-25T06:59:29.780Z</updated>
+  <id>https://yaozw.top/</id>
+  
+  <author>
+    <name>yaozw</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>上网攻略</title>
+    <link href="https://yaozw.top/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/"/>
+    <id>https://yaozw.top/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/</id>
+    <published>2021-01-14T01:56:18.000Z</published>
+    <updated>2021-02-25T06:59:29.780Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;上网攻略&quot;&gt;&lt;a href=&quot;#上网攻略&quot; class=&quot;headerlink&quot; title=&quot;上网攻略&quot;&gt;&lt;/a&gt;上网攻略&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;centos6+</summary>
+        
+      
+    
+    
+    
+    <category term="上网攻略" scheme="https://yaozw.top/categories/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java好的开源项目</title>
+    <link href="https://yaozw.top/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
+    <id>https://yaozw.top/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</id>
+    <published>2021-01-08T09:38:24.000Z</published>
+    <updated>2021-02-25T06:59:29.374Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;好的开源项目&quot;&gt;&lt;a href=&quot;#好的开源项目&quot; class=&quot;headerlink&quot; title=&quot;好的开源项目&quot;&gt;&lt;/a&gt;好的开源项目&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;项目简介&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一个基于 Spring</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>访问者设计模式</title>
+    <link href="https://yaozw.top/2021/01/07/%E8%AE%BF%E9%97%AE%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2021/01/07/%E8%AE%BF%E9%97%AE%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2021-01-07T08:59:49.000Z</published>
+    <updated>2021-02-25T06:59:31.380Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;访问者设计模式-Vistor-Pattern&quot;&gt;&lt;a href=&quot;#访问者设计模式-Vistor-Pattern&quot; class=&quot;headerlink&quot; title=&quot;访问者设计模式(Vistor Pattern)&quot;&gt;&lt;/a&gt;访问者设计模式(Vistor</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>模板设计模式</title>
+    <link href="https://yaozw.top/2021/01/07/%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2021/01/07/%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2021-01-07T07:06:57.000Z</published>
+    <updated>2021-02-25T06:59:30.847Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;模板设计模式-Template-Pattern&quot;&gt;&lt;a href=&quot;#模板设计模式-Template-Pattern&quot; class=&quot;headerlink&quot; title=&quot;模板设计模式(Template Pattern)&quot;&gt;&lt;/a&gt;模板设计模式(Template</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mysql存储过程分割字符串</title>
+    <link href="https://yaozw.top/2021/01/07/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%88%86%E5%89%B2%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <id>https://yaozw.top/2021/01/07/mysql%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%88%86%E5%89%B2%E5%AD%97%E7%AC%A6%E4%B8%B2/</id>
+    <published>2021-01-07T05:59:19.000Z</published>
+    <updated>2021-02-25T06:59:29.491Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;mysql存储过程循环分割字符串示例：&quot;&gt;&lt;a href=&quot;#mysql存储过程循环分割字符串示例：&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="mysql" scheme="https://yaozw.top/categories/mysql/"/>
+    
+    
+    <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java模拟浏览器做文件上传</title>
+    <link href="https://yaozw.top/2021/01/02/java%E6%A8%A1%E6%8B%9F%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
+    <id>https://yaozw.top/2021/01/02/java%E6%A8%A1%E6%8B%9F%E6%B5%8F%E8%A7%88%E5%99%A8%E5%81%9A%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</id>
+    <published>2021-01-02T07:59:44.000Z</published>
+    <updated>2021-02-25T06:59:29.419Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;java模拟浏览器做文件上传&quot;&gt;&lt;a href=&quot;#java模拟浏览器做文件上传&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="个人笔记" scheme="https://yaozw.top/categories/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用jacob实现word转pdf</title>
+    <link href="https://yaozw.top/2021/01/01/%E4%BD%BF%E7%94%A8jacob%E5%AE%9E%E7%8E%B0word%E8%BD%ACpdf/"/>
+    <id>https://yaozw.top/2021/01/01/%E4%BD%BF%E7%94%A8jacob%E5%AE%9E%E7%8E%B0word%E8%BD%ACpdf/</id>
+    <published>2021-01-01T12:20:00.000Z</published>
+    <updated>2021-02-25T06:59:30.073Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;使用jacob实现word转pdf-WPS版&quot;&gt;&lt;a href=&quot;#使用jacob实现word转pdf-WPS版&quot; class=&quot;headerlink&quot; title=&quot;使用jacob实现word转pdf WPS版&quot;&gt;&lt;/a&gt;使用jacob实现word转pdf</summary>
+        
+      
+    
+    
+    
+    <category term="个人笔记" scheme="https://yaozw.top/categories/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>解释器设计模式</title>
+    <link href="https://yaozw.top/2020/12/25/%E8%A7%A3%E9%87%8A%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/25/%E8%A7%A3%E9%87%8A%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-25T08:38:54.000Z</published>
+    <updated>2021-02-25T06:59:31.304Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;解释器设计模式-Interpreter-Pattern&quot;&gt;&lt;a href=&quot;#解释器设计模式-Interpreter-Pattern&quot; class=&quot;headerlink&quot; title=&quot;解释器设计模式(Interpreter</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>状态设计模式</title>
+    <link href="https://yaozw.top/2020/12/25/%E7%8A%B6%E6%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/25/%E7%8A%B6%E6%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-25T05:43:00.000Z</published>
+    <updated>2021-02-25T06:59:30.919Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;状态设计模式-State-Pattern&quot;&gt;&lt;a href=&quot;#状态设计模式-State-Pattern&quot; class=&quot;headerlink&quot; title=&quot;状态设计模式(State Pattern)&quot;&gt;&lt;/a&gt;状态设计模式(State</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>备忘录设计模式</title>
+    <link href="https://yaozw.top/2020/12/24/%E5%A4%87%E5%BF%98%E5%BD%95%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/24/%E5%A4%87%E5%BF%98%E5%BD%95%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-24T08:08:12.000Z</published>
+    <updated>2021-02-25T06:59:30.366Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;备忘录设计模式-Memento-Pattern&quot;&gt;&lt;a href=&quot;#备忘录设计模式-Memento-Pattern&quot; class=&quot;headerlink&quot; title=&quot;备忘录设计模式(Memento Pattern)&quot;&gt;&lt;/a&gt;备忘录设计模式(Memento</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>中介者设计模式</title>
+    <link href="https://yaozw.top/2020/12/24/%E4%B8%AD%E4%BB%8B%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/24/%E4%B8%AD%E4%BB%8B%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-24T06:42:32.000Z</published>
+    <updated>2021-02-25T06:59:29.853Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;中介者设计模式-Mediator-Pattern&quot;&gt;&lt;a href=&quot;#中介者设计模式-Mediator-Pattern&quot; class=&quot;headerlink&quot; title=&quot;中介者设计模式(Mediator</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>迭代器设计模式</title>
+    <link href="https://yaozw.top/2020/12/23/%E8%BF%AD%E4%BB%A3%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/23/%E8%BF%AD%E4%BB%A3%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-23T09:00:57.000Z</published>
+    <updated>2021-02-25T06:59:31.531Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;迭代器设计模式-Iterator-Pattern&quot;&gt;&lt;a href=&quot;#迭代器设计模式-Iterator-Pattern&quot; class=&quot;headerlink&quot; title=&quot;迭代器设计模式(Iterator</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>命令设计模式</title>
+    <link href="https://yaozw.top/2020/12/22/%E5%91%BD%E4%BB%A4%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/22/%E5%91%BD%E4%BB%A4%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-22T02:44:59.000Z</published>
+    <updated>2021-02-25T06:59:30.296Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;命令设计模式-Command-Pattern&quot;&gt;&lt;a href=&quot;#命令设计模式-Command-Pattern&quot; class=&quot;headerlink&quot; title=&quot;命令设计模式(Command Pattern)&quot;&gt;&lt;/a&gt;命令设计模式(Command</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>代理设计模式</title>
+    <link href="https://yaozw.top/2020/12/22/%E4%BB%A3%E7%90%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/22/%E4%BB%A3%E7%90%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-22T02:09:57.000Z</published>
+    <updated>2021-02-25T06:59:29.998Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;代理设计模式-Proxy-Pattern&quot;&gt;&lt;a href=&quot;#代理设计模式-Proxy-Pattern&quot; class=&quot;headerlink&quot; title=&quot;代理设计模式(Proxy Pattern)&quot;&gt;&lt;/a&gt;代理设计模式(Proxy</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>享元设计模式</title>
+    <link href="https://yaozw.top/2020/12/21/%E4%BA%AB%E5%85%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/21/%E4%BA%AB%E5%85%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-21T06:52:27.000Z</published>
+    <updated>2021-02-25T06:59:29.927Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;享元设计模式-Flyweight-Pattern&quot;&gt;&lt;a href=&quot;#享元设计模式-Flyweight-Pattern&quot; class=&quot;headerlink&quot; title=&quot;享元设计模式(Flyweight</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>外观设计模式</title>
+    <link href="https://yaozw.top/2020/12/21/%E5%A4%96%E8%A7%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/21/%E5%A4%96%E8%A7%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-21T05:48:09.000Z</published>
+    <updated>2021-02-25T06:59:30.445Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;外观设计模式-Facade-pattern&quot;&gt;&lt;a href=&quot;#外观设计模式-Facade-pattern&quot; class=&quot;headerlink&quot; title=&quot;外观设计模式(Facade pattern)&quot;&gt;&lt;/a&gt;外观设计模式(Facade</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>组合设计模式</title>
+    <link href="https://yaozw.top/2020/12/20/%E7%BB%84%E5%90%88%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/20/%E7%BB%84%E5%90%88%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-20T09:47:50.000Z</published>
+    <updated>2021-02-25T06:59:31.065Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;组合设计模式-Composite-Pattern&quot;&gt;&lt;a href=&quot;#组合设计模式-Composite-Pattern&quot; class=&quot;headerlink&quot; title=&quot;组合设计模式(Composite</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>桥接设计模式</title>
+    <link href="https://yaozw.top/2020/12/20/%E6%A1%A5%E6%8E%A5%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/20/%E6%A1%A5%E6%8E%A5%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-20T08:23:35.000Z</published>
+    <updated>2021-02-25T06:59:30.779Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;桥接设计模式-Bridge-Pattern&quot;&gt;&lt;a href=&quot;#桥接设计模式-Bridge-Pattern&quot; class=&quot;headerlink&quot; title=&quot;桥接设计模式(Bridge Pattern)&quot;&gt;&lt;/a&gt;桥接设计模式(Bridge</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>适配器设计模式</title>
+    <link href="https://yaozw.top/2020/12/19/%E9%80%82%E9%85%8D%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2020/12/19/%E9%80%82%E9%85%8D%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-12-19T12:53:42.000Z</published>
+    <updated>2021-02-25T06:59:31.630Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;适配器设计模式-adapter-pattern&quot;&gt;&lt;a href=&quot;#适配器设计模式-adapter-pattern&quot; class=&quot;headerlink&quot; title=&quot;适配器设计模式(adapter pattern)&quot;&gt;&lt;/a&gt;适配器设计模式(adapter</summary>
+        
+      
+    
+    
+    
+    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java中的深克隆和浅克隆</title>
+    <link href="https://yaozw.top/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/"/>
+    <id>https://yaozw.top/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/</id>
+    <published>2020-12-18T08:01:13.000Z</published>
+    <updated>2021-02-25T06:59:29.294Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;Java中的深克隆和浅克隆&quot;&gt;&lt;a href=&quot;#Java中的深克隆和浅克隆&quot; class=&quot;headerlink&quot; title=&quot;Java中的深克隆和浅克隆&quot;&gt;&lt;/a&gt;Java中的深克隆和浅克隆&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;浅克隆：&lt;/strong&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="Java中的深克隆和浅克隆" scheme="https://yaozw.top/tags/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/"/>
+    
+  </entry>
+  
+</feed>

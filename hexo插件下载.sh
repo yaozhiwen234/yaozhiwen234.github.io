@@ -11,4 +11,8 @@ npm install gulp-babel --save-dev &&
 npm install babel-preset-env --save-dev &&
 npm install babel-core --save-dev &&
 npm install - -save -dev gulp -imagemin &&
-npm install workbox -build gulp - -save -dev
+npm install workbox -build gulp - -save -dev &&
+npm install hexo-baidu-url-submit --save &&
+
+npm install hexo-generator-sitemap --save
+

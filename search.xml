@@ -222,132 +222,6 @@
       </tags>
   </entry>
   <entry>
-    <title>上网攻略</title>
-    <url>/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/</url>
-    <content><![CDATA[<h4 id="上网攻略"><a href="#上网攻略" class="headerlink" title="上网攻略"></a>上网攻略</h4><p><strong>centos6+ wget链接到外网</strong></p>
-<ul>
-<li>执行以下命令修改文件</li>
-</ul>
-<p>​       vi /etc/resolv.conf</p>
-<ul>
-<li>把resolv.conf里面的文件替换为以下：</li>
-</ul>
-<p>​        nameserver 8.8.8.8<br>​         nameserver 114.114.114.114search localdomain</p>
-<p><strong>注意：是用以上的配置替换文件中的所有配置</strong></p>
-<p><a href="https://github.com/ruolanaces/kxsw">详情攻略</a></p>
-<p>上网攻略：<a href="https://github.com/ruolanaces/kxsw">https://github.com/ruolanaces/kxsw</a></p>
-]]></content>
-      <categories>
-        <category>上网攻略</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>中介者设计模式</title>
-    <url>/2020/12/24/%E4%B8%AD%E4%BB%8B%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h4 id="中介者设计模式-Mediator-Pattern"><a href="#中介者设计模式-Mediator-Pattern" class="headerlink" title="中介者设计模式(Mediator Pattern)"></a>中介者设计模式(Mediator Pattern)</h4><p><strong>描述：</strong> 中介者设计模式是用来降低多个对象和类之间通信的复杂性。这种模式提供了一个中介类，该类通常处理不同类之间的通信，并支持松耦合，代码易于维护。中介模式属于行为型模式</p>
-<p><strong>核心思想：</strong> 对象与对象之间存在大量的关联关系，这样势必会导致系统结构变的很复杂，同时若一个对象发生变化，我们也需要跟踪与之相关联的对象，同时做出相应的处理</p>
-<p><strong>使用场景：</strong> </p>
-<ul>
-<li>系统中对对象之间存在比较复杂的引用关系，导致它们之间的依赖关系结构混乱而且难以服用改对象</li>
-<li>想通过一个中间类来封装多个类中的行为，而不像生成太多的子类</li>
-</ul>
-<p><strong>中介者设计模式的优点：</strong></p>
-<ul>
-<li>降低了类的复杂度将一对多转化为一对一</li>
-<li>各个类之间解耦</li>
-<li>符合迪米特法则</li>
-</ul>
-<p><strong>中介者设计模式的缺点：</strong></p>
-<ul>
-<li>中介者会变得庞大， 变得复杂难以维护</li>
-</ul>
-<p><strong>示例：</strong> </p>
-<ul>
-<li>抽象中介者</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Mediator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">send</span><span class="params">(String message, Colleague colleague)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>中介者具体实现</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteMediator</span> <span class="keyword">implements</span> <span class="title">Mediator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ConcreteColleague1 colleague1;</span><br><span class="line">    <span class="keyword">private</span> ConcreteColleague2 colleague2;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColleague1</span><span class="params">(ConcreteColleague1 colleague1)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.colleague1 = colleague1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColleague2</span><span class="params">(ConcreteColleague2 colleague2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.colleague2 = colleague2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(String message, Colleague colleague)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (colleague == colleague1) &#123;</span><br><span class="line">            colleague2.notify(message);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            colleague1.notify(message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>抽象出用户对象</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//抽象同事类</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> Mediator mediator;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Colleague</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mediator = mediator;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>用户的实现</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteColleague1</span> <span class="keyword">extends</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteColleague1</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(mediator);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        mediator.send(message, <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;同事1得到消息：&quot;</span> + message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteColleague2</span> <span class="keyword">extends</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteColleague2</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(mediator);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        mediator.send(message, <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;同事1得到消息：&quot;</span> + message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>调用</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       ConcreteMediator mediator = <span class="keyword">new</span> ConcreteMediator();</span><br><span class="line"></span><br><span class="line">       ConcreteColleague1 colleague1 = <span class="keyword">new</span> ConcreteColleague1(mediator);</span><br><span class="line">       ConcreteColleague2 colleague2 = <span class="keyword">new</span> ConcreteColleague2(mediator);</span><br><span class="line"></span><br><span class="line">       mediator.setColleague1(colleague1);</span><br><span class="line">       mediator.setColleague2(colleague2);</span><br><span class="line"></span><br><span class="line">       colleague1.send(<span class="string">&quot;Nice to meet u.&quot;</span>);</span><br><span class="line">       colleague2.send(<span class="string">&quot;Nice to meet u too.&quot;</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>程序设计</category>
-      </categories>
-      <tags>
-        <tag>23种设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>享元设计模式</title>
-    <url>/2020/12/21/%E4%BA%AB%E5%85%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h4 id="享元设计模式-Flyweight-Pattern"><a href="#享元设计模式-Flyweight-Pattern" class="headerlink" title="享元设计模式(Flyweight Pattern)"></a>享元设计模式(Flyweight Pattern)</h4><p><strong>描述：</strong> 享元设计模式主要用于减少对象的创建，以减少内存的占用提高性能这种类型的设计模式属于结构型模式，它减少了对象的数量从而改善应用所需的对象结构的方式</p>
-<p><strong>核心思想：</strong> 主要的思想和池化技术的概念类似。当我们取对象时如果有就返回，没有就创建。</p>
-<p><strong>使用场景：</strong> </p>
-<ul>
-<li>系统有大量的相似对象</li>
-<li>有缓冲池的场景</li>
-</ul>
-<p><strong>享元设计模式的优点：</strong></p>
-<ul>
-<li>降低内存的消耗，提高使用率</li>
-</ul>
-<p><strong>享元设计模式的缺点：</strong></p>
-<ul>
-<li>提高了系统的复杂度，需要分理处外部状态和内部的状态，而且外部状态具有固有化的性质，不应该随着内部状态的变化而变化，否则会造成系统的混乱。</li>
-</ul>
-<p><strong>示例：</strong></p>
-<ul>
-<li>抽象享元对象</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">borrow</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>享元对象的实现</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateBook</span> <span class="keyword">implements</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CreateBook</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">borrow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;借出一本书 书名是：&quot;</span> + name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>享元工厂</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Llibrary</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Book&gt; books;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Llibrary llibrary = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Llibrary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        books = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//使用单例 图书馆必须是一个</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Llibrary <span class="title">getLlibrary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (llibrary == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Llibrary.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (llibrary == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    llibrary = <span class="keyword">new</span> Llibrary();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> llibrary;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//此处借助于map 将享元对象存入map </span></span><br><span class="line">    <span class="comment">//传进来一个书的名字 此时如果有就直接返回这本书 如果没有就  添加一本书进来</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Book <span class="title">libToBorrow</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        Book book = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (books.containsKey(bookName)) &#123;</span><br><span class="line">            book = books.get(bookName);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            book = <span class="keyword">new</span> CreateBook(bookName);</span><br><span class="line">            books.put(bookName, book);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> book;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getBookSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> books.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>调用</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> List&lt;Book&gt; books = <span class="keyword">new</span> ArrayList&lt;Book&gt;();</span><br><span class="line">    <span class="keyword">static</span> Llibrary llibrary = Llibrary.getLlibrary();</span><br><span class="line">   <span class="comment">//调用book工厂 返回book对象</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">studentBorrow</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        books.add(llibrary.libToBorrow(bookName));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        studentBorrow(<span class="string">&quot;java编程思想&quot;</span>);</span><br><span class="line">        studentBorrow(<span class="string">&quot;java核心卷一&quot;</span>);</span><br><span class="line">        studentBorrow(<span class="string">&quot;java核心卷二&quot;</span>);</span><br><span class="line"></span><br><span class="line">        studentBorrow(<span class="string">&quot;java核心卷一&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Book book : books) &#123;</span><br><span class="line">            book.borrow();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>程序设计</category>
-      </categories>
-      <tags>
-        <tag>23种设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>代理设计模式</title>
     <url>/2020/12/22/%E4%BB%A3%E7%90%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h4 id="代理设计模式-Proxy-Pattern"><a href="#代理设计模式-Proxy-Pattern" class="headerlink" title="代理设计模式(Proxy Pattern)"></a>代理设计模式(Proxy Pattern)</h4><p><strong>描述：</strong> 代理设计模式就是一个对象代表另外一个对象的功能， 也就是指客户端并不直接调用实际的对象，而是通过中间的代理对象来间接的调用实际对象,  这种设计设计模式属于结构模式。</p>
@@ -1611,6 +1485,132 @@
       </categories>
       <tags>
         <tag>七大设计原则</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>上网攻略</title>
+    <url>/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/</url>
+    <content><![CDATA[<h4 id="上网攻略"><a href="#上网攻略" class="headerlink" title="上网攻略"></a>上网攻略</h4><p><strong>centos6+ wget链接到外网</strong></p>
+<ul>
+<li>执行以下命令修改文件</li>
+</ul>
+<p>​       vi /etc/resolv.conf</p>
+<ul>
+<li>把resolv.conf里面的文件替换为以下：</li>
+</ul>
+<p>​        nameserver 8.8.8.8<br>​         nameserver 114.114.114.114search localdomain</p>
+<p><strong>注意：是用以上的配置替换文件中的所有配置</strong></p>
+<p><a href="https://github.com/ruolanaces/kxsw">详情攻略</a></p>
+<p>上网攻略：<a href="https://github.com/ruolanaces/kxsw">https://github.com/ruolanaces/kxsw</a></p>
+]]></content>
+      <categories>
+        <category>上网攻略</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>中介者设计模式</title>
+    <url>/2020/12/24/%E4%B8%AD%E4%BB%8B%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h4 id="中介者设计模式-Mediator-Pattern"><a href="#中介者设计模式-Mediator-Pattern" class="headerlink" title="中介者设计模式(Mediator Pattern)"></a>中介者设计模式(Mediator Pattern)</h4><p><strong>描述：</strong> 中介者设计模式是用来降低多个对象和类之间通信的复杂性。这种模式提供了一个中介类，该类通常处理不同类之间的通信，并支持松耦合，代码易于维护。中介模式属于行为型模式</p>
+<p><strong>核心思想：</strong> 对象与对象之间存在大量的关联关系，这样势必会导致系统结构变的很复杂，同时若一个对象发生变化，我们也需要跟踪与之相关联的对象，同时做出相应的处理</p>
+<p><strong>使用场景：</strong> </p>
+<ul>
+<li>系统中对对象之间存在比较复杂的引用关系，导致它们之间的依赖关系结构混乱而且难以服用改对象</li>
+<li>想通过一个中间类来封装多个类中的行为，而不像生成太多的子类</li>
+</ul>
+<p><strong>中介者设计模式的优点：</strong></p>
+<ul>
+<li>降低了类的复杂度将一对多转化为一对一</li>
+<li>各个类之间解耦</li>
+<li>符合迪米特法则</li>
+</ul>
+<p><strong>中介者设计模式的缺点：</strong></p>
+<ul>
+<li>中介者会变得庞大， 变得复杂难以维护</li>
+</ul>
+<p><strong>示例：</strong> </p>
+<ul>
+<li>抽象中介者</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Mediator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">send</span><span class="params">(String message, Colleague colleague)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>中介者具体实现</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteMediator</span> <span class="keyword">implements</span> <span class="title">Mediator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ConcreteColleague1 colleague1;</span><br><span class="line">    <span class="keyword">private</span> ConcreteColleague2 colleague2;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColleague1</span><span class="params">(ConcreteColleague1 colleague1)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.colleague1 = colleague1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColleague2</span><span class="params">(ConcreteColleague2 colleague2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.colleague2 = colleague2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(String message, Colleague colleague)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (colleague == colleague1) &#123;</span><br><span class="line">            colleague2.notify(message);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            colleague1.notify(message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>抽象出用户对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//抽象同事类</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> Mediator mediator;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Colleague</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mediator = mediator;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用户的实现</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteColleague1</span> <span class="keyword">extends</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteColleague1</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(mediator);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        mediator.send(message, <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;同事1得到消息：&quot;</span> + message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteColleague2</span> <span class="keyword">extends</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteColleague2</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(mediator);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        mediator.send(message, <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;同事1得到消息：&quot;</span> + message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       ConcreteMediator mediator = <span class="keyword">new</span> ConcreteMediator();</span><br><span class="line"></span><br><span class="line">       ConcreteColleague1 colleague1 = <span class="keyword">new</span> ConcreteColleague1(mediator);</span><br><span class="line">       ConcreteColleague2 colleague2 = <span class="keyword">new</span> ConcreteColleague2(mediator);</span><br><span class="line"></span><br><span class="line">       mediator.setColleague1(colleague1);</span><br><span class="line">       mediator.setColleague2(colleague2);</span><br><span class="line"></span><br><span class="line">       colleague1.send(<span class="string">&quot;Nice to meet u.&quot;</span>);</span><br><span class="line">       colleague2.send(<span class="string">&quot;Nice to meet u too.&quot;</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>程序设计</category>
+      </categories>
+      <tags>
+        <tag>23种设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>享元设计模式</title>
+    <url>/2020/12/21/%E4%BA%AB%E5%85%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h4 id="享元设计模式-Flyweight-Pattern"><a href="#享元设计模式-Flyweight-Pattern" class="headerlink" title="享元设计模式(Flyweight Pattern)"></a>享元设计模式(Flyweight Pattern)</h4><p><strong>描述：</strong> 享元设计模式主要用于减少对象的创建，以减少内存的占用提高性能这种类型的设计模式属于结构型模式，它减少了对象的数量从而改善应用所需的对象结构的方式</p>
+<p><strong>核心思想：</strong> 主要的思想和池化技术的概念类似。当我们取对象时如果有就返回，没有就创建。</p>
+<p><strong>使用场景：</strong> </p>
+<ul>
+<li>系统有大量的相似对象</li>
+<li>有缓冲池的场景</li>
+</ul>
+<p><strong>享元设计模式的优点：</strong></p>
+<ul>
+<li>降低内存的消耗，提高使用率</li>
+</ul>
+<p><strong>享元设计模式的缺点：</strong></p>
+<ul>
+<li>提高了系统的复杂度，需要分理处外部状态和内部的状态，而且外部状态具有固有化的性质，不应该随着内部状态的变化而变化，否则会造成系统的混乱。</li>
+</ul>
+<p><strong>示例：</strong></p>
+<ul>
+<li>抽象享元对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">borrow</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>享元对象的实现</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateBook</span> <span class="keyword">implements</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CreateBook</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">borrow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;借出一本书 书名是：&quot;</span> + name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>享元工厂</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Llibrary</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Book&gt; books;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Llibrary llibrary = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Llibrary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        books = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//使用单例 图书馆必须是一个</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Llibrary <span class="title">getLlibrary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (llibrary == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Llibrary.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (llibrary == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    llibrary = <span class="keyword">new</span> Llibrary();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> llibrary;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//此处借助于map 将享元对象存入map </span></span><br><span class="line">    <span class="comment">//传进来一个书的名字 此时如果有就直接返回这本书 如果没有就  添加一本书进来</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Book <span class="title">libToBorrow</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        Book book = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (books.containsKey(bookName)) &#123;</span><br><span class="line">            book = books.get(bookName);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            book = <span class="keyword">new</span> CreateBook(bookName);</span><br><span class="line">            books.put(bookName, book);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> book;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getBookSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> books.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> List&lt;Book&gt; books = <span class="keyword">new</span> ArrayList&lt;Book&gt;();</span><br><span class="line">    <span class="keyword">static</span> Llibrary llibrary = Llibrary.getLlibrary();</span><br><span class="line">   <span class="comment">//调用book工厂 返回book对象</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">studentBorrow</span><span class="params">(String bookName)</span> </span>&#123;</span><br><span class="line">        books.add(llibrary.libToBorrow(bookName));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        studentBorrow(<span class="string">&quot;java编程思想&quot;</span>);</span><br><span class="line">        studentBorrow(<span class="string">&quot;java核心卷一&quot;</span>);</span><br><span class="line">        studentBorrow(<span class="string">&quot;java核心卷二&quot;</span>);</span><br><span class="line"></span><br><span class="line">        studentBorrow(<span class="string">&quot;java核心卷一&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Book book : books) &#123;</span><br><span class="line">            book.borrow();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>程序设计</category>
+      </categories>
+      <tags>
+        <tag>23种设计模式</tag>
       </tags>
   </entry>
   <entry>

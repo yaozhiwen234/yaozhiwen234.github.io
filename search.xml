@@ -137,6 +137,18 @@
       </tags>
   </entry>
   <entry>
+    <title>java8之Stream补充</title>
+    <url>/2021/03/16/java8%E4%B9%8BStream%E8%A1%A5%E5%85%85/</url>
+    <content><![CDATA[<h3 id="java8之Stream补充"><a href="#java8之Stream补充" class="headerlink" title="java8之Stream补充"></a>java8之Stream补充</h3><p><strong>.findFirst()：</strong>  返回流中的第一个元素<br><strong>.findAny()</strong>   返回Stream中的任何元素<br><strong>.orElse(null)</strong>  表示如果一个都没找到返回null. 【orElse()中可以塞默认值。如果找不到就会返回orElse中你自己设置的默认值。】</p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java好的开源项目</title>
     <url>/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<h4 id="好的开源项目"><a href="#好的开源项目" class="headerlink" title="好的开源项目"></a>好的开源项目</h4><ul>
@@ -208,6 +220,34 @@
       </categories>
       <tags>
         <tag>Demo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>spring校验注解</title>
+    <url>/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/</url>
+    <content><![CDATA[<h3 id="NotNull-NotBlank和-NotEmpty的区别"><a href="#NotNull-NotBlank和-NotEmpty的区别" class="headerlink" title="@NotNull,@NotBlank和 @NotEmpty的区别"></a>@NotNull,@NotBlank和 @NotEmpty的区别</h3><pre><code>- @NotEmpty 用在集合上面(不能注释枚举) 对象不能是 null 并且相关对象的 size 大于 0。
+
+- @NotBlank用在String上面  String 不能是 null 且去除两端空白字符后的长度(trimmed length)大于 0。
+
+- @NotNull用在所有类型上面  对象不能是 null, 但可以是空集(size = 0)。</code></pre>
+]]></content>
+      <categories>
+        <category>spring</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>web安全笔记</title>
+    <url>/2021/03/14/web%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h3 id="关于web端安全笔记"><a href="#关于web端安全笔记" class="headerlink" title="关于web端安全笔记"></a>关于web端安全笔记</h3><p>   <a href="https://websec.readthedocs.io/zh/latest/index.html">web安全地址</a></p>
+]]></content>
+      <categories>
+        <category>web安全</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>

@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-03-11T03:35:49.274Z</updated>
+  <updated>2021-03-16T04:47:26.710Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -17,11 +17,86 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>spring校验注解</title>
+    <link href="https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/"/>
+    <id>https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/</id>
+    <published>2021-03-16T03:06:50.000Z</published>
+    <updated>2021-03-16T04:47:26.710Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;NotNull-NotBlank和-NotEmpty的区别&quot;&gt;&lt;a href=&quot;#NotNull-NotBlank和-NotEmpty的区别&quot; class=&quot;headerlink&quot; title=&quot;@NotNull,@NotBlank和</summary>
+        
+      
+    
+    
+    
+    <category term="spring" scheme="https://yaozw.top/categories/spring/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java8之Stream补充</title>
+    <link href="https://yaozw.top/2021/03/16/java8%E4%B9%8BStream%E8%A1%A5%E5%85%85/"/>
+    <id>https://yaozw.top/2021/03/16/java8%E4%B9%8BStream%E8%A1%A5%E5%85%85/</id>
+    <published>2021-03-16T01:46:12.000Z</published>
+    <updated>2021-03-16T04:47:26.037Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;java8之Stream补充&quot;&gt;&lt;a href=&quot;#java8之Stream补充&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="java" scheme="https://yaozw.top/categories/java/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>web安全笔记</title>
+    <link href="https://yaozw.top/2021/03/14/web%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0/"/>
+    <id>https://yaozw.top/2021/03/14/web%E5%AE%89%E5%85%A8%E7%AC%94%E8%AE%B0/</id>
+    <published>2021-03-14T05:13:03.000Z</published>
+    <updated>2021-03-16T04:47:21.604Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;关于web端安全笔记&quot;&gt;&lt;a href=&quot;#关于web端安全笔记&quot; class=&quot;headerlink&quot; title=&quot;关于web端安全笔记&quot;&gt;&lt;/a&gt;关于web端安全笔记&lt;/h3&gt;&lt;p&gt;   &lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="web安全" scheme="https://yaozw.top/categories/web%E5%AE%89%E5%85%A8/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>上网攻略</title>
     <link href="https://yaozw.top/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/"/>
     <id>https://yaozw.top/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/</id>
     <published>2021-01-14T01:56:18.000Z</published>
-    <updated>2021-03-11T03:35:49.274Z</updated>
+    <updated>2021-03-16T04:47:19.011Z</updated>
     
     
       
@@ -441,81 +516,6 @@
     
     
     <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>桥接设计模式</title>
-    <link href="https://yaozw.top/2020/12/20/%E6%A1%A5%E6%8E%A5%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/20/%E6%A1%A5%E6%8E%A5%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-20T08:23:35.000Z</published>
-    <updated>2021-03-11T03:32:31.422Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;桥接设计模式-Bridge-Pattern&quot;&gt;&lt;a href=&quot;#桥接设计模式-Bridge-Pattern&quot; class=&quot;headerlink&quot; title=&quot;桥接设计模式(Bridge Pattern)&quot;&gt;&lt;/a&gt;桥接设计模式(Bridge</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>适配器设计模式</title>
-    <link href="https://yaozw.top/2020/12/19/%E9%80%82%E9%85%8D%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/19/%E9%80%82%E9%85%8D%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-19T12:53:42.000Z</published>
-    <updated>2021-03-11T03:32:32.690Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;适配器设计模式-adapter-pattern&quot;&gt;&lt;a href=&quot;#适配器设计模式-adapter-pattern&quot; class=&quot;headerlink&quot; title=&quot;适配器设计模式(adapter pattern)&quot;&gt;&lt;/a&gt;适配器设计模式(adapter</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java中的深克隆和浅克隆</title>
-    <link href="https://yaozw.top/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/"/>
-    <id>https://yaozw.top/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/</id>
-    <published>2020-12-18T08:01:13.000Z</published>
-    <updated>2021-03-11T03:32:35.176Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;Java中的深克隆和浅克隆&quot;&gt;&lt;a href=&quot;#Java中的深克隆和浅克隆&quot; class=&quot;headerlink&quot; title=&quot;Java中的深克隆和浅克隆&quot;&gt;&lt;/a&gt;Java中的深克隆和浅克隆&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;浅克隆：&lt;/strong&gt;</summary>
-        
-      
-    
-    
-    
-    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-    
-    <category term="Java中的深克隆和浅克隆" scheme="https://yaozw.top/tags/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/"/>
     
   </entry>
   

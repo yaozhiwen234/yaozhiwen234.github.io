@@ -225,11 +225,11 @@
   <entry>
     <title>spring校验注解</title>
     <url>/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/</url>
-    <content><![CDATA[<h3 id="NotNull-NotBlank和-NotEmpty的区别"><a href="#NotNull-NotBlank和-NotEmpty的区别" class="headerlink" title="@NotNull,@NotBlank和 @NotEmpty的区别"></a>@NotNull,@NotBlank和 @NotEmpty的区别</h3><pre><code>- @NotEmpty 用在集合上面(不能注释枚举) 对象不能是 null 并且相关对象的 size 大于 0。
-
-- @NotBlank用在String上面  String 不能是 null 且去除两端空白字符后的长度(trimmed length)大于 0。
-
-- @NotNull用在所有类型上面  对象不能是 null, 但可以是空集(size = 0)。</code></pre>
+    <content><![CDATA[<h3 id="NotNull-NotBlank和-NotEmpty的区别"><a href="#NotNull-NotBlank和-NotEmpty的区别" class="headerlink" title="@NotNull,@NotBlank和 @NotEmpty的区别"></a>@NotNull,@NotBlank和 @NotEmpty的区别</h3><ul>
+<li>@NotEmpty 用在集合上面(不能注释枚举) 对象不能是 null 并且相关对象的 size 大于 0。</li>
+<li>@NotBlank用在String上面  String 不能是 null 且去除两端空白字符后的长度(trimmed length)大于 0。</li>
+<li>@NotNull用在所有类型上面  对象不能是 null, 但可以是空集(size = 0)。</li>
+</ul>
 ]]></content>
       <categories>
         <category>spring</category>

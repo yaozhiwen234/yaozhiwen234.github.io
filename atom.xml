@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-03-16T04:50:22.562Z</updated>
+  <updated>2021-03-18T04:56:57.247Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>springBoot整合 jpa数据源+mybatis数据源</title>
+    <link href="https://yaozw.top/2021/03/18/springBoot%E6%95%B4%E5%90%88%20jpa%E6%95%B0%E6%8D%AE%E6%BA%90+mybatis%E6%95%B0%E6%8D%AE%E6%BA%90/"/>
+    <id>https://yaozw.top/2021/03/18/springBoot%E6%95%B4%E5%90%88%20jpa%E6%95%B0%E6%8D%AE%E6%BA%90+mybatis%E6%95%B0%E6%8D%AE%E6%BA%90/</id>
+    <published>2021-03-18T04:49:52.000Z</published>
+    <updated>2021-03-18T04:56:57.247Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;yml配置&quot;&gt;&lt;a href=&quot;#yml配置&quot; class=&quot;headerlink&quot; title=&quot;yml配置&quot;&gt;&lt;/a&gt;yml配置&lt;/h3&gt;&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    <category term="springBoot" scheme="https://yaozw.top/categories/springBoot/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>spring的注解</title>
+    <link href="https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/"/>
+    <id>https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/</id>
+    <published>2021-03-16T03:06:50.000Z</published>
+    <updated>2021-03-19T05:57:51.880Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;NotNull-NotBlank和-NotEmpty的区别&quot;&gt;&lt;a href=&quot;#NotNull-NotBlank和-NotEmpty的区别&quot; class=&quot;headerlink&quot; title=&quot;@NotNull,@NotBlank和</summary>
+        
+      
+    
+    
+    
+    <category term="spring" scheme="https://yaozw.top/categories/spring/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
   
   <entry>
     <title>spring校验注解</title>
@@ -46,7 +96,7 @@
     <link href="https://yaozw.top/2021/03/16/java8%E4%B9%8BStream%E8%A1%A5%E5%85%85/"/>
     <id>https://yaozw.top/2021/03/16/java8%E4%B9%8BStream%E8%A1%A5%E5%85%85/</id>
     <published>2021-03-16T01:46:12.000Z</published>
-    <updated>2021-03-16T04:47:26.037Z</updated>
+    <updated>2021-03-19T05:57:50.986Z</updated>
     
     
       
@@ -59,10 +109,10 @@
     
     
     
-    <category term="java" scheme="https://yaozw.top/categories/java/"/>
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     
     
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
     
   </entry>
   
@@ -457,56 +507,6 @@
         
         
     <summary type="html">&lt;h4 id=&quot;享元设计模式-Flyweight-Pattern&quot;&gt;&lt;a href=&quot;#享元设计模式-Flyweight-Pattern&quot; class=&quot;headerlink&quot; title=&quot;享元设计模式(Flyweight</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>外观设计模式</title>
-    <link href="https://yaozw.top/2020/12/21/%E5%A4%96%E8%A7%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/21/%E5%A4%96%E8%A7%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-21T05:48:09.000Z</published>
-    <updated>2021-03-11T03:32:27.199Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;外观设计模式-Facade-pattern&quot;&gt;&lt;a href=&quot;#外观设计模式-Facade-pattern&quot; class=&quot;headerlink&quot; title=&quot;外观设计模式(Facade pattern)&quot;&gt;&lt;/a&gt;外观设计模式(Facade</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>组合设计模式</title>
-    <link href="https://yaozw.top/2020/12/20/%E7%BB%84%E5%90%88%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/20/%E7%BB%84%E5%90%88%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-20T09:47:50.000Z</published>
-    <updated>2021-03-11T03:32:29.598Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;组合设计模式-Composite-Pattern&quot;&gt;&lt;a href=&quot;#组合设计模式-Composite-Pattern&quot; class=&quot;headerlink&quot; title=&quot;组合设计模式(Composite</summary>
         
       
     

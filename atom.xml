@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-03-18T04:56:57.247Z</updated>
+  <updated>2021-03-21T14:31:02.455Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -15,6 +15,106 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LVS三种搭建模式</title>
+    <link href="https://yaozw.top/2021/03/21/LVS%E4%B8%89%E7%A7%8D%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://yaozw.top/2021/03/21/LVS%E4%B8%89%E7%A7%8D%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%BC%8F/</id>
+    <published>2021-03-21T10:57:12.000Z</published>
+    <updated>2021-03-21T14:31:02.455Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;lvs的三种搭建模型&quot;&gt;&lt;a href=&quot;#lvs的三种搭建模型&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>tcpip协议</title>
+    <link href="https://yaozw.top/2021/03/21/tcpip%E5%8D%8F%E8%AE%AE/"/>
+    <id>https://yaozw.top/2021/03/21/tcpip%E5%8D%8F%E8%AE%AE/</id>
+    <published>2021-03-21T06:00:08.000Z</published>
+    <updated>2021-03-21T10:49:28.664Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;Tcp-ip协议&quot;&gt;&lt;a href=&quot;#Tcp-ip协议&quot; class=&quot;headerlink&quot; title=&quot;Tcp/ip协议&quot;&gt;&lt;/a&gt;Tcp/ip协议&lt;/h3&gt;&lt;p&gt;  </summary>
+        
+      
+    
+    
+    
+    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>http协议</title>
+    <link href="https://yaozw.top/2021/03/21/http%E5%8D%8F%E8%AE%AE/"/>
+    <id>https://yaozw.top/2021/03/21/http%E5%8D%8F%E8%AE%AE/</id>
+    <published>2021-03-21T05:48:32.000Z</published>
+    <updated>2021-03-21T10:39:26.489Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;http协议&quot;&gt;&lt;a href=&quot;#http协议&quot; class=&quot;headerlink&quot; title=&quot;http协议&quot;&gt;&lt;/a&gt;http协议&lt;/h3&gt;&lt;p&gt;HTTP协议是Hyper Text Transfer</summary>
+        
+      
+    
+    
+    
+    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>网络OSI七层模型理解</title>
+    <link href="https://yaozw.top/2021/03/21/%E7%BD%91%E7%BB%9COSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B%E7%90%86%E8%A7%A3/"/>
+    <id>https://yaozw.top/2021/03/21/%E7%BD%91%E7%BB%9COSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B%E7%90%86%E8%A7%A3/</id>
+    <published>2021-03-21T04:13:01.000Z</published>
+    <updated>2021-03-21T10:39:24.921Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;网络OSI七层模型&quot;&gt;&lt;a href=&quot;#网络OSI七层模型&quot; class=&quot;headerlink&quot; title=&quot;网络OSI七层模型&quot;&gt;&lt;/a&gt;网络OSI七层模型&lt;/h3&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>springBoot整合 jpa数据源+mybatis数据源</title>
@@ -42,11 +142,11 @@
   </entry>
   
   <entry>
-    <title>spring的注解</title>
-    <link href="https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/"/>
-    <id>https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/</id>
+    <title>spring校验注解</title>
+    <link href="https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/"/>
+    <id>https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/</id>
     <published>2021-03-16T03:06:50.000Z</published>
-    <updated>2021-03-19T05:57:51.880Z</updated>
+    <updated>2021-03-16T04:50:22.562Z</updated>
     
     
       
@@ -67,11 +167,11 @@
   </entry>
   
   <entry>
-    <title>spring校验注解</title>
-    <link href="https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/"/>
-    <id>https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/</id>
+    <title>spring的注解</title>
+    <link href="https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/"/>
+    <id>https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/</id>
     <published>2021-03-16T03:06:50.000Z</published>
-    <updated>2021-03-16T04:50:22.562Z</updated>
+    <updated>2021-03-19T05:57:51.880Z</updated>
     
     
       
@@ -146,7 +246,7 @@
     <link href="https://yaozw.top/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/"/>
     <id>https://yaozw.top/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/</id>
     <published>2021-01-14T01:56:18.000Z</published>
-    <updated>2021-03-16T04:47:19.011Z</updated>
+    <updated>2021-03-21T10:39:30.804Z</updated>
     
     
       
@@ -159,10 +259,10 @@
     
     
     
-    <category term="上网攻略" scheme="https://yaozw.top/categories/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/"/>
+    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
@@ -407,106 +507,6 @@
         
         
     <summary type="html">&lt;h4 id=&quot;中介者设计模式-Mediator-Pattern&quot;&gt;&lt;a href=&quot;#中介者设计模式-Mediator-Pattern&quot; class=&quot;headerlink&quot; title=&quot;中介者设计模式(Mediator</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>迭代器设计模式</title>
-    <link href="https://yaozw.top/2020/12/23/%E8%BF%AD%E4%BB%A3%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/23/%E8%BF%AD%E4%BB%A3%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-23T09:00:57.000Z</published>
-    <updated>2021-03-11T03:32:20.411Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;迭代器设计模式-Iterator-Pattern&quot;&gt;&lt;a href=&quot;#迭代器设计模式-Iterator-Pattern&quot; class=&quot;headerlink&quot; title=&quot;迭代器设计模式(Iterator</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>命令设计模式</title>
-    <link href="https://yaozw.top/2020/12/22/%E5%91%BD%E4%BB%A4%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/22/%E5%91%BD%E4%BB%A4%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-22T02:44:59.000Z</published>
-    <updated>2021-03-11T03:32:21.956Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;命令设计模式-Command-Pattern&quot;&gt;&lt;a href=&quot;#命令设计模式-Command-Pattern&quot; class=&quot;headerlink&quot; title=&quot;命令设计模式(Command Pattern)&quot;&gt;&lt;/a&gt;命令设计模式(Command</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>代理设计模式</title>
-    <link href="https://yaozw.top/2020/12/22/%E4%BB%A3%E7%90%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/22/%E4%BB%A3%E7%90%86%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-22T02:09:57.000Z</published>
-    <updated>2021-03-11T03:32:23.510Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;代理设计模式-Proxy-Pattern&quot;&gt;&lt;a href=&quot;#代理设计模式-Proxy-Pattern&quot; class=&quot;headerlink&quot; title=&quot;代理设计模式(Proxy Pattern)&quot;&gt;&lt;/a&gt;代理设计模式(Proxy</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>享元设计模式</title>
-    <link href="https://yaozw.top/2020/12/21/%E4%BA%AB%E5%85%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/21/%E4%BA%AB%E5%85%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-21T06:52:27.000Z</published>
-    <updated>2021-03-11T03:32:25.717Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;享元设计模式-Flyweight-Pattern&quot;&gt;&lt;a href=&quot;#享元设计模式-Flyweight-Pattern&quot; class=&quot;headerlink&quot; title=&quot;享元设计模式(Flyweight</summary>
         
       
     

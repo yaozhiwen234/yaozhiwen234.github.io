@@ -1,76 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>LVS三种搭建模式</title>
-    <url>/2021/03/21/LVS%E4%B8%89%E7%A7%8D%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h3 id="lvs的三种搭建模型"><a href="#lvs的三种搭建模型" class="headerlink" title="lvs的三种搭建模型"></a>lvs的三种搭建模型</h3><ul>
-<li><p><strong>NAT模式</strong><br>优点：集群中的物理服务器可以使用任何支持TCP/IP操作系统，物理服务器可以分配Internet的保留私有地址，只有负载均衡器需要一个合法的IP地址。</p>
-<p>不足：扩展性有限。当服务器节点（普通PC服务器）数据增长到20个或更多时,负载均衡器将成为整个系统的瓶颈，因为所有的请求包和应答包都需要经过负载均衡器再生。假使TCP包的平均长度是536字节的话，平均包再生延迟时间大约为60us（在Pentium处理器上计算的，采用更快的处理器将使得这个延迟时间变短），负载均衡器的最大容许能力为8.93M/s，假定每台物理服务器的平台容许能力为400K/s来计算，负责均衡器能为22台物理服务器计算。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20nat%E6%A8%A1%E5%9E%8B.png" alt="NAT模式"></p>
-</li>
-<li><p><strong>TUN模式</strong><br>我们发现，许多Internet服务（例如WEB服务器）的请求包很短小，而应答包通常很大。<br>优点：负载均衡器只负责将请求包分发给物理服务器，而物理服务器将应答包直接发给用户。所以，负载均衡器能处理很巨大的请求量，这种方式，一台负载均衡能为超过100台的物理服务器服务，负载均衡器不再是系统的瓶颈。使用VS-TUN方式，如果你的负载均衡器拥有100M的全双工网卡的话，就能使得整个Virtual Server能达到1G的吞吐量。<br>不足：但是，这种方式需要所有的服务器支持”IP Tunneling”(IP Encapsulation)协议，我仅在Linux系统上实现了这个，如果你能让其它操作系统支持，还在探索之中。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20TUN.png" alt="TUN"></p>
-</li>
-<li><p><strong>DR模式</strong><br>优点：和VS-TUN一样，负载均衡器也只是分发请求，应答包通过单独的路由方法返回给客户端。与VS-TUN相比，VS-DR这种实现方式不需要隧道结构，因此可以使用大多数操作系统做为物理服务器，其中包括：Linux 2.0.36、2.2.9、2.2.10、2.2.12；Solaris 2.5.1、2.6、2.7；FreeBSD 3.1、3.2、3.3；NT4.0无需打补丁；IRIX 6.5；HPUX11等。<br>不足：要求负载均衡器的网卡必须与物理网卡在一个物理段上<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20DR.png" alt="DR"></p>
-</li>
-</ul>
-<h3 id="使用LVS搭建基于四层网络模型的负载均衡器-DR模式"><a href="#使用LVS搭建基于四层网络模型的负载均衡器-DR模式" class="headerlink" title="使用LVS搭建基于四层网络模型的负载均衡器 DR模式"></a>使用LVS搭建基于四层网络模型的负载均衡器 DR模式</h3><p><strong>命令解释</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rr:轮循</span><br><span class="line">wrr:</span><br><span class="line">dh:</span><br><span class="line">sh:</span><br><span class="line"></span><br><span class="line">动态调度方法：</span><br><span class="line">lc: 最少连接</span><br><span class="line">wlc: 加权最少连接</span><br><span class="line">sed: 最短期望延迟</span><br><span class="line">nq: never queue</span><br><span class="line">LBLC: 基于本地的最少连接</span><br><span class="line">LBLCR: 基于本地的带复制功能的最少连接</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><figcaption><span>：</span></figcaption><table><tr><td class="code"><pre><span class="line">kernel parameter:</span><br><span class="line">目标mac地址为全F，交换机触发广播</span><br><span class="line">  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;*IF*&#x2F;</span><br><span class="line">arp_ignore: 定义接收到ARP请求时的响应级别；</span><br><span class="line">  0：只要本地配置的有相应地址，就给予响应；</span><br><span class="line">  1：仅在请求的目标(MAC)地址配置请求</span><br><span class="line">        到达的接口上的时候，才给予响应；</span><br><span class="line"></span><br><span class="line">arp_announce：定义将自己地址向外通告时的通告级别；</span><br><span class="line">  0：将本地任何接口上的任何地址向外通告；</span><br><span class="line">  1：试图仅向目标网络通告与其网络匹配的地址；</span><br><span class="line">  2：仅向与本地接口上地址匹配的网络进行通告；</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line"></span><br><span class="line">管理集群服务</span><br><span class="line">添加：-A -t|u|f service-address [-s scheduler]</span><br><span class="line">-t: TCP协议的集群</span><br><span class="line">-u: UDP协议的集群</span><br><span class="line">service-address:     IP:PORT</span><br><span class="line">-f: FWM: 防火墙标记</span><br><span class="line">service-address: Mark Number</span><br><span class="line">修改：-E</span><br><span class="line">删除：-D -t|u|f service-address</span><br><span class="line"></span><br><span class="line">ipvsadm -A -t 192.168.9.100:80 -s rr</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加：ipvsadm  -a -t|u|f service-address -r server-address [-g|i|m] [-w weight]</span><br><span class="line">  -t|u|f service-address：事先定义好的某集群服务</span><br><span class="line">  -r server-address: 某RS的地址，在NAT模型中，可使用IP：PORT实现端口映射；</span><br><span class="line">  [-g|i|m]: LVS类型 </span><br><span class="line">  -g: DR</span><br><span class="line">  -i: TUN</span><br><span class="line">  -m: NAT</span><br><span class="line">  [-w weight]: 定义服务器权重</span><br><span class="line">修改：-e</span><br><span class="line">删除：-d -t|u|f service-address -r server-address</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.8 –g</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.9 -g</span><br><span class="line">查看</span><br><span class="line">  -L|l</span><br><span class="line">  -n: 数字格式显示主机地址和端口</span><br><span class="line">  --stats：统计数据</span><br><span class="line">  --rate: 速率</span><br><span class="line">  --timeout: 显示tcp、tcpfin和udp的会话超时时长</span><br><span class="line">  -:c 显示当前的ipvs连接状况</span><br><span class="line">删除所有集群服务</span><br><span class="line">  -C：清空ipvs规则</span><br><span class="line">保存规则</span><br><span class="line">  -S</span><br><span class="line"># ipvsadm -S &gt; &#x2F;path&#x2F;to&#x2F;somefile</span><br><span class="line">载入此前的规则：</span><br><span class="line">  -R</span><br><span class="line"># ipvsadm -R &lt; &#x2F;path&#x2F;form&#x2F;somefile </span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>拓扑图</strong><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs-DR%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%9E%8B.png" alt="lvs-DR拓扑图"></li>
-<li><strong>开始搭建</strong></li>
-</ul>
-<p>1.在192.168.150.11 中添加192.168.150.100的网卡</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加网卡  ifconfig eth0:2 192.168.150.100&#x2F;24</span><br><span class="line"></span><br><span class="line">注意&#x2F;24代表子网掩码是255.255.255.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<p>   <font color='red'> 删除 eth0:2网卡 ifconfig eth0:2 down </font></p>
-<p> 2.调192.168.150.12  和 192.168.150.13的内核协议</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;</span><br><span class="line">ll</span><br><span class="line"></span><br><span class="line">修改 arp_ignore 和  arp_announce</span><br><span class="line">echo 1 &gt; arp_ignore </span><br><span class="line">echo 1 &gt; arp_announce</span><br><span class="line">注意此处不能使用vi</span><br><span class="line"> </span><br><span class="line">cd ..</span><br><span class="line">此处修改all中的防止以后发生变化</span><br><span class="line">echo 1 &gt; arp_ignore </span><br><span class="line">echo 1 &gt; arp_announce</span><br></pre></td></tr></table></figure>
-<p>3.配置192.168.150.12  和 192.168.150.13环行路由</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ifconfig lo:2 192.168.150.100 netmask 255.255.255.255</span><br></pre></td></tr></table></figure>
-<p>4.在 192.168.150.12 和 192.168.150.13中安装 httpd</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install httpd -y</span><br><span class="line">启动  service httpd start</span><br><span class="line">创建主页vi&#x2F;var&#x2F;www&#x2F;html&#x2F;index.html</span><br></pre></td></tr></table></figure>
-<p>5在浏览器中输入192.168.150.12:80测试</p>
-<p>6.在192.168.150.11 中安装 ipvsadm</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line">添加进包的规则：ipvsadm -A -t 192.168.9.100:80 -s rr</span><br><span class="line">添加负载的规则:</span><br><span class="line">ipvsadm -a -t 192.168.9.100:80 -r 192.168.150.12 -g -w 1</span><br><span class="line">ipvsadm -a -t 192.168.9.100:80 -r 192.168.150.13 -g -w 1</span><br><span class="line">查看规则：ipvsadm  -ln</span><br></pre></td></tr></table></figure>
-<p>7.验证：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">浏览器访问  192.168.150.100   看到负载  F5属性</span><br><span class="line">192.168.150.11：</span><br><span class="line">	netstat -natp   结论看不到socket连接</span><br><span class="line">192.168.150.12~192.168.150.13:</span><br><span class="line">	netstat -natp   结论看到很多的socket连接</span><br><span class="line">192.168.150.11:</span><br><span class="line">	ipvsadm -lnc    查看偷窥记录本</span><br><span class="line">	TCP 00:57  FIN_WAIT    192.168.150.1:51587 192.168.150.100:80 192.168.150.12:80</span><br><span class="line"></span><br><span class="line">	           FIN_WAIT： 连接过，偷窥了所有的包</span><br><span class="line">	           SYN_RECV： 基本上lvs都记录了，证明lvs没事，一定是后边网络层出问题</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>http协议</title>
-    <url>/2021/03/21/http%E5%8D%8F%E8%AE%AE/</url>
-    <content><![CDATA[<h3 id="http协议"><a href="#http协议" class="headerlink" title="http协议"></a>http协议</h3><p>HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。</p>
-<p>HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。</p>
-<p>HTTP是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。它于1990年提出，经过几年的使用与发展，得到不断地完善和扩展。目前在WWW中使用的是HTTP/1.0的第六版，HTTP/1.1的规范化工作正在进行之中，而且HTTP-NG(Next Generation of HTTP)的建议已经提出。</p>
-<p>HTTP协议工作于客户端-服务端架构为上。浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求。Web服务器根据接收到的请求后，向客户端发送响应信息。</p>
-<h4 id="http协议的特点"><a href="#http协议的特点" class="headerlink" title="http协议的特点"></a>http协议的特点</h4><p>1、简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</p>
-<p>2、灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。</p>
-<p>3.无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</p>
-<p>4.无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。<br>5、支持B/S及C/S模式。</p>
-]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java中的深克隆和浅克隆</title>
     <url>/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/</url>
     <content><![CDATA[<h4 id="Java中的深克隆和浅克隆"><a href="#Java中的深克隆和浅克隆" class="headerlink" title="Java中的深克隆和浅克隆"></a>Java中的深克隆和浅克隆</h4><p><strong>浅克隆：</strong> 创建一个新对象，新对象的属性和原来对象完全相同（新对象的地址 ！= 原来对象的地址），对于非基本类型属性，仍指向原有属性所指向的对象的内存地址。**(String 类型除外)**。</p>
@@ -111,6 +41,199 @@
       </categories>
       <tags>
         <tag>Java中的深克隆和浅克隆</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LVS三种搭建模式</title>
+    <url>/2021/03/21/LVS%E4%B8%89%E7%A7%8D%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h3 id="lvs的三种搭建模型"><a href="#lvs的三种搭建模型" class="headerlink" title="lvs的三种搭建模型"></a>lvs的三种搭建模型</h3><ul>
+<li><p><strong>NAT模式</strong><br>优点：集群中的物理服务器可以使用任何支持TCP/IP操作系统，物理服务器可以分配Internet的保留私有地址，只有负载均衡器需要一个合法的IP地址。</p>
+<p>不足：扩展性有限。当服务器节点（普通PC服务器）数据增长到20个或更多时,负载均衡器将成为整个系统的瓶颈，因为所有的请求包和应答包都需要经过负载均衡器再生。假使TCP包的平均长度是536字节的话，平均包再生延迟时间大约为60us（在Pentium处理器上计算的，采用更快的处理器将使得这个延迟时间变短），负载均衡器的最大容许能力为8.93M/s，假定每台物理服务器的平台容许能力为400K/s来计算，负责均衡器能为22台物理服务器计算。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20nat%E6%A8%A1%E5%9E%8B.png" alt="NAT模式"></p>
+</li>
+<li><p><strong>TUN模式</strong><br>我们发现，许多Internet服务（例如WEB服务器）的请求包很短小，而应答包通常很大。<br>优点：负载均衡器只负责将请求包分发给物理服务器，而物理服务器将应答包直接发给用户。所以，负载均衡器能处理很巨大的请求量，这种方式，一台负载均衡能为超过100台的物理服务器服务，负载均衡器不再是系统的瓶颈。使用VS-TUN方式，如果你的负载均衡器拥有100M的全双工网卡的话，就能使得整个Virtual Server能达到1G的吞吐量。<br>不足：但是，这种方式需要所有的服务器支持”IP Tunneling”(IP Encapsulation)协议，我仅在Linux系统上实现了这个，如果你能让其它操作系统支持，还在探索之中。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20TUN.png" alt="TUN"></p>
+</li>
+<li><p><strong>DR模式</strong><br>优点：和VS-TUN一样，负载均衡器也只是分发请求，应答包通过单独的路由方法返回给客户端。与VS-TUN相比，VS-DR这种实现方式不需要隧道结构，因此可以使用大多数操作系统做为物理服务器，其中包括：Linux 2.0.36、2.2.9、2.2.10、2.2.12；Solaris 2.5.1、2.6、2.7；FreeBSD 3.1、3.2、3.3；NT4.0无需打补丁；IRIX 6.5；HPUX11等。<br>不足：要求负载均衡器的网卡必须与物理网卡在一个物理段上<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20DR.png" alt="DR"></p>
+</li>
+</ul>
+<h3 id="使用LVS搭建基于四层网络模型的负载均衡器-DR模式"><a href="#使用LVS搭建基于四层网络模型的负载均衡器-DR模式" class="headerlink" title="使用LVS搭建基于四层网络模型的负载均衡器 DR模式"></a>使用LVS搭建基于四层网络模型的负载均衡器 DR模式</h3><p><strong>命令解释</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rr:轮循</span><br><span class="line">wrr:</span><br><span class="line">dh:</span><br><span class="line">sh:</span><br><span class="line"></span><br><span class="line">动态调度方法：</span><br><span class="line">lc: 最少连接</span><br><span class="line">wlc: 加权最少连接</span><br><span class="line">sed: 最短期望延迟</span><br><span class="line">nq: never queue</span><br><span class="line">LBLC: 基于本地的最少连接</span><br><span class="line">LBLCR: 基于本地的带复制功能的最少连接</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><figcaption><span>：</span></figcaption><table><tr><td class="code"><pre><span class="line">kernel parameter:</span><br><span class="line">目标mac地址为全F，交换机触发广播</span><br><span class="line">  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;*IF*&#x2F;</span><br><span class="line">arp_ignore: 定义接收到ARP请求时的响应级别；</span><br><span class="line">  0：只要本地配置的有相应地址，就给予响应；</span><br><span class="line">  1：仅在请求的目标(MAC)地址配置请求</span><br><span class="line">        到达的接口上的时候，才给予响应；</span><br><span class="line"></span><br><span class="line">arp_announce：定义将自己地址向外通告时的通告级别；</span><br><span class="line">  0：将本地任何接口上的任何地址向外通告；</span><br><span class="line">  1：试图仅向目标网络通告与其网络匹配的地址；</span><br><span class="line">  2：仅向与本地接口上地址匹配的网络进行通告；</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line"></span><br><span class="line">管理集群服务</span><br><span class="line">添加：-A -t|u|f service-address [-s scheduler]</span><br><span class="line">-t: TCP协议的集群</span><br><span class="line">-u: UDP协议的集群</span><br><span class="line">service-address:     IP:PORT</span><br><span class="line">-f: FWM: 防火墙标记</span><br><span class="line">service-address: Mark Number</span><br><span class="line">修改：-E</span><br><span class="line">删除：-D -t|u|f service-address</span><br><span class="line"></span><br><span class="line">ipvsadm -A -t 192.168.9.100:80 -s rr</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加：ipvsadm  -a -t|u|f service-address -r server-address [-g|i|m] [-w weight]</span><br><span class="line">  -t|u|f service-address：事先定义好的某集群服务</span><br><span class="line">  -r server-address: 某RS的地址，在NAT模型中，可使用IP：PORT实现端口映射；</span><br><span class="line">  [-g|i|m]: LVS类型 </span><br><span class="line">  -g: DR</span><br><span class="line">  -i: TUN</span><br><span class="line">  -m: NAT</span><br><span class="line">  [-w weight]: 定义服务器权重</span><br><span class="line">修改：-e</span><br><span class="line">删除：-d -t|u|f service-address -r server-address</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.8 –g</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.9 -g</span><br><span class="line">查看</span><br><span class="line">  -L|l</span><br><span class="line">  -n: 数字格式显示主机地址和端口</span><br><span class="line">  --stats：统计数据</span><br><span class="line">  --rate: 速率</span><br><span class="line">  --timeout: 显示tcp、tcpfin和udp的会话超时时长</span><br><span class="line">  -:c 显示当前的ipvs连接状况</span><br><span class="line">删除所有集群服务</span><br><span class="line">  -C：清空ipvs规则</span><br><span class="line">保存规则</span><br><span class="line">  -S</span><br><span class="line"># ipvsadm -S &gt; &#x2F;path&#x2F;to&#x2F;somefile</span><br><span class="line">载入此前的规则：</span><br><span class="line">  -R</span><br><span class="line"># ipvsadm -R &lt; &#x2F;path&#x2F;form&#x2F;somefile </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>拓扑图</strong><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs-DR%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%9E%8B.png" alt="lvs-DR拓扑图"></li>
+<li><strong>开始搭建</strong></li>
+</ul>
+<p>1.在192.168.150.11 中添加192.168.150.100的网卡</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加网卡  ifconfig eth0:2 192.168.150.100&#x2F;24</span><br><span class="line"></span><br><span class="line">注意&#x2F;24代表子网掩码是255.255.255.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>   <font color='red'> 删除 eth0:2网卡 ifconfig eth0:2 down </font></p>
+<p> 2.调192.168.150.12  和 192.168.150.13的内核协议</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;</span><br><span class="line">ll</span><br><span class="line"></span><br><span class="line">cd eth0</span><br><span class="line">修改 arp_ignore 和  arp_announce</span><br><span class="line">echo 1 &gt; arp_ignore </span><br><span class="line">echo 1 &gt; arp_announce</span><br><span class="line">注意此处不能使用vi</span><br><span class="line"> </span><br><span class="line">cd ..</span><br><span class="line">cd all</span><br><span class="line">此处修改all中的防止以后发生变化</span><br><span class="line">echo 1 &gt; arp_ignore </span><br><span class="line">echo 1 &gt; arp_announce</span><br></pre></td></tr></table></figure>
+<p>3.配置192.168.150.12  和 192.168.150.13环行路由</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ifconfig lo:2 192.168.150.100 netmask 255.255.255.255</span><br></pre></td></tr></table></figure>
+<p>4.在 192.168.150.12 和 192.168.150.13中安装 httpd</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install httpd -y</span><br><span class="line">启动  service httpd start</span><br><span class="line">创建主页vi &#x2F;var&#x2F;www&#x2F;html&#x2F;index.html</span><br></pre></td></tr></table></figure>
+<p>5在浏览器中输入192.168.150.12:80测试</p>
+<p>6.在192.168.150.11 中安装 ipvsadm</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line">添加进包的规则：ipvsadm -A  -t  192.168.150.100:80  -s rr</span><br><span class="line">添加负载的规则:</span><br><span class="line">ipvsadm -a  -t 192.168.150.100:80  -r  192.168.150.12 -g -w 1</span><br><span class="line">ipvsadm -a  -t 192.168.150.100:80  -r  192.168.150.13 -g -w 1</span><br><span class="line"></span><br><span class="line">查看规则：ipvsadm  -ln</span><br></pre></td></tr></table></figure>
+<p>7.验证：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">浏览器访问  192.168.150.100   看到负载  F5属性</span><br><span class="line">192.168.150.11：</span><br><span class="line">	netstat -natp   结论看不到socket连接</span><br><span class="line">192.168.150.12~192.168.150.13:</span><br><span class="line">	netstat -natp   结论看到很多的socket连接</span><br><span class="line">192.168.150.11:</span><br><span class="line">	ipvsadm -lnc    查看偷窥记录本</span><br><span class="line">	TCP 00:57  FIN_WAIT    192.168.150.1:51587 192.168.150.100:80 192.168.150.12:80</span><br><span class="line"></span><br><span class="line">	           FIN_WAIT： 连接过，偷窥了所有的包</span><br><span class="line">	           SYN_RECV： 基本上lvs都记录了，证明lvs没事，一定是后边网络层出问题</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>http协议</title>
+    <url>/2021/03/21/http%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<h3 id="http协议"><a href="#http协议" class="headerlink" title="http协议"></a>http协议</h3><p>HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。</p>
+<p>HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。</p>
+<p>HTTP是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。它于1990年提出，经过几年的使用与发展，得到不断地完善和扩展。目前在WWW中使用的是HTTP/1.0的第六版，HTTP/1.1的规范化工作正在进行之中，而且HTTP-NG(Next Generation of HTTP)的建议已经提出。</p>
+<p>HTTP协议工作于客户端-服务端架构为上。浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求。Web服务器根据接收到的请求后，向客户端发送响应信息。</p>
+<h4 id="http协议的特点"><a href="#http协议的特点" class="headerlink" title="http协议的特点"></a>http协议的特点</h4><p>1、简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</p>
+<p>2、灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。</p>
+<p>3.无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</p>
+<p>4.无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。<br>5、支持B/S及C/S模式。</p>
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java8之Stream</title>
+    <url>/2020/11/28/java8%E4%B9%8BStream/</url>
+    <content><![CDATA[<h3 id="1-Stream介绍"><a href="#1-Stream介绍" class="headerlink" title="1. Stream介绍"></a>1. Stream介绍</h3><p>Stream不是集合元素，它不是数据结构并不保存数据，它是有关算法和计算的，它更像一个高级版本的Iterator。原始版本的Iterator，用户只能显式地一个一个遍历元素并对其执行某些操作；高级版本的Stream，用户只要给出需要对其包含的元素执行什么操作，比如，“过滤掉长度大于 10 的字符串”、“获取每个字符串的首字母”等，Stream会隐式地在内部进行遍历，做出相应的数据转换。Stream就如同一个迭代器（Iterator），单向，不可往复，数据只能遍历一次，遍历过一次后即用尽了。<br>在Java8 中增加了Stream API ，简化了串行或者并行的大批量的操作 。<br>Stream中的数据元素可以是对象引用，或者基本数据类型的值： int  long double  </p>
+<h3 id="2-Stream的具体用法"><a href="#2-Stream的具体用法" class="headerlink" title="2. Stream的具体用法"></a>2. Stream的具体用法</h3><h4 id="1-Stream-常用的创建方法"><a href="#1-Stream-常用的创建方法" class="headerlink" title="1. Stream 常用的创建方法"></a>1. Stream 常用的创建方法</h4><pre><code>   ***使用Collection下的 stream() 和 parallelStream() 方法***　　</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">       </span><br><span class="line"> List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Returns a sequential &#123;@code Stream&#125; with this collection as its source.(返回一个顺序的流，将此集合作为其源。)</span></span><br><span class="line">  Stream&lt;String&gt; stream = list.stream(); </span><br><span class="line"> <span class="comment">//Returns a possibly parallel &#123;@code Stream&#125; with this collection as its (返回一个可能是并行的流，其中包含此集合)</span></span><br><span class="line">  Stream&lt;String&gt; parallelStream = list.parallelStream();</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><em>使用Arrays 中的 stream() 方法，将数组转成流</em></strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer[] nums = <span class="keyword">new</span> Integer[<span class="number">10</span>];</span><br><span class="line">Stream&lt;Integer&gt; stream = Arrays.stream(nums);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><em>使用Stream中的静态方法：of()、iterate()、generate()</em></strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stream&lt;Integer&gt; stream = Stream.of(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">Stream&lt;Integer&gt; stream2 = Stream.iterate(<span class="number">0</span>, (x) -&gt; x + <span class="number">2</span>).limit(<span class="number">6</span>);</span><br><span class="line">stream2.forEach(System.out::println); <span class="comment">// 0 2 4 6 8 10</span></span><br><span class="line"></span><br><span class="line">Stream&lt;Double&gt; stream3 = Stream.generate(Math::random).limit(<span class="number">2</span>);</span><br><span class="line">stream3.forEach(System.out::println);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong><em>使用 BufferedReader.lines() 方法，将每行内容转成流</em></strong></p>
+ <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">&quot;D:\\test_stream.txt&quot;</span>));</span><br><span class="line">Stream&lt;String&gt; lineStream = reader.lines();</span><br><span class="line">lineStream.forEach(System.out::println);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><em>使用 Pattern.splitAsStream() 方法，将字符串分隔成流</em></strong></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Pattern pattern = Pattern.compile(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">Stream&lt;String&gt; stringStream = pattern.splitAsStream(<span class="string">&quot;a,b,c,d&quot;</span>);</span><br><span class="line">stringStream.forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-Stream的中间操作"><a href="#2-Stream的中间操作" class="headerlink" title="2 . Stream的中间操作"></a>2 . Stream的中间操作</h4><ul>
+<li><strong><em>筛选与切片</em></strong></li>
+</ul>
+<p>​       filter：过滤流中的某些元素<br>　　 limit(n)：获取n个元素<br>　　 skip(n)：跳过n个元素，配合limit(n)可实现分页<br>　　 distinct：通过流中元素的 hashCode() 和 equals() 去除重复元素</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stream&lt;Integer&gt; stream = Stream.of(<span class="number">6</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">14</span>);</span><br><span class="line">  </span><br><span class="line">Stream&lt;Integer&gt; newStream = stream.filter(s -&gt; s &gt; <span class="number">5</span>) <span class="comment">//6 6 7 9 8 10 12 14 14</span></span><br><span class="line">.distinct() <span class="comment">//6 7 9 8 10 12 14</span></span><br><span class="line">.skip(<span class="number">2</span>) <span class="comment">//9 8 10 12 14</span></span><br><span class="line">.limit(<span class="number">2</span>); <span class="comment">//9 8</span></span><br><span class="line">newStream.forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Student&gt; stuList = stuList();</span><br><span class="line"> </span><br><span class="line">	<span class="comment">// 需要筛选的条件：从stuList中筛选出年龄为21和22的学生</span></span><br><span class="line">	List&lt;Integer&gt; ageList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">	ageList.add(<span class="number">21</span>);</span><br><span class="line">	ageList.add(<span class="number">22</span>);</span><br><span class="line"> </span><br><span class="line">	<span class="comment">// JDK1.8提供了lambda表达式， 可以从stuList中过滤出符合条件的结果。</span></span><br><span class="line">	<span class="comment">// 定义结果集</span></span><br><span class="line">	List&lt;Student&gt; result = <span class="keyword">null</span>;</span><br><span class="line">	result = stuList.stream()</span><br><span class="line">			.filter((Student s) -&gt; ageList.contains(s.getAge()))</span><br><span class="line">			.collect(Collectors.toList());</span><br><span class="line">   </span><br><span class="line">	<span class="comment">// 打印原有stuList集合中的数据</span></span><br><span class="line">	System.out.println(<span class="string">&quot;原有stuList集合中的数据&quot;</span>);</span><br><span class="line">	stuList.forEach((Student s) -&gt; System.out.println(s.getName() + <span class="string">&quot;---&gt;&quot;</span> + s.getAge()));</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><em>映射</em></strong></li>
+</ul>
+<p>​       map：接收一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素。<br>　   flatMap：接收一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;a,b,c&quot;</span>, <span class="string">&quot;1,2,3&quot;</span>);</span><br><span class="line">  </span><br><span class="line"><span class="comment">//将每个元素转成一个新的且不带逗号的元素</span></span><br><span class="line">Stream&lt;String&gt; s1 = list.stream().map(s -&gt; s.replaceAll(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;&quot;</span>));</span><br><span class="line">s1.forEach(System.out::println); <span class="comment">// abc 123</span></span><br><span class="line">  </span><br><span class="line">Stream&lt;String&gt; s3 = list.stream().flatMap(s -&gt; &#123;</span><br><span class="line"><span class="comment">//将每个元素转换成一个stream</span></span><br><span class="line">String[] split = s.split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">Stream&lt;String&gt; s2 = Arrays.stream(split);</span><br><span class="line"><span class="keyword">return</span> s2;</span><br><span class="line">&#125;);</span><br><span class="line">s3.forEach(System.out::println); <span class="comment">// a b c 1 2 3</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><em>排序</em></strong> </li>
+</ul>
+<p>​        sorted()：自然排序，流中元素需实现Comparable接口<br>　　sorted(Comparator com)：定制排序，自定义Comparator排序器</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;aa&quot;</span>, <span class="string">&quot;ff&quot;</span>, <span class="string">&quot;dd&quot;</span>);</span><br><span class="line"><span class="comment">//String 类自身已实现Compareable接口</span></span><br><span class="line">list.stream().sorted().forEach(System.out::println);<span class="comment">// aa dd ff</span></span><br><span class="line">  </span><br><span class="line">Student s1 = <span class="keyword">new</span> Student(<span class="string">&quot;aa&quot;</span>, <span class="number">10</span>);</span><br><span class="line">Student s2 = <span class="keyword">new</span> Student(<span class="string">&quot;bb&quot;</span>, <span class="number">20</span>);</span><br><span class="line">Student s3 = <span class="keyword">new</span> Student(<span class="string">&quot;aa&quot;</span>, <span class="number">30</span>);</span><br><span class="line">Student s4 = <span class="keyword">new</span> Student(<span class="string">&quot;dd&quot;</span>, <span class="number">40</span>);</span><br><span class="line">List&lt;Student&gt; studentList = Arrays.asList(s1, s2, s3, s4);</span><br><span class="line">  </span><br><span class="line"><span class="comment">//自定义排序：先按姓名升序，姓名相同则按年龄升序</span></span><br><span class="line">studentList.stream().sorted(</span><br><span class="line">(o1, o2) -&gt; &#123;</span><br><span class="line"><span class="keyword">if</span> (o1.getName().equals(o2.getName())) &#123;</span><br><span class="line"><span class="keyword">return</span> o1.getAge() - o2.getAge();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="keyword">return</span> o1.getName().compareTo(o2.getName());</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">).forEach(System.out::println);　</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><em>消费</em></strong></li>
+</ul>
+<p>　　peek：如同于map，能得到流中的每一个元素。但map接收的是一个Function表达式，有返回值；而peek接收的是Consumer表达   式，没有返回值。</p>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Student s1 = <span class="keyword">new</span> Student(<span class="string">&quot;aa&quot;</span>, <span class="number">10</span>);</span><br><span class="line">Student s2 = <span class="keyword">new</span> Student(<span class="string">&quot;bb&quot;</span>, <span class="number">20</span>);</span><br><span class="line">List&lt;Student&gt; studentList = Arrays.asList(s1, s2);</span><br><span class="line">  </span><br><span class="line">studentList.stream()</span><br><span class="line">.peek(o -&gt; o.setAge(<span class="number">100</span>))</span><br><span class="line">.forEach(System.out::println);</span><br><span class="line">  </span><br><span class="line"><span class="comment">//结果：</span></span><br><span class="line">Student&#123;name=<span class="string">&#x27;aa&#x27;</span>, age=<span class="number">100</span>&#125;</span><br><span class="line">Student&#123;name=<span class="string">&#x27;bb&#x27;</span>, age=<span class="number">100</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-Stream的终止操作-常用函数"><a href="#3-Stream的终止操作-常用函数" class="headerlink" title="3. Stream的终止操作 (常用函数)"></a>3. Stream的终止操作 (常用函数)</h4><ul>
+<li><strong><em>匹配 聚合操作</em></strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Integer&gt; list = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line">  </span><br><span class="line"><span class="keyword">boolean</span> allMatch = list.stream().allMatch(e -&gt; e &gt; <span class="number">10</span>); <span class="comment">//false</span></span><br><span class="line"><span class="keyword">boolean</span> noneMatch = list.stream().noneMatch(e -&gt; e &gt; <span class="number">10</span>); <span class="comment">//true</span></span><br><span class="line"><span class="keyword">boolean</span> anyMatch = list.stream().anyMatch(e -&gt; e &gt; <span class="number">4</span>); <span class="comment">//true</span></span><br><span class="line">  </span><br><span class="line">Integer findFirst = list.stream().findFirst().get(); <span class="comment">//1</span></span><br><span class="line">Integer findAny = list.stream().findAny().get(); <span class="comment">//1</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">long</span> count = list.stream().count(); <span class="comment">//5</span></span><br><span class="line">Integer max = list.stream().max(Integer::compareTo).get(); <span class="comment">//5</span></span><br><span class="line">Integer min = list.stream().min(Integer::compareTo).get(); <span class="comment">//1　</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong><em>规约操作(reduce)</em></strong></p>
+<p>三个重载的方法：</p>
+<p>1.Optional&lt;T&gt; reduce(BinaryOperator&lt;T&gt; accumulator);</p>
+<p>2.T reduce(T identity, BinaryOperator&lt;T&gt; accumulator)</p>
+<p>3.&lt;U&gt; U reduce(U identity, BiFunction&lt;U, ? super T, U&gt; accumulator, BinaryOperator&lt;U&gt; combiner);用在流并发操作的时候，将每个线程前两个参数形成的结果result集合并为一个。所以第三个参数是一个BinaryOperator函数接口</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//reduce(String identity, BinaryOperator&lt;String&gt; accumulator) 第一个参数相当于起始值 ，第二个参数是二元运算函数接口</span></span><br><span class="line">String s1 = custs.stream().map(Cust::getCustName).reduce(<span class="string">&quot;&quot;</span>, (x,y)-&gt;x+<span class="string">&quot;,&quot;</span>+y).replaceFirst(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">System.out.println(s1);</span><br><span class="line">		</span><br><span class="line"><span class="comment">//reduce(BinaryOperator&lt;String&gt; accumulator) 参数是二元运算函数接口，因为没有给默认值，所以为了避免使用时空指针异常，返回的是Optional</span></span><br><span class="line">Optional&lt;String&gt; opt = custs.stream().map(Cust::getCustName).reduce((x,y)-&gt;x+<span class="string">&quot;,&quot;</span>+y);</span><br><span class="line">String s2 = opt.get().replaceFirst(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><em>收集操作</em></strong><br><strong><em>collect:</em></strong> 接收一个Collector实例，将流中元素收集成另外一个数据结构。<br><strong><em>Collector&lt;T, A, R&gt;:</em></strong> 是一个接口，有以下5个抽象方法：<br><strong><em>Supplier&lt;A&gt; supplier():</em></strong>创建一个结果容器A<br><strong><em>BiConsumer&lt;A, T&gt; accumulator():</em></strong>消费型接口，第一个参数为容器A，第二个参数为流中元素T。<br><strong><em>BinaryOperator&lt;A&gt; combiner():</em></strong>函数接口，该参数的作用跟上一个方法(reduce)中的combiner  参数一样，将并行流中各 个子进程          的运行结果(accumulator函数操作后的容器A)进行合并。<br><strong><em>Function&lt;A, R&gt; finisher():</em></strong>函数式接口，参数为：容器A，返回类型为：collect方法最终想要的结果R。<br><strong><em>Set&lt;Characteristics&gt; characteristics():</em></strong>  返回一个不可变的Set集合，用来表明该Collector的特征。有以下三个特征：<br><strong><em>CONCURRENT:</em></strong>表示此收集器支持并发。<br><strong><em>UNORDERED:</em></strong>表示该收集操作不会保留流中元素原有的顺序。<br><strong><em>IDENTITY_FINISH:</em></strong>表示finisher参数只是标识而已，可忽略。</li>
+</ul>
+<p><strong><em>Collector 工具库：Collectors</em></strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Student s1 = <span class="keyword">new</span> Student(<span class="string">&quot;aa&quot;</span>, <span class="number">10</span>,<span class="number">1</span>);</span><br><span class="line">Student s2 = <span class="keyword">new</span> Student(<span class="string">&quot;bb&quot;</span>, <span class="number">20</span>,<span class="number">2</span>);</span><br><span class="line">Student s3 = <span class="keyword">new</span> Student(<span class="string">&quot;cc&quot;</span>, <span class="number">10</span>,<span class="number">3</span>);</span><br><span class="line">List&lt;Student&gt; list = Arrays.asList(s1, s2, s3);</span><br><span class="line"></span><br><span class="line"><span class="comment">//装成list</span></span><br><span class="line">List&lt;Integer&gt; ageList = list.stream().map(Student::getAge).collect(Collectors.toList()); <span class="comment">// [10, 20, 10]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//转成set</span></span><br><span class="line">Set&lt;Integer&gt; ageSet = list.stream().map(Student::getAge).collect(Collectors.toSet()); <span class="comment">// [20, 10]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//转成map,注:key不能相同，否则报错</span></span><br><span class="line">Map&lt;String, Integer&gt; studentMap = list.stream().collect(Collectors.toMap(Student::getName, Student::getAge)); <span class="comment">// &#123;cc=10, bb=20, aa=10&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//转成map 如何key相同 是否覆盖  (oldVal ,newVal)-&gt;newVal ? oldVal</span></span><br><span class="line"> Map&lt;String, Integer&gt; studentMap = list.stream().collect(Collectors.toMap(Student::getName, Student::getAge, (oldVal ,newVal)-&gt;newVal)); </span><br><span class="line"></span><br><span class="line"><span class="comment">//转为 LinkedHashMap   (LinkedHashMap::new)</span></span><br><span class="line">LinkedHashMap&lt;String, Integer&gt; collect = list.stream().collect(Collectors.toMap(Student::getName, Student::getAge, (oldVal, newVal) -&gt; newVal, LinkedHashMap::<span class="keyword">new</span>));<span class="comment">// &#123;cc=10, bb=20, aa=10&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//字符串分隔符连接</span></span><br><span class="line">String joinName = list.stream().map(Student::getName).collect(Collectors.joining(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;(&quot;</span>, <span class="string">&quot;)&quot;</span>)); <span class="comment">// (aa,bb,cc)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//聚合操作</span></span><br><span class="line"><span class="comment">//1.学生总数</span></span><br><span class="line">Long count = list.stream().collect(Collectors.counting()); <span class="comment">// 3</span></span><br><span class="line"><span class="comment">//2.最大年龄 (最小的minBy同理)</span></span><br><span class="line">Integer maxAge = list.stream().map(Student::getAge).collect(Collectors.maxBy(Integer::compare)).get(); <span class="comment">// 20</span></span><br><span class="line"><span class="comment">//3.所有人的年龄</span></span><br><span class="line">Integer sumAge = list.stream().collect(Collectors.summingInt(Student::getAge)); <span class="comment">// 40</span></span><br><span class="line"><span class="comment">//4.平均年龄</span></span><br><span class="line">Double averageAge = list.stream().collect(Collectors.averagingDouble(Student::getAge)); <span class="comment">// 13.333333333333334</span></span><br><span class="line"><span class="comment">// 带上以上所有方法</span></span><br><span class="line">DoubleSummaryStatistics statistics = list.stream().collect(Collectors.summarizingDouble(Student::getAge));</span><br><span class="line">System.out.println(<span class="string">&quot;count:&quot;</span> + statistics.getCount() + <span class="string">&quot;,max:&quot;</span> + statistics.getMax() + <span class="string">&quot;,sum:&quot;</span> + statistics.getSum() + <span class="string">&quot;,average:&quot;</span> + statistics.getAverage());</span><br><span class="line"></span><br><span class="line"><span class="comment">//分组</span></span><br><span class="line">Map&lt;Integer, List&lt;Student&gt;&gt; ageMap = list.stream().collect(Collectors.groupingBy(Student::getAge));</span><br><span class="line"><span class="comment">//多重分组,先根据类型分再根据年龄分</span></span><br><span class="line">Map&lt;Integer, Map&lt;Integer, List&lt;Student&gt;&gt;&gt; typeAgeMap = list.stream().collect(Collectors.groupingBy(Student::getType, Collectors.groupingBy(Student::getAge)));</span><br><span class="line"></span><br><span class="line"><span class="comment">//分区</span></span><br><span class="line"><span class="comment">//分成两部分，一部分大于10岁，一部分小于等于10岁</span></span><br><span class="line">Map&lt;Boolean, List&lt;Student&gt;&gt; partMap = list.stream().collect(Collectors.partitioningBy(v -&gt; v.getAge() &gt; <span class="number">10</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//规约</span></span><br><span class="line">Integer allAge = list.stream().map(Student::getAge).collect(Collectors.reducing(Integer::sum)).get(); <span class="comment">//40　</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-补充"><a href="#3-补充" class="headerlink" title="3.补充"></a>3.补充</h3><p>​     <strong><em>并行流：</em></strong>并行流就是把一个内容分成多个数据库卡，并用不同的线程分别处理每个数据块的流  </p>
+<p>​    <strong><em>顺序流：</em></strong> 单线程执行</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * parallel（）  开启并行流</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Instant start = Instant.now();</span><br><span class="line">LongStream.rangeClosed(<span class="number">1</span>,<span class="number">10000000000L</span>).parallel().reduce(<span class="number">0</span>,Long::sum);</span><br><span class="line">System.out.println(<span class="string">&quot;系统执行时间:&quot;</span>+ Duration.between(start,Instant.now()).toMillis());</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * sequential()  开启顺序流</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Instant start1 = Instant.now();</span><br><span class="line">LongStream.rangeClosed(<span class="number">1</span>,<span class="number">10000000000L</span>).sequential().reduce(<span class="number">0</span>,Long::sum);</span><br><span class="line">System.out.println(<span class="string">&quot;系统执行时间:&quot;</span>+Duration.between(start1,Instant.now()).toMillis());</span><br></pre></td></tr></table></figure>
+
+<h4 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h4><p>​     <strong><em>并行流 ：</em></strong>  </p>
+<p>​               使用并行流并不是一定会提高效率，因为jvm对数据进行切片和切换线程也是需要时间的。</p>
+<p>​               所以数据量越小，串行操作越快；数据量越大，并行操作效果越好。</p>
+<p>​              并行流内部使用了默认的ForkJoinPool线程池，所以它默认的线程数量就是处理器的数量，通过它可以得到这个值。<br>​              <strong><em>System.out.println(Runtime.getRuntime().availableProcessors())。</em></strong></p>
+<p>​                通过这个方法可以修改这个值，而且这个还是全局属性，不过建议一般不修改</p>
+<p>​               <strong><em>System.setProperty(“java.util.concurrent.ForkJoinPool.common.parallelism”, “12”);</em></strong></p>
+]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>Demo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java8之Stream补充</title>
+    <url>/2021/03/16/java8%E4%B9%8BStream%E8%A1%A5%E5%85%85/</url>
+    <content><![CDATA[<h3 id="java8之Stream补充"><a href="#java8之Stream补充" class="headerlink" title="java8之Stream补充"></a>java8之Stream补充</h3><p><strong>.findFirst()：</strong>  返回流中的第一个元素<br><strong>.findAny()</strong>   返回Stream中的任何元素<br><strong>.orElse(null)</strong>  表示如果一个都没找到返回null. 【orElse()中可以塞默认值。如果找不到就会返回orElse中你自己设置的默认值。】</p>
+]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>Demo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java好的开源项目</title>
+    <url>/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
+    <content><![CDATA[<h4 id="好的开源项目"><a href="#好的开源项目" class="headerlink" title="好的开源项目"></a>好的开源项目</h4><ul>
+<li><strong>项目简介</strong></li>
+</ul>
+<p>一个基于 Spring Boot 2.1.0 、 Spring Boot Jpa、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统</p>
+<p>  <a href="https://el-admin.vip/">开发文档</a></p>
+<p> <a href="https://doc.el-admin.xin/">备用文档</a></p>
+<p><strong>账号密码：</strong> <code>admin / 123456</code></p>
+]]></content>
+      <categories>
+        <category>程序设计</category>
+      </categories>
+      <tags>
+        <tag>23种设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1653,129 +1776,6 @@
       </categories>
       <tags>
         <tag>七大设计原则</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java8之Stream</title>
-    <url>/2020/11/28/java8%E4%B9%8BStream/</url>
-    <content><![CDATA[<h3 id="1-Stream介绍"><a href="#1-Stream介绍" class="headerlink" title="1. Stream介绍"></a>1. Stream介绍</h3><p>Stream不是集合元素，它不是数据结构并不保存数据，它是有关算法和计算的，它更像一个高级版本的Iterator。原始版本的Iterator，用户只能显式地一个一个遍历元素并对其执行某些操作；高级版本的Stream，用户只要给出需要对其包含的元素执行什么操作，比如，“过滤掉长度大于 10 的字符串”、“获取每个字符串的首字母”等，Stream会隐式地在内部进行遍历，做出相应的数据转换。Stream就如同一个迭代器（Iterator），单向，不可往复，数据只能遍历一次，遍历过一次后即用尽了。<br>在Java8 中增加了Stream API ，简化了串行或者并行的大批量的操作 。<br>Stream中的数据元素可以是对象引用，或者基本数据类型的值： int  long double  </p>
-<h3 id="2-Stream的具体用法"><a href="#2-Stream的具体用法" class="headerlink" title="2. Stream的具体用法"></a>2. Stream的具体用法</h3><h4 id="1-Stream-常用的创建方法"><a href="#1-Stream-常用的创建方法" class="headerlink" title="1. Stream 常用的创建方法"></a>1. Stream 常用的创建方法</h4><pre><code>   ***使用Collection下的 stream() 和 parallelStream() 方法***　　</code></pre>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">       </span><br><span class="line"> List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Returns a sequential &#123;@code Stream&#125; with this collection as its source.(返回一个顺序的流，将此集合作为其源。)</span></span><br><span class="line">  Stream&lt;String&gt; stream = list.stream(); </span><br><span class="line"> <span class="comment">//Returns a possibly parallel &#123;@code Stream&#125; with this collection as its (返回一个可能是并行的流，其中包含此集合)</span></span><br><span class="line">  Stream&lt;String&gt; parallelStream = list.parallelStream();</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong><em>使用Arrays 中的 stream() 方法，将数组转成流</em></strong></li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer[] nums = <span class="keyword">new</span> Integer[<span class="number">10</span>];</span><br><span class="line">Stream&lt;Integer&gt; stream = Arrays.stream(nums);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong><em>使用Stream中的静态方法：of()、iterate()、generate()</em></strong></li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stream&lt;Integer&gt; stream = Stream.of(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">Stream&lt;Integer&gt; stream2 = Stream.iterate(<span class="number">0</span>, (x) -&gt; x + <span class="number">2</span>).limit(<span class="number">6</span>);</span><br><span class="line">stream2.forEach(System.out::println); <span class="comment">// 0 2 4 6 8 10</span></span><br><span class="line"></span><br><span class="line">Stream&lt;Double&gt; stream3 = Stream.generate(Math::random).limit(<span class="number">2</span>);</span><br><span class="line">stream3.forEach(System.out::println);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong><em>使用 BufferedReader.lines() 方法，将每行内容转成流</em></strong></p>
- <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">&quot;D:\\test_stream.txt&quot;</span>));</span><br><span class="line">Stream&lt;String&gt; lineStream = reader.lines();</span><br><span class="line">lineStream.forEach(System.out::println);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong><em>使用 Pattern.splitAsStream() 方法，将字符串分隔成流</em></strong></p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Pattern pattern = Pattern.compile(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">Stream&lt;String&gt; stringStream = pattern.splitAsStream(<span class="string">&quot;a,b,c,d&quot;</span>);</span><br><span class="line">stringStream.forEach(System.out::println);</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-Stream的中间操作"><a href="#2-Stream的中间操作" class="headerlink" title="2 . Stream的中间操作"></a>2 . Stream的中间操作</h4><ul>
-<li><strong><em>筛选与切片</em></strong></li>
-</ul>
-<p>​       filter：过滤流中的某些元素<br>　　 limit(n)：获取n个元素<br>　　 skip(n)：跳过n个元素，配合limit(n)可实现分页<br>　　 distinct：通过流中元素的 hashCode() 和 equals() 去除重复元素</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Stream&lt;Integer&gt; stream = Stream.of(<span class="number">6</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">14</span>);</span><br><span class="line">  </span><br><span class="line">Stream&lt;Integer&gt; newStream = stream.filter(s -&gt; s &gt; <span class="number">5</span>) <span class="comment">//6 6 7 9 8 10 12 14 14</span></span><br><span class="line">.distinct() <span class="comment">//6 7 9 8 10 12 14</span></span><br><span class="line">.skip(<span class="number">2</span>) <span class="comment">//9 8 10 12 14</span></span><br><span class="line">.limit(<span class="number">2</span>); <span class="comment">//9 8</span></span><br><span class="line">newStream.forEach(System.out::println);</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Student&gt; stuList = stuList();</span><br><span class="line"> </span><br><span class="line">	<span class="comment">// 需要筛选的条件：从stuList中筛选出年龄为21和22的学生</span></span><br><span class="line">	List&lt;Integer&gt; ageList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">	ageList.add(<span class="number">21</span>);</span><br><span class="line">	ageList.add(<span class="number">22</span>);</span><br><span class="line"> </span><br><span class="line">	<span class="comment">// JDK1.8提供了lambda表达式， 可以从stuList中过滤出符合条件的结果。</span></span><br><span class="line">	<span class="comment">// 定义结果集</span></span><br><span class="line">	List&lt;Student&gt; result = <span class="keyword">null</span>;</span><br><span class="line">	result = stuList.stream()</span><br><span class="line">			.filter((Student s) -&gt; ageList.contains(s.getAge()))</span><br><span class="line">			.collect(Collectors.toList());</span><br><span class="line">   </span><br><span class="line">	<span class="comment">// 打印原有stuList集合中的数据</span></span><br><span class="line">	System.out.println(<span class="string">&quot;原有stuList集合中的数据&quot;</span>);</span><br><span class="line">	stuList.forEach((Student s) -&gt; System.out.println(s.getName() + <span class="string">&quot;---&gt;&quot;</span> + s.getAge()));</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong><em>映射</em></strong></li>
-</ul>
-<p>​       map：接收一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素。<br>　   flatMap：接收一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;a,b,c&quot;</span>, <span class="string">&quot;1,2,3&quot;</span>);</span><br><span class="line">  </span><br><span class="line"><span class="comment">//将每个元素转成一个新的且不带逗号的元素</span></span><br><span class="line">Stream&lt;String&gt; s1 = list.stream().map(s -&gt; s.replaceAll(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;&quot;</span>));</span><br><span class="line">s1.forEach(System.out::println); <span class="comment">// abc 123</span></span><br><span class="line">  </span><br><span class="line">Stream&lt;String&gt; s3 = list.stream().flatMap(s -&gt; &#123;</span><br><span class="line"><span class="comment">//将每个元素转换成一个stream</span></span><br><span class="line">String[] split = s.split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">Stream&lt;String&gt; s2 = Arrays.stream(split);</span><br><span class="line"><span class="keyword">return</span> s2;</span><br><span class="line">&#125;);</span><br><span class="line">s3.forEach(System.out::println); <span class="comment">// a b c 1 2 3</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong><em>排序</em></strong> </li>
-</ul>
-<p>​        sorted()：自然排序，流中元素需实现Comparable接口<br>　　sorted(Comparator com)：定制排序，自定义Comparator排序器</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;aa&quot;</span>, <span class="string">&quot;ff&quot;</span>, <span class="string">&quot;dd&quot;</span>);</span><br><span class="line"><span class="comment">//String 类自身已实现Compareable接口</span></span><br><span class="line">list.stream().sorted().forEach(System.out::println);<span class="comment">// aa dd ff</span></span><br><span class="line">  </span><br><span class="line">Student s1 = <span class="keyword">new</span> Student(<span class="string">&quot;aa&quot;</span>, <span class="number">10</span>);</span><br><span class="line">Student s2 = <span class="keyword">new</span> Student(<span class="string">&quot;bb&quot;</span>, <span class="number">20</span>);</span><br><span class="line">Student s3 = <span class="keyword">new</span> Student(<span class="string">&quot;aa&quot;</span>, <span class="number">30</span>);</span><br><span class="line">Student s4 = <span class="keyword">new</span> Student(<span class="string">&quot;dd&quot;</span>, <span class="number">40</span>);</span><br><span class="line">List&lt;Student&gt; studentList = Arrays.asList(s1, s2, s3, s4);</span><br><span class="line">  </span><br><span class="line"><span class="comment">//自定义排序：先按姓名升序，姓名相同则按年龄升序</span></span><br><span class="line">studentList.stream().sorted(</span><br><span class="line">(o1, o2) -&gt; &#123;</span><br><span class="line"><span class="keyword">if</span> (o1.getName().equals(o2.getName())) &#123;</span><br><span class="line"><span class="keyword">return</span> o1.getAge() - o2.getAge();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="keyword">return</span> o1.getName().compareTo(o2.getName());</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">).forEach(System.out::println);　</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong><em>消费</em></strong></li>
-</ul>
-<p>　　peek：如同于map，能得到流中的每一个元素。但map接收的是一个Function表达式，有返回值；而peek接收的是Consumer表达   式，没有返回值。</p>
-  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Student s1 = <span class="keyword">new</span> Student(<span class="string">&quot;aa&quot;</span>, <span class="number">10</span>);</span><br><span class="line">Student s2 = <span class="keyword">new</span> Student(<span class="string">&quot;bb&quot;</span>, <span class="number">20</span>);</span><br><span class="line">List&lt;Student&gt; studentList = Arrays.asList(s1, s2);</span><br><span class="line">  </span><br><span class="line">studentList.stream()</span><br><span class="line">.peek(o -&gt; o.setAge(<span class="number">100</span>))</span><br><span class="line">.forEach(System.out::println);</span><br><span class="line">  </span><br><span class="line"><span class="comment">//结果：</span></span><br><span class="line">Student&#123;name=<span class="string">&#x27;aa&#x27;</span>, age=<span class="number">100</span>&#125;</span><br><span class="line">Student&#123;name=<span class="string">&#x27;bb&#x27;</span>, age=<span class="number">100</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-Stream的终止操作-常用函数"><a href="#3-Stream的终止操作-常用函数" class="headerlink" title="3. Stream的终止操作 (常用函数)"></a>3. Stream的终止操作 (常用函数)</h4><ul>
-<li><strong><em>匹配 聚合操作</em></strong></li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Integer&gt; list = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line">  </span><br><span class="line"><span class="keyword">boolean</span> allMatch = list.stream().allMatch(e -&gt; e &gt; <span class="number">10</span>); <span class="comment">//false</span></span><br><span class="line"><span class="keyword">boolean</span> noneMatch = list.stream().noneMatch(e -&gt; e &gt; <span class="number">10</span>); <span class="comment">//true</span></span><br><span class="line"><span class="keyword">boolean</span> anyMatch = list.stream().anyMatch(e -&gt; e &gt; <span class="number">4</span>); <span class="comment">//true</span></span><br><span class="line">  </span><br><span class="line">Integer findFirst = list.stream().findFirst().get(); <span class="comment">//1</span></span><br><span class="line">Integer findAny = list.stream().findAny().get(); <span class="comment">//1</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">long</span> count = list.stream().count(); <span class="comment">//5</span></span><br><span class="line">Integer max = list.stream().max(Integer::compareTo).get(); <span class="comment">//5</span></span><br><span class="line">Integer min = list.stream().min(Integer::compareTo).get(); <span class="comment">//1　</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong><em>规约操作(reduce)</em></strong></p>
-<p>三个重载的方法：</p>
-<p>1.Optional&lt;T&gt; reduce(BinaryOperator&lt;T&gt; accumulator);</p>
-<p>2.T reduce(T identity, BinaryOperator&lt;T&gt; accumulator)</p>
-<p>3.&lt;U&gt; U reduce(U identity, BiFunction&lt;U, ? super T, U&gt; accumulator, BinaryOperator&lt;U&gt; combiner);用在流并发操作的时候，将每个线程前两个参数形成的结果result集合并为一个。所以第三个参数是一个BinaryOperator函数接口</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//reduce(String identity, BinaryOperator&lt;String&gt; accumulator) 第一个参数相当于起始值 ，第二个参数是二元运算函数接口</span></span><br><span class="line">String s1 = custs.stream().map(Cust::getCustName).reduce(<span class="string">&quot;&quot;</span>, (x,y)-&gt;x+<span class="string">&quot;,&quot;</span>+y).replaceFirst(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">System.out.println(s1);</span><br><span class="line">		</span><br><span class="line"><span class="comment">//reduce(BinaryOperator&lt;String&gt; accumulator) 参数是二元运算函数接口，因为没有给默认值，所以为了避免使用时空指针异常，返回的是Optional</span></span><br><span class="line">Optional&lt;String&gt; opt = custs.stream().map(Cust::getCustName).reduce((x,y)-&gt;x+<span class="string">&quot;,&quot;</span>+y);</span><br><span class="line">String s2 = opt.get().replaceFirst(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong><em>收集操作</em></strong><br><strong><em>collect:</em></strong> 接收一个Collector实例，将流中元素收集成另外一个数据结构。<br><strong><em>Collector&lt;T, A, R&gt;:</em></strong> 是一个接口，有以下5个抽象方法：<br><strong><em>Supplier&lt;A&gt; supplier():</em></strong>创建一个结果容器A<br><strong><em>BiConsumer&lt;A, T&gt; accumulator():</em></strong>消费型接口，第一个参数为容器A，第二个参数为流中元素T。<br><strong><em>BinaryOperator&lt;A&gt; combiner():</em></strong>函数接口，该参数的作用跟上一个方法(reduce)中的combiner  参数一样，将并行流中各 个子进程          的运行结果(accumulator函数操作后的容器A)进行合并。<br><strong><em>Function&lt;A, R&gt; finisher():</em></strong>函数式接口，参数为：容器A，返回类型为：collect方法最终想要的结果R。<br><strong><em>Set&lt;Characteristics&gt; characteristics():</em></strong>  返回一个不可变的Set集合，用来表明该Collector的特征。有以下三个特征：<br><strong><em>CONCURRENT:</em></strong>表示此收集器支持并发。<br><strong><em>UNORDERED:</em></strong>表示该收集操作不会保留流中元素原有的顺序。<br><strong><em>IDENTITY_FINISH:</em></strong>表示finisher参数只是标识而已，可忽略。</li>
-</ul>
-<p><strong><em>Collector 工具库：Collectors</em></strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Student s1 = <span class="keyword">new</span> Student(<span class="string">&quot;aa&quot;</span>, <span class="number">10</span>,<span class="number">1</span>);</span><br><span class="line">Student s2 = <span class="keyword">new</span> Student(<span class="string">&quot;bb&quot;</span>, <span class="number">20</span>,<span class="number">2</span>);</span><br><span class="line">Student s3 = <span class="keyword">new</span> Student(<span class="string">&quot;cc&quot;</span>, <span class="number">10</span>,<span class="number">3</span>);</span><br><span class="line">List&lt;Student&gt; list = Arrays.asList(s1, s2, s3);</span><br><span class="line"></span><br><span class="line"><span class="comment">//装成list</span></span><br><span class="line">List&lt;Integer&gt; ageList = list.stream().map(Student::getAge).collect(Collectors.toList()); <span class="comment">// [10, 20, 10]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//转成set</span></span><br><span class="line">Set&lt;Integer&gt; ageSet = list.stream().map(Student::getAge).collect(Collectors.toSet()); <span class="comment">// [20, 10]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//转成map,注:key不能相同，否则报错</span></span><br><span class="line">Map&lt;String, Integer&gt; studentMap = list.stream().collect(Collectors.toMap(Student::getName, Student::getAge)); <span class="comment">// &#123;cc=10, bb=20, aa=10&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//转成map 如何key相同 是否覆盖  (oldVal ,newVal)-&gt;newVal ? oldVal</span></span><br><span class="line"> Map&lt;String, Integer&gt; studentMap = list.stream().collect(Collectors.toMap(Student::getName, Student::getAge, (oldVal ,newVal)-&gt;newVal)); </span><br><span class="line"></span><br><span class="line"><span class="comment">//转为 LinkedHashMap   (LinkedHashMap::new)</span></span><br><span class="line">LinkedHashMap&lt;String, Integer&gt; collect = list.stream().collect(Collectors.toMap(Student::getName, Student::getAge, (oldVal, newVal) -&gt; newVal, LinkedHashMap::<span class="keyword">new</span>));<span class="comment">// &#123;cc=10, bb=20, aa=10&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//字符串分隔符连接</span></span><br><span class="line">String joinName = list.stream().map(Student::getName).collect(Collectors.joining(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;(&quot;</span>, <span class="string">&quot;)&quot;</span>)); <span class="comment">// (aa,bb,cc)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//聚合操作</span></span><br><span class="line"><span class="comment">//1.学生总数</span></span><br><span class="line">Long count = list.stream().collect(Collectors.counting()); <span class="comment">// 3</span></span><br><span class="line"><span class="comment">//2.最大年龄 (最小的minBy同理)</span></span><br><span class="line">Integer maxAge = list.stream().map(Student::getAge).collect(Collectors.maxBy(Integer::compare)).get(); <span class="comment">// 20</span></span><br><span class="line"><span class="comment">//3.所有人的年龄</span></span><br><span class="line">Integer sumAge = list.stream().collect(Collectors.summingInt(Student::getAge)); <span class="comment">// 40</span></span><br><span class="line"><span class="comment">//4.平均年龄</span></span><br><span class="line">Double averageAge = list.stream().collect(Collectors.averagingDouble(Student::getAge)); <span class="comment">// 13.333333333333334</span></span><br><span class="line"><span class="comment">// 带上以上所有方法</span></span><br><span class="line">DoubleSummaryStatistics statistics = list.stream().collect(Collectors.summarizingDouble(Student::getAge));</span><br><span class="line">System.out.println(<span class="string">&quot;count:&quot;</span> + statistics.getCount() + <span class="string">&quot;,max:&quot;</span> + statistics.getMax() + <span class="string">&quot;,sum:&quot;</span> + statistics.getSum() + <span class="string">&quot;,average:&quot;</span> + statistics.getAverage());</span><br><span class="line"></span><br><span class="line"><span class="comment">//分组</span></span><br><span class="line">Map&lt;Integer, List&lt;Student&gt;&gt; ageMap = list.stream().collect(Collectors.groupingBy(Student::getAge));</span><br><span class="line"><span class="comment">//多重分组,先根据类型分再根据年龄分</span></span><br><span class="line">Map&lt;Integer, Map&lt;Integer, List&lt;Student&gt;&gt;&gt; typeAgeMap = list.stream().collect(Collectors.groupingBy(Student::getType, Collectors.groupingBy(Student::getAge)));</span><br><span class="line"></span><br><span class="line"><span class="comment">//分区</span></span><br><span class="line"><span class="comment">//分成两部分，一部分大于10岁，一部分小于等于10岁</span></span><br><span class="line">Map&lt;Boolean, List&lt;Student&gt;&gt; partMap = list.stream().collect(Collectors.partitioningBy(v -&gt; v.getAge() &gt; <span class="number">10</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//规约</span></span><br><span class="line">Integer allAge = list.stream().map(Student::getAge).collect(Collectors.reducing(Integer::sum)).get(); <span class="comment">//40　</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-补充"><a href="#3-补充" class="headerlink" title="3.补充"></a>3.补充</h3><p>​     <strong><em>并行流：</em></strong>并行流就是把一个内容分成多个数据库卡，并用不同的线程分别处理每个数据块的流  </p>
-<p>​    <strong><em>顺序流：</em></strong> 单线程执行</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * parallel（）  开启并行流</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Instant start = Instant.now();</span><br><span class="line">LongStream.rangeClosed(<span class="number">1</span>,<span class="number">10000000000L</span>).parallel().reduce(<span class="number">0</span>,Long::sum);</span><br><span class="line">System.out.println(<span class="string">&quot;系统执行时间:&quot;</span>+ Duration.between(start,Instant.now()).toMillis());</span><br></pre></td></tr></table></figure>
-
- <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * sequential()  开启顺序流</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">Instant start1 = Instant.now();</span><br><span class="line">LongStream.rangeClosed(<span class="number">1</span>,<span class="number">10000000000L</span>).sequential().reduce(<span class="number">0</span>,Long::sum);</span><br><span class="line">System.out.println(<span class="string">&quot;系统执行时间:&quot;</span>+Duration.between(start1,Instant.now()).toMillis());</span><br></pre></td></tr></table></figure>
-
-<h4 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h4><p>​     <strong><em>并行流 ：</em></strong>  </p>
-<p>​               使用并行流并不是一定会提高效率，因为jvm对数据进行切片和切换线程也是需要时间的。</p>
-<p>​               所以数据量越小，串行操作越快；数据量越大，并行操作效果越好。</p>
-<p>​              并行流内部使用了默认的ForkJoinPool线程池，所以它默认的线程数量就是处理器的数量，通过它可以得到这个值。<br>​              <strong><em>System.out.println(Runtime.getRuntime().availableProcessors())。</em></strong></p>
-<p>​                通过这个方法可以修改这个值，而且这个还是全局属性，不过建议一般不修改</p>
-<p>​               <strong><em>System.setProperty(“java.util.concurrent.ForkJoinPool.common.parallelism”, “12”);</em></strong></p>
-]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>Demo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java8之Stream补充</title>
-    <url>/2021/03/16/java8%E4%B9%8BStream%E8%A1%A5%E5%85%85/</url>
-    <content><![CDATA[<h3 id="java8之Stream补充"><a href="#java8之Stream补充" class="headerlink" title="java8之Stream补充"></a>java8之Stream补充</h3><p><strong>.findFirst()：</strong>  返回流中的第一个元素<br><strong>.findAny()</strong>   返回Stream中的任何元素<br><strong>.orElse(null)</strong>  表示如果一个都没找到返回null. 【orElse()中可以塞默认值。如果找不到就会返回orElse中你自己设置的默认值。】</p>
-]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>Demo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java好的开源项目</title>
-    <url>/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
-    <content><![CDATA[<h4 id="好的开源项目"><a href="#好的开源项目" class="headerlink" title="好的开源项目"></a>好的开源项目</h4><ul>
-<li><strong>项目简介</strong></li>
-</ul>
-<p>一个基于 Spring Boot 2.1.0 、 Spring Boot Jpa、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统</p>
-<p>  <a href="https://el-admin.vip/">开发文档</a></p>
-<p> <a href="https://doc.el-admin.xin/">备用文档</a></p>
-<p><strong>账号密码：</strong> <code>admin / 123456</code></p>
-]]></content>
-      <categories>
-        <category>程序设计</category>
-      </categories>
-      <tags>
-        <tag>23种设计模式</tag>
       </tags>
   </entry>
   <entry>

@@ -44,6 +44,26 @@
       </tags>
   </entry>
   <entry>
+    <title>Keepalived</title>
+    <url>/2021/03/28/Keepalived/</url>
+    <content><![CDATA[<h3 id="Keepalived"><a href="#Keepalived" class="headerlink" title="Keepalived"></a>Keepalived</h3><p><strong>keeplived可以用来保证单台服务的可靠性</strong><br>如何保证单台负载服务的可靠性</p>
+<ul>
+<li>主备</li>
+<li>主主</li>
+</ul>
+<p> <strong>主备：</strong><br>主备即一台主的服务一台备用的服务器，当主的服务器挂掉之后备的扶服务器立即顶上，此时思考一个问题，备扶服务是如何知道主的服务挂掉的，第一种是主服务过一段时间给备服务广播。第二种是备服务主动的去请求主服务，看主服务是否还活着。但是第二中很明显存在一个问题，就是每隔一段时间都会有被服务来发送数据包到主的服务器，此时就会消耗主服务的资源，所以Keepalived采用的是第一种。<br><strong>Keepalived的配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">主备服务安装Keepalived</span><br><span class="line">	yum install keepalived ipvsadm -y</span><br><span class="line">	</span><br><span class="line"> 修改配置文件：</span><br><span class="line">		cd  &#x2F;etc&#x2F;keepalived&#x2F;</span><br><span class="line">		cp keepalived.conf keepalived.conf.bak</span><br><span class="line">		vi keepalived.conf</span><br><span class="line"></span><br><span class="line">			node01:</span><br><span class="line">			vrrp：虚拟路由冗余协议！</span><br><span class="line">				vrrp_instance VI_1 &#123;</span><br><span class="line">					state MASTER     &#x2F;&#x2F;MASTER&#x2F; BACKUP</span><br><span class="line">					interface eth0  &#x2F;&#x2F;网关接口</span><br><span class="line">					virtual_router_id 51</span><br><span class="line">					priority 100 &#x2F;&#x2F;权重配置	100&#x2F; 50</span><br><span class="line">					advert_int 1</span><br><span class="line">					authentication &#123;</span><br><span class="line">						auth_type PASS</span><br><span class="line">						auth_pass 1111</span><br><span class="line">					&#125;</span><br><span class="line">					virtual_ipaddress &#123;</span><br><span class="line">						192.168.150.100&#x2F;24 dev eth0 label  eth0:3     &#x2F;&#x2F;虚拟IP</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">&#x2F;&#x2F;配置入包规则</span><br><span class="line">			virtual_server 192.168.150.100 80 &#123;</span><br><span class="line">				delay_loop 6</span><br><span class="line">				lb_algo rr   &#x2F;&#x2F;负载机制  rr轮询</span><br><span class="line">				lb_kind DR   &#x2F;&#x2F;模式</span><br><span class="line">				nat_mask 255.255.255.0</span><br><span class="line">&#x2F;&#x2F;在50秒内如果同一个用户有多次的请求发送过来则向固定的一台服务负载</span><br><span class="line">				persistence_timeout 50  </span><br><span class="line">				protocol TCP</span><br><span class="line">&#x2F;&#x2F; 出包规则</span><br><span class="line">				real_server 192.168.150.12 80 &#123;</span><br><span class="line">					weight 1</span><br><span class="line">					HTTP_GET &#123;</span><br><span class="line">						url &#123;</span><br><span class="line">						  path &#x2F;</span><br><span class="line">						  status_code 200</span><br><span class="line">						&#125;</span><br><span class="line">						connect_timeout 3</span><br><span class="line">						nb_get_retry 3</span><br><span class="line">						delay_before_retry 3</span><br><span class="line">					&#125;   </span><br><span class="line">				&#125;       </span><br><span class="line">				real_server 192.168.150.13 80 &#123;</span><br><span class="line">					weight 1</span><br><span class="line">					HTTP_GET &#123;</span><br><span class="line">						url &#123;</span><br><span class="line">						  path &#x2F;</span><br><span class="line">						  status_code 200</span><br><span class="line">						&#125;</span><br><span class="line">						connect_timeout 3</span><br><span class="line">						nb_get_retry 3</span><br><span class="line">						delay_before_retry 3</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LVS三种搭建模式</title>
     <url>/2021/03/21/LVS%E4%B8%89%E7%A7%8D%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h3 id="lvs的三种搭建模型"><a href="#lvs的三种搭建模型" class="headerlink" title="lvs的三种搭建模型"></a>lvs的三种搭建模型</h3><ul>

@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-03-21T15:56:56.177Z</updated>
+  <updated>2021-03-29T07:57:45.205Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Keepalived</title>
+    <link href="https://yaozw.top/2021/03/28/Keepalived/"/>
+    <id>https://yaozw.top/2021/03/28/Keepalived/</id>
+    <published>2021-03-28T09:25:15.000Z</published>
+    <updated>2021-03-29T07:57:45.205Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;Keepalived&quot;&gt;&lt;a href=&quot;#Keepalived&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
   
   <entry>
     <title>LVS三种搭建模式</title>
@@ -482,31 +507,6 @@
         
         
     <summary type="html">&lt;h4 id=&quot;备忘录设计模式-Memento-Pattern&quot;&gt;&lt;a href=&quot;#备忘录设计模式-Memento-Pattern&quot; class=&quot;headerlink&quot; title=&quot;备忘录设计模式(Memento Pattern)&quot;&gt;&lt;/a&gt;备忘录设计模式(Memento</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>中介者设计模式</title>
-    <link href="https://yaozw.top/2020/12/24/%E4%B8%AD%E4%BB%8B%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/24/%E4%B8%AD%E4%BB%8B%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-24T06:42:32.000Z</published>
-    <updated>2021-03-11T03:32:17.942Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;中介者设计模式-Mediator-Pattern&quot;&gt;&lt;a href=&quot;#中介者设计模式-Mediator-Pattern&quot; class=&quot;headerlink&quot; title=&quot;中介者设计模式(Mediator</summary>
         
       
     

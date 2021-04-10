@@ -46,21 +46,154 @@
   <entry>
     <title>Keepalived</title>
     <url>/2021/03/28/Keepalived/</url>
-    <content><![CDATA[<h3 id="Keepalived"><a href="#Keepalived" class="headerlink" title="Keepalived"></a>Keepalived</h3><p><strong>keeplived可以用来保证单台服务的可靠性</strong><br>如何保证单台负载服务的可靠性</p>
+    <content><![CDATA[<h3 id="Keepalived"><a href="#Keepalived" class="headerlink" title="Keepalived"></a>Keepalived</h3><p><strong>LVS集群的缺点</strong></p>
+<p>LVS能够实现四层负载，能够支持足够大的并发量，但使用LVS负载均衡集群有以下两个缺点。</p>
+<p>① 如果调度器（Director）挂了（不可用），将会导致整个系统不可用，从而调度器成为了单点故障（SPOF）。</p>
+<p>② 调度器（Director）无法对后端RealServer做健康状态检测。因此，如果后端的某一台RealServer挂了，前端调度器将无法得知，仍然会向该RealServer调度请求，导致服务不可用；另外，如果某一台挂了的RealServer但已经恢复正常并重新提供服务时，前端调度器也无法得知，并将其加入调度队列。</p>
+<p>因此，为了能够使前端调度器（Director）能够冗余、使Director能够对后端各RS做健康状态检测，并按需增删RS，需要引入高可用集群的解决方案。以下介绍的是Keepalived高可用软件。</p>
+<p><strong>Keepalived的介绍</strong></p>
+<p>什么是keepalived呢？keepalived是实现高可用的一种轻量级的技术手段，主要用来防止单点故障(单点故障是指一旦某一点出现故障就会导致整个系统架构的不可用)的发生。</p>
+<p>Keepalived的高可用功能是通过VRRP协议实现的，VRRP是Virtual Router Redundancy Protocol（虚拟路由器冗余协议）的缩写。VRRP的出现是为了解决静态路由单点故障的问题，当某一节点出现故障时，可以防止导致整个网络不可用。Keepalived除了可以高可用LVS之外，还可以作为其他系统网络服务（Nginx、Haproxy等）的高可用解决方案（Keepalived可通过调用vrrp_script来高可用其它服务，并通过调用vrrp_track来追踪每一个服务）。</p>
+<p><strong>Keepalived的功能</strong></p>
+<p>Keepalived有三个重要功能，如下。</p>
 <ul>
-<li>主备</li>
-<li>主主</li>
+<li>高可用系统网络服务。</li>
 </ul>
-<p> <strong>主备：</strong><br>主备即一台主的服务一台备用的服务器，当主的服务器挂掉之后备的扶服务器立即顶上，此时思考一个问题，备扶服务是如何知道主的服务挂掉的，第一种是主服务过一段时间给备服务广播。第二种是备服务主动的去请求主服务，看主服务是否还活着。但是第二中很明显存在一个问题，就是每隔一段时间都会有被服务来发送数据包到主的服务器，此时就会消耗主服务的资源，所以Keepalived采用的是第一种。<br><strong>Keepalived的配置</strong></p>
+<p>Keepalived可以实现在两台或多台主机之间的故障切换转移。如果在两台主机中都安装了Keepalived，当正常工作时，有一台主机工作为Master角色，另一台主机工作为Backup角色。角色为Master的主机获得所有资源（VIP资源、服务资源）并向用户提供服务，角色为Backup的主机不提供服务而仅作为Master主机的热备。当角色为Master的主机出现故障时，角色为Backup的主机将自动接管Master主机的所有资源（VIP资源、服务资源）并开始工作。当Master主机故障修复完成时，将重新接管原来的资源和工作，而Backup主机则释放Master主机故障时它接管的资源和工作，各自恢复原来的角色。</p>
+<ul>
+<li>实现对LVS集群中各RealServer的健康状态进行检测。</li>
+</ul>
+<p>Keepalived可以通过在自身配置文件keepalived.conf中配置LVS集群服务中各台RealServer的IP地址和相关参数，并可以通过网络层、传输层和应用层这三层进行探测各RealServer的健康状态。当有一台或多台RealServer出现故障而无法提供服务时，Keepalived服务可以把出现故障的RealServer从LVS的正常转发队列中移除，保证不影响用户的访问。而当有RealServer故障修复完成时，Keepalived服务可以将其重新加入LVS的正常转发队列中，向用户提供服务。</p>
+<ul>
+<li>管理LVS负载均衡软件</li>
+</ul>
+<p>Keepalived可以读取配置文件，并通过一个更为底层的接口来管理IPVS并生成IPVS规则，这使得LVS的使用更为方便。</p>
+<p><strong>Keepalived工作原理</strong></p>
+<p>前面提到，Keepalived的高可用功能是通过VRRP协议实现的，要了解Keepalived的工作原理，需要先了解VRRP协议的工作原理。</p>
+<p><strong>VRRP</strong></p>
+<p>​        VRRP是一种容错性协议，它是通过将多台设备虚拟化成一台设备，如果其中一台设备出现故障，那么另一台设备可以迅速接替其工作，已保证通讯的可靠性和连续性。</p>
+<p>​     1.工作原理</p>
+<p>​    在企业网当中，PC一般是需要使用”网关”来与外部网络进行通讯，这样如果网关出现了故障那么整一个子网的对外通讯都会被切断，VRRP的出现就能把这个问题很好地解决了，VRRP可以通过把多台设备（路由器、交换机、防火墙等）虚拟化成一台设备，然后通过配置虚拟IP地址作为网关就能实现对网关的备份（这虚拟IP地址是代表整个VRRP组内的所有设备），当其中一台设备出现故障之后，VRRP组内其他设备会通过某些机制来接替故障设备的工作。</p>
+<p><strong>VRRP概念</strong></p>
+<p><strong>虚拟设备：</strong>由一个”主（Master）”设备和多个”备（Backup）”设备组成的一个虚拟网关。</p>
+<p><strong>主设备（Master）：</strong>负责转发数据报文和周期性向备设备发送VRRP协议报文。</p>
+<p><strong>备设备（Backup）：</strong>不负责转发数据报文，在Master设备发生故障的时候会通过选举形式成为新的Master设备，该角色会接收来自Master设备的VRRP报文并加以分析。</p>
+<p><strong>VRID：</strong>用来表示一个VRRP组。</p>
+<p><strong>虚拟IP：</strong>配置在虚拟设备上的虚拟IP地址，一个虚拟设备可以拥有一个或者多个虚拟IP地址。</p>
+<p><strong>IP地址拥有者：</strong>分配给虚拟设备的虚拟IP的真实拥有者（例如：分配个虚拟路由的IP为192.168.1.1，但是这个IP已经分配给物理接口G0/0/1这个接口那么这个接口就是”IP拥有者”），IP拥有者会直接跳过选举成为Master，并且是不可抢占的。</p>
+<p><strong>虚拟MAC地址：</strong>由虚拟设备生成的虚拟MAC地址，每一个虚拟设备都会自动生成一个虚拟MAC地址，这个MAC地址是用于虚拟设备处理ARP报文的。</p>
+<p><strong>优先级：</strong>用于表示物理设备的优先级，这个参数用于Master的选举，取值范围是1-254，这个有优先级有两个比较特殊的值，分别是0和255，优先级0是由原来Master设备发送的，这个优先级是声明此设备不再参与VRRP组。优先级为255的是IP拥有者的优先级，拥有这个优先级会直接成为Master。<strong>（优先级数值越低优先级则越高）</strong></p>
+<p><strong>抢占模式：</strong>当Backup 设备接收到的VRRP报文通过分析得出当前Master设备的优先级低于Backup设备，则Backup设备会切换为Master设备。</p>
+<p><strong>工作流程</strong></p>
+<p>VRRP备份组会通过优先级选举出Master，Master会使用虚拟MAC发送ARP报文，使与Master连接的主机或者客户端建立与虚拟MAC对应的ARP映射表，同时Master会周期性发布VRRP报文向所有Backup通告其配置信息与工作状态。</p>
+<p>如果当前Master出现故障，Backup设备将会在MASTER_DOWN_INTERVAL定时器超时或者其他联动技术检测到Master出现故障时则会根据Backup组内的成员的优先级选举出新的Master，如果Backup只有一台设备则直接成为Master。</p>
+<p>新的Master使用虚拟MAC发送ARP报文，使连接在当前VRRP组内的客户端或者设备刷新其ARP映射表。</p>
+<p>如果原来的Master从故障中恢复过来，如果其优先级为255则会直接切换到Master，若不是则会恢复到Backup状态，如果当前为抢占模式，当原Master接收到新Master的VRRP报文发现其优先级高于原Master则原Master会直接成为Master。如果处于非抢占模式，则原Master会在新Master出现故障时通过选举等方式成为Master。</p>
+<p><strong>VRRP选举</strong></p>
+<p>VRRP通过优先级来确定设备成为Master或者Backup，优先级取值越低，则优先级越高。</p>
+<p>初始创建的VRRP设备都处于初始状态，在该状态下，如果设备的优先级为255，则直接成为Master并且跳过接下来的选举，若不是则会切换到Backup状态，然后会等待MASTER_DOWN_INTERVAL超时后成为Master。</p>
+<p>首先切换到Master的设备会通过VRRP报文获取其他设备的优先级，然后通过以下规则进行选举：</p>
+<ol>
+<li>如果Backup设备接收到来自Master的VRRP报文，发现其优先级数值低于自身，则继续处于Backup状态。</li>
+<li>如果Backup设备接收到来自Master的VRRP报文，发现其优先级数值高于自身，则当前Backup设备会切换到Master，而原Master设备会切换到Backup。如果在非抢占模式下，Backup设备仍然会处于Backup状态。</li>
+<li>如果同时有多个设备切换到Master，则会互相通过VRRP报文确定其优先级，优先级高的则成为Master，若优先级一样，则对比IP地址，IP地址大的则成为Master。</li>
+</ol>
+<p> <strong>VRRP状态通告</strong></p>
+<p>Master设备会周期性发送VRRP报文，通告其配置信息与工作状态，Backup则会接收并处理VRRP报文确定Master设备的工作状态。</p>
+<p>当Master主动退出VRRP组是，会发送优先级为0的报文通知所有的Backup设备，Backup设备接收到之后会直接切换到Master状态，若Backup组内有多台设备则通过上述选举选出新的Master设备，而不需要等待MASTER_DOWN_INTERVAL超时后再进行切换或者选举。</p>
+<p>当Master设备由于故障不能发送VRRP报文，所有的Backup设备都需要等待MASTER_DOWN_INTERVAL 超时后才会认为Master设备出现故障，之后才切换到Master。</p>
+<h3 id="如何保证单台服务器的可靠性"><a href="#如何保证单台服务器的可靠性" class="headerlink" title="如何保证单台服务器的可靠性"></a><strong>如何保证单台服务器的可靠性</strong></h3><p><strong>可以借用VRRP的两种模式</strong></p>
+<ul>
+<li><p>主备备份模式</p>
+</li>
+<li><p>负载分担模式</p>
+</li>
+</ul>
+<h3 id="主备备份模式："><a href="#主备备份模式：" class="headerlink" title="主备备份模式："></a><strong>主备备份模式：</strong></h3><p>主备备份模式就是只由Master设备负责转发数据，而Backup设备则处于待机备份模式不参与数据转发，当Master设备出现故障时才会切换到Master进行数据转发。</p>
+<p>参照下图，正常情况下只有SW1转发数据，而SW2则处于待机状态，SW1会周期发送VRRP报文告知SW2自身的配置信息和工作状态，如果SW1发生故障，则SW2会自动切换到到Master继续进行数据转发等。</p>
+<p>而当SW1恢复之后，若当前为抢占模式，若SW1的优先级为255那么SW1会直接成为Master否则会先切换到Backup然后再切换到Master。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[pc]  </span><br><span class="line">      A --&gt; |客户端的情求| C[SW3]</span><br><span class="line">      C --&gt;  B[Master   SW1]</span><br><span class="line">      C --&gt;  f[Backup SW2]</span><br><span class="line">      B --&gt; c[SW3]</span><br><span class="line">      f --&gt; c[R]</span><br><span class="line">   </span><br><span class="line">     </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="负载分担模式："><a href="#负载分担模式：" class="headerlink" title="负载分担模式："></a><strong>负载分担模式：</strong></h3><p>上述的主备备份模式，若SW1一直正常工作，那么SW2则长期处于待机状态，显然这种做法比较浪费，所以一般会采用负载分担模式，负载分到模式会是SW2都处于工作状态。</p>
+<p>参照下图，负载分担模式是创建两个VRRP组分别为A组和B组，A组的Master为SW1，Backup为SW2，而B组的Master为SW2，Backup为SW1，通过创建多个拥有不同虚拟IP的VRRP组，为不同的VLAN指定网关实现负载分担。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph TD</span><br><span class="line"></span><br><span class="line">A[pc1]  </span><br><span class="line">      D[pc2]</span><br><span class="line">      A --&gt; |客户端的情求| C[SW3]</span><br><span class="line">      D --&gt; |客户端的情求| C[vlan 10 192.168.10.1 &lt;&#x2F;br&gt; vlan 20   192.168.20.1&lt;&#x2F;br&gt;  SW3]</span><br><span class="line">      C --&gt;  B[Master:vlan 10 &lt;&#x2F;br&gt; backup:vlan 20 &lt;&#x2F;br&gt;  SW1]  </span><br><span class="line">      C --&gt;  f[Master:vlan 20 &lt;&#x2F;br&gt; backup:vlan 10 &lt;&#x2F;br&gt;  SW2]</span><br><span class="line">      f --&gt; E[R]</span><br><span class="line">      B --&gt; E[R]</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<p>参照上图，在VLAN10当中Master是SW1，Backup为SW2，两台交换机都分别创建vlan10和vlan20 并且分配好IP地址，正常情况下vlan10的客户端会通过SW1访问R1，vlan20的客户端会通过SW2访问R1这样就实现了负载分担，如果SW1出现故障，那么SW2会成为vlan10的Master（同时也是vlan20的Master），接替SW1的工作，而vlan10的客户端也会通过SW2访问R1，而SW2故障则同理。</p>
+<p> <strong>Keepalived的配置</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">主备服务安装Keepalived</span><br><span class="line">	yum install keepalived ipvsadm -y</span><br><span class="line">	</span><br><span class="line"> 修改配置文件：</span><br><span class="line">		cd  &#x2F;etc&#x2F;keepalived&#x2F;</span><br><span class="line">		cp keepalived.conf keepalived.conf.bak</span><br><span class="line">		vi keepalived.conf</span><br><span class="line"></span><br><span class="line">			node01:</span><br><span class="line">			vrrp：虚拟路由冗余协议！</span><br><span class="line">				vrrp_instance VI_1 &#123;</span><br><span class="line">					state MASTER     &#x2F;&#x2F;MASTER&#x2F; BACKUP</span><br><span class="line">					interface eth0  &#x2F;&#x2F;网关接口</span><br><span class="line">					virtual_router_id 51</span><br><span class="line">					priority 100 &#x2F;&#x2F;权重配置	100&#x2F; 50</span><br><span class="line">					advert_int 1</span><br><span class="line">					authentication &#123;</span><br><span class="line">						auth_type PASS</span><br><span class="line">						auth_pass 1111</span><br><span class="line">					&#125;</span><br><span class="line">					virtual_ipaddress &#123;</span><br><span class="line">						192.168.150.100&#x2F;24 dev eth0 label  eth0:3     &#x2F;&#x2F;虚拟IP</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">&#x2F;&#x2F;配置入包规则</span><br><span class="line">			virtual_server 192.168.150.100 80 &#123;</span><br><span class="line">				delay_loop 6</span><br><span class="line">				lb_algo rr   &#x2F;&#x2F;负载机制  rr轮询</span><br><span class="line">				lb_kind DR   &#x2F;&#x2F;模式</span><br><span class="line">				nat_mask 255.255.255.0</span><br><span class="line">&#x2F;&#x2F;在50秒内如果同一个用户有多次的请求发送过来则向固定的一台服务负载</span><br><span class="line">				persistence_timeout 50  </span><br><span class="line">				protocol TCP</span><br><span class="line">&#x2F;&#x2F; 出包规则</span><br><span class="line">				real_server 192.168.150.12 80 &#123;</span><br><span class="line">					weight 1</span><br><span class="line">					HTTP_GET &#123;</span><br><span class="line">						url &#123;</span><br><span class="line">						  path &#x2F;</span><br><span class="line">						  status_code 200</span><br><span class="line">						&#125;</span><br><span class="line">						connect_timeout 3</span><br><span class="line">						nb_get_retry 3</span><br><span class="line">						delay_before_retry 3</span><br><span class="line">					&#125;   </span><br><span class="line">				&#125;       </span><br><span class="line">				real_server 192.168.150.13 80 &#123;</span><br><span class="line">					weight 1</span><br><span class="line">					HTTP_GET &#123;</span><br><span class="line">						url &#123;</span><br><span class="line">						  path &#x2F;</span><br><span class="line">						  status_code 200</span><br><span class="line">						&#125;</span><br><span class="line">						connect_timeout 3</span><br><span class="line">						nb_get_retry 3</span><br><span class="line">						delay_before_retry 3</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br></pre></td></tr></table></figure>
 
 
-]]></content>
+
+<h3 id="详细参考https-www-cnblogs-com-wuweidong-p-13804180-html"><a href="#详细参考https-www-cnblogs-com-wuweidong-p-13804180-html" class="headerlink" title="详细参考https://www.cnblogs.com/wuweidong/p/13804180.html"></a>详细参考<a href="https://www.cnblogs.com/wuweidong/p/13804180.html">https://www.cnblogs.com/wuweidong/p/13804180.html</a></h3>]]></content>
       <categories>
         <category>网络</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LVS</title>
+    <url>/2021/03/21/LVS/</url>
+    <content><![CDATA[<h3 id="LVS的介绍"><a href="#LVS的介绍" class="headerlink" title="LVS的介绍"></a>LVS的介绍</h3><p><strong>LVS是什么？</strong><br>LVS（Linux Virtual Server，Linux虚拟服务器）是由章文嵩开发的一款开源软件（遵循GPL协议）。LVS工作在layer 4，又称为四层路由/四层交换，能够根据请求报文的目标IP地址和目标PORT将其调度转发至后端的某台服务器上，调度转发是根据调度算法来进行的。</p>
+<p>LVS由两部分组成，分别是工作在内核空间的ipvs框架和工作在用户空间的ipvsadm命令。ipvsadm是工作在用户空间的命令行工具，用于管理集群服务及集群服务上的Real Server（RS），而ipvs则是工作于内核上的netfilter的INPUT钩子上的程序，其功能是根据用户定义的集群实现对请求报文的转发。</p>
+<p>LVS支持基于TCP、UDP、SCTP、AH、EST、AH_EST等协议进行调度。</p>
+<p><strong>为什么要使用LVS？</strong></p>
+<p>LVS是负载均衡能力最强的一款软件，对于选择LVS作为负载均衡的原因总结如下。</p>
+<p>1、相比于Nginx、Haproxy等负载均衡器，LVS支持较大的并发量。Nginx、Haproxy是工作在七层的负载均衡器，因此需要监听在一个端口上，同时对于每一个客户端都需要打开一个套接字文件来接受请求数据，当在应用层分析完数据时，有需要扮演成客户端角色向后端的服务器主机发送请求报文，不仅需要打开大量套接字文件，还需要有多个随机端口可以使用，而端口数最多只有65535个，并且其中有一部分端口是不能使用的。因此，工作在七层的负载均衡软件（如Nginx、Haproxy等）的最大并发数受限于能够打开的套接字文件数（内核需要打开很多的文件描述符来维护）以及能使用的随机端口数。对于LVS而言，因此它工作在四层，所以不需要监听在某个端口以响应客户端请求，因此不需要打开套接字接受和发送数据，同时也不需要使用端口，所有功能均在ipvs中实现，因此LVS的性能更高，支持的并发量更大。据统计，LVS的最大并发量可以达到400~500w。</p>
+<p>2、LVS是一款开源且免费的软件，结合Linux使用可以大大降低企业的应用成本。</p>
+<p>3、LVS具有可伸缩性。当一台服务器负载压力增长时，系统可以在不降低服务质量的情况下通过扩展来满足需求。</p>
+<p>4、LVS具有高可靠性。这在国内很多大型的、关键性的Web站点实践中得到印证。</p>
+<h3 id="LVS的三种搭建模型"><a href="#LVS的三种搭建模型" class="headerlink" title="LVS的三种搭建模型"></a>LVS的三种搭建模型</h3><ul>
+<li><p><strong>NAT模式</strong><br>优点：集群中的物理服务器可以使用任何支持TCP/IP操作系统，物理服务器可以分配Internet的保留私有地址，只有负载均衡器需要一个合法的IP地址。</p>
+<p>不足：扩展性有限。当服务器节点（普通PC服务器）数据增长到20个或更多时,负载均衡器将成为整个系统的瓶颈，因为所有的请求包和应答包都需要经过负载均衡器再生。假使TCP包的平均长度是536字节的话，平均包再生延迟时间大约为60us（在Pentium处理器上计算的，采用更快的处理器将使得这个延迟时间变短），负载均衡器的最大容许能力为8.93M/s，假定每台物理服务器的平台容许能力为400K/s来计算，负责均衡器能为22台物理服务器计算。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20nat%E6%A8%A1%E5%9E%8B.png" alt="NAT模式"></p>
+</li>
+<li><p><strong>TUN模式</strong><br>我们发现，许多Internet服务（例如WEB服务器）的请求包很短小，而应答包通常很大。<br>优点：负载均衡器只负责将请求包分发给物理服务器，而物理服务器将应答包直接发给用户。所以，负载均衡器能处理很巨大的请求量，这种方式，一台负载均衡能为超过100台的物理服务器服务，负载均衡器不再是系统的瓶颈。使用VS-TUN方式，如果你的负载均衡器拥有100M的全双工网卡的话，就能使得整个Virtual Server能达到1G的吞吐量。<br>不足：但是，这种方式需要所有的服务器支持”IP Tunneling”(IP Encapsulation)协议，我仅在Linux系统上实现了这个，如果你能让其它操作系统支持，还在探索之中。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20TUN.png" alt="TUN"></p>
+</li>
+<li><p><strong>DR模式</strong><br>优点：和VS-TUN一样，负载均衡器也只是分发请求，应答包通过单独的路由方法返回给客户端。与VS-TUN相比，VS-DR这种实现方式不需要隧道结构，因此可以使用大多数操作系统做为物理服务器，其中包括：Linux 2.0.36、2.2.9、2.2.10、2.2.12；Solaris 2.5.1、2.6、2.7；FreeBSD 3.1、3.2、3.3；NT4.0无需打补丁；IRIX 6.5；HPUX11等。<br>不足：要求负载均衡器的网卡必须与物理网卡在一个物理段上<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20DR.png" alt="DR"></p>
+</li>
+</ul>
+<h3 id="使用LVS搭建基于四层网络模型的负载均衡器-DR模式"><a href="#使用LVS搭建基于四层网络模型的负载均衡器-DR模式" class="headerlink" title="使用LVS搭建基于四层网络模型的负载均衡器 DR模式"></a>使用LVS搭建基于四层网络模型的负载均衡器 DR模式</h3><p><strong>命令解释</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rr:轮循</span><br><span class="line">wrr:</span><br><span class="line">dh:</span><br><span class="line">sh:</span><br><span class="line"></span><br><span class="line">动态调度方法：</span><br><span class="line">lc: 最少连接</span><br><span class="line">wlc: 加权最少连接</span><br><span class="line">sed: 最短期望延迟</span><br><span class="line">nq: never queue</span><br><span class="line">LBLC: 基于本地的最少连接</span><br><span class="line">LBLCR: 基于本地的带复制功能的最少连接</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><figcaption><span>：</span></figcaption><table><tr><td class="code"><pre><span class="line">kernel parameter:</span><br><span class="line">目标mac地址为全F，交换机触发广播</span><br><span class="line">  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;*IF*&#x2F;</span><br><span class="line">arp_ignore: 定义接收到ARP请求时的响应级别；</span><br><span class="line">  0：只要本地配置的有相应地址，就给予响应；</span><br><span class="line">  1：仅在请求的目标(MAC)地址配置请求</span><br><span class="line">        到达的接口上的时候，才给予响应；</span><br><span class="line"></span><br><span class="line">arp_announce：定义将自己地址向外通告时的通告级别；</span><br><span class="line">  0：将本地任何接口上的任何地址向外通告；</span><br><span class="line">  1：试图仅向目标网络通告与其网络匹配的地址；</span><br><span class="line">  2：仅向与本地接口上地址匹配的网络进行通告；</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line"></span><br><span class="line">管理集群服务</span><br><span class="line">添加：-A -t|u|f service-address [-s scheduler]</span><br><span class="line">-t: TCP协议的集群</span><br><span class="line">-u: UDP协议的集群</span><br><span class="line">service-address:     IP:PORT</span><br><span class="line">-f: FWM: 防火墙标记</span><br><span class="line">service-address: Mark Number</span><br><span class="line">修改：-E</span><br><span class="line">删除：-D -t|u|f service-address</span><br><span class="line"></span><br><span class="line">ipvsadm -A -t 192.168.9.100:80 -s rr</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加：ipvsadm  -a -t|u|f service-address -r server-address [-g|i|m] [-w weight]</span><br><span class="line">  -t|u|f service-address：事先定义好的某集群服务</span><br><span class="line">  -r server-address: 某RS的地址，在NAT模型中，可使用IP：PORT实现端口映射；</span><br><span class="line">  [-g|i|m]: LVS类型 </span><br><span class="line">  -g: DR</span><br><span class="line">  -i: TUN</span><br><span class="line">  -m: NAT</span><br><span class="line">  [-w weight]: 定义服务器权重</span><br><span class="line">修改：-e</span><br><span class="line">删除：-d -t|u|f service-address -r server-address</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.8 –g</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.9 -g</span><br><span class="line">查看</span><br><span class="line">  -L|l</span><br><span class="line">  -n: 数字格式显示主机地址和端口</span><br><span class="line">  --stats：统计数据</span><br><span class="line">  --rate: 速率</span><br><span class="line">  --timeout: 显示tcp、tcpfin和udp的会话超时时长</span><br><span class="line">  -:c 显示当前的ipvs连接状况</span><br><span class="line">删除所有集群服务</span><br><span class="line">  -C：清空ipvs规则</span><br><span class="line">保存规则</span><br><span class="line">  -S</span><br><span class="line"># ipvsadm -S &gt; &#x2F;path&#x2F;to&#x2F;somefile</span><br><span class="line">载入此前的规则：</span><br><span class="line">  -R</span><br><span class="line"># ipvsadm -R &lt; &#x2F;path&#x2F;form&#x2F;somefile </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>拓扑图</strong><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs-DR%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%9E%8B.png" alt="lvs-DR拓扑图"></li>
+<li><strong>开始搭建</strong></li>
+</ul>
+<p>1.在192.168.150.11 中添加192.168.150.100的网卡</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加网卡  ifconfig eth0:2 192.168.150.100&#x2F;24</span><br><span class="line"></span><br><span class="line">注意&#x2F;24代表子网掩码是255.255.255.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>   <font color='red'> 删除 eth0:2网卡 ifconfig eth0:2 down </font></p>
+<p> 2.调192.168.150.12  和 192.168.150.13的内核协议</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo 1  &gt;  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;eth0&#x2F;arp_ignore </span><br><span class="line">echo 1  &gt;  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;all&#x2F;arp_ignore </span><br><span class="line">echo 2 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;eth0&#x2F;arp_announce </span><br><span class="line">echo 2 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;all&#x2F;arp_announce </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>3.配置192.168.150.12  和 192.168.150.13环行路由</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ifconfig lo:2 192.168.150.100 netmask 255.255.255.255</span><br></pre></td></tr></table></figure>
+<p>4.在 192.168.150.12 和 192.168.150.13中安装 httpd</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install httpd -y</span><br><span class="line">启动  service httpd start</span><br><span class="line">创建主页vi &#x2F;var&#x2F;www&#x2F;html&#x2F;index.html</span><br></pre></td></tr></table></figure>
+<p>5在浏览器中输入192.168.150.12:80测试</p>
+<p>6.在192.168.150.11 中安装 ipvsadm</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line">添加进包的规则：ipvsadm -A  -t  192.168.150.100:80  -s rr</span><br><span class="line">添加负载的规则:</span><br><span class="line">ipvsadm -a  -t 192.168.150.100:80  -r  192.168.150.12 -g -w 1</span><br><span class="line">ipvsadm -a  -t 192.168.150.100:80  -r  192.168.150.13 -g -w 1</span><br><span class="line"></span><br><span class="line">查看规则：ipvsadm  -ln</span><br></pre></td></tr></table></figure>
+<p>7.验证：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">浏览器访问  192.168.150.100   看到负载  F5属性</span><br><span class="line">192.168.150.11：</span><br><span class="line">	netstat -natp   结论看不到socket连接</span><br><span class="line">192.168.150.12~192.168.150.13:</span><br><span class="line">	netstat -natp   结论看到很多的socket连接</span><br><span class="line">192.168.150.11:</span><br><span class="line">	ipvsadm -lnc    查看偷窥记录本</span><br><span class="line">	TCP 00:57  FIN_WAIT    192.168.150.1:51587 192.168.150.100:80 192.168.150.12:80</span><br><span class="line"></span><br><span class="line">	           FIN_WAIT： 连接过，偷窥了所有的包</span><br><span class="line">	           SYN_RECV： 基本上lvs都记录了，证明lvs没事，一定是后边网络层出问题</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
@@ -239,6 +372,61 @@
       </tags>
   </entry>
   <entry>
+    <title>java中的位和位移运算符</title>
+    <url>/2021/04/05/java%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%92%8C%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6/</url>
+    <content><![CDATA[<h3 id="位和位移运算符"><a href="#位和位移运算符" class="headerlink" title="位和位移运算符"></a>位和位移运算符</h3><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;</td>
+<td>如果相对应的位数都是1，则结果为1，否则为0</td>
+<td>(1100&amp;1101) = 1100</td>
+</tr>
+<tr>
+<td>|</td>
+<td>如果对应的位数有一个是1，则结果是1，否则为0</td>
+<td>(1100&amp;1101) = 1101</td>
+</tr>
+<tr>
+<td>^</td>
+<td>如果相对应 位的值相同则取0，否则取1</td>
+<td>(1100&amp;1101) = 0001</td>
+</tr>
+<tr>
+<td>~</td>
+<td>按位取反运算符，反转操作数的每一位，即0变成1，1变成0</td>
+<td>~ 1100 = 0011</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>按位左移运算符，按照指定的位数左移,不分正负数，低位补0,带符号位移，高位移出，低位补0，移动位数超过该类型的最大位数，则进行取模，如对Integer型左移34位，实际上只移动了两位。左移一位相当于乘以2的一次方，左移n位相当于乘以2的n次方。</td>
+<td>1100 &lt;&lt; 1 = 1000</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>按位右移运算符。按照指定的位数右移并以符号位填空 ,如果该数为正，则高位补0，若为负数，则高位补1；</td>
+<td>1100 &gt;&gt;1 = 1110</td>
+</tr>
+<tr>
+<td>&gt;&gt;&gt;</td>
+<td>按位右移补0操作,按照指定的位数右移并以零填空位,无符号右移，也叫逻辑右移，即若该数为正，则高位补0，而若该数为负数，则右移后高位同样补0</td>
+<td>1100 &gt;&gt;&gt; 1 =  0110</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java好的开源项目</title>
     <url>/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<h4 id="好的开源项目"><a href="#好的开源项目" class="headerlink" title="好的开源项目"></a>好的开源项目</h4><ul>
@@ -250,10 +438,10 @@
 <p><strong>账号密码：</strong> <code>admin / 123456</code></p>
 ]]></content>
       <categories>
-        <category>程序设计</category>
+        <category>随笔记录</category>
       </categories>
       <tags>
-        <tag>23种设计模式</tag>
+        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>
@@ -310,6 +498,23 @@
       </categories>
       <tags>
         <tag>Demo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis</title>
+    <url>/2021/04/07/redis/</url>
+    <content><![CDATA[<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><h3 id="redis介绍"><a href="#redis介绍" class="headerlink" title="redis介绍"></a>redis介绍</h3><h3 id="redis数据类型"><a href="#redis数据类型" class="headerlink" title="redis数据类型"></a>redis数据类型</h3><h3 id="redis的发布-订阅"><a href="#redis的发布-订阅" class="headerlink" title="redis的发布/订阅"></a>redis的发布/订阅</h3><h3 id="redis的key过期设置"><a href="#redis的key过期设置" class="headerlink" title="redis的key过期设置"></a>redis的key过期设置</h3><h3 id="redis的事务"><a href="#redis的事务" class="headerlink" title="redis的事务"></a>redis的事务</h3><h3 id="redis的缓存穿透"><a href="#redis的缓存穿透" class="headerlink" title="redis的缓存穿透"></a>redis的缓存穿透</h3><h3 id="redis的缓存穿透解决办法-布隆过滤器"><a href="#redis的缓存穿透解决办法-布隆过滤器" class="headerlink" title="redis的缓存穿透解决办法(布隆过滤器)"></a>redis的缓存穿透解决办法(布隆过滤器)</h3><h3 id="redis中的持久化"><a href="#redis中的持久化" class="headerlink" title="redis中的持久化"></a>redis中的持久化</h3><ul>
+<li><p>  <strong>rdb</strong></p>
+</li>
+<li><p> <strong>aof</strong></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>redis</category>
+      </categories>
+      <tags>
+        <tag>中间件</tag>
       </tags>
   </entry>
   <entry>

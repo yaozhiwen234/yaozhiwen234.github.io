@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-03-29T07:57:45.205Z</updated>
+  <updated>2021-04-10T16:50:49.399Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -17,11 +17,61 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>redis</title>
+    <link href="https://yaozw.top/2021/04/07/redis/"/>
+    <id>https://yaozw.top/2021/04/07/redis/</id>
+    <published>2021-04-07T14:49:46.000Z</published>
+    <updated>2021-04-10T16:50:49.399Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;redis&quot;&gt;&lt;a href=&quot;#redis&quot; class=&quot;headerlink&quot; title=&quot;redis&quot;&gt;&lt;/a&gt;redis&lt;/h2&gt;&lt;h3 id=&quot;redis介绍&quot;&gt;&lt;a href=&quot;#redis介绍&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="redis" scheme="https://yaozw.top/categories/redis/"/>
+    
+    
+    <category term="中间件" scheme="https://yaozw.top/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java中的位和位移运算符</title>
+    <link href="https://yaozw.top/2021/04/05/java%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%92%8C%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
+    <id>https://yaozw.top/2021/04/05/java%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%92%8C%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6/</id>
+    <published>2021-04-05T11:03:18.000Z</published>
+    <updated>2021-04-05T12:12:20.240Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;位和位移运算符&quot;&gt;&lt;a href=&quot;#位和位移运算符&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Keepalived</title>
     <link href="https://yaozw.top/2021/03/28/Keepalived/"/>
     <id>https://yaozw.top/2021/03/28/Keepalived/</id>
     <published>2021-03-28T09:25:15.000Z</published>
-    <updated>2021-03-29T07:57:45.205Z</updated>
+    <updated>2021-04-10T16:50:51.262Z</updated>
     
     
       
@@ -38,6 +88,31 @@
     
     
     <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LVS</title>
+    <link href="https://yaozw.top/2021/03/21/LVS/"/>
+    <id>https://yaozw.top/2021/03/21/LVS/</id>
+    <published>2021-03-21T10:57:12.000Z</published>
+    <updated>2021-04-10T16:50:53.467Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;LVS的介绍&quot;&gt;&lt;a href=&quot;#LVS的介绍&quot; class=&quot;headerlink&quot; title=&quot;LVS的介绍&quot;&gt;&lt;/a&gt;LVS的介绍&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;LVS是什么？&lt;/strong&gt;&lt;br&gt;LVS（Linux Virtual</summary>
+        
+      
+    
+    
+    
+    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
@@ -167,11 +242,11 @@
   </entry>
   
   <entry>
-    <title>spring的注解</title>
-    <link href="https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/"/>
-    <id>https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/</id>
+    <title>spring校验注解</title>
+    <link href="https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/"/>
+    <id>https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/</id>
     <published>2021-03-16T03:06:50.000Z</published>
-    <updated>2021-03-19T05:57:51.880Z</updated>
+    <updated>2021-03-16T04:50:22.562Z</updated>
     
     
       
@@ -192,11 +267,11 @@
   </entry>
   
   <entry>
-    <title>spring校验注解</title>
-    <link href="https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/"/>
-    <id>https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/</id>
+    <title>spring的注解</title>
+    <link href="https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/"/>
+    <id>https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/</id>
     <published>2021-03-16T03:06:50.000Z</published>
-    <updated>2021-03-16T04:50:22.562Z</updated>
+    <updated>2021-03-19T05:57:51.880Z</updated>
     
     
       
@@ -296,7 +371,7 @@
     <link href="https://yaozw.top/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
     <id>https://yaozw.top/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</id>
     <published>2021-01-08T09:38:24.000Z</published>
-    <updated>2021-03-11T03:32:01.542Z</updated>
+    <updated>2021-03-30T07:18:14.143Z</updated>
     
     
       
@@ -312,10 +387,10 @@
     
     
     
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    <category term="随笔记录" scheme="https://yaozw.top/categories/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
     
     
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
     
   </entry>
   
@@ -441,81 +516,6 @@
     
     
     <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>解释器设计模式</title>
-    <link href="https://yaozw.top/2020/12/25/%E8%A7%A3%E9%87%8A%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/25/%E8%A7%A3%E9%87%8A%E5%99%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-25T08:38:54.000Z</published>
-    <updated>2021-03-11T03:32:13.180Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;解释器设计模式-Interpreter-Pattern&quot;&gt;&lt;a href=&quot;#解释器设计模式-Interpreter-Pattern&quot; class=&quot;headerlink&quot; title=&quot;解释器设计模式(Interpreter</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>状态设计模式</title>
-    <link href="https://yaozw.top/2020/12/25/%E7%8A%B6%E6%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/25/%E7%8A%B6%E6%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-25T05:43:00.000Z</published>
-    <updated>2021-03-11T03:32:14.392Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;状态设计模式-State-Pattern&quot;&gt;&lt;a href=&quot;#状态设计模式-State-Pattern&quot; class=&quot;headerlink&quot; title=&quot;状态设计模式(State Pattern)&quot;&gt;&lt;/a&gt;状态设计模式(State</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>备忘录设计模式</title>
-    <link href="https://yaozw.top/2020/12/24/%E5%A4%87%E5%BF%98%E5%BD%95%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2020/12/24/%E5%A4%87%E5%BF%98%E5%BD%95%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-12-24T08:08:12.000Z</published>
-    <updated>2021-03-11T03:32:17.052Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;备忘录设计模式-Memento-Pattern&quot;&gt;&lt;a href=&quot;#备忘录设计模式-Memento-Pattern&quot; class=&quot;headerlink&quot; title=&quot;备忘录设计模式(Memento Pattern)&quot;&gt;&lt;/a&gt;备忘录设计模式(Memento</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   

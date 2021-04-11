@@ -518,8 +518,12 @@ A[pc1]
   <entry>
     <title>redis</title>
     <url>/2021/04/07/redis/</url>
-    <content><![CDATA[<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p><a href="http://www.redis.cn/">redis官网</a></p>
-<h3 id="redis介绍"><a href="#redis介绍" class="headerlink" title="redis介绍"></a>redis介绍</h3><p>Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了 复制（replication），LUA脚本（Lua scripting）， LRU驱动事件（LRU eviction），事务（transactions） 和不同级别的 磁盘持久化（persistence）， 并通过 Redis哨兵（Sentinel）和自动 分区（Cluster）提供高可用性（high availability）。</p>
+    <content><![CDATA[<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><h3 id="redis官网"><a href="#redis官网" class="headerlink" title="redis官网"></a><a href="http://www.redis.cn/">redis官网</a></h3><h3 id="redis介绍"><a href="#redis介绍" class="headerlink" title="redis介绍"></a>redis介绍</h3><p>Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了 复制（replication），LUA脚本（Lua scripting）， LRU驱动事件（LRU eviction），事务（transactions） 和不同级别的 磁盘持久化（persistence）， 并通过 Redis哨兵（Sentinel）和自动 分区（Cluster）提供高可用性（high availability）。</p>
+<div class="markmap-container" style="height:300px;" ><svg class="markmap-svg">{"t":"root","d":0,"v":"","c":[{"t":"heading","d":1,"v":"Testa","c":[{"t":"heading","d":2,"v":"test1"},{"t":"heading","d":2,"v":"test2"}]},{"t":"heading","d":1,"v":"Testb","c":[{"t":"heading","d":2,"v":"test1"},{"t":"heading","d":2,"v":"test2"}]}]}</svg></div>
+
+
+
+
 <h3 id="redis数据类型"><a href="#redis数据类型" class="headerlink" title="redis数据类型"></a>redis数据类型</h3><div class="markmap-container" style="height:300px;" ><svg class="markmap-svg">{"t":"root","d":0,"v":"","c":[{"t":"paragraph","d":1,"v":"redis常用的数据类型"},{"t":"heading","d":1,"v":"String","c":[{"t":"heading","d":2,"v":"字符串"},{"t":"heading","d":2,"v":"数值","c":[{"t":"list_item","d":3,"v":"使用场景"}]},{"t":"heading","d":2,"v":"bitmap","c":[{"t":"bullet_list","d":3,"v":"","c":[{"t":"list_item","d":4,"v":"常用命令"},{"t":"list_item","d":4,"v":"使用场景1"}]},{"t":"bullet_list","d":3,"v":"","c":[{"t":"paragraph","d":4,"v":"使用场景2"},{"t":"paragraph","d":4,"v":"2618做活动：送礼物<br/>大库备货多少礼物<br/>假设京东有2E用户"},{"t":"paragraph","d":4,"v":"僵尸用户<br/>冷热用户/忠诚用户"},{"t":"paragraph","d":4,"v":"活跃用户统计！1号~3号 都有哪些用户进行了登录<br/>比如说 1号~3号  连续登录要     去重"}]}]}]},{"t":"heading","d":1,"v":"set","c":[{"t":"heading","d":2,"v":"使用场景"}]},{"t":"heading","d":1,"v":"hash","c":[{"t":"heading","d":2,"v":"使用场景"}]},{"t":"heading","d":1,"v":"sorted_set","c":[{"t":"heading","d":2,"v":"功能"}]},{"t":"heading","d":1,"v":"list","c":[{"t":"heading","d":2,"v":"功能"}]}]}</svg></div>
 
 

@@ -112,7 +112,13 @@
 <h3 id="主备备份模式："><a href="#主备备份模式：" class="headerlink" title="主备备份模式："></a><strong>主备备份模式：</strong></h3><p>主备备份模式就是只由Master设备负责转发数据，而Backup设备则处于待机备份模式不参与数据转发，当Master设备出现故障时才会切换到Master进行数据转发。</p>
 <p>参照下图，正常情况下只有SW1转发数据，而SW2则处于待机状态，SW1会周期发送VRRP报文告知SW2自身的配置信息和工作状态，如果SW1发生故障，则SW2会自动切换到到Master继续进行数据转发等。</p>
 <p>而当SW1恢复之后，若当前为抢占模式，若SW1的优先级为255那么SW1会直接成为Master否则会先切换到Backup然后再切换到Master。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[pc]  </span><br><span class="line">      A --&gt; |客户端的情求| C[SW3]</span><br><span class="line">      C --&gt;  B[Master   SW1]</span><br><span class="line">      C --&gt;  f[Backup SW2]</span><br><span class="line">      B --&gt; c[SW3]</span><br><span class="line">      f --&gt; c[R]</span><br><span class="line">   </span><br><span class="line">     </span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TD
+A[pc]  
+      A --> |客户端的情求| C[SW3]
+      C -->  B[Master   SW1]
+      C -->  f[Backup SW2]
+      B --> c[SW3]
+      f --> c[R]</pre>
 
 
 
@@ -120,7 +126,16 @@
 
 <h3 id="负载分担模式："><a href="#负载分担模式：" class="headerlink" title="负载分担模式："></a><strong>负载分担模式：</strong></h3><p>上述的主备备份模式，若SW1一直正常工作，那么SW2则长期处于待机状态，显然这种做法比较浪费，所以一般会采用负载分担模式，负载分到模式会是SW2都处于工作状态。</p>
 <p>参照下图，负载分担模式是创建两个VRRP组分别为A组和B组，A组的Master为SW1，Backup为SW2，而B组的Master为SW2，Backup为SW1，通过创建多个拥有不同虚拟IP的VRRP组，为不同的VLAN指定网关实现负载分担。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph TD</span><br><span class="line"></span><br><span class="line">A[pc1]  </span><br><span class="line">      D[pc2]</span><br><span class="line">      A --&gt; |客户端的情求| C[SW3]</span><br><span class="line">      D --&gt; |客户端的情求| C[vlan 10 192.168.10.1 &lt;&#x2F;br&gt; vlan 20   192.168.20.1&lt;&#x2F;br&gt;  SW3]</span><br><span class="line">      C --&gt;  B[Master:vlan 10 &lt;&#x2F;br&gt; backup:vlan 20 &lt;&#x2F;br&gt;  SW1]  </span><br><span class="line">      C --&gt;  f[Master:vlan 20 &lt;&#x2F;br&gt; backup:vlan 10 &lt;&#x2F;br&gt;  SW2]</span><br><span class="line">      f --&gt; E[R]</span><br><span class="line">      B --&gt; E[R]</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TD
+
+A[pc1]  
+      D[pc2]
+      A --> |客户端的情求| C[SW3]
+      D --> |客户端的情求| C[vlan 10 192.168.10.1 </br> vlan 20   192.168.20.1</br>  SW3]
+      C -->  B[Master:vlan 10 </br> backup:vlan 20 </br>  SW1]  
+      C -->  f[Master:vlan 20 </br> backup:vlan 10 </br>  SW2]
+      f --> E[R]
+      B --> E[R]</pre>
 
 <p>参照上图，在VLAN10当中Master是SW1，Backup为SW2，两台交换机都分别创建vlan10和vlan20 并且分配好IP地址，正常情况下vlan10的客户端会通过SW1访问R1，vlan20的客户端会通过SW2访问R1这样就实现了负载分担，如果SW1出现故障，那么SW2会成为vlan10的Master（同时也是vlan20的Master），接替SW1的工作，而vlan10的客户端也会通过SW2访问R1，而SW2故障则同理。</p>
 <p> <strong>Keepalived的配置</strong></p>

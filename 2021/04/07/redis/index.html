@@ -175,12 +175,11 @@ if (asideStatus !== undefined) {
 </li>
 <li><p>使用场景1</p>
 <p>1,有用户系统，统计用户登录天数，<br>setbit sean 1 1<br>setbit sean 7 1<br>setbit sean 364 1<br>STRLEN sean<br>BITCOUNT sean -2 -1</p>
+<pre><code>   01 02 03 04
+</code></pre>
+<p>sean    0    1   0   1   010101<br>json     0    1   0   1   011111</p>
+<p>每用户46B *  用户数 10000000  =460 000 000</p>
 </li>
-</ul>
-<pre><code>     01 02 03 04</code></pre>
-<p>  sean    0    1   0   1   010101<br>  json     0    1   0   1   011111</p>
-<p>  每用户46B *  用户数 10000000  =460 000 000</p>
-<ul>
 <li><p>使用场景2</p>
 <p>2618做活动：送礼物<br>大库备货多少礼物<br>假设京东有2E用户</p>
 <p>僵尸用户<br>冷热用户/忠诚用户</p>

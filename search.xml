@@ -522,8 +522,8 @@ A[pc1]
 
 <h3 id="1-String"><a href="#1-String" class="headerlink" title="1. String"></a><strong><a href="http://www.redis.cn/topics/data-types-intro.html#strings">1. String</a></strong></h3><ul>
 <li><strong><a href="http://www.redis.cn/topics/data-types-intro.html#strings">字符串</a></strong> <ul>
-<li><a href="http://www.redis.cn/commands.html#string">1.常用的命令</a><br>set<br>get<br>append<br>strlen<br>type 查看vlue的类型 </li>
-<li>2.正负向索引<br>setrange<br>getrange</li>
+<li><a href="http://www.redis.cn/commands.html#string">1.常用的命令</a><br>  set<br>  get<br>  append<br>  strlen<br>  type 查看vlue的类型 </li>
+<li>2.正负向索引<br>  setrange<br>  getrange</li>
 <li><a href="http://www.redis.cn/commands/object.html">3.object</a></li>
 </ul>
 </li>
@@ -547,30 +547,23 @@ sean    0    1   0   1   010101<br>json    0    1   0   1   011111<br>每用户4
 </ul>
 </li>
 </ul>
-<h2 id="set"><a href="#set" class="headerlink" title="set"></a><a href="http://www.redis.cn/topics/data-types-intro.html#sets">set</a></h2><p>Redis Set 是 String 的无序排列。SADD 指令把新的元素添加到 set 中。对 set 也可做一些其他的操作，比如测试一个给定的元素是否存在，对不同 set 取交集，并集或差，等等。</p>
-<p>Sets 适合用于表示对象间的关系。 例如，我们可以轻易使用 set 来表示标记。</p>
-<p>一个简单的建模方式是，对每一个希望标记的对象使用 set。这个 set 包含和对象相关联的标签的 ID。</p>
-<p>假设我们想要给新闻打上标签。 假设新闻 ID 1000 被打上了 1,2,5 和 77 四个标签，我们可以使用一个 set 把 tag ID 和新闻条目关联起来：</p>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>set中的随机事件</p>
-<p>SRANDMEMBER  key  count<br>正数：取出一个去重的结果集（不能超过已有集）<br>负数：取出一个带重复的结果集，一定满足你要的数量<br>如果：0，不返回</p>
-<h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a><a href="http://www.redis.cn/topics/data-types-intro.html#hashes">hash</a></h2><p>Hash 便于表示 objects，实际上，你可以放入一个 hash 的域数量实际上没有限制（除了可用内存以外）。所以，你可以在你的应用中以不同的方式使用 hash。</p>
-<p>HMSET 指令设置 hash 中的多个域，而 HGET 取回单个域。HMGET 和 HGET 类似，但返回一系列值：</p>
-<h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h3><p>场景：点赞，收藏，详情页</p>
-<h2 id="sorted-set"><a href="#sorted-set" class="headerlink" title="sorted_set"></a><a href="http://www.redis.cn/topics/data-types-intro.html#sorted-sets">sorted_set</a></h2><p>当您只需要获取随机元素而不将其从集合中删除时，可以使用SRANDMEMBER适合该任务的命令。它还具有返回重复和非重复元素的功能。</p>
-<p>Redis排序集—</p>
-<p>排序集是一种数据类型，类似于集合和哈希之间的混合。像集合一样，排序集合由唯一的，非重复的字符串元素组成，因此从某种意义上说，排序集合也是一个集合。</p>
-<p>但是，虽然不对集合内的元素进行排序，但是排序后的集合中的每个元素都与一个称为得分的浮点值相关联 （这就是为什么该类型也类似于哈希的原因，因为每个元素都映射到一个值）。</p>
-<p>此外，已排序集合中的元素是按顺序进行的（因此，它们不是应请求而排序的，顺序是用于表示已排序集合的数据结构的特殊性）。它们按照以下规则排序：</p>
-<p>如果A和B是两个具有不同分数的元素，那么如果A.score是&gt; B.score，则A&gt;B。<br>如果A和B的得分完全相同，那么如果A字符串在字典上大于B字符串，则A&gt;B。A和B字符串不能相等，因为排序集仅具有唯一元素。</p>
-<h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><p>集合操作<br>并集，交集<br>权重/聚合指令</p>
-<h2 id="list"><a href="#list" class="headerlink" title="list"></a><a href="http://www.redis.cn/topics/data-types-intro.html#lists">list</a></h2><p>Lists: 按插入顺序排序的字符串元素的集合。他们基本上就是链表（linked lists）</p>
-<p>Redis lists基于Linked Lists实现。这意味着即使在一个list中有数百万个元素，在头部或尾部添加一个元素的操作，其时间复杂度也是常数级别的。用LPUSH 命令在十个元素的list头部添加新元素，和在千万元素list头部添加新元素的速度相同。</p>
-<p>那么，坏消息是什么？在数组实现的list中利用索引访问元素的速度极快，而同样的操作在linked list实现的list上没有那么快。</p>
-<p>Redis Lists用linked list实现的原因是：对于数据库系统来说，至关重要的特性是：能非常快的在很大的列表上添加元素。另一个重要因素是，正如你将要看到的：Redis lists能在常数时间取得常数长度。</p>
-<h3 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h3><p>栈 同向命令</p>
-<p>队列 反向命令</p>
-<p>数组</p>
-<p>阻塞，单播队列 FIFO</p>
+<h3 id="2-set"><a href="#2-set" class="headerlink" title="2. set"></a><strong><a href="http://www.redis.cn/topics/data-types-intro.html#sets">2. set</a></strong></h3><ul>
+<li><a href="http://www.redis.cn/commands.html#set">1.常用命令</a></li>
+<li>2.set介绍<br>Redis Set 是 String 的无序排列。SADD 指令把新的元素添加到 set 中。对 set 也可做一些其他的操作，比如测试一个给定的元素是否存在，对不同 set 取交集，并集或差，等等。</li>
+<li><a href="http://www.redis.cn/commands/srandmember.html">3.set中的随机事件</a><br>SRANDMEMBER  key  count </li>
+<li>3.使用场景<br>Sets 适合用于表示对象间的关系。 例如，我们可以轻易使用 set 来表示标记。<br>一个简单的建模方式是，对每一个希望标记的对象使用 set。这个 set 包含和对象相关联的标签的 ID。<br>假设我们想要给新闻打上标签。 假设新闻 ID 1000 被打上了 1,2,5 和 77 四个标签，我们可以使用一个 set 把 tag ID 和新闻条目关联起来：</li>
+</ul>
+<h3 id="3-hash"><a href="#3-hash" class="headerlink" title="3. hash"></a><strong><a href="http://www.redis.cn/topics/data-types-intro.html#hashes">3. hash</a></strong></h3><ul>
+<li><a href="http://www.redis.cn/commands.html#hash">1.常用命令</a></li>
+<li> hash介绍<br>Hash 便于表示 objects，实际上，你可以放入一个 hash 的域数量实际上没有限制（除了可用内存以外）。所以，你可以在你的应用中以不同的方式使用 hash。<br>HMSET 指令设置 hash 中的多个域，而 HGET 取回单个域。HMGET 和 HGET 类似，但返回一系列值：</li>
+<li>使用场景<br>场景：点赞，收藏，详情页<h3 id="4-sorted-set"><a href="#4-sorted-set" class="headerlink" title="4.sorted_set"></a><strong><a href="http://www.redis.cn/topics/data-types-intro.html#sorted-sets">4.sorted_set</a></strong></h3></li>
+<li><a href="http://www.redis.cn/commands.html#sorted_set">1.常用命令</a></li>
+<li>sorted_set介绍<br>Redis排序集—<br>排序集是一种数据类型，类似于集合和哈希之间的混合。像集合一样，排序集合由唯一的，非重复的字符串元素组成，因此从某种意义上说，排序集合也是一个集合。<br>但是，虽然不对集合内的元素进行排序，但是排序后的集合中的每个元素都与一个称为得分的浮点值相关联 （这就是为什么该类型也类似于哈希的原因，因为每个元素都映射到一个值）。<br>此外，已排序集合中的元素是按顺序进行的（因此，它们不是应请求而排序的，顺序是用于表示已排序集合的数据结构的特殊性）。它们按照以下规则排序：<br>如果A和B是两个具有不同分数的元素，那么如果A.score是&gt; B.score，则A&gt;B。<br>如果A和B的得分完全相同，那么如果A字符串在字典上大于B字符串，则A&gt;B。A和B字符串不能相等，因为排序集仅具有唯一元素。<br>它的底层核心实现的机制是<a href="https://www.cnblogs.com/wlphp/p/11774171.html">跳跃表</a></li>
+<li>功能<br>集合操作<br>并集，交集<br>权重/聚合指令<h3 id="5-list"><a href="#5-list" class="headerlink" title="5.list"></a><strong><a href="http://www.redis.cn/topics/data-types-intro.html#lists">5.list</a></strong></h3></li>
+<li><a href="http://www.redis.cn/commands.html#list">1.常用命令</a></li>
+<li>list介绍<br>Lists: 按插入顺序排序的字符串元素的集合。他们基本上就是链表（linked lists）<br>Redis lists基于Linked Lists实现。这意味着即使在一个list中有数百万个元素，在头部或尾部添加一个元素的操作，其时间复杂度也是常数级别的。用LPUSH 命令在十个元素的list头部添加新元素，和在千万元素list头部添加新元素的速度相同。<br>那么，坏消息是什么？在数组实现的list中利用索引访问元素的速度极快，而同样的操作在linked list实现的list上没有那么快。<br>Redis Lists用linked list实现的原因是：对于数据库系统来说，至关重要的特性是：能非常快的在很大的列表上添加元素。另一个重要因素是，正如你将要看到的：Redis lists能在常数时间取得常数长度。</li>
+<li>功能<br>栈 同向命令<br>队列 反向命令<br>数组<br>阻塞，单播队列 FIFO</li>
+</ul>
 <h3 id="redis的发布-订阅"><a href="#redis的发布-订阅" class="headerlink" title="redis的发布/订阅"></a>redis的发布/订阅</h3><h3 id="redis的key过期设置"><a href="#redis的key过期设置" class="headerlink" title="redis的key过期设置"></a>redis的key过期设置</h3><h3 id="redis的事务"><a href="#redis的事务" class="headerlink" title="redis的事务"></a>redis的事务</h3><h3 id="redis的缓存穿透"><a href="#redis的缓存穿透" class="headerlink" title="redis的缓存穿透"></a>redis的缓存穿透</h3><h3 id="redis的缓存穿透解决办法-布隆过滤器"><a href="#redis的缓存穿透解决办法-布隆过滤器" class="headerlink" title="redis的缓存穿透解决办法(布隆过滤器)"></a>redis的缓存穿透解决办法(布隆过滤器)</h3><h3 id="redis中的持久化"><a href="#redis中的持久化" class="headerlink" title="redis中的持久化"></a>redis中的持久化</h3><ul>
 <li><p>  <strong>rdb</strong></p>
 </li>

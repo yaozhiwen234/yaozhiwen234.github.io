@@ -518,73 +518,64 @@ A[pc1]
     <title>redis</title>
     <url>/2021/04/07/redis/</url>
     <content><![CDATA[<h1 id="redis"><a href="#redis" class="headerlink" title="redis"></a><a href="http://www.redis.cn/">redis</a></h1><h2 id="redis介绍"><a href="#redis介绍" class="headerlink" title="redis介绍"></a>redis介绍</h2><p>Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了 复制（replication），LUA脚本（Lua scripting）， LRU驱动事件（LRU eviction），事务（transactions） 和不同级别的 磁盘持久化（persistence）， 并通过 Redis哨兵（Sentinel）和自动 分区（Cluster）提供高可用性（high availability）。</p>
-<h2 id="redis常用的数据类型"><a href="#redis常用的数据类型" class="headerlink" title="redis常用的数据类型"></a>redis常用的数据类型</h2><div class="markmap-container" style="height:300px;" ><svg class="markmap-svg">{"t":"root","d":0,"v":"","c":[{"t":"heading","d":1,"v":"Testa","c":[{"t":"heading","d":2,"v":"test1"},{"t":"heading","d":2,"v":"test2"}]},{"t":"heading","d":1,"v":"Testb","c":[{"t":"heading","d":2,"v":"test1"},{"t":"heading","d":2,"v":"test2"}]}]}</svg></div>
+<h2 id="redis常用的数据类型"><a href="#redis常用的数据类型" class="headerlink" title="redis常用的数据类型"></a>redis常用的数据类型</h2><div class="markmap-container" style="height:300px;" ><svg class="markmap-svg">{"t":"heading","d":1,"v":"redis常用的数据类型","c":[{"t":"heading","d":2,"v":"String","c":[{"t":"heading","d":3,"v":"字符串"},{"t":"heading","d":3,"v":"数值"},{"t":"heading","d":3,"v":"bitmap","c":[{"t":"heading","d":4,"v":"使用场景1"},{"t":"heading","d":4,"v":"使用场景2"}]}]},{"t":"heading","d":2,"v":"set"},{"t":"heading","d":2,"v":"hash"},{"t":"heading","d":2,"v":"sorted_set"},{"t":"heading","d":2,"v":"list"}]}</svg></div>
 
-
-<div class="markmap-container" style="height:300px;" ><svg class="markmap-svg">{"t":"heading","d":1,"v":"redis常用的数据类型","c":[{"t":"heading","d":2,"v":"<a href=\"http://www.redis.cn/topics/data-types-intro.html#strings\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">String</a>","c":[{"t":"heading","d":3,"v":"<a href=\"http://www.redis.cn/topics/data-types-intro.html#strings\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">字符串</a>"},{"t":"heading","d":3,"v":"<a href=\"http://www.redis.cn/topics/data-types-intro.html#strings\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">数值</a>"},{"t":"heading","d":3,"v":"<a href=\"http://www.redis.cn/commands.html\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">bitmap</a>","c":[{"t":"heading","d":4,"v":"<a href=\"http://www.redis.cn/commands/bitcount.html\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">使用场景1</a>"},{"t":"heading","d":4,"v":"<a href=\"https://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps/\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">使用场景2</a>"}]}]},{"t":"heading","d":2,"v":"<a href=\"http://www.redis.cn/topics/data-types-intro.html#sets\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">set</a>"},{"t":"heading","d":2,"v":"<a href=\"http://www.redis.cn/topics/data-types-intro.html#hashes\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">hash</a>"},{"t":"heading","d":2,"v":"<a href=\"http://www.redis.cn/topics/data-types-intro.html#sorted-sets\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">sorted_set</a>"},{"t":"heading","d":2,"v":"<a href=\"http://www.redis.cn/topics/data-types-intro.html#lists\" title=\"\" target=\"_blank\" rel=\"noopener noreferrer\">list</a>"}]}</svg></div>
-
-<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><ul>
-<li> <strong>字符串</strong></li>
-</ul>
-<p>  <a href="http://www.redis.cn/commands.html#string">1.常用的命令</a></p>
-<p>  ​        set<br>  ​        get<br>  ​       append<br>  ​        strlen</p>
-<p>  ​       type 查看vlue的类型 </p>
-<p>  2.正负向索引</p>
-<p>  setrange<br>  getrange</p>
-<p>  3.<a href="http://www.redis.cn/commands/object.html">object</a></p>
+<h3 id="1-String"><a href="#1-String" class="headerlink" title="1. String"></a><a href="http://www.redis.cn/topics/data-types-intro.html#strings">1. String</a></h3><ul>
+<li><p><strong><a href="http://www.redis.cn/topics/data-types-intro.html#strings">字符串</a></strong> </p>
 <ul>
-<li>**数值 **</li>
+<li><p><a href="http://www.redis.cn/commands.html#string">1.常用的命令</a><br>  set<br>  get<br>  append<br>  strlen<br>  type 查看vlue的类型 </p>
+</li>
+<li><p>2.正负向索引<br>  setrange<br>  getrange</p>
+</li>
+<li><p>3.<a href="http://www.redis.cn/commands/object.html">object</a></p>
+</li>
 </ul>
-<p>incr</p>
-<p>INCR 命令将字符串值解析成整型，将其加一，最后将结果保存为新的字符串值，类似的命令有</p>
-<p>对一个k 加 n</p>
-<p>INCRBY n</p>
-<p>减一</p>
-<p> DECR </p>
-<p>减n</p>
-<p> DECRBY n</p>
-<p>实际上他们在内部就是同一个命令，只是看上去有点儿不同。</p>
-<p>INCR是原子操作意味着什么呢？就是说即使多个客户端对同一个key发出INCR命令，也决不会导致竞争的情况。例如如下情况永远不可能发生：『客户端1和客户端2同时读出“10”，他们俩都对其加到11，然后将新值设置为11』。最终的值一定是12，read-increment-set操作完成时，其他客户端不会在同一时间执行任何命令。</p>
-<p>对字符串，另一个的令人感兴趣的操作是GETSET命令，行如其名：他为key设置新值并且返回原值。这有什么用处呢？例如：你的系统每当有新用户访问时就用INCR命令操作一个Redis key。你希望每小时对这个信息收集一次。你就可以GETSET这个key并给其赋值0并读取原值。<br>为减少等待时间，也可以一次存储或获取多个key对应的值，使用MSET和MGET命令:</p>
-<p>  <em><strong>使用场景</strong></em></p>
-<p>  抢购，秒杀，详情页，点赞，评论<br>  规避并发下，<br>  对数据库的事务操作<br>  完全由redis内存操作代替</p>
+</li>
+<li><p><strong><a href="http://www.redis.cn/topics/data-types-intro.html#strings">数值</a></strong></p>
 <ul>
-<li><strong>bitmap</strong></li>
+<li>1.常用命令<br>​                INCR 命令将字符串值解析成整型，将其加一，最后将结果保存为新的字符串值<br>​                INCRBY   n   对一个k 加 n<br>​                 DECR  减一<br>​                 DECRBY n  减n<pre><code>           GETSET命令，行如其名：它为key设置新值并且返回原值      
+</code></pre>
+</li>
+<li>2.命令说明<br>INCR是原子操作意味着什么呢？就是说即使多个客户端对同一个key发出INCR命令，也决不会导致竞争的情况。例如如下情况永远不可能发生：『客户端1和客户端2同时读出“10”，他们俩都对其加到11，然后将新值设置为11』。最终的值一定是12，read-increment-set操作完成时，其他客户端不会在同一时间执行任何命令。<br>对字符串，另一个的令人感兴趣的操作是GETSET命令，行如其名：他为key设置新值并且返回原值。这有什么用处呢？例如：你的系统每当有新用户访问时就用INCR命令操作一个Redis key。你希望每小时对这个信息收集一次。你就可以GETSET这个key并给其赋值0并读取原值。<br>为减少等待时间，也可以一次存储或获取多个key对应的值，使用MSET和MGET命令:</li>
+<li>3.使用场景<pre><code>抢购，秒杀，详情页，点赞，评论
+规避并发下，
+对数据库的事务操作
+完全由redis内存操作代替
+</code></pre>
+</li>
 </ul>
-<p>1.常用命令</p>
-<p>setbit<br>bitcount<br>bitpos<br>bitop</p>
-<ol start="2">
-<li><a href="http://www.redis.cn/commands/bitcount.html">使用场景1</a></li>
-</ol>
-<p>1,有用户系统，统计用户登录天数，<br>setbit sean 1 1<br>setbit sean 7 1<br>setbit sean 364 1<br>STRLEN sean<br>BITCOUNT sean -2 -1</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">01 02 03 04</span><br></pre></td></tr></table></figure>
-
-<p>sean    0    1   0   1   010101<br>json     0    1   0   1   011111</p>
-<p>每用户46B *  用户数 10000000  =460 000 000</p>
-<ol start="3">
-<li><a href="https://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps/">使用场景2</a></li>
-</ol>
-<p>2618做活动：送礼物<br>大库备货多少礼物<br>假设京东有2E用户</p>
-<p>僵尸用户<br>冷热用户/忠诚用户</p>
-<p>活跃用户统计！1号<del>3号 都有哪些用户进行了登录<br>比如说 1号</del>3号  连续登录要     去重</p>
-<p>  setbit 20190101   1  1<br>  setbit 20190102   1  1<br>  setbit 20190102   7  1<br>  bitop  or   destkey 20190101  20190102<br>  BITCOUNT  destkey  0 -1</p>
-<h2 id="set"><a href="#set" class="headerlink" title="set"></a>set</h2><p>Redis Set 是 String 的无序排列。SADD 指令把新的元素添加到 set 中。对 set 也可做一些其他的操作，比如测试一个给定的元素是否存在，对不同 set 取交集，并集或差，等等。</p>
+</li>
+<li><p><strong><a href="http://www.redis.cn/commands.html">bitmap</a></strong></p>
+<ul>
+<li><p>1.常用命令<br>setbit<br>bitcount<br>bitpos<br>bitop</p>
+</li>
+<li><p>2.<a href="http://www.redis.cn/commands/bitcount.html">使用场景1</a><br>1,有用户系统，统计用户登录天数，<br>setbit sean 1 1<br>setbit sean 7 1<br>setbit sean 364 1<br>STRLEN sean<br>BITCOUNT sean -2 -1</p>
+<pre><code>01   02  03  04
+</code></pre>
+<p>sean    0    1   0   1   010101<br>json    0    1   0   1   011111<br>每用户46B *  用户数 10000000  =460 000 000</p>
+</li>
+<li><p>3.<a href="https://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps/">使用场景2</a><br>618做活动：送礼物<br>大库备货多少礼物<br>假设京东有2E用户<br>僵尸用户<br>冷热用户/忠诚用户<br>活跃用户统计！1号<del>3号 都有哪些用户进行了登录<br>比如说 1号</del>3号  连续登录要     去重<br>setbit 20190101   1  1<br>setbit 20190102   1  1<br>setbit 20190102   7  1<br>bitop  or   destkey 20190101  20190102<br>BITCOUNT  destkey  0 -1</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a><a href="http://www.redis.cn/topics/data-types-intro.html#sets">set</a></h2><p>Redis Set 是 String 的无序排列。SADD 指令把新的元素添加到 set 中。对 set 也可做一些其他的操作，比如测试一个给定的元素是否存在，对不同 set 取交集，并集或差，等等。</p>
 <p>Sets 适合用于表示对象间的关系。 例如，我们可以轻易使用 set 来表示标记。</p>
 <p>一个简单的建模方式是，对每一个希望标记的对象使用 set。这个 set 包含和对象相关联的标签的 ID。</p>
 <p>假设我们想要给新闻打上标签。 假设新闻 ID 1000 被打上了 1,2,5 和 77 四个标签，我们可以使用一个 set 把 tag ID 和新闻条目关联起来：</p>
 <h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>set中的随机事件</p>
 <p>SRANDMEMBER  key  count<br>正数：取出一个去重的结果集（不能超过已有集）<br>负数：取出一个带重复的结果集，一定满足你要的数量<br>如果：0，不返回</p>
-<h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2><p>Hash 便于表示 objects，实际上，你可以放入一个 hash 的域数量实际上没有限制（除了可用内存以外）。所以，你可以在你的应用中以不同的方式使用 hash。</p>
+<h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a><a href="http://www.redis.cn/topics/data-types-intro.html#hashes">hash</a></h2><p>Hash 便于表示 objects，实际上，你可以放入一个 hash 的域数量实际上没有限制（除了可用内存以外）。所以，你可以在你的应用中以不同的方式使用 hash。</p>
 <p>HMSET 指令设置 hash 中的多个域，而 HGET 取回单个域。HMGET 和 HGET 类似，但返回一系列值：</p>
 <h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h3><p>场景：点赞，收藏，详情页</p>
-<h2 id="sorted-set"><a href="#sorted-set" class="headerlink" title="sorted_set"></a>sorted_set</h2><p>当您只需要获取随机元素而不将其从集合中删除时，可以使用SRANDMEMBER适合该任务的命令。它还具有返回重复和非重复元素的功能。</p>
+<h2 id="sorted-set"><a href="#sorted-set" class="headerlink" title="sorted_set"></a><a href="http://www.redis.cn/topics/data-types-intro.html#sorted-sets">sorted_set</a></h2><p>当您只需要获取随机元素而不将其从集合中删除时，可以使用SRANDMEMBER适合该任务的命令。它还具有返回重复和非重复元素的功能。</p>
 <p>Redis排序集—</p>
 <p>排序集是一种数据类型，类似于集合和哈希之间的混合。像集合一样，排序集合由唯一的，非重复的字符串元素组成，因此从某种意义上说，排序集合也是一个集合。</p>
 <p>但是，虽然不对集合内的元素进行排序，但是排序后的集合中的每个元素都与一个称为得分的浮点值相关联 （这就是为什么该类型也类似于哈希的原因，因为每个元素都映射到一个值）。</p>
 <p>此外，已排序集合中的元素是按顺序进行的（因此，它们不是应请求而排序的，顺序是用于表示已排序集合的数据结构的特殊性）。它们按照以下规则排序：</p>
 <p>如果A和B是两个具有不同分数的元素，那么如果A.score是&gt; B.score，则A&gt;B。<br>如果A和B的得分完全相同，那么如果A字符串在字典上大于B字符串，则A&gt;B。A和B字符串不能相等，因为排序集仅具有唯一元素。</p>
 <h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><p>集合操作<br>并集，交集<br>权重/聚合指令</p>
-<h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><p>Lists: 按插入顺序排序的字符串元素的集合。他们基本上就是链表（linked lists）</p>
+<h2 id="list"><a href="#list" class="headerlink" title="list"></a><a href="http://www.redis.cn/topics/data-types-intro.html#lists">list</a></h2><p>Lists: 按插入顺序排序的字符串元素的集合。他们基本上就是链表（linked lists）</p>
 <p>Redis lists基于Linked Lists实现。这意味着即使在一个list中有数百万个元素，在头部或尾部添加一个元素的操作，其时间复杂度也是常数级别的。用LPUSH 命令在十个元素的list头部添加新元素，和在千万元素list头部添加新元素的速度相同。</p>
 <p>那么，坏消息是什么？在数组实现的list中利用索引访问元素的速度极快，而同样的操作在linked list实现的list上没有那么快。</p>
 <p>Redis Lists用linked list实现的原因是：对于数据库系统来说，至关重要的特性是：能非常快的在很大的列表上添加元素。另一个重要因素是，正如你将要看到的：Redis lists能在常数时间取得常数长度。</p>

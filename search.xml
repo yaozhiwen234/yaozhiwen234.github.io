@@ -521,18 +521,14 @@ A[pc1]
 <h2 id="redis常用的数据类型"><a href="#redis常用的数据类型" class="headerlink" title="redis常用的数据类型"></a>redis常用的数据类型</h2><div class="markmap-container" style="height:300px;" ><svg class="markmap-svg">{"t":"heading","d":1,"v":"redis常用的数据类型","c":[{"t":"heading","d":2,"v":"String","c":[{"t":"heading","d":3,"v":"字符串"},{"t":"heading","d":3,"v":"数值"},{"t":"heading","d":3,"v":"bitmap"}]},{"t":"heading","d":2,"v":"set"},{"t":"heading","d":2,"v":"hash"},{"t":"heading","d":2,"v":"sorted_set"},{"t":"heading","d":2,"v":"list"}]}</svg></div>
 
 <h3 id="1-String"><a href="#1-String" class="headerlink" title="1. String"></a><strong><a href="http://www.redis.cn/topics/data-types-intro.html#strings">1. String</a></strong></h3><ul>
-<li><p><strong><a href="http://www.redis.cn/topics/data-types-intro.html#strings">字符串</a></strong> </p>
-<ul>
+<li><strong><a href="http://www.redis.cn/topics/data-types-intro.html#strings">字符串</a></strong> <ul>
 <li><a href="http://www.redis.cn/commands.html#string">1.常用的命令</a><br>set<br>get<br>append<br>strlen<br>type 查看vlue的类型 </li>
 <li>2.正负向索引<br>setrange<br>getrange</li>
-<li>3.<a href="http://www.redis.cn/commands/object.html">object</a></li>
+<li><a href="http://www.redis.cn/commands/object.html">3.object</a></li>
 </ul>
 </li>
-<li><p><strong><a href="http://www.redis.cn/topics/data-types-intro.html#strings">数值</a></strong></p>
-<ul>
-<li>1.常用命令<br>​                INCR 命令将字符串值解析成整型，将其加一，最后将结果保存为新的字符串值<br>​                INCRBY   n   对一个k 加 n<br>​                 DECR  减一<br>​                 DECRBY n  减n<pre><code>GETSET命令，行如其名：它为key设置新值并且返回原值      
-</code></pre>
-</li>
+<li><strong><a href="http://www.redis.cn/topics/data-types-intro.html#strings">数值</a></strong><ul>
+<li>1.常用命令<br>​                INCR 命令将字符串值解析成整型，将其加一，最后将结果保存为新的字符串值<br>​                INCRBY   n   对一个k 加 n<br>​                 DECR  减一<br>​                 DECRBY n  减n<br>​                GETSET命令，行如其名：它为key设置新值并且返回原值      </li>
 <li>2.命令说明<br>INCR是原子操作意味着什么呢？就是说即使多个客户端对同一个key发出INCR命令，也决不会导致竞争的情况。例如如下情况永远不可能发生：『客户端1和客户端2同时读出“10”，他们俩都对其加到11，然后将新值设置为11』。最终的值一定是12，read-increment-set操作完成时，其他客户端不会在同一时间执行任何命令。<br>对字符串，另一个的令人感兴趣的操作是GETSET命令，行如其名：他为key设置新值并且返回原值。这有什么用处呢？例如：你的系统每当有新用户访问时就用INCR命令操作一个Redis key。你希望每小时对这个信息收集一次。你就可以GETSET这个key并给其赋值0并读取原值。<br>为减少等待时间，也可以一次存储或获取多个key对应的值，使用MSET和MGET命令:</li>
 <li>3.使用场景<pre><code>抢购，秒杀，详情页，点赞，评论
 规避并发下，
@@ -542,14 +538,12 @@ A[pc1]
 </li>
 </ul>
 </li>
-<li><p><strong><a href="http://www.redis.cn/commands.html">bitmap</a></strong></p>
-<ul>
-<li><p>1.常用命令<br>setbit<br>bitcount<br>bitpos<br>bitop</p>
-</li>
-<li><p>2.<a href="http://www.redis.cn/commands/bitcount.html">使用场景1</a><br>1,有用户系统，统计用户登录天数，<br>setbit sean 1 1<br>setbit sean 7 1<br>setbit sean 364 1<br>STRLEN sean<br>BITCOUNT sean -2 -1<br> 01   02  03  04<br>sean    0    1   0   1   010101<br>json    0    1   0   1   011111<br>每用户46B *  用户数 10000000  =460 000 000</p>
-</li>
-<li><p>3.<a href="https://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps/">使用场景2</a><br>618做活动：送礼物<br>大库备货多少礼物<br>假设京东有2E用户<br>僵尸用户<br>冷热用户/忠诚用户<br>活跃用户统计！1号<del>3号 都有哪些用户进行了登录<br>比如说 1号</del>3号  连续登录要     去重<br>setbit 20190101   1  1<br>setbit 20190102   1  1<br>setbit 20190102   7  1<br>bitop  or   destkey 20190101  20190102<br>BITCOUNT  destkey  0 -1</p>
-</li>
+<li><strong><a href="http://www.redis.cn/commands.html">bitmap</a></strong><ul>
+<li>1.常用命令<br>setbit<br>bitcount<br>bitpos<br>bitop</li>
+<li>2.<a href="http://www.redis.cn/commands/bitcount.html">使用场景1</a><br>1,有用户系统，统计用户登录天数，<br>setbit sean 1 1<br>setbit sean 7 1<br>setbit sean 364 1<br>STRLEN sean<br>BITCOUNT sean -2 -1<pre><code>        01   02  03  04
+</code></pre>
+sean    0    1   0   1   010101<br>json    0    1   0   1   011111<br>每用户46B *  用户数 10000000  =460 000 000</li>
+<li>3.<a href="https://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps/">使用场景2</a><br>618做活动：送礼物<br>大库备货多少礼物<br>假设京东有2E用户<br>僵尸用户<br>冷热用户/忠诚用户<br>活跃用户统计！1号<del>3号 都有哪些用户进行了登录<br>比如说 1号</del>3号  连续登录要     去重<br>setbit 20190101   1  1<br>setbit 20190102   1  1<br>setbit 20190102   7  1<br>bitop  or   destkey 20190101  20190102<br>BITCOUNT  destkey  0 -1</li>
 </ul>
 </li>
 </ul>

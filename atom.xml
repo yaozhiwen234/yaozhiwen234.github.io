@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-04-18T10:31:37.048Z</updated>
+  <updated>2021-04-18T11:57:32.990Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>test</title>
+    <link href="https://yaozw.top/2021/04/18/test/"/>
+    <id>https://yaozw.top/2021/04/18/test/</id>
+    <published>2021-04-18T11:54:59.000Z</published>
+    <updated>2021-04-18T11:57:32.990Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;test&quot;&gt;&lt;a href=&quot;#test&quot; class=&quot;headerlink&quot; title=&quot;test&quot;&gt;&lt;/a&gt;test&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;#test&quot;&gt;点test&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="test" scheme="https://yaozw.top/categories/test/"/>
+    
+    
+    <category term="test" scheme="https://yaozw.top/tags/test/"/>
+    
+  </entry>
   
   <entry>
     <title>AKF服务拆分原则</title>
@@ -483,31 +509,6 @@
         
         
     <summary type="html">&lt;h4 id=&quot;访问者设计模式-Vistor-Pattern&quot;&gt;&lt;a href=&quot;#访问者设计模式-Vistor-Pattern&quot; class=&quot;headerlink&quot; title=&quot;访问者设计模式(Vistor Pattern)&quot;&gt;&lt;/a&gt;访问者设计模式(Vistor</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>模板设计模式</title>
-    <link href="https://yaozw.top/2021/01/07/%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2021/01/07/%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2021-01-07T07:06:57.000Z</published>
-    <updated>2021-03-11T03:32:05.134Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;模板设计模式-Template-Pattern&quot;&gt;&lt;a href=&quot;#模板设计模式-Template-Pattern&quot; class=&quot;headerlink&quot; title=&quot;模板设计模式(Template Pattern)&quot;&gt;&lt;/a&gt;模板设计模式(Template</summary>
         
       
     

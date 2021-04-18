@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yaozw.top/2021/04/18/test/</loc>
+    
+    <lastmod>2021-04-18</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yaozw.top/2021/04/07/redis/</loc>
     
     <lastmod>2021-04-18</lastmod>
@@ -431,6 +438,13 @@
   </url>
   
   <url>
+    <loc>https://yaozw.top/tags/test/</loc>
+    <lastmod>2021-04-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2021-04-18</lastmod>
     <changefreq>daily</changefreq>
@@ -511,6 +525,13 @@
   
   <url>
     <loc>https://yaozw.top/categories/spring/</loc>
+    <lastmod>2021-04-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://yaozw.top/categories/test/</loc>
     <lastmod>2021-04-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

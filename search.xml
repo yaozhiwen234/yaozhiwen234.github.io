@@ -668,7 +668,12 @@ A[pc1]
     <content><![CDATA[<h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><p><a href="#test">点test</a></p>
 <p><a href="#redis%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">点redis</a></p>
 <p><a href="#redis%E4%BB%8B%E7%BB%8D">点redis介绍</a></p>
-<a href="/2021/04/07/redis/" title="redis">redis</a><link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+<a href="/2021/04/07/redis/" title="redis">redis</a>
+
+<a href="#">Post not found: redis的内存淘汰策略 redis的内存淘汰策略</a>
+
+
+<a href="#">Post not found: #redis的内存淘汰策略 redis的内存淘汰策略</a><link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>test</category>
       </categories>

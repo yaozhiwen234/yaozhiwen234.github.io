@@ -80,11 +80,10 @@
     <title>Java 中的并发</title>
     <url>/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/</url>
     <content><![CDATA[<h3 id="java-中的Lock"><a href="#java-中的Lock" class="headerlink" title="java 中的Lock"></a>java 中的Lock</h3><ol>
-<li><p>ReentrantLock</p>
-<p>2.ReentrantReadWriteLock </p>
-<p>3.ReentrantLock</p>
-<p>4.lock</p>
-</li>
+<li>ReentrantLock</li>
+<li>ReentrantReadWriteLock</li>
+<li>ReentrantLock</li>
+<li>lock</li>
 </ol>
 <h3 id="java-中的并发容器"><a href="#java-中的并发容器" class="headerlink" title="java 中的并发容器"></a>java 中的并发容器</h3><ol>
 <li>ConcurrentHashMap：并发版 HashMap</li>
@@ -105,10 +104,16 @@
 <h3 id="java-中的并发框架"><a href="#java-中的并发框架" class="headerlink" title="java 中的并发框架"></a>java 中的并发框架</h3><ol>
 <li>Fork/join</li>
 </ol>
-<h3 id="java中的并发工具类"><a href="#java中的并发工具类" class="headerlink" title="java中的并发工具类"></a>java中的并发工具类</h3><p>   1.CountDownLatch</p>
-<p>   2.CyclicBarrier</p>
-<p>   3.Semaphore</p>
-<p>   4.Exchanger</p>
+<h3 id="java中的并发工具类"><a href="#java中的并发工具类" class="headerlink" title="java中的并发工具类"></a>java中的并发工具类</h3><ol>
+<li><p>CountDownLatch</p>
+</li>
+<li><p>CyclicBarrier</p>
+</li>
+<li><p>Semaphore</p>
+</li>
+<li><p>Exchanger</p>
+</li>
+</ol>
 <h3 id="Java中的原子操作类"><a href="#Java中的原子操作类" class="headerlink" title="Java中的原子操作类"></a>Java中的原子操作类</h3><ul>
 <li><p><strong>原子更新基本类型</strong></p>
 <p>·AtomicBoolean：原子更新布尔类型。<br>·AtomicInteger：原子更新整型。<br>·AtomicLong：原子更新长整型。</p>

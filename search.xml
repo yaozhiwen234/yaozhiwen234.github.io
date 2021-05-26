@@ -499,12 +499,12 @@ A[pc1]
 </tr>
 <tr>
 <td>&gt;&gt;</td>
-<td>按位右移运算符。按照指定的位数右移并以符号位填空 ,如果该数为正，则高位补0，若为负数，则高位补1；</td>
+<td>按位右移运算符。按照指定的位数右移并以符号位填空 ,如果该数为正，则高位补0，若为负数，则高位补1；带符号右移</td>
 <td>1100 &gt;&gt;1 = 1110</td>
 </tr>
 <tr>
 <td>&gt;&gt;&gt;</td>
-<td>按位右移补0操作,按照指定的位数右移并以零填空位,无符号右移，也叫逻辑右移，即若该数为正，则高位补0，而若该数为负数，则右移后高位同样补0</td>
+<td>按位右移补0操作,按照指定的位数右移并以零填空位,无符号右移，也叫逻辑右移，即若该数为正，则高位补0，而若该数为负数，则右移后高位同样补0；不带符号右移</td>
 <td>1100 &gt;&gt;&gt; 1 =  0110</td>
 </tr>
 </tbody></table>
@@ -529,6 +529,55 @@ A[pc1]
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>随笔记录</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java对象结构</title>
+    <url>/2021/05/24/java%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="java对象结构"><a href="#java对象结构" class="headerlink" title="java对象结构"></a>java对象结构</h1><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/juc/%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84.png" alt="对象布局"></p>
+<p><strong>HotSpot虚拟机</strong> markOop.cpp 中的 C++ 代码注释片段，描述了 64bits 下 mark-word 的存储状态，也就是如上图结构示意。</p>
+<p>markOop.cpp 源码地址： <a href="http://hg.openjdk.java.net/jdk8/jdk8/hotspot/file/87ee5ee27509/src/share/vm/oops/markOop.hpp">jdk8/hotspot/file/vm/oops/markOop.hpp</a></p>
+<p><strong>HotSpot虚拟机中</strong>，对象在内存中存储的布局可以分为三块区域：<code>对象头（Header）</code>、<code>实例数据（Instance Data）</code>和<code>对齐填充（Padding）</code>。</p>
+<ul>
+<li>mark-word：对象标记字段占4个字节，用于存储一些列的标记位，比如：哈希值、轻量级锁的标记位，偏向锁标记位、分代年龄等。</li>
+<li>Klass Pointer：Class对象的类型指针，Jdk1.8默认开启指针压缩后为4字节，关闭指针压缩（<code>-XX:-UseCompressedOops</code>）后，长度为8字节。其指向的位置是对象对应的Class对象（其对应的元数据对象）的内存地址。</li>
+<li>对象实际数据：包括对象的所有成员变量，大小由各个成员变量决定，比如：byte占1个字节8比特位、int占4个字节32比特位。</li>
+<li>对齐：最后这段空间补全并非必须，仅仅为了起到占位符的作用。由于HotSpot虚拟机的内存管理系统要求对象起始地址必须是8字节的整数倍，所以对象头正好是8字节的倍数。因此当对象实例数据部分没有对齐的话，就需要通过对齐填充来补全。</li>
+</ul>
+<p><strong>另外</strong>，在mark-word锁类型标记中，无锁，偏向锁，轻量锁，重量锁，以及GC标记，5种类中没法用2比特标记（2比特最终有4种组合<code>00</code>、<code>01</code>、<code>10</code>、<code>11</code>），所以无锁、偏向锁，前又占了一位偏向锁标记。最终：001为无锁、101为偏向锁。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;!-- https:<span class="comment">//mvnrepository.com/artifact/org.openjdk.jol/jol-core --&gt;</span></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.openjdk.jol&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jol-core&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.9&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class A &#123;</span><br><span class="line">    int i &#x3D; 3;</span><br><span class="line">    int i1 &#x3D; 3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class B &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        A a &#x3D; new A();</span><br><span class="line">&#x2F;&#x2F;        Object o &#x3D; new Object();</span><br><span class="line">&#x2F;&#x2F;        System.out.println(o + &quot; 十六进制哈希：&quot; + Integer.toHexString(o.hashCode()));</span><br><span class="line">&#x2F;&#x2F;        System.out.println(ClassLayout.parseInstance(a).toPrintable());</span><br><span class="line">        System.out.println(ClassLayout.parseInstance(a).toPrintable());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">com.yzw.juc.markWord.A@5cad8086 十六进制哈希：5cad8086</span><br><span class="line">com.yzw.juc.markWord.A object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE</span><br><span class="line">      <span class="number">0</span>     <span class="number">4</span>        (object header)                           <span class="number">01</span> <span class="number">86</span> <span class="number">80</span> ad (<span class="number">00000001</span> <span class="number">10000110</span> <span class="number">10000000</span> <span class="number">10101101</span>) (-<span class="number">1384086015</span>)</span><br><span class="line">      <span class="number">4</span>     <span class="number">4</span>        (object header)                           5c <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> (<span class="number">01011100</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span>) (<span class="number">92</span>)</span><br><span class="line">      <span class="number">8</span>     <span class="number">4</span>        (object header)                           <span class="number">43</span> c1 <span class="number">00</span> f8 (<span class="number">01000011</span> <span class="number">11000001</span> <span class="number">00000000</span> <span class="number">11111000</span>) (-<span class="number">134168253</span>)</span><br><span class="line">     <span class="number">12</span>     <span class="number">4</span>    <span class="keyword">int</span> A.i                                       <span class="number">3</span></span><br><span class="line">     <span class="number">16</span>     <span class="number">4</span>    <span class="keyword">int</span> A.i1                                      <span class="number">3</span></span><br><span class="line">     <span class="number">20</span>     <span class="number">4</span>        (loss due to the next object alignment)</span><br><span class="line">Instance size: <span class="number">24</span> bytes</span><br><span class="line">Space losses: <span class="number">0</span> bytes internal + <span class="number">4</span> bytes external = <span class="number">4</span> bytes total</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>运行结果</li>
+</ul>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/juc/%E5%A4%B4%E5%83%8F%E5%A4%B4%E5%AD%98%E5%82%A8%E9%AA%8C%E8%AF%81.png" alt="验证"></p>
+<ul>
+<li><p><strong>如上图：</strong> markWord 占8字节   Klass Point占4字节  实际的对象数据占8字节  最后四个字节用于填充对齐</p>
+</li>
+<li><p><strong>如上图：</strong> 对象的头部也存放了hash,只不过这个哈希值是倒过来的</p>
+<p><strong>关于倒过来的问题是大小端存储导致的</strong></p>
+<ul>
+<li>Big-Endian：高位字节存放于内存的低地址端，低位字节存放于内存的高地址端</li>
+<li>Little-Endian：低位字节存放于内存的低地址端，高位字节存放于内存的高地址端</li>
+</ul>
+</li>
+</ul>
+<p><strong>markWord结构</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/juc/markword%E7%BB%93%E6%9E%84.png" alt="markWord"></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>java基础知识</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
@@ -639,6 +688,120 @@ A[pc1]
       </tags>
   </entry>
   <entry>
+    <title>synchronized</title>
+    <url>/2021/05/24/synchronized/</url>
+    <content><![CDATA[<h1 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h1><ul>
+<li><p><strong>jdk早期的synchronized为什么是重量级的</strong></p>
+<p>因为我们的jvm是运行在操作系统上的，即用户态，而我们的操作系统是运行在内核态的，用户态中的程序是不能直接调用系统指令的，所以synchronized必须经过老大操作系统,所以synchronized是重量级锁</p>
+</li>
+<li><p><strong>synchronized的升级过程</strong></p>
+</li>
+</ul>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/juc/synchronized%E5%8D%87%E7%BA%A7%E8%BF%87%E7%A8%8B.png" alt="锁升级"></p>
+<ul>
+<li><p><strong>偏向锁：</strong></p>
+<p>引入偏向锁是为了在<code>无多线程</code>竞争的情况下尽量减少不必要的轻量级锁执行路径，因为轻量级锁的获取及释放依赖多次CAS原子指令，而偏向锁只需要在置换ThreadID的时候依赖一次CAS原子指令（由于一旦出现多线程竞争的情况就必须撤销偏向锁，所以偏向锁的撤销操作的性能损耗必须小于节省下来的CAS原子指令的性能消耗）。上面说过，轻量级锁是为了在线程交替执行同步块时提高性能，而偏向锁则是在只有一个线程执行同步块时进一步提高性能。</p>
+</li>
+<li><p><strong>偏向锁的获取：</strong></p>
+<p>（1）访问Mark Word中偏向锁的标识是否设置成1，锁标志位是否为01——确认为可偏向状态。</p>
+<p>（2）当第一次第一个线程来的时候将Mark Word中线程ID设置为当前线程ID</p>
+</li>
+<li><p><strong>偏向锁的释放</strong></p>
+<p>偏向锁只有遇到其他线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁，线程不会主动去释放偏向锁。偏向锁的撤销，需要等待全局安全点（在这个时间点上没有字节码正在执行），它会首先暂停拥有偏向锁的线程，判断锁对象是否处于被锁定状态，撤销偏向锁后恢复到未锁定（标志位为“01”）或轻量级锁（标志位为“00”）的状态。</p>
+</li>
+<li><p><strong>偏向锁的使用</strong></p>
+<p>偏向锁 - markword 上记录当前线程指针，下次同一个线程加锁的时候，不需要争用, 只需要判断线程指针是否同一个，所以，偏向              锁, 偏向加锁的第一个线程 。hashCode备份在线程栈上 线程销毁，锁降级为无锁</p>
+<p> 有争用 - 锁升级为轻量级锁 - 每个线程有自己的LockRecord在自己的线程栈上，用CAS去争用markword的LR的指针，指针指向哪个线程的LR，哪个线程就拥有锁</p>
+</li>
+<li><p><strong>匿名偏向锁</strong></p>
+<p>默认情况 偏向锁有个时延，默认是4秒</p>
+<p>打开偏向锁刚 new 出来的对象就是匿名偏向锁</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>注：</strong></p>
+<p>  在 JDK 15 中，默认情况下禁用偏向锁（Biased Locking），并弃用所有相关的命令行选项。</p>
+</li>
+<li><p><strong>自旋锁</strong></p>
+<p>自旋锁在 JDK1.4.2 中引入，使用 -XX:+UseSpinning 来开启。JDK 6 中变为默认开启，并且引入了自适应的自旋锁（适应性自旋锁）。</p>
+<p>自适应自旋锁意味着自旋的时间（次数）不再固定，而是由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定。如果在同一个锁对象上，自旋等待刚刚成功获得过锁，并且持有锁的线程正在运行中，那么虚拟机就会认为这次自旋也是很有可能再次成功，进而它将允许自旋等待持续相对更长的时间。如果对于某个锁，自旋很少成功获得过，那在以后尝试获取这个锁时将可能省略掉自旋过程，直接阻塞线程，避免浪费处理器资源。</p>
+</li>
+<li><p><strong>什么情况下升级为重量级锁</strong></p>
+<p>锁的时间长，或者自旋线程多</p>
+</li>
+<li><p><strong>new –&gt; 偏向锁 –&gt; 轻量级锁 （无锁, 自旋锁，自适应自旋）–&gt; 重量级锁</strong></p>
+<ol>
+<li><p>Object o = new Object()<br>锁 = 0 01 无锁态<br>注意：如果偏向锁打开，默认是匿名偏向状态,不偏向任何线程</p>
+</li>
+<li><p>o.hashCode()<br>001 + hashcode</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="number">00000001</span> <span class="number">10101101</span> <span class="number">00110100</span> <span class="number">00110110</span></span><br><span class="line"><span class="number">01011001</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span></span><br></pre></td></tr></table></figure>
+
+<p>little endian big endian </p>
+<p>00000000 00000000 00000000 01011001 00110110 00110100 10101101 00000000</p>
+</li>
+<li><p>默认synchronized(o)<br>00 -&gt; 轻量级锁<br>默认情况 偏向锁有个时延，默认是4秒<br>why? 因为JVM虚拟机自己有一些默认启动的线程，里面有好多sync代码，这些sync代码启动时就知道肯定会有竞争，如果使用偏向锁，就会造成偏向锁不断的进行锁撤销和锁升级的操作，效率较低。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">-XX:BiasedLockingStartupDelay=0</span><br></pre></td></tr></table></figure></li>
+<li><p>如果设定上述参数<br>new Object () - &gt; 101 偏向锁 -&gt;线程ID为0 -&gt; Anonymous BiasedLock<br>打开偏向锁，new出来的对象，默认就是一个可偏向匿名对象101</p>
+</li>
+<li><p>如果有线程上锁<br>上偏向锁，指的就是，把markword的线程ID改为自己线程ID的过程<br>偏向锁不可重偏向 批量偏向 批量撤销</p>
+</li>
+<li><p>如果有线程竞争<br>撤销偏向锁，升级轻量级锁<br>线程在自己的线程栈生成LockRecord ，用CAS操作将markword设置为指向自己这个线程的LR的指针，设置成功者得到锁</p>
+</li>
+<li><p>如果竞争加剧<br>竞争加剧：有线程超过10次自旋， -XX:PreBlockSpin， 或者自旋线程数超过CPU核数的一半， 1.6之后，加入自适应自旋 Adapative Self Spinning ， JVM自己控制<br>升级重量级锁：-&gt; 向操作系统申请资源，linux mutex , CPU从3级-0级系统调用，线程挂起，进入等待队列，等待操作系统的调度，然后再映射回用户空间</p>
+</li>
+</ol>
+<p>(以上实验环境是JDK11，打开就是偏向锁，而JDK8默认对象头是无锁)</p>
+<p>偏向锁默认是打开的，但是有一个时延，如果要观察到偏向锁，应该设定参数</p>
+<p><strong>如果计算过对象的hashCode，则对象无法进入偏向状态！</strong></p>
+<blockquote>
+<p>轻量级锁重量级锁的hashCode存在与什么地方？</p>
+<p>答案：线程栈中，轻量级锁的LR中，或是代表重量级锁的ObjectMonitor的成员中</p>
+</blockquote>
+<p><strong>为什么有自旋锁还需要重量级锁？</strong></p>
+<blockquote>
+<p>自旋是消耗CPU资源的，如果锁的时间长，或者自旋线程多，CPU会被大量消耗</p>
+<p>重量级锁有等待队列，所有拿不到锁的进入等待队列，不需要消耗CPU资源</p>
+</blockquote>
+<p><strong>偏向锁是否一定比自旋锁效率高？</strong></p>
+<blockquote>
+<p>不一定，在明确知道会有多线程竞争的情况下，偏向锁肯定会涉及锁撤销，这时候直接使用自旋锁</p>
+<p>JVM启动过程，会有很多线程竞争（明确），所以默认情况启动时不打开偏向锁，过一段儿时间再打开</p>
+</blockquote>
+</li>
+<li><p><strong>锁重入</strong></p>
+<p>sychronized是可重入锁</p>
+<p>重入次数必须记录，因为要解锁几次必须得对应</p>
+<p>偏向锁 自旋锁 -&gt; 线程栈 -&gt; LR + 1</p>
+</li>
+<li><p> <strong>锁消除 lock eliminate</strong></p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String str1,String str2)</span></span>&#123;</span><br><span class="line">         StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">         sb.append(str1).append(str2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们都知道 StringBuffer 是线程安全的，因为它的关键方法都是被 synchronized 修饰过的，但我们看上面这段代码，我们会发现，sb 这个引用只会在 add 方法中使用，不可能被其它线程引用（因为是局部变量，栈私有），因此 sb 是不可能共享的资源，JVM 会自动消除 StringBuffer 对象内部的锁。</p>
+<ul>
+<li><strong>锁粗化 lock coarsening</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">test</span><span class="params">(String str)</span></span>&#123;</span><br><span class="line">       </span><br><span class="line">       <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">       StringBuffer sb = <span class="keyword">new</span> StringBuffer():</span><br><span class="line">       <span class="keyword">while</span>(i &lt; <span class="number">100</span>)&#123;</span><br><span class="line">           sb.append(str);</span><br><span class="line">           i++;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> sb.toString():</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JVM 会检测到这样一连串的操作都对同一个对象加锁（while 循环内 100 次执行 append，没有锁粗化的就要进行 100  次加锁/解锁），此时 JVM 就会将加锁的范围粗化到这一连串的操作的外部（比如 while 虚幻体外），使得这一连串操作只需要加一次锁即可。</p>
+<ul>
+<li><strong>锁降级</strong></li>
+</ul>
+<p><a href="https://www.zhihu.com/question/63859501">https://www.zhihu.com/question/63859501</a></p>
+<ul>
+<li><strong>超线程</strong></li>
+</ul>
+<p>一个ALU + 两组Registers + PC</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>tcpip协议</title>
     <url>/2021/03/21/tcpip%E5%8D%8F%E8%AE%AE/</url>
     <content><![CDATA[<h3 id="Tcp-ip协议"><a href="#Tcp-ip协议" class="headerlink" title="Tcp/ip协议"></a>Tcp/ip协议</h3><p>   <strong>TCP/IP传输协议，即传输控制/网络协议，也叫作网络通讯协议</strong></p>
@@ -663,22 +826,69 @@ A[pc1]
       </tags>
   </entry>
   <entry>
-    <title>test</title>
-    <url>/2021/04/18/test/</url>
-    <content><![CDATA[<h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><p><a href="#test">点test</a></p>
-<p><a href="#redis%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">点redis</a></p>
-<p><a href="#redis%E4%BB%8B%E7%BB%8D">点redis介绍</a></p>
-<a href="/2021/04/07/redis/" title="redis">redis</a>
+    <title>volatile</title>
+    <url>/2021/05/24/volatile/</url>
+    <content><![CDATA[<h2 id="volatile的用途"><a href="#volatile的用途" class="headerlink" title="volatile的用途"></a>volatile的用途</h2><h3 id="问题：-DCL单例需不需要加volatile？"><a href="#问题：-DCL单例需不需要加volatile？" class="headerlink" title="问题： DCL单例需不需要加volatile？"></a>问题： DCL单例需不需要加volatile？</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    <span class="comment">//此处加volatile 和 不加的区别</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Instance ins = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Instance <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (ins == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Instance.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (ins == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    ins = <span class="keyword">new</span> Instance();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ins;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<a href="#">Post not found: redis的内存淘汰策略 redis的内存淘汰策略</a>
+<h3 id="1-防止指令重排序"><a href="#1-防止指令重排序" class="headerlink" title="1.防止指令重排序"></a>1.防止指令重排序</h3><ul>
+<li>证明指令重排序存在</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> x = <span class="number">0</span>, y = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        i++;</span><br><span class="line">        x = <span class="number">0</span>;</span><br><span class="line">        y = <span class="number">0</span>;</span><br><span class="line">        a = <span class="number">0</span>;</span><br><span class="line">        b = <span class="number">0</span>;</span><br><span class="line">        Thread one = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            a = <span class="number">1</span>;</span><br><span class="line">            x = b;</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread other = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            b = <span class="number">1</span>;</span><br><span class="line">            y = a;</span><br><span class="line">        &#125;);</span><br><span class="line">        one.start();</span><br><span class="line">        other.start();</span><br><span class="line">        one.join();</span><br><span class="line">        other.join();</span><br><span class="line">        String result = <span class="string">&quot;第&quot;</span> + i + <span class="string">&quot;次 (&quot;</span> + x + <span class="string">&quot;,&quot;</span> + y + <span class="string">&quot;）&quot;</span>;</span><br><span class="line">        <span class="comment">// 出现00组合 证明cpu乱序执行了</span></span><br><span class="line">        <span class="keyword">if</span> (x == <span class="number">0</span> &amp;&amp; y == <span class="number">0</span>) &#123;</span><br><span class="line">            System.err.println(result);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">//  System.out.println(result);</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不存乱序的情况下应该输出的值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">x = <span class="number">1</span>;</span><br><span class="line">y = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">x = <span class="number">0</span>;</span><br><span class="line">y = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">x = <span class="number">1</span>;</span><br><span class="line">y = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>存在乱序的情况下出现的值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">第<span class="number">461233</span>次 (<span class="number">0</span>,<span class="number">0</span>）</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>对象创建的过程</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//https://blog.csdn.net/u010737756/article/details/104843152</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">10</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        C o = <span class="keyword">new</span> C();</span><br><span class="line">        System.out.println(ClassLayout.parseInstance(o).toPrintable());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1.使用 idea 的插件jclasslib  Bytecode Viewer 即可查看对象实例化过程的字节码</p>
+<p><code>new C();</code>实列化过程 </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">0 new #2 &lt;com/yzw/juc/markWord/C&gt;</span><br><span class="line"><span class="number">3</span> dup</span><br><span class="line">4 invokespecial #3 &lt;com/yzw/juc/markWord/C.&lt;init&gt;&gt;</span><br><span class="line"><span class="number">7</span> astore_1</span><br><span class="line"><span class="number">8</span> <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<p><code>new C();</code>字节码解释</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="number">0</span> <span class="keyword">new</span>                         创建一个对象，并且其引用进栈</span><br><span class="line"><span class="number">3</span> dup                         复制栈顶数值，并且复制值进栈</span><br><span class="line"><span class="number">4</span> invokespecial               调用超类构造方法、实例初始化方法、私有方法</span><br><span class="line"><span class="number">7</span> astore_1                    将栈顶数值（objectref）存入当前</span><br><span class="line"><span class="number">8</span> <span class="keyword">return</span>                      从当前方法返回<span class="keyword">void</span></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>字节码</strong></li>
+</ul>
+<p>0.new -&gt;申请内存。堆里有了一个新的内存。（<strong>半初始化。成员变量设置默认值</strong>）</p>
+<pre class="mermaid">graph LR
+A(c)    
+B[i = 0]</pre>
 
 
-<a href="#">Post not found: #redis的内存淘汰策略 redis的内存淘汰策略</a><link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+
+<p>3 dup 因为invokespecial会消耗一份，所以必须先复制一份<br>4 invokespecial T initlize 初始化，<strong>调用他的构造方法</strong></p>
+<pre class="mermaid">graph LR
+A(c)  
+B[i = 8]</pre>
+
+<p>7 astore_1 <strong>把c与i建立关联</strong></p>
+<pre class="mermaid">graph LR
+A(c)  --> B[i = 8]</pre>
+
+<p>8 return                      从当前方法返回void</p>
+<ul>
+<li>结论</li>
+</ul>
+<p>由上述步骤可以看出：<code>在多线程的环境下，假设线程1拿到锁Instance.class，线程1执行锁中的代码时有可能会发生  c与i先建立联系 ， 然后给i赋值，此时线程2如果出现进入第一个判断ins！= null,此时的线程2就会直接 return ins，所以这里就会出现问题</code></p>
+<h3 id="2-保证线程的可见性"><a href="#2-保证线程的可见性" class="headerlink" title="2.保证线程的可见性"></a>2.<strong>保证线程的可见性</strong></h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//证明线程的可见性</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">V</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*volatile*/</span> <span class="keyword">boolean</span> running = <span class="keyword">true</span>; <span class="comment">//对比一下有无volatile的情况下，整个程序运行结果的区别</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">m</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;m start&quot;</span>);</span><br><span class="line">        <span class="keyword">while</span> (running) &#123;</span><br><span class="line">            <span class="comment">//System.out.println(&quot;runing.....&quot;);</span></span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;m end!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        V v = <span class="keyword">new</span> V();</span><br><span class="line">        <span class="keyword">new</span> Thread(v::m, <span class="string">&quot;t1&quot;</span>).start();</span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">        v.running = <span class="keyword">false</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;min stop&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>test</category>
+        <category>java基础知识</category>
       </categories>
       <tags>
-        <tag>test</tag>
+        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>
@@ -706,8 +916,12 @@ A[pc1]
 </ul>
 <p>​        nameserver 8.8.8.8<br>​         nameserver 114.114.114.114search localdomain</p>
 <p><strong>注意：是用以上的配置替换文件中的所有配置</strong></p>
-<p><a href="https://github.com/ruolanaces/kxsw">详情攻略</a></p>
-<p>上网攻略：<a href="https://github.com/ruolanaces/kxsw">https://github.com/ruolanaces/kxsw</a></p>
+<h3 id="KX上网完整攻略"><a href="#KX上网完整攻略" class="headerlink" title="KX上网完整攻略"></a>KX上网完整攻略</h3><p>客观条件要求：<br>1，代理节点：<br>免费节点分享：<a href="http://bit.ly/3cFPrfV">http://bit.ly/3cFPrfV</a><br>免费节点订阅：<a href="http://bit.ly/2xa7o67">http://bit.ly/2xa7o67</a><br>2，代理客户端：<br>ssr客户端免费下载：<br>PC端：<a href="https://github.com/shadowsocksrr/shadowsocksr-csharp/releases">https://github.com/shadowsocksrr/shadowsocksr-csharp/releases</a><br>-下载最新版本的zip压缩包；<br>MAC端：<a href="https://github.com/qinyuhang/ShadowsocksX-NG-R/releases">https://github.com/qinyuhang/ShadowsocksX-NG-R/releases</a><br>-下载最新版本的dmg安装包；<br>安卓端：<a href="https://github.com/shadowsocksrr/shadowsocksr-android/releases">https://github.com/shadowsocksrr/shadowsocksr-android/releases</a><br>-下载最上面的版本 APK安装包（一般Android手机浏览器会自动下安装）。<br>v2ray客户端免费下载：<br>PC端和MAC端：<a href="https://github.com/v2ray/v2ray-core/releases">https://github.com/v2ray/v2ray-core/releases</a><br>-PC端下载最新版本的zip压缩包；MAC端下载最新的macos版本zip压缩包后解压；<br>MAC端其他版本v2rayU：<a href="https://github.com/yanue/V2rayU/releases">https://github.com/yanue/V2rayU/releases</a><br>-下载最新版本的dmg安装包;<br>安卓端：<a href="https://github.com/2dust/v2rayNG/releases">https://github.com/2dust/v2rayNG/releases</a><br>-下载最新版本的APK安装包。<br>IOS（苹果手机iphone或ipad）建议使用小火箭shadowrocket和quantumult，但因为大陆商店统统下架，所以只能使用非大陆地区的AppleID，打开App Store才能找到这两个软件，而且这两个软件收费;<br>如果希望不花钱也可以安装小火箭，请看我的视频：免费分享美区香港Apple ID(已购买小火箭shadowrocket)</p>
+<p>小火箭shadowrocket ipa安装包下载：<br>小火箭爱思助手ipa安装包：<a href="http://bit.ly/38r7VNX">http://bit.ly/38r7VNX</a><br>小火箭和quantumult配置文件规则：<br>最完善的小火箭翻墙规则：<a href="https://github.com/h2y/Shadowrocket-ADBlock-Rules">https://github.com/h2y/Shadowrocket-ADBlock-Rules</a><br>quantumult等客户端配置规则：<a href="https://github.com/lhie1/Rules">https://github.com/lhie1/Rules</a><br>以上规则足够使用；<br>如果youtube出现黑屏 请点进去所使用的规则列表 搜索youtube 删除 “ads.youtube.com”这条规则.<br>如果不会添加规则，请看我的视频：小火箭使用教程</p>
+<p>自己搭建代理节点<br>自己搭建代理节点，需要租用一台vps，视频教程里我会以谷歌云vps为例，因为谷歌云可以免费申请300美金的赠金，并且有一年的有效期。假如赠金用光或是有效期到期，还可以申请新的账号，再获取300美金赠金，并可转移至老账户作为付款账户，如此可以不用修改已经在用的节点而一直免费使用，爽吧！</p>
+<p>一，ssr节点搭建步骤<br>系统要求：<br>CentOS 6+ / Debian 6+ / Ubuntu 14.04 +<br>推荐使用Debian 8+<br>安装：<br>简单的来说，如果你什么都不懂，那么你直接一路回车就可以了！</p>
+<p>进入root目录：<br>首先确认命令符框最前面是不是root@xxxxx<br>如果不是, 说明不在根目录，请输入：<br>sudo su<br>输入上面代码回车后可能会提示你输入当前用户的密码，输入并回车后，没有报错就继续下面的步骤安装ShadowsocksR。<br>ssr一键安装脚本（逗比-单用户）：<br>wget -N –no-check-certificate <a href="https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/ssr.sh">https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/ssr.sh</a> &amp;&amp; chmod +x ssr.sh &amp;&amp; bash ssr.sh<br>单用户脚本：ssr.sh 则是单服务器单用户脚本，使用的是SSR服务端的单用户配置方式，即使实现了多端口，但是还算不上多用户，不支持每个用户(端口)不同的加密方式/协议/混淆等，并且无法管理流量使用。<br>ssr一键安装脚本（逗比-多用户）：<br>wget -N –no-check-certificate <a href="https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/ssrmu.sh">https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/ssrmu.sh</a> &amp;&amp; chmod +x ssrmu.sh &amp;&amp; bash ssrmu.sh<br>多用户脚本：ssrmu.sh 脚本是单服务器多用户脚本，使用的是SSR服务端的MudbJSON模式，可以给每个用户(端口)设置不同的加密方式/协议/混淆/限制速度/设备数限制/可用总流量等功能。即实现单服务器多用户流量管理等功能。<br>根据你的需求选择，比如你仅仅是 一个或两个人使用，并且不需要流量管理功能，那么选择 ssr.sh 好了。而如果很多人使用，并且都需要限制流量来管理，那你适合使用 ssrmu.sh , 所以自己看着选，多试试（两个脚本不能共存）！<br>运行后会提示你输入数字来选择要做什么。按提示操作即可;<br>如果全部完成，出现黑屏，请滑动一下你的鼠标滚轮！！！<br>使用管理：<br>运行脚本(单用户ssr.sh)：<br>bash ssr.sh<br>运行脚本(多用户ssrmu.sh)：<br>bash ssrmu.sh<br>输入对应的数字来执行相应的命令。<br>如果需要网络加速，可以安装BBR:<br>同样，需要在根目录操作：<br>如果没有安装wget GCP服务器，输入安装：<br>yum -y install wget<br>bbr加速一键安装脚本(其实以上ssr两个脚本14项“其他”里面已经可以安装）：<br>wget -N –no-check-certificate <a href="https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/bbr.sh">https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/bbr.sh</a> &amp;&amp; chmod +x bbr.sh &amp;&amp; bash bbr.sh<br>注意：在Debian系统中，删除旧内核时，会提示你是否终止删除内核的行为(点击打开图样)，这个需要你选择 (键盘方向键:选择，回车键:确认)。<br>使用管理：<br>1:启动bbr:bash bbr.sh start<br>2:关闭bbr:bash bbr.sh stop<br>3:查看bbr状态：bash bbr.sh status<br>二，v2ray节点搭建步骤<br>系统要求：<br>Ubuntu 16+ / Debian 8+ / CentOS 7+ 系统<br>推荐使用 Debian 9 系统，脚本会自动启用 BBR 优化。<br>安装：<br>进入root目录：<br>首先确认命令符框最前面是不是root@xxxxx<br>如果不是, 说明不在根目录，请输入：<br>sudo -i<br>v2ray一键安装脚本（233大佬)：<br>bash &lt;(curl -s -L <a href="https://git.io/v2ray.sh">https://git.io/v2ray.sh</a>)<br>如果提示 curl: command not found ，那是因为你的VPS没装Curl;<br>ubuntu/debian系统安装Curl,输入: apt-get update -y &amp;&amp; apt-get install curl -y<br>centos系统安装Curl,输入: yum update -y &amp;&amp; yum install curl -y<br>安装好curl之后就能安装脚本了!<br>安装完成后，自动启用bbr加速;<br>根目录下输入：v2ray 即可管理 V2Ray;<br>如果提示你的系统不支持此脚本，那么请尝试更换系统.<br>快速管理<br>查看 V2Ray 配置信息：v2ray info<br>修改 V2Ray 配置：v2ray config<br>生成 V2Ray 配置文件链接：v2ray link<br>生成 V2Ray 配置信息链接：v2ray infolink<br>生成 V2Ray 配置二维码链接：v2ray qr<br>查看 V2Ray 运行状态：v2ray status<br>启动 V2Ray：v2ray start<br>停止 V2Ray：v2ray stop<br>重启 V2Ray：v2ray restart<br>查看 V2Ray 运行日志：v2ray log<br>更新 V2Ray：v2ray update<br>更新 V2Ray 管理脚本：v2ray update.sh<br>卸载 V2Ray：v2ray uninstall<br>欢迎加入我的电报圈子<br>点击加入：<a href="https://bit.ly/2wqOQ1B">https://bit.ly/2wqOQ1B</a></p>
+<p>Telegram客户端免费下载：<br>PC(desktop)端：<a href="https://desktop.telegram.org/">https://desktop.telegram.org/</a><br>安卓：<a href="https://play.google.com/store/apps/details?id=org.telegram.messenger">https://play.google.com/store/apps/details?id=org.telegram.messenger</a><br>IOS：<a href="https://www.apple.com/us/search/telegram?src=globalnav">https://www.apple.com/us/search/telegram?src=globalnav</a><br>MacOS：<a href="https://macos.telegram.org/">https://macos.telegram.org/</a><br>WP：<a href="https://www.microsoft.com/en-us/p/telegram-messenger/9wzdncrdzhs0?rtc=1&amp;activetab=pivot:overviewtab">https://www.microsoft.com/en-us/p/telegram-messenger/9wzdncrdzhs0?rtc=1&amp;activetab=pivot:overviewtab</a><br>Web网页端：<a href="https://web.telegram.org/#/login">https://web.telegram.org/#/login</a><br>电报MTproxy一键脚本(逗比):<br>wget -N –no-check-certificate <a href="https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/mtproxy.sh">https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/mtproxy.sh</a> &amp;&amp; chmod +x mtproxy.sh &amp;&amp; bash mtproxy.sh<br>管理脚本：<br>./mtproxy.sh<br>请勿违反国家法律法规，否则后果自负！<br>使用一键脚本并不会害了你，并且会让你节省大量的时间，工具从来都是为了更快的解决问题。</p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>网络</category>

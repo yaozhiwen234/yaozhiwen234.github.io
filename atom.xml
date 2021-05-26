@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-04-18T12:23:52.713Z</updated>
+  <updated>2021-05-26T12:25:57.622Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -17,28 +17,77 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>test</title>
-    <link href="https://yaozw.top/2021/04/18/test/"/>
-    <id>https://yaozw.top/2021/04/18/test/</id>
-    <published>2021-04-18T11:54:59.000Z</published>
-    <updated>2021-04-18T12:23:52.713Z</updated>
+    <title>synchronized</title>
+    <link href="https://yaozw.top/2021/05/24/synchronized/"/>
+    <id>https://yaozw.top/2021/05/24/synchronized/</id>
+    <published>2021-05-24T10:18:11.000Z</published>
+    <updated>2021-05-26T12:25:57.622Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h3 id=&quot;test&quot;&gt;&lt;a href=&quot;#test&quot; class=&quot;headerlink&quot; title=&quot;test&quot;&gt;&lt;/a&gt;test&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;#test&quot;&gt;点test&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a</summary>
+    <summary type="html">&lt;h1 id=&quot;synchronized&quot;&gt;&lt;a href=&quot;#synchronized&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
-    <category term="test" scheme="https://yaozw.top/categories/test/"/>
+    <category term="java基础知识" scheme="https://yaozw.top/categories/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     
     
-    <category term="test" scheme="https://yaozw.top/tags/test/"/>
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>volatile</title>
+    <link href="https://yaozw.top/2021/05/24/volatile/"/>
+    <id>https://yaozw.top/2021/05/24/volatile/</id>
+    <published>2021-05-24T10:17:22.000Z</published>
+    <updated>2021-05-26T12:25:55.925Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;volatile的用途&quot;&gt;&lt;a href=&quot;#volatile的用途&quot; class=&quot;headerlink&quot; title=&quot;volatile的用途&quot;&gt;&lt;/a&gt;volatile的用途&lt;/h2&gt;&lt;h3 id=&quot;问题：-DCL单例需不需要加volatile？&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="java基础知识" scheme="https://yaozw.top/categories/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java对象结构</title>
+    <link href="https://yaozw.top/2021/05/24/java%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84/"/>
+    <id>https://yaozw.top/2021/05/24/java%E5%AF%B9%E8%B1%A1%E7%BB%93%E6%9E%84/</id>
+    <published>2021-05-24T10:16:07.000Z</published>
+    <updated>2021-05-26T12:25:54.198Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;java对象结构&quot;&gt;&lt;a href=&quot;#java对象结构&quot; class=&quot;headerlink&quot; title=&quot;java对象结构&quot;&gt;&lt;/a&gt;java对象结构&lt;/h1&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="java基础知识" scheme="https://yaozw.top/categories/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
     
   </entry>
   
@@ -148,7 +197,7 @@
     <link href="https://yaozw.top/2021/04/05/java%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%92%8C%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
     <id>https://yaozw.top/2021/04/05/java%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%92%8C%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6/</id>
     <published>2021-04-05T11:03:18.000Z</published>
-    <updated>2021-04-11T06:18:42.635Z</updated>
+    <updated>2021-04-21T13:31:42.499Z</updated>
     
     
       
@@ -344,11 +393,11 @@
   </entry>
   
   <entry>
-    <title>spring校验注解</title>
-    <link href="https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/"/>
-    <id>https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/</id>
+    <title>spring的注解</title>
+    <link href="https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/"/>
+    <id>https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/</id>
     <published>2021-03-16T03:06:50.000Z</published>
-    <updated>2021-03-16T04:50:22.562Z</updated>
+    <updated>2021-03-19T05:57:51.880Z</updated>
     
     
       
@@ -369,11 +418,11 @@
   </entry>
   
   <entry>
-    <title>spring的注解</title>
-    <link href="https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/"/>
-    <id>https://yaozw.top/2021/03/16/spring%E7%9A%84%E6%B3%A8%E8%A7%A3/</id>
+    <title>spring校验注解</title>
+    <link href="https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/"/>
+    <id>https://yaozw.top/2021/03/16/spring%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3/</id>
     <published>2021-03-16T03:06:50.000Z</published>
-    <updated>2021-03-19T05:57:51.880Z</updated>
+    <updated>2021-03-16T04:50:22.562Z</updated>
     
     
       
@@ -448,7 +497,7 @@
     <link href="https://yaozw.top/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/"/>
     <id>https://yaozw.top/2021/01/14/%E4%B8%8A%E7%BD%91%E6%94%BB%E7%95%A5/</id>
     <published>2021-01-14T01:56:18.000Z</published>
-    <updated>2021-03-21T10:39:30.804Z</updated>
+    <updated>2021-05-18T03:06:25.912Z</updated>
     
     
       
@@ -465,59 +514,6 @@
     
     
     <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java好的开源项目</title>
-    <link href="https://yaozw.top/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
-    <id>https://yaozw.top/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</id>
-    <published>2021-01-08T09:38:24.000Z</published>
-    <updated>2021-03-30T07:18:14.143Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;好的开源项目&quot;&gt;&lt;a href=&quot;#好的开源项目&quot; class=&quot;headerlink&quot; title=&quot;好的开源项目&quot;&gt;&lt;/a&gt;好的开源项目&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;项目简介&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;一个基于 Spring</summary>
-        
-      
-    
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/categories/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>访问者设计模式</title>
-    <link href="https://yaozw.top/2021/01/07/%E8%AE%BF%E9%97%AE%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2021/01/07/%E8%AE%BF%E9%97%AE%E8%80%85%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</id>
-    <published>2021-01-07T08:59:49.000Z</published>
-    <updated>2021-03-11T03:32:03.889Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h4 id=&quot;访问者设计模式-Vistor-Pattern&quot;&gt;&lt;a href=&quot;#访问者设计模式-Vistor-Pattern&quot; class=&quot;headerlink&quot; title=&quot;访问者设计模式(Vistor Pattern)&quot;&gt;&lt;/a&gt;访问者设计模式(Vistor</summary>
-        
-      
-    
-    
-    
-    <category term="程序设计" scheme="https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="23种设计模式" scheme="https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   

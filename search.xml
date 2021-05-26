@@ -77,6 +77,63 @@
       </tags>
   </entry>
   <entry>
+    <title>Java 中的并发</title>
+    <url>/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/</url>
+    <content><![CDATA[<h3 id="java-中的Lock"><a href="#java-中的Lock" class="headerlink" title="java 中的Lock"></a>java 中的Lock</h3><ol>
+<li><p>ReentrantLock</p>
+<p>2.ReentrantReadWriteLock </p>
+<p>3.ReentrantLock</p>
+<p>4.lock</p>
+</li>
+</ol>
+<h3 id="java-中的并发容器"><a href="#java-中的并发容器" class="headerlink" title="java 中的并发容器"></a>java 中的并发容器</h3><ol>
+<li>ConcurrentHashMap：并发版 HashMap</li>
+<li>CopyOnWriteArrayList：并发版 ArrayList</li>
+<li>CopyOnWriteArraySet：并发 Set</li>
+<li>ConcurrentLinkedQueue：并发队列 (基于链表)</li>
+<li>ConcurrentLinkedDeque：并发队列 (基于双向链表)</li>
+<li>ConcurrentSkipListMap：基于跳表的并发 Map</li>
+<li>ConcurrentSkipListSet：基于跳表的并发 Set</li>
+<li>ArrayBlockingQueue：阻塞队列 (基于数组)</li>
+<li>LinkedBlockingQueue：阻塞队列 (基于链表)</li>
+<li>LinkedBlockingDeque：阻塞队列 (基于双向链表)</li>
+<li>PriorityBlockingQueue：线程安全的优先队列</li>
+<li>SynchronousQueue：读写成对的队列</li>
+<li>LinkedTransferQueue：基于链表的数据交换队列</li>
+<li>DelayQueue：延时队列</li>
+</ol>
+<h3 id="java-中的并发框架"><a href="#java-中的并发框架" class="headerlink" title="java 中的并发框架"></a>java 中的并发框架</h3><ol>
+<li>Fork/join</li>
+</ol>
+<h3 id="java中的并发工具类"><a href="#java中的并发工具类" class="headerlink" title="java中的并发工具类"></a>java中的并发工具类</h3><p>   1.CountDownLatch</p>
+<p>   2.CyclicBarrier</p>
+<p>   3.Semaphore</p>
+<p>   4.Exchanger</p>
+<h3 id="Java中的原子操作类"><a href="#Java中的原子操作类" class="headerlink" title="Java中的原子操作类"></a>Java中的原子操作类</h3><ul>
+<li><p><strong>原子更新基本类型</strong></p>
+<p>·AtomicBoolean：原子更新布尔类型。<br>·AtomicInteger：原子更新整型。<br>·AtomicLong：原子更新长整型。</p>
+</li>
+<li><p><strong>原子更新数组</strong></p>
+<p>·AtomicIntegerArray：原子更新整型数组里的元素。<br>·AtomicLongArray：原子更新长整型数组里的元素。<br>·AtomicReferenceArray：原子更新引用类型数组里的元素。</p>
+</li>
+<li><p><strong>原子更新引用类型</strong></p>
+<p>·AtomicReference：原子更新引用类型。</p>
+<p>·AtomicReferenceFieldUpdater：原子更新引用类型里的字段。</p>
+<p>·AtomicMarkableReference：原子更新带有标记位的引用类型。可以原子更新一个布尔类型的标记位和引用类型。</p>
+</li>
+<li><p><strong>原子更新字段</strong></p>
+<p>·AtomicIntegerFieldUpdater：原子更新整型的字段的更新器。<br>·AtomicLongFieldUpdater：原子更新长整型字段的更新器。<br>·AtomicStampedReference：原子更新带有版本号的引用类型。该类将整数值与引用关联起来，可用于原子的更新数据和数据的版本号，可以解决使用CAS进行原子更新时可能出现的ABA问题。</p>
+</li>
+</ul>
+<h3 id="Executor"><a href="#Executor" class="headerlink" title="Executor"></a>Executor</h3><link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java中的深克隆和浅克隆</title>
     <url>/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/</url>
     <content><![CDATA[<h4 id="Java中的深克隆和浅克隆"><a href="#Java中的深克隆和浅克隆" class="headerlink" title="Java中的深克隆和浅克隆"></a>Java中的深克隆和浅克隆</h4><p><strong>浅克隆：</strong> 创建一个新对象，新对象的属性和原来对象完全相同（新对象的地址 ！= 原来对象的地址），对于非基本类型属性，仍指向原有属性所指向的对象的内存地址。**(String 类型除外)**。</p>
@@ -577,7 +634,7 @@ A[pc1]
 <p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/juc/markword%E7%BB%93%E6%9E%84.png" alt="markWord"></p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>java基础知识</category>
+        <category>Java基础知识</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
@@ -795,7 +852,7 @@ A[pc1]
 <p>一个ALU + 两组Registers + PC</p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>java基础知识</category>
+        <category>Java基础知识</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
@@ -885,7 +942,7 @@ A(c)  --> B[i = 8]</pre>
 
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>java基础知识</category>
+        <category>Java基础知识</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>

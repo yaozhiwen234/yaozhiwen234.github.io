@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-06-05T04:50:45.365Z</updated>
+  <updated>2021-06-10T07:41:52.944Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -15,6 +15,83 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>代码的精简之道</title>
+    <link href="https://yaozw.top/2021/06/10/%E4%BB%A3%E7%A0%81%E7%9A%84%E7%B2%BE%E7%AE%80%E4%B9%8B%E9%81%93/"/>
+    <id>https://yaozw.top/2021/06/10/%E4%BB%A3%E7%A0%81%E7%9A%84%E7%B2%BE%E7%AE%80%E4%B9%8B%E9%81%93/</id>
+    <published>2021-06-10T07:40:11.000Z</published>
+    <updated>2021-06-10T07:41:52.944Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/categories/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+    
+    <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java中基于文件的NIO</title>
+    <link href="https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/"/>
+    <id>https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/</id>
+    <published>2021-06-08T10:08:11.000Z</published>
+    <updated>2021-06-08T10:09:40.708Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;java-中文件NIO&quot;&gt;&lt;a href=&quot;#java-中文件NIO&quot; class=&quot;headerlink&quot; title=&quot;java 中文件NIO&quot;&gt;&lt;/a&gt;java 中文件NIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1.</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BIO</title>
+    <link href="https://yaozw.top/2021/06/08/BIO/"/>
+    <id>https://yaozw.top/2021/06/08/BIO/</id>
+    <published>2021-06-08T10:07:22.000Z</published>
+    <updated>2021-06-10T07:39:24.773Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;BIO&quot;&gt;&lt;a href=&quot;#BIO&quot; class=&quot;headerlink&quot; title=&quot;BIO&quot;&gt;&lt;/a&gt;BIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. 什么是BIO&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;B I/O，意为Blocking</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
   
   <entry>
     <title>HashMap源码详解</title>
@@ -430,81 +507,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;lvs的三种搭建模型&quot;&gt;&lt;a href=&quot;#lvs的三种搭建模型&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LVS</title>
-    <link href="https://yaozw.top/2021/03/21/LVS/"/>
-    <id>https://yaozw.top/2021/03/21/LVS/</id>
-    <published>2021-03-21T10:57:12.000Z</published>
-    <updated>2021-04-10T16:50:53.467Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;LVS的介绍&quot;&gt;&lt;a href=&quot;#LVS的介绍&quot; class=&quot;headerlink&quot; title=&quot;LVS的介绍&quot;&gt;&lt;/a&gt;LVS的介绍&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;LVS是什么？&lt;/strong&gt;&lt;br&gt;LVS（Linux Virtual</summary>
-        
-      
-    
-    
-    
-    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>tcpip协议</title>
-    <link href="https://yaozw.top/2021/03/21/tcpip%E5%8D%8F%E8%AE%AE/"/>
-    <id>https://yaozw.top/2021/03/21/tcpip%E5%8D%8F%E8%AE%AE/</id>
-    <published>2021-03-21T06:00:08.000Z</published>
-    <updated>2021-03-21T10:49:28.664Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;Tcp-ip协议&quot;&gt;&lt;a href=&quot;#Tcp-ip协议&quot; class=&quot;headerlink&quot; title=&quot;Tcp/ip协议&quot;&gt;&lt;/a&gt;Tcp/ip协议&lt;/h3&gt;&lt;p&gt;  </summary>
-        
-      
-    
-    
-    
-    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>http协议</title>
-    <link href="https://yaozw.top/2021/03/21/http%E5%8D%8F%E8%AE%AE/"/>
-    <id>https://yaozw.top/2021/03/21/http%E5%8D%8F%E8%AE%AE/</id>
-    <published>2021-03-21T05:48:32.000Z</published>
-    <updated>2021-03-21T10:39:26.489Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;http协议&quot;&gt;&lt;a href=&quot;#http协议&quot; class=&quot;headerlink&quot; title=&quot;http协议&quot;&gt;&lt;/a&gt;http协议&lt;/h3&gt;&lt;p&gt;HTTP协议是Hyper Text Transfer</summary>
         
       
     

@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yaozw.top/2021/06/12/test/</loc>
+    
+    <lastmod>2021-06-12</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yaozw.top/2021/06/11/ww/</loc>
+    
+    <lastmod>2021-06-11</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yaozw.top/2021/06/10/%E4%BB%A3%E7%A0%81%E7%9A%84%E7%B2%BE%E7%AE%80%E4%B9%8B%E9%81%93/</loc>
     
     <lastmod>2021-06-10</lastmod>
@@ -487,7 +501,7 @@
 
   <url>
     <loc>https://yaozw.top/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -495,49 +509,63 @@
   
   <url>
     <loc>https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/tags/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/tags/Demo/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://yaozw.top/tags/test/</loc>
+    <lastmod>2021-06-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://yaozw.top/tags/ww/</loc>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/tags/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/tags/%E4%B8%83%E5%A4%A7%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -546,91 +574,105 @@
   
   <url>
     <loc>https://yaozw.top/categories/%E5%88%86%E5%B8%83%E5%BC%8F/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/mybatis/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/mysql/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/springBoot/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/spring/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://yaozw.top/categories/test/</loc>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/web%E5%AE%89%E5%85%A8/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://yaozw.top/categories/ww/</loc>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/%E7%BC%93%E5%AD%98/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://yaozw.top/categories/redis/</loc>
-    <lastmod>2021-06-11</lastmod>
+    <lastmod>2021-06-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>

@@ -1054,6 +1054,18 @@ A[pc1]
       </tags>
   </entry>
   <entry>
+    <title>test</title>
+    <url>/2021/06/12/test/</url>
+    <content><![CDATA[<p>sss<br>WWWW</p>
+<h2 id="test"><a href="#test" class="headerlink" title="test"></a>test</h2><link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>test</category>
+      </categories>
+      <tags>
+        <tag>test</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>volatile</title>
     <url>/2021/05/24/volatile/</url>
     <content><![CDATA[<h2 id="volatile的用途"><a href="#volatile的用途" class="headerlink" title="volatile的用途"></a>volatile的用途</h2><h3 id="问题：-DCL单例需不需要加volatile？"><a href="#问题：-DCL单例需不需要加volatile？" class="headerlink" title="问题： DCL单例需不需要加volatile？"></a>问题： DCL单例需不需要加volatile？</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Instance</span> </span>&#123;</span><br><span class="line">    <span class="comment">//此处加volatile 和 不加的区别</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Instance ins = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Instance <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (ins == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Instance.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (ins == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    ins = <span class="keyword">new</span> Instance();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ins;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1129,6 +1141,17 @@ A(c)  --> B[i = 8]</pre>
       </categories>
       <tags>
         <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ww</title>
+    <url>/2021/06/11/ww/</url>
+    <content><![CDATA[<h3 id="test-fsds"><a href="#test-fsds" class="headerlink" title="test  fsds"></a>test  fsds</h3><link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>ww</category>
+      </categories>
+      <tags>
+        <tag>ww</tag>
       </tags>
   </entry>
   <entry>

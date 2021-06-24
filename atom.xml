@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-06-24T09:43:54.308Z</updated>
+  <updated>2021-06-24T12:13:13.978Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -21,15 +21,14 @@
     <link href="https://yaozw.top/2021/06/24/%E5%AF%B9%E8%B1%A1%E5%AE%9A%E4%BD%8D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
     <id>https://yaozw.top/2021/06/24/%E5%AF%B9%E8%B1%A1%E5%AE%9A%E4%BD%8D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/</id>
     <published>2021-06-24T09:43:15.000Z</published>
-    <updated>2021-06-24T09:43:54.308Z</updated>
+    <updated>2021-06-24T12:13:13.978Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;null&lt;/p&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;对象定位的两种方式&quot;&gt;&lt;a href=&quot;#对象定位的两种方式&quot; class=&quot;headerlink&quot; title=&quot;对象定位的两种方式&quot;&gt;&lt;/a&gt;对象定位的两种方式&lt;/h1&gt;&lt;p&gt; </summary>
         
       
     
@@ -47,15 +46,14 @@
     <link href="https://yaozw.top/2021/06/24/%E4%BD%BF%E7%94%A8JavaAgent%E8%A7%82%E5%AF%9Fnew%E5%AF%B9%E8%B1%A1%E5%8D%A0%E7%9A%84%E7%9A%84%E5%86%85%E5%AD%98%E7%9A%84%E5%A4%A7%E5%B0%8F/"/>
     <id>https://yaozw.top/2021/06/24/%E4%BD%BF%E7%94%A8JavaAgent%E8%A7%82%E5%AF%9Fnew%E5%AF%B9%E8%B1%A1%E5%8D%A0%E7%9A%84%E7%9A%84%E5%86%85%E5%AD%98%E7%9A%84%E5%A4%A7%E5%B0%8F/</id>
     <published>2021-06-24T09:41:45.000Z</published>
-    <updated>2021-06-24T09:43:55.132Z</updated>
+    <updated>2021-06-24T12:13:15.579Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;null&lt;/p&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;new-Object-占的的内存的大小&quot;&gt;&lt;a href=&quot;#new-Object-占的的内存的大小&quot; class=&quot;headerlink&quot; title=&quot;new Object()占的的内存的大小&quot;&gt;&lt;/a&gt;new</summary>
         
       
     
@@ -73,15 +71,14 @@
     <link href="https://yaozw.top/2021/06/24/Java%20%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/"/>
     <id>https://yaozw.top/2021/06/24/Java%20%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</id>
     <published>2021-06-24T08:34:33.000Z</published>
-    <updated>2021-06-24T08:35:09.091Z</updated>
+    <updated>2021-06-24T12:13:16.957Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;null&lt;/p&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+    <summary type="html">&lt;h3 id=&quot;Java-类的加载过程&quot;&gt;&lt;a href=&quot;#Java-类的加载过程&quot; class=&quot;headerlink&quot; title=&quot;Java 类的加载过程&quot;&gt;&lt;/a&gt;Java 类的加载过程&lt;/h3&gt;&lt;h4 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot;</summary>
         
       
     
@@ -99,15 +96,14 @@
     <link href="https://yaozw.top/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     <id>https://yaozw.top/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</id>
     <published>2021-06-20T03:59:56.000Z</published>
-    <updated>2021-06-20T04:00:24.839Z</updated>
+    <updated>2021-06-24T12:13:18.247Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;null&lt;/p&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;GC和GC-Tuning&quot;&gt;&lt;a href=&quot;#GC和GC-Tuning&quot; class=&quot;headerlink&quot; title=&quot;GC和GC Tuning&quot;&gt;&lt;/a&gt;GC和GC Tuning&lt;/h1&gt;&lt;h3 id=&quot;GC的基础知识&quot;&gt;&lt;a</summary>
         
       
     
@@ -175,15 +171,16 @@
     <link href="https://yaozw.top/2021/06/08/NIO/"/>
     <id>https://yaozw.top/2021/06/08/NIO/</id>
     <published>2021-06-08T10:08:11.000Z</published>
-    <updated>2021-06-19T04:31:28.653Z</updated>
+    <updated>2021-06-24T12:13:20.454Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;null&lt;/p&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+    <summary type="html">&lt;h3 id=&quot;NIO&quot;&gt;&lt;a href=&quot;#NIO&quot; class=&quot;headerlink&quot; title=&quot;NIO&quot;&gt;&lt;/a&gt;NIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. NIO是什么&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NIO（Non-blocking</summary>
         
       
     
@@ -201,7 +198,7 @@
     <link href="https://yaozw.top/2021/06/08/BIO/"/>
     <id>https://yaozw.top/2021/06/08/BIO/</id>
     <published>2021-06-08T10:07:22.000Z</published>
-    <updated>2021-06-10T07:39:24.773Z</updated>
+    <updated>2021-06-24T12:13:21.561Z</updated>
     
     
       
@@ -378,15 +375,14 @@
     <link href="https://yaozw.top/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/"/>
     <id>https://yaozw.top/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/</id>
     <published>2021-05-26T13:25:17.000Z</published>
-    <updated>2021-06-24T09:56:04.001Z</updated>
+    <updated>2021-06-24T12:13:47.211Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;null&lt;/p&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+    <summary type="html">&lt;h3 id=&quot;java-中的Lock&quot;&gt;&lt;a href=&quot;#java-中的Lock&quot; class=&quot;headerlink&quot; title=&quot;java 中的Lock&quot;&gt;&lt;/a&gt;java</summary>
         
       
     
@@ -404,15 +400,14 @@
     <link href="https://yaozw.top/2021/05/24/synchronized/"/>
     <id>https://yaozw.top/2021/05/24/synchronized/</id>
     <published>2021-05-24T10:18:11.000Z</published>
-    <updated>2021-06-24T09:43:58.418Z</updated>
+    <updated>2021-06-24T12:13:23.737Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;null&lt;/p&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;synchronized&quot;&gt;&lt;a href=&quot;#synchronized&quot; class=&quot;headerlink&quot;</summary>
         
       
     
@@ -430,15 +425,14 @@
     <link href="https://yaozw.top/2021/05/24/volatile/"/>
     <id>https://yaozw.top/2021/05/24/volatile/</id>
     <published>2021-05-24T10:17:22.000Z</published>
-    <updated>2021-06-24T09:43:56.925Z</updated>
+    <updated>2021-06-24T12:13:26.349Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;null&lt;/p&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;volatile的用途&quot;&gt;&lt;a href=&quot;#volatile的用途&quot; class=&quot;headerlink&quot; title=&quot;volatile的用途&quot;&gt;&lt;/a&gt;volatile的用途&lt;/h2&gt;&lt;h3 id=&quot;问题：-DCL单例需不需要加volatile？&quot;&gt;&lt;a</summary>
         
       
     

@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-06-10T07:41:52.944Z</updated>
+  <updated>2021-06-24T09:43:54.308Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -15,6 +15,110 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>对象定位的两种方式</title>
+    <link href="https://yaozw.top/2021/06/24/%E5%AF%B9%E8%B1%A1%E5%AE%9A%E4%BD%8D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/"/>
+    <id>https://yaozw.top/2021/06/24/%E5%AF%B9%E8%B1%A1%E5%AE%9A%E4%BD%8D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/</id>
+    <published>2021-06-24T09:43:15.000Z</published>
+    <updated>2021-06-24T09:43:54.308Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;null&lt;/p&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用JavaAgent观察new对象占的的内存的大小</title>
+    <link href="https://yaozw.top/2021/06/24/%E4%BD%BF%E7%94%A8JavaAgent%E8%A7%82%E5%AF%9Fnew%E5%AF%B9%E8%B1%A1%E5%8D%A0%E7%9A%84%E7%9A%84%E5%86%85%E5%AD%98%E7%9A%84%E5%A4%A7%E5%B0%8F/"/>
+    <id>https://yaozw.top/2021/06/24/%E4%BD%BF%E7%94%A8JavaAgent%E8%A7%82%E5%AF%9Fnew%E5%AF%B9%E8%B1%A1%E5%8D%A0%E7%9A%84%E7%9A%84%E5%86%85%E5%AD%98%E7%9A%84%E5%A4%A7%E5%B0%8F/</id>
+    <published>2021-06-24T09:41:45.000Z</published>
+    <updated>2021-06-24T09:43:55.132Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;null&lt;/p&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java 类的加载过程</title>
+    <link href="https://yaozw.top/2021/06/24/Java%20%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/"/>
+    <id>https://yaozw.top/2021/06/24/Java%20%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</id>
+    <published>2021-06-24T08:34:33.000Z</published>
+    <updated>2021-06-24T08:35:09.091Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;null&lt;/p&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GC的基础知识</title>
+    <link href="https://yaozw.top/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    <id>https://yaozw.top/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</id>
+    <published>2021-06-20T03:59:56.000Z</published>
+    <updated>2021-06-20T04:00:24.839Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;null&lt;/p&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
   
   <entry>
     <title>代码的精简之道</title>
@@ -54,6 +158,32 @@
         
         
     <summary type="html">&lt;h3 id=&quot;java-中文件NIO&quot;&gt;&lt;a href=&quot;#java-中文件NIO&quot; class=&quot;headerlink&quot; title=&quot;java 中文件NIO&quot;&gt;&lt;/a&gt;java 中文件NIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1.</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NIO</title>
+    <link href="https://yaozw.top/2021/06/08/NIO/"/>
+    <id>https://yaozw.top/2021/06/08/NIO/</id>
+    <published>2021-06-08T10:08:11.000Z</published>
+    <updated>2021-06-19T04:31:28.653Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;null&lt;/p&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
         
       
     
@@ -248,14 +378,15 @@
     <link href="https://yaozw.top/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/"/>
     <id>https://yaozw.top/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/</id>
     <published>2021-05-26T13:25:17.000Z</published>
-    <updated>2021-06-05T04:41:08.931Z</updated>
+    <updated>2021-06-24T09:56:04.001Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h3 id=&quot;java-中的Lock&quot;&gt;&lt;a href=&quot;#java-中的Lock&quot; class=&quot;headerlink&quot; title=&quot;java 中的Lock&quot;&gt;&lt;/a&gt;java</summary>
+    <summary type="html">&lt;p&gt;null&lt;/p&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
         
       
     
@@ -273,14 +404,15 @@
     <link href="https://yaozw.top/2021/05/24/synchronized/"/>
     <id>https://yaozw.top/2021/05/24/synchronized/</id>
     <published>2021-05-24T10:18:11.000Z</published>
-    <updated>2021-05-26T13:24:15.978Z</updated>
+    <updated>2021-06-24T09:43:58.418Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;synchronized&quot;&gt;&lt;a href=&quot;#synchronized&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;p&gt;null&lt;/p&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
         
       
     
@@ -298,14 +430,15 @@
     <link href="https://yaozw.top/2021/05/24/volatile/"/>
     <id>https://yaozw.top/2021/05/24/volatile/</id>
     <published>2021-05-24T10:17:22.000Z</published>
-    <updated>2021-05-26T13:24:16.842Z</updated>
+    <updated>2021-06-24T09:43:56.925Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h2 id=&quot;volatile的用途&quot;&gt;&lt;a href=&quot;#volatile的用途&quot; class=&quot;headerlink&quot; title=&quot;volatile的用途&quot;&gt;&lt;/a&gt;volatile的用途&lt;/h2&gt;&lt;h3 id=&quot;问题：-DCL单例需不需要加volatile？&quot;&gt;&lt;a</summary>
+    <summary type="html">&lt;p&gt;null&lt;/p&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/markmap.css&quot; type=&quot;text/css&quot;&gt;&lt;script type=&quot;text/javascript&quot;</summary>
         
       
     
@@ -390,132 +523,6 @@
     
     
     <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>缓存的过期策略</title>
-    <link href="https://yaozw.top/2021/04/14/%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/"/>
-    <id>https://yaozw.top/2021/04/14/%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/</id>
-    <published>2021-04-14T06:18:24.000Z</published>
-    <updated>2021-04-14T06:40:15.374Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;缓存的过期策略LFU-FIFO-LRU&quot;&gt;&lt;a href=&quot;#缓存的过期策略LFU-FIFO-LRU&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="缓存" scheme="https://yaozw.top/categories/%E7%BC%93%E5%AD%98/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>redis</title>
-    <link href="https://yaozw.top/2021/04/07/redis/"/>
-    <id>https://yaozw.top/2021/04/07/redis/</id>
-    <published>2021-04-07T14:49:46.000Z</published>
-    <updated>2021-04-18T10:55:11.981Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;&lt;h1 id=&quot;redis&quot;&gt;&lt;a href=&quot;#redis&quot; class=&quot;headerlink&quot; title=&quot;redis&quot;&gt;&lt;/a&gt;&lt;a href=&quot;http://www.redis.cn/&quot;&gt;redis&lt;/a&gt;&lt;/h1&gt;&lt;h2</summary>
-        
-      
-    
-    
-    
-    <category term="redis" scheme="https://yaozw.top/categories/redis/"/>
-    
-    
-    <category term="中间件" scheme="https://yaozw.top/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java中的位和位移运算符</title>
-    <link href="https://yaozw.top/2021/04/05/java%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%92%8C%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
-    <id>https://yaozw.top/2021/04/05/java%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%92%8C%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6/</id>
-    <published>2021-04-05T11:03:18.000Z</published>
-    <updated>2021-04-21T13:31:42.499Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;位和位移运算符&quot;&gt;&lt;a href=&quot;#位和位移运算符&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Keepalived</title>
-    <link href="https://yaozw.top/2021/03/28/Keepalived/"/>
-    <id>https://yaozw.top/2021/03/28/Keepalived/</id>
-    <published>2021-03-28T09:25:15.000Z</published>
-    <updated>2021-04-11T04:43:13.966Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;Keepalived&quot;&gt;&lt;a href=&quot;#Keepalived&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LVS三种搭建模式</title>
-    <link href="https://yaozw.top/2021/03/21/LVS%E4%B8%89%E7%A7%8D%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://yaozw.top/2021/03/21/LVS%E4%B8%89%E7%A7%8D%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%BC%8F/</id>
-    <published>2021-03-21T10:57:12.000Z</published>
-    <updated>2021-03-21T15:56:56.177Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;lvs的三种搭建模型&quot;&gt;&lt;a href=&quot;#lvs的三种搭建模型&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="网络" scheme="https://yaozw.top/categories/%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="网络" scheme="https://yaozw.top/tags/%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   

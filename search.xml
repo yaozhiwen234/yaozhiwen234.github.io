@@ -36,48 +36,29 @@
       </tags>
   </entry>
   <entry>
-    <title>BIO</title>
-    <url>/2021/06/08/BIO/</url>
-    <content><![CDATA[<h3 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h3><p><strong>1. 什么是BIO</strong></p>
-<blockquote>
-<p>B I/O，意为Blocking I/O，即阻塞的I/O。</p>
-<p>很明显重点在阻塞，但怎么就阻塞了？阻塞在哪了？阻塞带来了什么坏处？</p>
-</blockquote>
-<p><strong>2. BIO的代码实现：</strong></p>
-<ol>
-<li>服务端</li>
+    <title>ConcurrentHashMap 详解</title>
+    <url>/2021/05/27/ConcurrentHashMap%20%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h2 id="ConcurrentHashMap-详解"><a href="#ConcurrentHashMap-详解" class="headerlink" title="ConcurrentHashMap 详解"></a>ConcurrentHashMap 详解</h2><h3 id="private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30"><a href="#private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30" class="headerlink" title="private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;"></a>private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</h3><ul>
+<li><strong>MAXIMUM_CAPACITY是2的30次方 的原因</strong>`<ol>
+<li>int的最大的值是2的31次方-1，所以容量无法到达2的31次方，</li>
+<li>需要让容量满足2的幂次，所以设置为2的30次方 </li>
 </ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">9090</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;step1: new ServerSocket(9090) &quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        Socket client = server.accept();  <span class="comment">//阻塞1</span></span><br><span class="line">        System.out.println(<span class="string">&quot;step2:client\t&quot;</span> + client.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            InputStream in = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in = client.getInputStream();</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                    String dataline = reader.readLine(); <span class="comment">//阻塞2</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">null</span> != dataline)&#123;</span><br><span class="line">                    System.out.println(dataline);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        client.close();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;客户端断开&quot;</span>);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>客户端</li>
+</li>
+</ul>
+<h3 id="private-static-final-int-DEFAULT-CAPACITY-16"><a href="#private-static-final-int-DEFAULT-CAPACITY-16" class="headerlink" title="private static final int DEFAULT_CAPACITY = 16;"></a>private static final int DEFAULT_CAPACITY = 16;</h3><ul>
+<li><strong>DEFAULT_CAPACITY = 16;</strong><ol>
+<li>方便数据迁移</li>
+<li>方便进行计算对应的位置</li>
+<li>概率统计</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          Socket client = <span class="keyword">new</span> Socket(<span class="string">&quot;192.168.150.11&quot;</span>,<span class="number">9090</span>);</span><br><span class="line"></span><br><span class="line">          client.setSendBufferSize(<span class="number">20</span>);</span><br><span class="line">          client.setTcpNoDelay(<span class="keyword">true</span>);</span><br><span class="line">          OutputStream out = client.getOutputStream();</span><br><span class="line"></span><br><span class="line">          InputStream in = System.in;</span><br><span class="line">          BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line"></span><br><span class="line">          <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">              String line = reader.readLine();</span><br><span class="line">              <span class="keyword">if</span>(line != <span class="keyword">null</span> )&#123;</span><br><span class="line">                  <span class="keyword">byte</span>[] bb = line.getBytes();</span><br><span class="line">                  <span class="keyword">for</span> (<span class="keyword">byte</span> b : bb) &#123;</span><br><span class="line">                      out.write(b);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="new-ConcurrentHashMap-lt-gt-2-自定义大小解释："><a href="#new-ConcurrentHashMap-lt-gt-2-自定义大小解释：" class="headerlink" title="new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释："></a>new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">int</span> cap = ((initialCapacity &gt;= (MAXIMUM_CAPACITY &gt;&gt;&gt; <span class="number">1</span>)) ?</span><br><span class="line">               MAXIMUM_CAPACITY :</span><br><span class="line">               tableSizeFor(initialCapacity + (initialCapacity &gt;&gt;&gt; <span class="number">1</span>) + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">this</span>.sizeCtl = cap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>3. BIO的工作模式</strong></p>
-<pre class="mermaid">graph TD
-A[Client 1] --> S(Service 9090)
-C[Client 2] --> S
-D[Client 2] --> S
-S --> F(Thread 1)
-S --> E(Thread 2)
-S --> G(Thread 3)
-F -->   H(Socket1 处理 Client 1 )
-E -->   I(Socket2 处理 Client 2 )
-G -->   V(Socket3 处理 Client 3 )</pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// tableSizeFor的功能（不考虑大于最大容量的情况）是返回大于输入参数且最近的2的整数次幂的数。比如10，则返回16。 </span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = c - <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">8</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>4. 为什么要使用多线程：</strong></p>
-<blockquote>
-<p>这是一个经典的每连接每线程的模型，之所以使用多线程，主要原因在于socket.accept()、socket.read()、socket.write()三个主要函数都是同步阻塞的，当一个连接在处理I/O的时候，系统是阻塞的，如果是单线程的话必然就挂死在那里；但CPU是被释放出来的，开启多线程，就可以让CPU去处理更多的事情。其实这也是所有使用多线程的本质：</p>
-</blockquote>
-<p><strong>5. BIO的缺点</strong></p>
-<blockquote>
-<p>（1）线程创建资源开销巨大。如果有10000个连接怎么办？创建10000个线程？很明显不现实，太多的线程对系统资源的开销是巨大的。</p>
-<p>（2）单个线程的资源浪费。</p>
-<p>一个请求来了，如果这个线程从被创建为这个连接服务开始就一直在工工作，那么就不存在资源浪费，就像你找来一个服务员，他只服务一个客人，但他期间一直都有工作作，那么他的劳动力就算不上浪费。</p>
-<p>但是绝大多数情况下客人多服务员的需求都是暂时的，服务员很多时候都在发呆玩手机，等待着回应客人的请求，这样这个服务员的劳动力就被浪费了。那么在Bio中线程等待服务的时候是什么样的呢，那就是阻塞，线程等待着为连接服务（读数据/写数据/业务处理），很多时候BIo的服务子线程都是在阻塞状态下的。</p>
-</blockquote>
-<p><strong>基于以上不足出现了NIO</strong></p>
+
+
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>Java基础知识</category>
@@ -89,99 +70,10 @@ G -->   V(Socket3 处理 Client 3 )</pre>
   <entry>
     <title>GC的基础知识</title>
     <url>/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<h1 id="GC和GC-Tuning"><a href="#GC和GC-Tuning" class="headerlink" title="GC和GC Tuning"></a>GC和GC Tuning</h1><h3 id="GC的基础知识"><a href="#GC的基础知识" class="headerlink" title="GC的基础知识"></a>GC的基础知识</h3><h4 id="1-什么是垃圾"><a href="#1-什么是垃圾" class="headerlink" title="1.什么是垃圾"></a>1.什么是垃圾</h4><blockquote>
-<p>C语言申请内存：malloc free</p>
-<p>C++： new delete</p>
-<p>Java: new ？</p>
-<p>自动内存回收，编程上简单，系统不容易出错，手动释放内存，容易出两种类型的问题：</p>
-<ol>
-<li>忘记回收</li>
-<li>多次回收</li>
-</ol>
-</blockquote>
-<p>没有任何引用指向的一个对象或者多个对象（循环引用）</p>
-<h4 id="2-如何定位垃圾"><a href="#2-如何定位垃圾" class="headerlink" title="2.如何定位垃圾"></a>2.如何定位垃圾</h4><ol>
-<li>引用计数</li>
-<li>根可达算法  </li>
-</ol>
-<h4 id="3-GC-roots"><a href="#3-GC-roots" class="headerlink" title="3. GC roots"></a>3. GC roots</h4><ol>
-<li>JVM stack  (jvm栈)</li>
-<li>native method stack （本地方法栈）</li>
-<li>run-time constant pool （常量池指向的变量）</li>
-<li>static references in method artea （静态变量指向的对象）</li>
-<li>Clazz  （对象字节load到内存）</li>
-</ol>
-<h4 id="3-常见的垃圾回收算法"><a href="#3-常见的垃圾回收算法" class="headerlink" title="3.常见的垃圾回收算法"></a>3.常见的垃圾回收算法</h4><ol>
-<li>标记清除 - 位置不连续 产生碎片</li>
-<li>拷贝算法 - 没有碎片，浪费空间</li>
-<li>标记压缩 - 没有碎片，效率偏低</li>
-</ol>
-<h4 id="4-JVM内存分代模型（用于分代垃圾回收算法）"><a href="#4-JVM内存分代模型（用于分代垃圾回收算法）" class="headerlink" title="4.JVM内存分代模型（用于分代垃圾回收算法）"></a>4.JVM内存分代模型（用于分代垃圾回收算法）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/jvm%E5%88%86%E4%BB%A3%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png"></h4><ol>
-<li>部分垃圾回收器使用的模型</li>
-<li>新生代 + 老年代 + 永久代（1.7）/ 元数据区(1.8) Metaspace<ol>
-<li>永久代 元数据 - Class</li>
-<li>永久代必须指定大小限制 ，元数据可以设置，也可以不设置，无上限（受限于物理内存）</li>
-<li>字符串常量 1.7 - 永久代，1.8 - 堆</li>
-<li>MethodArea逻辑概念 - 永久代、元数据</li>
-</ol>
-</li>
-<li>新生代 = Eden + 2个suvivor区 <ol>
-<li>YGC回收之后，大多数的对象会被回收，活着的进入s0</li>
-<li>再次YGC，活着的对象eden + s0 -&gt; s1</li>
-<li>再次YGC，eden + s1 -&gt; s0</li>
-<li>年龄足够 -&gt; 老年代 （15 CMS 6）</li>
-<li>s区装不下 -&gt; 老年代</li>
-</ol>
-</li>
-<li>老年代<ol>
-<li>顽固分子</li>
-<li>老年代满了FGC Full GC</li>
-</ol>
-</li>
-<li>GC Tuning (Generation)<ol>
-<li>尽量减少FGC</li>
-<li>MinorGC = YGC</li>
-<li>MajorGC = FGC</li>
-</ol>
-</li>
-</ol>
-<h4 id="5-常见的垃圾回收器"><a href="#5-常见的垃圾回收器" class="headerlink" title="5.常见的垃圾回收器"></a>5.常见的垃圾回收器</h4><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/gc%E7%AE%97%E6%B3%95.png" alt="gc"></p>
-<ol>
-<li>Serial 年轻代 串行回收</li>
-<li>PS 年轻代 并行回收</li>
-<li>ParNew 年轻代 配合CMS的并行回收</li>
-<li>SerialOld </li>
-<li>ParallelOld</li>
-<li>ConcurrentMarkSweep 老年代 并发的， 垃圾回收和应用程序同时运行，降低STW的时间(200ms)</li>
-<li>G1(10ms)</li>
-<li>ZGC (1ms) PK C++</li>
-<li>Shenandoah</li>
-<li>Eplison</li>
-</ol>
-<p>1.8默认的垃圾回收：PS + ParallelOld</p>
-<h4 id="6-JVM调优第一步，了解生产环境下的垃圾回收器组合"><a href="#6-JVM调优第一步，了解生产环境下的垃圾回收器组合" class="headerlink" title="6.JVM调优第一步，了解生产环境下的垃圾回收器组合"></a>6.JVM调优第一步，了解生产环境下的垃圾回收器组合</h4><ul>
-<li><p>JVM的命令行参数参考：<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></p>
-</li>
-<li><p>JVM参数分类</p>
-<blockquote>
-<p>标准： - 开头，所有的HotSpot都支持</p>
-<p>非标准：-X 开头，特定版本HotSpot支持特定命令</p>
-<p>不稳定：-XX 开头，下个版本可能取消</p>
-</blockquote>
-<p>-XX:+PrintCommandLineFlags   查看jvm启动时所用的参数和使用的垃圾回收器</p>
-<p>-XX:+PrintFlagsFinal 最终参数值</p>
-<p>-XX:+PrintFlagsInitial 默认参数值</p>
-</li>
-</ul>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://blogs.oracle.com/jonthecollector/our-collectors">https://blogs.oracle.com/
- </a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">jonthecollector</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">/our-collectors</a></li>
-<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></li>
-<li><a href="http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp">http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp</a></li>
-</ol>
+    <content><![CDATA[<p>null</p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>Java基础知识</category>
+        <category>JVM</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
@@ -255,110 +147,56 @@ G -->   V(Socket3 处理 Client 3 )</pre>
   <entry>
     <title>Java 类的加载过程</title>
     <url>/2021/06/24/Java%20%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<h3 id="Java-类的加载过程"><a href="#Java-类的加载过程" class="headerlink" title="Java 类的加载过程"></a>Java 类的加载过程</h3><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E7%9A%84%E4%BA%94%E4%B8%AA%E9%83%A8%E5%88%86%281%29.jpg" alt="类的加载过程"></h4><h3 id="1-Loading-使用双亲委派机制将-class加载到内存中"><a href="#1-Loading-使用双亲委派机制将-class加载到内存中" class="headerlink" title="1.Loading 使用双亲委派机制将 .class加载到内存中"></a><strong>1.Loading 使用双亲委派机制将 .class加载到内存中</strong></h3><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE.jpg" alt="类的加载机制"></p>
-<ol>
-<li><p><strong>为什么要使用双亲委派</strong></p>
-<blockquote>
-<p>　<strong>防止加载同一个.class。</strong>通过委托去询问上级是否已经加载过该.class，如果加载过了，则不需要重新加载。保证了数据安全。</p>
-<p>　<strong>保证核心.class不被篡改。</strong>通过委托的方式，保证核心.class不被篡改，即使被篡改也不会被加载，即使被加载也不会是同一个class对象，因为不同的加载器加载同一个.class也不是同一个Class对象。这样则保证了Class的执行安全。</p>
-</blockquote>
-</li>
-<li><p><strong>自定义类加载器 加密代码</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassLoaderWithEncription</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> seed = <span class="number">0B10110110</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        File f = <span class="keyword">new</span> File(<span class="string">&quot;c:/test/&quot;</span>, name.replace(<span class="string">&#x27;.&#x27;</span>, <span class="string">&#x27;/&#x27;</span>).concat(<span class="string">&quot;.msbclass&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            FileInputStream fis = <span class="keyword">new</span> FileInputStream(f);</span><br><span class="line">            ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">            <span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> ((b=fis.read()) !=<span class="number">0</span>) &#123;</span><br><span class="line">                baos.write(b ^ seed);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">byte</span>[] bytes = baos.toByteArray();</span><br><span class="line">            baos.close();</span><br><span class="line">            fis.close();<span class="comment">//可以写的更加严谨</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> defineClass(name, bytes, <span class="number">0</span>, bytes.length);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.findClass(name); <span class="comment">//throws ClassNotFoundException</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        encFile(<span class="string">&quot;com.yzw.jvm.hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">        ClassLoader l = <span class="keyword">new</span> ClassLoaderWithEncription();</span><br><span class="line">        Class clazz = l.loadClass(<span class="string">&quot;com.yzw.jvm.Hello&quot;</span>);</span><br><span class="line">        Hello h = (Hello)clazz.newInstance();</span><br><span class="line">        h.m();</span><br><span class="line"></span><br><span class="line">        System.out.println(l.getClass().getClassLoader());</span><br><span class="line">        System.out.println(l.getParent());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">encFile</span><span class="params">(String name)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        File f = <span class="keyword">new</span> File(<span class="string">&quot;c:/test/&quot;</span>, name.replace(<span class="string">&#x27;.&#x27;</span>, <span class="string">&#x27;/&#x27;</span>).concat(<span class="string">&quot;.class&quot;</span>));</span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(f);</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(<span class="keyword">new</span> File(<span class="string">&quot;c:/test/&quot;</span>, name.replaceAll(<span class="string">&quot;.&quot;</span>, <span class="string">&quot;/&quot;</span>).concat(<span class="string">&quot;.msbclass&quot;</span>)));</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>((b = fis.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">            fos.write(b ^ seed);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fis.close();</span><br><span class="line">        fos.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p><strong>如何打破：重写loadClass（）</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">T012_ClassReloading2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> Class&lt;?&gt; loadClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line"></span><br><span class="line">            File f = <span class="keyword">new</span> File(<span class="string">&quot;C:/work/ijprojects/JVM/out/production/JVM/&quot;</span> + name.replace(<span class="string">&quot;.&quot;</span>, <span class="string">&quot;/&quot;</span>).concat(<span class="string">&quot;.class&quot;</span>));</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(!f.exists()) <span class="keyword">return</span> <span class="keyword">super</span>.loadClass(name);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">                InputStream is = <span class="keyword">new</span> FileInputStream(f);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[is.available()];</span><br><span class="line">                is.read(b);</span><br><span class="line">                <span class="keyword">return</span> defineClass(name, b, <span class="number">0</span>, b.length);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.loadClass(name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        MyLoader m = <span class="keyword">new</span> MyLoader();</span><br><span class="line">        Class clazz = m.loadClass(<span class="string">&quot;com.yzw.jvm.Hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">        m = <span class="keyword">new</span> MyLoader();</span><br><span class="line">        Class clazzNew = m.loadClass(<span class="string">&quot;com.yzw.jvm.Hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(clazz == clazzNew);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><p><strong>打破双亲委派的用途</strong></p>
-<blockquote>
-<ol>
-<li>ThreadContextClassLoader可以实现基础类调用实现类代码，通过thread.setContextClassLoader指定</li>
-<li>热启动，热部署</li>
-<li>osgi tomcat 都有自己的模块指定classloader（可以加载同一类库的不同版本）</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-</li>
-</ol>
-<h4 id="2-Linking"><a href="#2-Linking" class="headerlink" title="2. Linking"></a><strong>2. Linking</strong></h4><ol>
-<li>Verification<ol>
-<li>验证文件是否符合JVM规定</li>
-</ol>
-</li>
-<li>Preparation<ol>
-<li>静态成员变量赋默认值</li>
-</ol>
-</li>
-<li>Resolution<ol>
-<li>将类、方法、属性等符号引用解析为直接引用<br>常量池中的各种符号引用解析为指针、偏移量等内存地址的直接引用</li>
-</ol>
-</li>
-</ol>
-<h4 id="3-Initializing"><a href="#3-Initializing" class="headerlink" title="3.Initializing"></a><strong>3.Initializing</strong></h4><ol>
-<li>调用类初始化代码 <clinit>，给静态成员变量赋初始值</li>
-</ol>
-<h4 id="4-小总结："><a href="#4-小总结：" class="headerlink" title="4. 小总结："></a><strong>4. 小总结：</strong></h4><ol>
-<li><p>load - 默认值 - 初始值</p>
-</li>
-<li><p>new - 申请内存 - 默认值 - 初始值</p>
-</li>
-<li><p>java 执行的方式是 混合执行 即编译执行+解释执行 jvm会对热点代码进行编译为本地的可执行文件  </p>
-</li>
-</ol>
-<p>​                编译执行： 代码运行速度快，但第一次运行时速度极慢</p>
-<p>​                解释执行： 代码以运行速度稍慢</p>
-<p>​              -XX:CICompilerCount=n 指定JIT编译器用来编译方法的线程数量</p>
-<p>​              -XX:CompileThreshold = 10000:   一个方法调用多少次会被 HotSpot和JIT 编译器能编译它</p>
-<p>​               -Xcomp： 指定JVM在第一次使用时把所有的字节码编译成本地代码. (即CompileThreshold=1)</p>
-<p>​              -Xint 仅仅使用解释模式，不激活JIT编译器 (即CompileThreshold=0)</p>
+    <content><![CDATA[<p>null</p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>Java基础知识</category>
+        <category>JVM</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>
-    <title>CAP定理</title>
-    <url>/2021/04/18/CAP%E5%AE%9A%E7%90%86/</url>
-    <content><![CDATA[<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><h3 id="CAP理论概述"><a href="#CAP理论概述" class="headerlink" title="CAP理论概述"></a><strong>CAP理论概述</strong></h3><p>   一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两     项。</p>
-<h3 id="CAP的定义"><a href="#CAP的定义" class="headerlink" title="CAP的定义"></a><strong>CAP的定义</strong></h3><p><strong>Consistency 一致性</strong></p>
-<p>一致性指“<code>all nodes see the same data at the same time</code>”，即所有节点在同一时间的数据完全一致。</p>
-<p>一致性是因为多个数据拷贝下并发读写才有的问题，因此理解时一定要注意结合考虑多个数据拷贝下并发读写的场景。</p>
-<p>对于一致性，可以分为从客户端和服务端两个不同的视角。</p>
+    <title>Java中的深克隆和浅克隆</title>
+    <url>/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/</url>
+    <content><![CDATA[<h4 id="Java中的深克隆和浅克隆"><a href="#Java中的深克隆和浅克隆" class="headerlink" title="Java中的深克隆和浅克隆"></a>Java中的深克隆和浅克隆</h4><p><strong>浅克隆：</strong> 创建一个新对象，新对象的属性和原来对象完全相同（新对象的地址 ！= 原来对象的地址），对于非基本类型属性，仍指向原有属性所指向的对象的内存地址。**(String 类型除外)**。</p>
+<p><strong>深克隆：</strong> 创建一个新对象，属性中引用的其他对象也会被克隆，不再指向原有对象地址。</p>
+<p><strong>浅克隆示例：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span>  </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">teacher</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] drive;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line">    <span class="keyword">private</span> student stu;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        teacher tea = <span class="keyword">new</span> teacher();</span><br><span class="line">        <span class="keyword">int</span>[] i = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">        i[<span class="number">0</span>]=<span class="number">88</span>;</span><br><span class="line">        tea.setDrive(i);</span><br><span class="line">        tea.setName(<span class="string">&quot;老师&quot;</span>);</span><br><span class="line">        student student = <span class="keyword">new</span> student();</span><br><span class="line">        student.setAge(<span class="number">33</span>);</span><br><span class="line">        student.setName(<span class="string">&quot;学生&quot;</span>);</span><br><span class="line">        tea.setAge(<span class="number">56</span>);</span><br><span class="line">        tea.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">        tea.setStu(student);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">       teacher clone = (teacher) tea.clone();</span><br><span class="line">         i[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">        clone.setDrive(i);</span><br><span class="line">        clone.setAge(<span class="number">78</span>);</span><br><span class="line">        clone.setName(<span class="string">&quot;克隆老师&quot;</span>);</span><br><span class="line">        clone.getStu().setAge(<span class="number">99</span>);</span><br><span class="line">        clone.getStu().setName(<span class="string">&quot;小学生&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        System.out.println(tea);</span><br><span class="line">        System.out.println(clone);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>客户端</li>
+<li>结果</li>
 </ul>
-<p>从客户端来看，一致性主要指的是多并发访问时更新过的数据如何获取的问题。</p>
+<p><strong>注意 此处只有基本数据类型被克隆 引用类型的地址并没有发生变化  Sting除外 因为String是final</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">teacher(drive=[<span class="number">99</span>], name=老师, age=<span class="number">56</span>, sex=男, stu=student(name=小学生, age=<span class="number">99</span>))</span><br><span class="line">teacher(drive=[<span class="number">99</span>], name=克隆老师, age=<span class="number">78</span>, sex=男, stu=student(name=小学生,age=<span class="number">99</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>附图：</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%B5%85%E6%8B%B7%E8%B4%9D.png" alt="浅克隆UNL"></p>
+<p><strong>深克隆示例：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">teacher</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] drive;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> student stu;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意此处</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">            student clone1 = (student) <span class="keyword">this</span>.getStu().clone();</span><br><span class="line">            <span class="keyword">this</span>.setStu(clone1);</span><br><span class="line">            <span class="keyword">int</span>[] clone2 = <span class="keyword">this</span>.getDrive().clone();</span><br><span class="line">            <span class="keyword">this</span>.setDrive(clone2);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      teacher tea = <span class="keyword">new</span> teacher();</span><br><span class="line">      <span class="keyword">int</span>[] i = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">      i[<span class="number">0</span>] = <span class="number">88</span>;</span><br><span class="line">      tea.setDrive(i);</span><br><span class="line">      tea.setName(<span class="string">&quot;老师&quot;</span>);</span><br><span class="line">      student student = <span class="keyword">new</span> student();</span><br><span class="line">      student.setAge(<span class="number">33</span>);</span><br><span class="line">      student.setName(<span class="string">&quot;学生&quot;</span>);</span><br><span class="line">      tea.setAge(<span class="number">56</span>);</span><br><span class="line">      tea.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">      tea.setStu(student);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      teacher clone = (teacher) tea.clone();</span><br><span class="line">      i[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">      clone.setDrive(i);</span><br><span class="line">      clone.setAge(<span class="number">78</span>);</span><br><span class="line">      clone.setName(<span class="string">&quot;克隆老师&quot;</span>);</span><br><span class="line">      clone.getStu().setAge(<span class="number">99</span>);</span><br><span class="line">      clone.getStu().setName(<span class="string">&quot;小学生&quot;</span>);</span><br><span class="line"></span><br><span class="line">      System.out.println(tea);</span><br><span class="line">      System.out.println(clone);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>服务端</li>
+<li>结果</li>
 </ul>
-<p>从服务端来看，则是更新如何分布到整个系统，以保证数据最终一致。</p>
-<p>对于一致性，可以分为强/弱/最终一致性三类</p>
-<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
-<ul>
-<li>强一致性</li>
-</ul>
-<p>对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是强一致性。</p>
-<ul>
-<li>弱一致性</li>
-</ul>
-<p>如果能容忍后续的部分或者全部访问不到，则是弱一致性。</p>
-<ul>
-<li>最终一致性</li>
-</ul>
-<p>如果经过一段时间后要求能访问到更新后的数据，则是最终一致性。</p>
-<h3 id="Availability-可用性"><a href="#Availability-可用性" class="headerlink" title="Availability 可用性"></a><strong>Availability 可用性</strong></h3><p>可用性指“<code>Reads and writes always succeed</code>”，即服务在正常响应时间内一直可用。</p>
-<p>好的可用性主要是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。可用性通常情况下可用性和分布式数据冗余，负载均衡等有着很大的关联。</p>
-<h2 id="Partition-Tolerance分区容错性"><a href="#Partition-Tolerance分区容错性" class="headerlink" title="Partition Tolerance分区容错性"></a><strong>Partition Tolerance分区容错性</strong></h2><p>分区容错性指“<code>the system continues to operate despite arbitrary message loss or failure of part of the system</code>”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务。</p>
+<p><strong>注意结果发生明显的变化， 因为没个对象都被克隆 所有的引用都指向了不同的地址</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">teacher(drive=[<span class="number">88</span>], name=老师, age=<span class="number">56</span>, sex=男, stu=student(name=学生, age=<span class="number">33</span>))</span><br><span class="line">teacher(drive=[<span class="number">99</span>], name=克隆老师, age=<span class="number">78</span>, sex=男, stu=student(name=小学生, age=<span class="number">99</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>附图：</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%B7%B1%E6%8B%B7%E8%B4%9D.png" alt="深克隆UML"></p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>分布式</category>
+        <category>Java基础知识</category>
       </categories>
       <tags>
-        <tag>随笔记录</tag>
+        <tag>Java中的深克隆和浅克隆</tag>
       </tags>
   </entry>
   <entry>
@@ -907,6 +745,18 @@ A[pc1]
       </tags>
   </entry>
   <entry>
+    <title>java内存模型</title>
+    <url>/2021/06/25/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>null</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java中的位和位移运算符</title>
     <url>/2021/04/05/java%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%92%8C%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6/</url>
     <content><![CDATA[<h3 id="位和位移运算符"><a href="#位和位移运算符" class="headerlink" title="位和位移运算符"></a>位和位移运算符</h3><table>
@@ -956,24 +806,6 @@ A[pc1]
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java好的开源项目</title>
-    <url>/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
-    <content><![CDATA[<h4 id="好的开源项目"><a href="#好的开源项目" class="headerlink" title="好的开源项目"></a>好的开源项目</h4><ul>
-<li><strong>项目简介</strong></li>
-</ul>
-<p>一个基于 Spring Boot 2.1.0 、 Spring Boot Jpa、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统</p>
-<p>  <a href="https://el-admin.vip/">开发文档</a></p>
-<p> <a href="https://doc.el-admin.xin/">备用文档</a></p>
-<p><strong>账号密码：</strong> <code>admin / 123456</code></p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>随笔记录</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
@@ -1043,6 +875,18 @@ A[pc1]
       </categories>
       <tags>
         <tag>Demo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java运行时数据区</title>
+    <url>/2021/06/25/java%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/</url>
+    <content><![CDATA[<p>null</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>
@@ -1623,58 +1467,10 @@ A(c)  --> B[i = 8]</pre>
   <entry>
     <title>使用JavaAgent观察new对象占的的内存的大小</title>
     <url>/2021/06/24/%E4%BD%BF%E7%94%A8JavaAgent%E8%A7%82%E5%AF%9Fnew%E5%AF%B9%E8%B1%A1%E5%8D%A0%E7%9A%84%E7%9A%84%E5%86%85%E5%AD%98%E7%9A%84%E5%A4%A7%E5%B0%8F/</url>
-    <content><![CDATA[<h2 id="new-Object-占的的内存的大小"><a href="#new-Object-占的的内存的大小" class="headerlink" title="new Object()占的的内存的大小"></a>new Object()占的的内存的大小</h2><h3 id="JavaAgent-介绍"><a href="#JavaAgent-介绍" class="headerlink" title="JavaAgent 介绍"></a>JavaAgent 介绍</h3><blockquote>
-<p>以前在做后台服务开发的时候，SpringBoot每次改动代码都需要手动重启才能生效，感觉贼麻烦，后来使用Spring提供的一款热部署插件，它只是部分重启，相当于重新加载了我们自己写的代码，效率提高很多。后来遇到了<a href="https://zeroturnaround.com/software/jrebel/">Jrebel</a>，它只重新加载我们修改的那个类，比Springboot热部署插件重启速度更快，连改mybatis的xml文件都能热部署，太方便了有不有！（顺便安利一下同一家公司的另一个软件<a href="https://zeroturnaround.com/software/xrebel/download/">XRebel</a>，实时监控服务请求）后来又接触了<a href="https://github.com/btraceio/btrace">BTrace</a>，它可以线上调试代码而不需要重启项目，也是很吊的一个东西。通过了解，上面所说的几个东西都是通过Java Agent来实现的，那么Java Agent到底是啥，为啥这么吊？</p>
-<p>在JDK1.5以后，我们可以使用agent技术构建一个独立于应用程序的代理程序（即为Agent），用来协助监测、运行甚至替换其他JVM上的程序。使用它可以实现虚拟机级别的AOP功能。</p>
-<p>Agent分为两种，一种是在主程序之前运行的Agent，一种是在主程序之后运行的Agent（前者的升级版，1.6以后提供），这两种我们都会举个</p>
-</blockquote>
-<h3 id="对象大小（64位机）"><a href="#对象大小（64位机）" class="headerlink" title="对象大小（64位机）"></a>对象大小（64位机）</h3><h3 id="观察虚拟机配置"><a href="#观察虚拟机配置" class="headerlink" title="观察虚拟机配置"></a>观察虚拟机配置</h3><p>java -XX:+PrintCommandLineFlags -version</p>
-<h3 id="普通对象"><a href="#普通对象" class="headerlink" title="普通对象"></a>普通对象</h3><ol>
-<li>对象头：markword  8</li>
-<li>ClassPointer指针：-XX:+UseCompressedClassPointers 为4字节 不开启为8字节</li>
-<li>实例数据<ol>
-<li>引用类型：-XX:+UseCompressedOops 为4字节 不开启为8字节<br>Oops Ordinary Object Pointers</li>
-</ol>
-</li>
-<li>Padding对齐，8的倍数</li>
-</ol>
-<h3 id="数组对象"><a href="#数组对象" class="headerlink" title="数组对象"></a>数组对象</h3><ol>
-<li>对象头：markword 8</li>
-<li>ClassPointer指针同上</li>
-<li>数组长度：4字节</li>
-<li>数组数据</li>
-<li>对齐 8的倍数</li>
-</ol>
-<h2 id="实验-使用JavaAgent测试Object的大小"><a href="#实验-使用JavaAgent测试Object的大小" class="headerlink" title="实验 使用JavaAgent测试Object的大小"></a>实验 使用JavaAgent测试Object的大小</h2><ol>
-<li><p>新建项目ObjectSize （1.8）</p>
-</li>
-<li><p>创建文件ObjectSizeAgent</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.mashibing.jvm.agent;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.instrument.Instrumentation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjectSizeAgent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Instrumentation inst;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentArgs, Instrumentation _inst)</span> </span>&#123;</span><br><span class="line">        inst = _inst;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">sizeOf</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> inst.getObjectSize(o);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>src目录下创建META-INF/MANIFEST.MF</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Manifest-Version: <span class="number">1.0</span></span><br><span class="line">Created-By: mashibing.com</span><br><span class="line">Premain-Class: com.mashibing.jvm.agent.ObjectSizeAgent</span><br></pre></td></tr></table></figure>
-
-<p>注意Premain-Class这行必须是新的一行（回车 + 换行），确认idea不能有任何错误提示</p>
-</li>
-<li><p>打包jar文件</p>
-</li>
-<li><p>在需要使用该Agent Jar的项目中引入该Jar包<br>project structure - project settings - library 添加该jar包</p>
-</li>
-<li><p>运行时需要该Agent Jar的类，加入参数：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-javaagent:C:\work\ijprojects\ObjectSize\out\artifacts\ObjectSize_jar\ObjectSize.jar</span><br></pre></td></tr></table></figure></li>
-<li><p>如何使用该类：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">​```java</span><br><span class="line">   <span class="keyword">package</span> com.mashibing.jvm.c3_jmm;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">import</span> com.mashibing.jvm.agent.ObjectSizeAgent;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">T03_SizeOfAnObject</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">           System.out.println(ObjectSizeAgent.sizeOf(<span class="keyword">new</span> Object()));</span><br><span class="line">           System.out.println(ObjectSizeAgent.sizeOf(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123;&#125;));</span><br><span class="line">           System.out.println(ObjectSizeAgent.sizeOf(<span class="keyword">new</span> P()));</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">P</span> </span>&#123;</span><br><span class="line">                           <span class="comment">//8 _markword</span></span><br><span class="line">                           <span class="comment">//4 _oop指针</span></span><br><span class="line">           <span class="keyword">int</span> id;         <span class="comment">//4</span></span><br><span class="line">           String name;    <span class="comment">//4</span></span><br><span class="line">           <span class="keyword">int</span> age;        <span class="comment">//4</span></span><br><span class="line">   </span><br><span class="line">           <span class="keyword">byte</span> b1;        <span class="comment">//1</span></span><br><span class="line">           <span class="keyword">byte</span> b2;        <span class="comment">//1</span></span><br><span class="line">   </span><br><span class="line">           Object o;       <span class="comment">//4</span></span><br><span class="line">           <span class="keyword">byte</span> b3;        <span class="comment">//1</span></span><br><span class="line">   </span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="Hotspot开启内存压缩的规则（64位机）"><a href="#Hotspot开启内存压缩的规则（64位机）" class="headerlink" title="Hotspot开启内存压缩的规则（64位机）"></a>Hotspot开启内存压缩的规则（64位机）</h2><ol>
-<li>4G以下，直接砍掉高32位</li>
-<li>4G - 32G，默认开启内存压缩 ClassPointers Oops</li>
-<li>32G，压缩无效，使用64位<br>内存并不是越大越好（^-^）</li>
-</ol>
-<p><a href="https://cloud.tencent.com/developer/article/1480590">https://cloud.tencent.com/developer/article/1480590</a><br> <a href="https://cloud.tencent.com/developer/article/1484167">https://cloud.tencent.com/developer/article/1484167</a></p>
-<p><a href="https://cloud.tencent.com/developer/article/1485795">https://cloud.tencent.com/developer/article/1485795</a></p>
-<p><a href="https://cloud.tencent.com/developer/article/1482500">https://cloud.tencent.com/developer/article/1482500</a></p>
+    <content><![CDATA[<p>null</p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>Java基础知识</category>
+        <category>JVM</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
@@ -1984,17 +1780,10 @@ A(c)  --> B[i = 8]</pre>
   <entry>
     <title>对象定位的两种方式</title>
     <url>/2021/06/24/%E5%AF%B9%E8%B1%A1%E5%AE%9A%E4%BD%8D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/</url>
-    <content><![CDATA[<h1 id="对象定位的两种方式"><a href="#对象定位的两种方式" class="headerlink" title="对象定位的两种方式"></a>对象定位的两种方式</h1><p>  由于reference类型在Java虚拟机规范里只规定了一个指向对象的引用，并没有定义这个引用应该通过哪种方式去定位，以及访问到Java堆中的对象的具体位置，因此不同虚拟机实现的对象访问方式会有所不同，主流的访问方式有两种：使用句柄和直接指针。</p>
-<p>1、使用句柄访问方式</p>
-<p>如果使用句柄访问方式，Java堆中会划分出一块内存来作为句柄池，reference中存储的就是对象的句柄地址，而句柄中包含了对象实例数据和类型数据各自的具体地址信息。使用句柄方式最大的好处就是reference中存储的是稳定的句柄地址，在对象被移动（垃圾收集时移动对象是非常普遍的行为）时只会改变句柄中的实例数据指针，而reference本身不需要被修改。</p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/%E8%AF%AD%E7%97%85%E5%8F%A5%E8%AE%BF%E9%97%AE.png" alt="语柄句"></p>
-<p>二、使用直接指针访问方式</p>
-<p>如果使用该方式，Java堆对象的布局就必须考虑如何放置访问类型数据的相关信息，reference中直接存储的就是对象地址。使用直接指针方式最大的好处就是速度更快，他节省了一次指针定位的时间开销。</p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/%E7%9B%B4%E6%8E%A5%E6%8C%87%E9%92%88%E8%AE%BF%E9%97%AE.png" alt="直接指针"></p>
-<p>就HotSpot而言，他使用的是直接指针访问方式进行对象访问，但从整个软件开发的范围来看，各种语言和框架使用句柄来访问的情况也十分常见。</p>
+    <content><![CDATA[<p>null</p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>Java基础知识</category>
+        <category>JVM</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
@@ -2366,6 +2155,18 @@ A(c)  --> B[i = 8]</pre>
       </categories>
       <tags>
         <tag>23种设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬件级别的缓存对程序的影响</title>
+    <url>/2021/06/25/%E7%A1%AC%E4%BB%B6%E7%BA%A7%E5%88%AB%E7%9A%84%E7%BC%93%E5%AD%98%E5%AF%B9%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%BD%B1%E5%93%8D/</url>
+    <content><![CDATA[<p>null</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>
@@ -2990,29 +2791,48 @@ A(c)  --> B[i = 8]</pre>
       </tags>
   </entry>
   <entry>
-    <title>ConcurrentHashMap 详解</title>
-    <url>/2021/05/27/ConcurrentHashMap%20%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<h2 id="ConcurrentHashMap-详解"><a href="#ConcurrentHashMap-详解" class="headerlink" title="ConcurrentHashMap 详解"></a>ConcurrentHashMap 详解</h2><h3 id="private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30"><a href="#private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30" class="headerlink" title="private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;"></a>private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</h3><ul>
-<li><strong>MAXIMUM_CAPACITY是2的30次方 的原因</strong>`<ol>
-<li>int的最大的值是2的31次方-1，所以容量无法到达2的31次方，</li>
-<li>需要让容量满足2的幂次，所以设置为2的30次方 </li>
+    <title>BIO</title>
+    <url>/2021/06/08/BIO/</url>
+    <content><![CDATA[<h3 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h3><p><strong>1. 什么是BIO</strong></p>
+<blockquote>
+<p>B I/O，意为Blocking I/O，即阻塞的I/O。</p>
+<p>很明显重点在阻塞，但怎么就阻塞了？阻塞在哪了？阻塞带来了什么坏处？</p>
+</blockquote>
+<p><strong>2. BIO的代码实现：</strong></p>
+<ol>
+<li>服务端</li>
 </ol>
-</li>
-</ul>
-<h3 id="private-static-final-int-DEFAULT-CAPACITY-16"><a href="#private-static-final-int-DEFAULT-CAPACITY-16" class="headerlink" title="private static final int DEFAULT_CAPACITY = 16;"></a>private static final int DEFAULT_CAPACITY = 16;</h3><ul>
-<li><strong>DEFAULT_CAPACITY = 16;</strong><ol>
-<li>方便数据迁移</li>
-<li>方便进行计算对应的位置</li>
-<li>概率统计</li>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">9090</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;step1: new ServerSocket(9090) &quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        Socket client = server.accept();  <span class="comment">//阻塞1</span></span><br><span class="line">        System.out.println(<span class="string">&quot;step2:client\t&quot;</span> + client.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            InputStream in = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in = client.getInputStream();</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                    String dataline = reader.readLine(); <span class="comment">//阻塞2</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">null</span> != dataline)&#123;</span><br><span class="line">                    System.out.println(dataline);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        client.close();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;客户端断开&quot;</span>);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>客户端</li>
 </ol>
-</li>
-</ul>
-<h3 id="new-ConcurrentHashMap-lt-gt-2-自定义大小解释："><a href="#new-ConcurrentHashMap-lt-gt-2-自定义大小解释：" class="headerlink" title="new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释："></a>new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">int</span> cap = ((initialCapacity &gt;= (MAXIMUM_CAPACITY &gt;&gt;&gt; <span class="number">1</span>)) ?</span><br><span class="line">               MAXIMUM_CAPACITY :</span><br><span class="line">               tableSizeFor(initialCapacity + (initialCapacity &gt;&gt;&gt; <span class="number">1</span>) + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">this</span>.sizeCtl = cap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          Socket client = <span class="keyword">new</span> Socket(<span class="string">&quot;192.168.150.11&quot;</span>,<span class="number">9090</span>);</span><br><span class="line"></span><br><span class="line">          client.setSendBufferSize(<span class="number">20</span>);</span><br><span class="line">          client.setTcpNoDelay(<span class="keyword">true</span>);</span><br><span class="line">          OutputStream out = client.getOutputStream();</span><br><span class="line"></span><br><span class="line">          InputStream in = System.in;</span><br><span class="line">          BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line"></span><br><span class="line">          <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">              String line = reader.readLine();</span><br><span class="line">              <span class="keyword">if</span>(line != <span class="keyword">null</span> )&#123;</span><br><span class="line">                  <span class="keyword">byte</span>[] bb = line.getBytes();</span><br><span class="line">                  <span class="keyword">for</span> (<span class="keyword">byte</span> b : bb) &#123;</span><br><span class="line">                      out.write(b);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// tableSizeFor的功能（不考虑大于最大容量的情况）是返回大于输入参数且最近的2的整数次幂的数。比如10，则返回16。 </span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = c - <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">8</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>3. BIO的工作模式</strong></p>
+<pre class="mermaid">graph TD
+A[Client 1] --> S(Service 9090)
+C[Client 2] --> S
+D[Client 2] --> S
+S --> F(Thread 1)
+S --> E(Thread 2)
+S --> G(Thread 3)
+F -->   H(Socket1 处理 Client 1 )
+E -->   I(Socket2 处理 Client 2 )
+G -->   V(Socket3 处理 Client 3 )</pre>
 
-
-
+<p><strong>4. 为什么要使用多线程：</strong></p>
+<blockquote>
+<p>这是一个经典的每连接每线程的模型，之所以使用多线程，主要原因在于socket.accept()、socket.read()、socket.write()三个主要函数都是同步阻塞的，当一个连接在处理I/O的时候，系统是阻塞的，如果是单线程的话必然就挂死在那里；但CPU是被释放出来的，开启多线程，就可以让CPU去处理更多的事情。其实这也是所有使用多线程的本质：</p>
+</blockquote>
+<p><strong>5. BIO的缺点</strong></p>
+<blockquote>
+<p>（1）线程创建资源开销巨大。如果有10000个连接怎么办？创建10000个线程？很明显不现实，太多的线程对系统资源的开销是巨大的。</p>
+<p>（2）单个线程的资源浪费。</p>
+<p>一个请求来了，如果这个线程从被创建为这个连接服务开始就一直在工工作，那么就不存在资源浪费，就像你找来一个服务员，他只服务一个客人，但他期间一直都有工作作，那么他的劳动力就算不上浪费。</p>
+<p>但是绝大多数情况下客人多服务员的需求都是暂时的，服务员很多时候都在发呆玩手机，等待着回应客人的请求，这样这个服务员的劳动力就被浪费了。那么在Bio中线程等待服务的时候是什么样的呢，那就是阻塞，线程等待着为连接服务（读数据/写数据/业务处理），很多时候BIo的服务子线程都是在阻塞状态下的。</p>
+</blockquote>
+<p><strong>基于以上不足出现了NIO</strong></p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>Java基础知识</category>
@@ -3022,46 +2842,62 @@ A(c)  --> B[i = 8]</pre>
       </tags>
   </entry>
   <entry>
-    <title>Java中的深克隆和浅克隆</title>
-    <url>/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/</url>
-    <content><![CDATA[<h4 id="Java中的深克隆和浅克隆"><a href="#Java中的深克隆和浅克隆" class="headerlink" title="Java中的深克隆和浅克隆"></a>Java中的深克隆和浅克隆</h4><p><strong>浅克隆：</strong> 创建一个新对象，新对象的属性和原来对象完全相同（新对象的地址 ！= 原来对象的地址），对于非基本类型属性，仍指向原有属性所指向的对象的内存地址。**(String 类型除外)**。</p>
-<p><strong>深克隆：</strong> 创建一个新对象，属性中引用的其他对象也会被克隆，不再指向原有对象地址。</p>
-<p><strong>浅克隆示例：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span>  </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">teacher</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] drive;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line">    <span class="keyword">private</span> student stu;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        teacher tea = <span class="keyword">new</span> teacher();</span><br><span class="line">        <span class="keyword">int</span>[] i = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">        i[<span class="number">0</span>]=<span class="number">88</span>;</span><br><span class="line">        tea.setDrive(i);</span><br><span class="line">        tea.setName(<span class="string">&quot;老师&quot;</span>);</span><br><span class="line">        student student = <span class="keyword">new</span> student();</span><br><span class="line">        student.setAge(<span class="number">33</span>);</span><br><span class="line">        student.setName(<span class="string">&quot;学生&quot;</span>);</span><br><span class="line">        tea.setAge(<span class="number">56</span>);</span><br><span class="line">        tea.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">        tea.setStu(student);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">       teacher clone = (teacher) tea.clone();</span><br><span class="line">         i[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">        clone.setDrive(i);</span><br><span class="line">        clone.setAge(<span class="number">78</span>);</span><br><span class="line">        clone.setName(<span class="string">&quot;克隆老师&quot;</span>);</span><br><span class="line">        clone.getStu().setAge(<span class="number">99</span>);</span><br><span class="line">        clone.getStu().setName(<span class="string">&quot;小学生&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        System.out.println(tea);</span><br><span class="line">        System.out.println(clone);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
+    <title>CAP定理</title>
+    <url>/2021/04/18/CAP%E5%AE%9A%E7%90%86/</url>
+    <content><![CDATA[<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><h3 id="CAP理论概述"><a href="#CAP理论概述" class="headerlink" title="CAP理论概述"></a><strong>CAP理论概述</strong></h3><p>   一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两     项。</p>
+<h3 id="CAP的定义"><a href="#CAP的定义" class="headerlink" title="CAP的定义"></a><strong>CAP的定义</strong></h3><p><strong>Consistency 一致性</strong></p>
+<p>一致性指“<code>all nodes see the same data at the same time</code>”，即所有节点在同一时间的数据完全一致。</p>
+<p>一致性是因为多个数据拷贝下并发读写才有的问题，因此理解时一定要注意结合考虑多个数据拷贝下并发读写的场景。</p>
+<p>对于一致性，可以分为从客户端和服务端两个不同的视角。</p>
 <ul>
-<li>结果</li>
+<li>客户端</li>
 </ul>
-<p><strong>注意 此处只有基本数据类型被克隆 引用类型的地址并没有发生变化  Sting除外 因为String是final</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">teacher(drive=[<span class="number">99</span>], name=老师, age=<span class="number">56</span>, sex=男, stu=student(name=小学生, age=<span class="number">99</span>))</span><br><span class="line">teacher(drive=[<span class="number">99</span>], name=克隆老师, age=<span class="number">78</span>, sex=男, stu=student(name=小学生,age=<span class="number">99</span>))</span><br></pre></td></tr></table></figure>
-
-<p><strong>附图：</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%B5%85%E6%8B%B7%E8%B4%9D.png" alt="浅克隆UNL"></p>
-<p><strong>深克隆示例：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">teacher</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] drive;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> student stu;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意此处</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">            student clone1 = (student) <span class="keyword">this</span>.getStu().clone();</span><br><span class="line">            <span class="keyword">this</span>.setStu(clone1);</span><br><span class="line">            <span class="keyword">int</span>[] clone2 = <span class="keyword">this</span>.getDrive().clone();</span><br><span class="line">            <span class="keyword">this</span>.setDrive(clone2);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      teacher tea = <span class="keyword">new</span> teacher();</span><br><span class="line">      <span class="keyword">int</span>[] i = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">      i[<span class="number">0</span>] = <span class="number">88</span>;</span><br><span class="line">      tea.setDrive(i);</span><br><span class="line">      tea.setName(<span class="string">&quot;老师&quot;</span>);</span><br><span class="line">      student student = <span class="keyword">new</span> student();</span><br><span class="line">      student.setAge(<span class="number">33</span>);</span><br><span class="line">      student.setName(<span class="string">&quot;学生&quot;</span>);</span><br><span class="line">      tea.setAge(<span class="number">56</span>);</span><br><span class="line">      tea.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">      tea.setStu(student);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      teacher clone = (teacher) tea.clone();</span><br><span class="line">      i[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">      clone.setDrive(i);</span><br><span class="line">      clone.setAge(<span class="number">78</span>);</span><br><span class="line">      clone.setName(<span class="string">&quot;克隆老师&quot;</span>);</span><br><span class="line">      clone.getStu().setAge(<span class="number">99</span>);</span><br><span class="line">      clone.getStu().setName(<span class="string">&quot;小学生&quot;</span>);</span><br><span class="line"></span><br><span class="line">      System.out.println(tea);</span><br><span class="line">      System.out.println(clone);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
+<p>从客户端来看，一致性主要指的是多并发访问时更新过的数据如何获取的问题。</p>
 <ul>
-<li>结果</li>
+<li>服务端</li>
 </ul>
-<p><strong>注意结果发生明显的变化， 因为没个对象都被克隆 所有的引用都指向了不同的地址</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">teacher(drive=[<span class="number">88</span>], name=老师, age=<span class="number">56</span>, sex=男, stu=student(name=学生, age=<span class="number">33</span>))</span><br><span class="line">teacher(drive=[<span class="number">99</span>], name=克隆老师, age=<span class="number">78</span>, sex=男, stu=student(name=小学生, age=<span class="number">99</span>))</span><br></pre></td></tr></table></figure>
-
-<p><strong>附图：</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%B7%B1%E6%8B%B7%E8%B4%9D.png" alt="深克隆UML"></p>
+<p>从服务端来看，则是更新如何分布到整个系统，以保证数据最终一致。</p>
+<p>对于一致性，可以分为强/弱/最终一致性三类</p>
+<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
+<ul>
+<li>强一致性</li>
+</ul>
+<p>对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是强一致性。</p>
+<ul>
+<li>弱一致性</li>
+</ul>
+<p>如果能容忍后续的部分或者全部访问不到，则是弱一致性。</p>
+<ul>
+<li>最终一致性</li>
+</ul>
+<p>如果经过一段时间后要求能访问到更新后的数据，则是最终一致性。</p>
+<h3 id="Availability-可用性"><a href="#Availability-可用性" class="headerlink" title="Availability 可用性"></a><strong>Availability 可用性</strong></h3><p>可用性指“<code>Reads and writes always succeed</code>”，即服务在正常响应时间内一直可用。</p>
+<p>好的可用性主要是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。可用性通常情况下可用性和分布式数据冗余，负载均衡等有着很大的关联。</p>
+<h2 id="Partition-Tolerance分区容错性"><a href="#Partition-Tolerance分区容错性" class="headerlink" title="Partition Tolerance分区容错性"></a><strong>Partition Tolerance分区容错性</strong></h2><p>分区容错性指“<code>the system continues to operate despite arbitrary message loss or failure of part of the system</code>”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务。</p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>Java基础知识</category>
+        <category>分布式</category>
       </categories>
       <tags>
-        <tag>Java中的深克隆和浅克隆</tag>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java好的开源项目</title>
+    <url>/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
+    <content><![CDATA[<h4 id="好的开源项目"><a href="#好的开源项目" class="headerlink" title="好的开源项目"></a>好的开源项目</h4><ul>
+<li><strong>项目简介</strong></li>
+</ul>
+<p>一个基于 Spring Boot 2.1.0 、 Spring Boot Jpa、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统</p>
+<p>  <a href="https://el-admin.vip/">开发文档</a></p>
+<p> <a href="https://doc.el-admin.xin/">备用文档</a></p>
+<p><strong>账号密码：</strong> <code>admin / 123456</code></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>随笔记录</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>

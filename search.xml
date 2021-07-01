@@ -36,41 +36,270 @@
       </tags>
   </entry>
   <entry>
-    <title>ConcurrentHashMap 详解</title>
-    <url>/2021/05/27/ConcurrentHashMap%20%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<h2 id="ConcurrentHashMap-详解"><a href="#ConcurrentHashMap-详解" class="headerlink" title="ConcurrentHashMap 详解"></a>ConcurrentHashMap 详解</h2><h3 id="private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30"><a href="#private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30" class="headerlink" title="private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;"></a>private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</h3><ul>
-<li><strong>MAXIMUM_CAPACITY是2的30次方 的原因</strong>`<ol>
-<li>int的最大的值是2的31次方-1，所以容量无法到达2的31次方，</li>
-<li>需要让容量满足2的幂次，所以设置为2的30次方 </li>
-</ol>
-</li>
-</ul>
-<h3 id="private-static-final-int-DEFAULT-CAPACITY-16"><a href="#private-static-final-int-DEFAULT-CAPACITY-16" class="headerlink" title="private static final int DEFAULT_CAPACITY = 16;"></a>private static final int DEFAULT_CAPACITY = 16;</h3><ul>
-<li><strong>DEFAULT_CAPACITY = 16;</strong><ol>
-<li>方便数据迁移</li>
-<li>方便进行计算对应的位置</li>
-<li>概率统计</li>
-</ol>
-</li>
-</ul>
-<h3 id="new-ConcurrentHashMap-lt-gt-2-自定义大小解释："><a href="#new-ConcurrentHashMap-lt-gt-2-自定义大小解释：" class="headerlink" title="new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释："></a>new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">int</span> cap = ((initialCapacity &gt;= (MAXIMUM_CAPACITY &gt;&gt;&gt; <span class="number">1</span>)) ?</span><br><span class="line">               MAXIMUM_CAPACITY :</span><br><span class="line">               tableSizeFor(initialCapacity + (initialCapacity &gt;&gt;&gt; <span class="number">1</span>) + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">this</span>.sizeCtl = cap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// tableSizeFor的功能（不考虑大于最大容量的情况）是返回大于输入参数且最近的2的整数次幂的数。比如10，则返回16。 </span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = c - <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">8</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>GC的基础知识</title>
     <url>/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<p>null</p>
+    <content><![CDATA[<h1 id="GC和GC-Tuning"><a href="#GC和GC-Tuning" class="headerlink" title="GC和GC Tuning"></a>GC和GC Tuning</h1><h4 id="1-什么是垃圾"><a href="#1-什么是垃圾" class="headerlink" title="1.什么是垃圾"></a>1.什么是垃圾</h4><blockquote>
+<p>没有任何引用指向的一个对象或者多个对象（循环引用）</p>
+</blockquote>
+<h4 id="2-如何定位垃圾"><a href="#2-如何定位垃圾" class="headerlink" title="2.如何定位垃圾"></a>2.如何定位垃圾</h4><blockquote>
+<p>引用计数（ReferenceCount）</p>
+<p>根可达算法(RootSearching)</p>
+</blockquote>
+<h4 id="3-GC-roots"><a href="#3-GC-roots" class="headerlink" title="3. GC roots"></a>3. GC roots</h4><blockquote>
+<p>JVM stack  (jvm栈)</p>
+<p>native method stack （本地方法栈）</p>
+<p>run-time constant pool （常量池指向的变量）</p>
+<p>static references in method artea （静态变量指向的对象）</p>
+<p>Clazz  （对象字节load到内存）</p>
+</blockquote>
+<h4 id="3-常见的垃圾回收算法"><a href="#3-常见的垃圾回收算法" class="headerlink" title="3.常见的垃圾回收算法"></a>3.常见的垃圾回收算法</h4><blockquote>
+<p>标记清除(mark sweep) - 位置不连续 产生碎片 效率偏低（两遍扫描）</p>
+<p>拷贝算法 (copying) - 没有碎片，浪费空间</p>
+<p>标记压缩(mark compact) - 没有碎片，效率偏低（两遍扫描，指针需要调整）</p>
+</blockquote>
+<h4 id="4-JVM内存分代模型（用于分代垃圾回收算法）"><a href="#4-JVM内存分代模型（用于分代垃圾回收算法）" class="headerlink" title="4.JVM内存分代模型（用于分代垃圾回收算法）"></a>4.JVM内存分代模型（用于分代垃圾回收算法）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/jvm%E5%88%86%E4%BB%A3%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png"></h4><p><strong>1. 部分垃圾回收器使用的模型</strong></p>
+<blockquote>
+<p>除Epsilon ZGC Shenandoah之外的GC都是使用逻辑分代模型</p>
+<p>G1是逻辑分代，物理不分代</p>
+<p>除此之外不仅逻辑分代，而且物理分代</p>
+</blockquote>
+<p><strong>2. 新生代 + 老年代 + 永久代（1.7）Perm Generation/ 元数据区(1.8) Metaspace</strong></p>
+<blockquote>
+<p>永久代 元数据 - Class</p>
+<p>永久代必须指定大小限制 ，元数据可以设置，也可以不设置，无上限（受限于物理内存）</p>
+<p>字符串常量 1.7 - 永久代，1.8 - 堆</p>
+<p>MethodArea逻辑概念 - 永久代、元数据</p>
+</blockquote>
+<p><strong>3. 新生代 = Eden + 2个suvivor区</strong> </p>
+<blockquote>
+<p>YGC回收之后，大多数的对象会被回收，活着的进入s0</p>
+<p>再次YGC，活着的对象eden + s0 -&gt; s1</p>
+<p>再次YGC，eden + s1 -&gt; s0</p>
+<p>年龄足够 -&gt; 老年代 （15 CMS 6）</p>
+<p>s区装不下 -&gt; 老年代</p>
+</blockquote>
+<p><strong>4. 老年代</strong></p>
+<blockquote>
+<p>顽固分子</p>
+<p>老年代满了FGC Full GC</p>
+</blockquote>
+<p><strong>GC Tuning (Generation)</strong></p>
+<blockquote>
+<p>尽量减少FGC</p>
+<p>MinorGC = YGC</p>
+<p>MajorGC = FGC</p>
+</blockquote>
+<p><strong>动态年龄：</strong><br><a href="https://www.jianshu.com/p/989d3b06a49d">https://www.jianshu.com/p/989d3b06a49d</a></p>
+<p><strong>分配担保：</strong><br>YGC期间 survivor区空间不够了 空间担保直接进入老年代<br>参考：<a href="https://cloud.tencent.com/developer/article/1082730">https://cloud.tencent.com/developer/article/1082730</a></p>
+<p><strong>对象的分配过程</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.png" alt="对象内存分配的过程"></p>
+<p><strong>5 .TLAB 分配</strong></p>
+<blockquote>
+<p>　JVM在内存新生代Eden Space中开辟了一小块线程私有的区域，称作TLAB（Thread-local allocation buffer）。默认设定为占用Eden Space的1%。在Java程序中很多对象都是小对象且用过即丢，它们不存在线程共享也适合被快速GC，所以对于小对象通常JVM会优先分配在TLAB上，并且TLAB上的分配由于是线程私有所以没有锁开销。因此在实践中分配多个小对象的效率通常比分配一个大对象的效率要高。<br>　　也就是说，Java中每个线程都会有自己的缓冲区称作TLAB（Thread-local allocation buffer），每个TLAB都只有一个线程可以操作，TLAB结合bump-the-pointer技术可以实现快速的对象分配，而不需要任何的锁进行同步，也就是说，在对象分配的时候不用锁住整个堆，而只需要在自己的缓冲区分配即可。<br>　　关于对象分配的JDK源码可以参见 [JVM 之 Java对象创建<a href="http://blog.hesey.net/2011/07/object-allocation-on-non-heap.html">初始化]</a> 中对OpenJDK源码的分析。</p>
+</blockquote>
+<p><strong>为什么需要TLAB？</strong></p>
+<blockquote>
+<p>　　这是为了加速对象的分配。由于对象一般分配在堆上，而堆是线程共用的，因此可能会有多个线程在堆上申请空间，而每一次的对象分配都必须线程同步，会使分配的效率下降。考虑到对象分配几乎是Java中最常用的操作，因此JVM使用了TLAB这样的线程专有区域来避免多线程冲突，提高对象分配的效率。</p>
+</blockquote>
+<h4 id="6-常见的垃圾回收器"><a href="#6-常见的垃圾回收器" class="headerlink" title="6.常见的垃圾回收器"></a>6.常见的垃圾回收器</h4><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/gc%E7%AE%97%E6%B3%95.png" alt="gc"></p>
+<ol>
+<li>JDK诞生 Serial追随 提高效率，诞生了PS，为了配合CMS，诞生了PN，CMS是1.4版本后期引入，CMS是里程碑式的GC，它开启了并发回收的过程，但是CMS毛病较多，因此目前任何一个JDK版本默认是CMS<br>并发垃圾回收是因为无法忍受STW</li>
+<li>Serial 年轻代 串行回收</li>
+<li>PS 年轻代 并行回收</li>
+<li>ParNew 年轻代 配合CMS的并行回收</li>
+<li>SerialOld </li>
+<li>ParallelOld</li>
+<li>ConcurrentMarkSweep 老年代 并发的， 垃圾回收和应用程序同时运行，降低STW的时间(200ms)<br>CMS问题比较多，所以现在没有一个版本默认是CMS，只能手工指定<br>CMS既然是MarkSweep，就一定会有碎片化的问题，碎片到达一定程度，CMS的老年代分配对象分配不下的时候，使用SerialOld 进行老年代回收<br>想象一下：<br>PS + PO -&gt; 加内存 换垃圾回收器 -&gt; PN + CMS + SerialOld（几个小时 - 几天的STW）<br>几十个G的内存，单线程回收 -&gt; G1 + FGC 几十个G -&gt; 上T内存的服务器 ZGC<br>算法：三色标记 + Incremental Update</li>
+<li>G1(10ms)<br>算法：三色标记 + SATB</li>
+<li>ZGC (1ms) PK C++<br>算法：ColoredPointers + LoadBarrier</li>
+<li>Shenandoah<br>算法：ColoredPointers + WriteBarrier</li>
+<li>Eplison</li>
+<li>PS 和 PN区别的延伸阅读：<br>▪<a href="https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html">https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html#GUID-3D0BB91E-9BFF-4EBB-B523-14493A860E73</a></li>
+<li>垃圾收集器跟内存大小的关系<ol>
+<li>Serial 几十兆</li>
+<li>PS 上百兆 - 几个G</li>
+<li>CMS - 20G</li>
+<li>G1 - 上百G</li>
+<li>ZGC - 4T - 16T（JDK13）</li>
+</ol>
+</li>
+</ol>
+<p>1.8默认的垃圾回收：PS + ParallelOld</p>
+<h4 id="7-常见垃圾回收器组合参数设定：-1-8"><a href="#7-常见垃圾回收器组合参数设定：-1-8" class="headerlink" title="7.常见垃圾回收器组合参数设定：(1.8)"></a>7.常见垃圾回收器组合参数设定：(1.8)</h4><ul>
+<li><p>-XX:+UseSerialGC = Serial New (DefNew) + Serial Old</p>
+<ul>
+<li>小型程序。默认情况下不会是这种选项，HotSpot会根据计算及配置和JDK版本自动选择收集器</li>
+</ul>
+</li>
+<li><p>-XX:+UseParNewGC = ParNew + SerialOld</p>
+<ul>
+<li>这个组合已经很少用（在某些版本中已经废弃）</li>
+<li><a href="https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future">https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future</a></li>
+</ul>
+</li>
+<li><p>-XX:+UseConc<font color=red>(urrent)</font>MarkSweepGC = ParNew + CMS + Serial Old</p>
+</li>
+<li><p>-XX:+UseParallelGC = Parallel Scavenge + Parallel Old (1.8默认) 【PS + SerialOld】</p>
+</li>
+<li><p>-XX:+UseParallelOldGC = Parallel Scavenge + Parallel Old</p>
+</li>
+<li><p>-XX:+UseG1GC = G1</p>
+</li>
+<li><p>Linux中没找到默认GC的查看方法，而windows中会打印UseParallelGC </p>
+<ul>
+<li>java +XX:+PrintCommandLineFlags -version</li>
+<li>通过GC的日志来分辨</li>
+</ul>
+</li>
+<li><p>Linux下1.8版本默认的垃圾回收器到底是什么？</p>
+<ul>
+<li>1.8.0_181 默认（看不出来）Copy MarkCompact</li>
+<li>1.8.0_222 默认 PS + PO</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-了解JVM常用命令行参数"><a href="#8-了解JVM常用命令行参数" class="headerlink" title="8.了解JVM常用命令行参数"></a>8.了解JVM常用命令行参数</h4><ul>
+<li><p>JVM的命令行参数参考：<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></p>
+</li>
+<li><p>HotSpot参数分类</p>
+<blockquote>
+<p>标准： - 开头，所有的HotSpot都支持</p>
+<p>非标准：-X 开头，特定版本HotSpot支持特定命令</p>
+<p>不稳定：-XX 开头，下个版本可能取消</p>
+</blockquote>
+<p>java -version</p>
+<p>试验用程序：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloGC</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;HelloGC!&quot;</span>);</span><br><span class="line">    List list = <span class="keyword">new</span> LinkedList();</span><br><span class="line">    <span class="keyword">for</span>(;;) &#123;</span><br><span class="line">      <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">      list.add(b);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol>
+<li>区分概念：内存泄漏memory leak，内存溢出out of memory</li>
+<li>java -XX:+PrintCommandLineFlags HelloGC</li>
+<li>java -Xmn10M -Xms40M -Xmx60M -XX:+PrintCommandLineFlags -XX:+PrintGC  HelloGC<br>PrintGCDetails PrintGCTimeStamps PrintGCCauses</li>
+<li>java -XX:+UseConcMarkSweepGC -XX:+PrintCommandLineFlags HelloGC</li>
+<li>java -XX:+PrintFlagsInitial 默认参数值</li>
+<li>java -XX:+PrintFlagsFinal 最终参数值</li>
+<li>java -XX:+PrintFlagsFinal | grep xxx 找到对应的参数</li>
+<li>java -XX:+PrintFlagsFinal -version |grep GC</li>
+</ol>
+</li>
+</ul>
+<h4 id="9-PS-GC日志详解"><a href="#9-PS-GC日志详解" class="headerlink" title="9. PS GC日志详解"></a>9. PS GC日志详解</h4><p>每种垃圾回收器的日志格式是不同的！</p>
+<p>PS日志格式</p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3.png" alt="gc日志详解"></p>
+<p>heap dump部分：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">eden space 5632K, <span class="number">94</span>% used [<span class="number">0x00000000ff980000</span>,<span class="number">0x00000000ffeb3e28</span>,<span class="number">0x00000000fff00000</span>)</span><br><span class="line">                            后面的内存地址指的是，起始地址，使用空间结束地址，整体空间结束地址</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A32.png" alt="gc日志详解2"></p>
+<p>total = eden + 1个survivor</p>
+<h4 id="10-调优前的基础概念："><a href="#10-调优前的基础概念：" class="headerlink" title="10. 调优前的基础概念："></a>10. 调优前的基础概念：</h4><ol>
+<li>吞吐量：用户代码时间 /（用户代码执行时间 + 垃圾回收时间）</li>
+<li>响应时间：STW越短，响应时间越好</li>
+</ol>
+<p>所谓调优，首先确定，追求啥？吞吐量优先，还是响应时间优先？还是在满足一定的响应时间的情况下，要求达到多大的吞吐量…</p>
+<p><strong>什么是调优？</strong></p>
+<ol>
+<li>根据需求进行JVM规划和预调优</li>
+<li>优化运行JVM运行环境（慢，卡顿）</li>
+<li>解决JVM运行过程中出现的各种问题(OOM)</li>
+</ol>
+<h4 id="11-调优步骤"><a href="#11-调优步骤" class="headerlink" title="11. 调优步骤"></a>11. 调优步骤</h4><ul>
+<li><p>调优，从业务场景开始，没有业务场景的调优都是耍流氓</p>
+</li>
+<li><p>无监控（压力测试，能看到结果），不调优</p>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li>熟悉业务场景（没有最好的垃圾回收器，只有最合适的垃圾回收器）<ol>
+<li>响应时间、停顿时间 [CMS G1 ZGC] （需要给用户作响应）</li>
+<li>吞吐量 = 用户时间 /( 用户时间 + GC时间) [PS]</li>
+</ol>
+</li>
+<li>选择回收器组合</li>
+<li>计算内存需求（经验值 1.5G 16G）</li>
+<li>选定CPU（越高越好）</li>
+<li>设定年代大小、升级年龄</li>
+<li>设定日志参数<ol>
+<li>-Xloggc:/opt/xxx/logs/xxx-xxx-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCCause</li>
+<li>或者每天产生一个日志文件</li>
+</ol>
+</li>
+<li>观察日志情况 </li>
+</ol>
+</li>
+</ul>
+<h4 id="GC常用参数"><a href="#GC常用参数" class="headerlink" title="GC常用参数"></a>GC常用参数</h4><ul>
+<li>-Xmn -Xms -Xmx -Xss<br>年轻代 最小堆 最大堆 栈空间</li>
+<li>-XX:+UseTLAB<br>使用TLAB，默认打开</li>
+<li>-XX:+PrintTLAB<br>打印TLAB的使用情况</li>
+<li>-XX:TLABSize<br>设置TLAB大小</li>
+<li>-XX:+DisableExplictGC<br>System.gc()不管用 ，FGC</li>
+<li>-XX:+PrintGC</li>
+<li>-XX:+PrintGCDetails</li>
+<li>-XX:+PrintHeapAtGC</li>
+<li>-XX:+PrintGCTimeStamps</li>
+<li>-XX:+PrintGCApplicationConcurrentTime (低)<br>打印应用程序时间</li>
+<li>-XX:+PrintGCApplicationStoppedTime （低）<br>打印暂停时长</li>
+<li>-XX:+PrintReferenceGC （重要性低）<br>记录回收了多少种不同引用类型的引用</li>
+<li>-verbose:class<br>类加载详细过程</li>
+<li>-XX:+PrintVMOptions</li>
+<li>-XX:+PrintFlagsFinal  -XX:+PrintFlagsInitial<br>必须会用</li>
+<li>-Xloggc:opt/log/gc.log</li>
+<li>-XX:MaxTenuringThreshold<br>升代年龄，最大值15</li>
+<li>锁自旋次数 -XX:PreBlockSpin 热点代码检测参数-XX:CompileThreshold 逃逸分析 标量替换 …<br>这些不建议设置</li>
+</ul>
+<h4 id="Parallel常用参数"><a href="#Parallel常用参数" class="headerlink" title="Parallel常用参数"></a>Parallel常用参数</h4><ul>
+<li>-XX:SurvivorRatio</li>
+<li>-XX:PreTenureSizeThreshold<br>大对象到底多大</li>
+<li>-XX:MaxTenuringThreshold</li>
+<li>-XX:+ParallelGCThreads<br>并行收集器的线程数，同样适用于CMS，一般设为和CPU核数相同</li>
+<li>-XX:+UseAdaptiveSizePolicy<br>自动选择各区大小比例</li>
+</ul>
+<h4 id="CMS常用参数"><a href="#CMS常用参数" class="headerlink" title="CMS常用参数"></a>CMS常用参数</h4><ul>
+<li>-XX:+UseConcMarkSweepGC</li>
+<li>-XX:ParallelCMSThreads<br>CMS线程数量</li>
+<li>-XX:CMSInitiatingOccupancyFraction<br>使用多少比例的老年代后开始CMS收集，默认是68%(近似值)，如果频繁发生SerialOld卡顿，应该调小，（频繁CMS回收）</li>
+<li>-XX:+UseCMSCompactAtFullCollection<br>在FGC时进行压缩</li>
+<li>-XX:CMSFullGCsBeforeCompaction<br>多少次FGC之后进行压缩</li>
+<li>-XX:+CMSClassUnloadingEnabled</li>
+<li>-XX:CMSInitiatingPermOccupancyFraction<br>达到什么比例时进行Perm回收</li>
+<li>GCTimeRatio<br>设置GC时间占用程序运行时间的百分比</li>
+<li>-XX:MaxGCPauseMillis<br>停顿时间，是一个建议时间，GC会尝试用各种手段达到这个时间，比如减小年轻代</li>
+</ul>
+<h4 id="G1常用参数"><a href="#G1常用参数" class="headerlink" title="G1常用参数"></a>G1常用参数</h4><ul>
+<li>-XX:+UseG1GC</li>
+<li>-XX:MaxGCPauseMillis<br>建议值，G1会尝试调整Young区的块数来达到这个值</li>
+<li>-XX:GCPauseIntervalMillis<br>？GC的间隔时间</li>
+<li>-XX:+G1HeapRegionSize<br>分区大小，建议逐渐增大该值，1 2 4 8 16 32。<br>随着size增加，垃圾的存活时间更长，GC间隔更长，但每次GC的时间也会更长<br>ZGC做了改进（动态区块大小）</li>
+<li>G1NewSizePercent<br>新生代最小比例，默认为5%</li>
+<li>G1MaxNewSizePercent<br>新生代最大比例，默认为60%</li>
+<li>GCTimeRatio<br>GC时间建议比例，G1会根据这个值调整堆空间</li>
+<li>ConcGCThreads<br>线程数量</li>
+<li>InitiatingHeapOccupancyPercent<br>启动G1的堆空间占用比例</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://blogs.oracle.com/jonthecollector/our-collectors">https://blogs.oracle.com/</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">jonthecollector</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">/our-collectors</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></li>
+<li><a href="http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp">http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp</a></li>
+<li>JVM调优参考文档：<a href="https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184">https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184</a> </li>
+<li><a href="https://www.cnblogs.com/nxlhero/p/11660854.html">https://www.cnblogs.com/nxlhero/p/11660854.html</a> 在线排查工具</li>
+<li><a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> arthas常用命令</li>
+<li>Arthas手册：<ol>
+<li>启动arthas java -jar arthas-boot.jar</li>
+<li>绑定java进程</li>
+<li>dashboard命令观察系统整体情况</li>
+<li>help 查看帮助</li>
+<li>help xx 查看具体命令帮助</li>
+</ol>
+</li>
+<li>jmap命令参考： <a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> <ol>
+<li>jmap -heap pid</li>
+<li>jmap -histo pid</li>
+<li>jmap -clstats pid</li>
+</ol>
+</li>
+</ol>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>JVM</category>
@@ -147,7 +376,63 @@
   <entry>
     <title>Java 类的加载过程</title>
     <url>/2021/06/24/Java%20%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<p>null</p>
+    <content><![CDATA[<h3 id="Java-类的加载过程"><a href="#Java-类的加载过程" class="headerlink" title="Java 类的加载过程"></a>Java 类的加载过程</h3><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E7%9A%84%E4%BA%94%E4%B8%AA%E9%83%A8%E5%88%86%281%29.jpg" alt="类的加载过程"></h4><h3 id="1-Loading-使用双亲委派机制将-class加载到内存中"><a href="#1-Loading-使用双亲委派机制将-class加载到内存中" class="headerlink" title="1.Loading 使用双亲委派机制将 .class加载到内存中"></a><strong>1.Loading 使用双亲委派机制将 .class加载到内存中</strong></h3><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE.jpg" alt="类的加载机制"></p>
+<ol>
+<li><p><strong>为什么要使用双亲委派</strong></p>
+<blockquote>
+<p>　<strong>防止加载同一个.class。</strong>通过委托去询问上级是否已经加载过该.class，如果加载过了，则不需要重新加载。保证了数据安全。</p>
+<p>　<strong>保证核心.class不被篡改。</strong>通过委托的方式，保证核心.class不被篡改，即使被篡改也不会被加载，即使被加载也不会是同一个class对象，因为不同的加载器加载同一个.class也不是同一个Class对象。这样则保证了Class的执行安全。</p>
+</blockquote>
+</li>
+<li><p><strong>自定义类加载器 加密代码</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassLoaderWithEncription</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> seed = <span class="number">0B10110110</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        File f = <span class="keyword">new</span> File(<span class="string">&quot;c:/test/&quot;</span>, name.replace(<span class="string">&#x27;.&#x27;</span>, <span class="string">&#x27;/&#x27;</span>).concat(<span class="string">&quot;.msbclass&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            FileInputStream fis = <span class="keyword">new</span> FileInputStream(f);</span><br><span class="line">            ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">            <span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> ((b=fis.read()) !=<span class="number">0</span>) &#123;</span><br><span class="line">                baos.write(b ^ seed);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">byte</span>[] bytes = baos.toByteArray();</span><br><span class="line">            baos.close();</span><br><span class="line">            fis.close();<span class="comment">//可以写的更加严谨</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> defineClass(name, bytes, <span class="number">0</span>, bytes.length);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.findClass(name); <span class="comment">//throws ClassNotFoundException</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        encFile(<span class="string">&quot;com.yzw.jvm.hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">        ClassLoader l = <span class="keyword">new</span> ClassLoaderWithEncription();</span><br><span class="line">        Class clazz = l.loadClass(<span class="string">&quot;com.yzw.jvm.Hello&quot;</span>);</span><br><span class="line">        Hello h = (Hello)clazz.newInstance();</span><br><span class="line">        h.m();</span><br><span class="line"></span><br><span class="line">        System.out.println(l.getClass().getClassLoader());</span><br><span class="line">        System.out.println(l.getParent());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">encFile</span><span class="params">(String name)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        File f = <span class="keyword">new</span> File(<span class="string">&quot;c:/test/&quot;</span>, name.replace(<span class="string">&#x27;.&#x27;</span>, <span class="string">&#x27;/&#x27;</span>).concat(<span class="string">&quot;.class&quot;</span>));</span><br><span class="line">        FileInputStream fis = <span class="keyword">new</span> FileInputStream(f);</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(<span class="keyword">new</span> File(<span class="string">&quot;c:/test/&quot;</span>, name.replaceAll(<span class="string">&quot;.&quot;</span>, <span class="string">&quot;/&quot;</span>).concat(<span class="string">&quot;.msbclass&quot;</span>)));</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>((b = fis.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">            fos.write(b ^ seed);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fis.close();</span><br><span class="line">        fos.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>如何打破：重写loadClass（）</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">T012_ClassReloading2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> Class&lt;?&gt; loadClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line"></span><br><span class="line">            File f = <span class="keyword">new</span> File(<span class="string">&quot;C:/work/ijprojects/JVM/out/production/JVM/&quot;</span> + name.replace(<span class="string">&quot;.&quot;</span>, <span class="string">&quot;/&quot;</span>).concat(<span class="string">&quot;.class&quot;</span>));</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(!f.exists()) <span class="keyword">return</span> <span class="keyword">super</span>.loadClass(name);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">                InputStream is = <span class="keyword">new</span> FileInputStream(f);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[is.available()];</span><br><span class="line">                is.read(b);</span><br><span class="line">                <span class="keyword">return</span> defineClass(name, b, <span class="number">0</span>, b.length);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.loadClass(name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        MyLoader m = <span class="keyword">new</span> MyLoader();</span><br><span class="line">        Class clazz = m.loadClass(<span class="string">&quot;com.yzw.jvm.Hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">        m = <span class="keyword">new</span> MyLoader();</span><br><span class="line">        Class clazzNew = m.loadClass(<span class="string">&quot;com.yzw.jvm.Hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(clazz == clazzNew);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p><strong>打破双亲委派的用途</strong></p>
+<blockquote>
+<ol>
+<li>ThreadContextClassLoader可以实现基础类调用实现类代码，通过thread.setContextClassLoader指定</li>
+<li>热启动，热部署</li>
+<li>osgi tomcat 都有自己的模块指定classloader（可以加载同一类库的不同版本）</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="2-Linking"><a href="#2-Linking" class="headerlink" title="2. Linking"></a><strong>2. Linking</strong></h4><ol>
+<li>Verification<ol>
+<li>验证文件是否符合JVM规定</li>
+</ol>
+</li>
+<li>Preparation<ol>
+<li>静态成员变量赋默认值</li>
+</ol>
+</li>
+<li>Resolution<ol>
+<li>将类、方法、属性等符号引用解析为直接引用<br>常量池中的各种符号引用解析为指针、偏移量等内存地址的直接引用</li>
+</ol>
+</li>
+</ol>
+<h4 id="3-Initializing"><a href="#3-Initializing" class="headerlink" title="3.Initializing"></a><strong>3.Initializing</strong></h4><ol>
+<li>调用类初始化代码 <clinit>，给静态成员变量赋初始值</li>
+</ol>
+<h4 id="4-小总结："><a href="#4-小总结：" class="headerlink" title="4. 小总结："></a><strong>4. 小总结：</strong></h4><ol>
+<li><p>load - 默认值 - 初始值</p>
+</li>
+<li><p>new - 申请内存 - 默认值 - 初始值</p>
+</li>
+<li><p>java 执行的方式是 混合执行 即编译执行+解释执行 jvm会对热点代码进行编译为本地的可执行文件  </p>
+</li>
+</ol>
+<p>​                编译执行： 代码运行速度快，但第一次运行时速度极慢</p>
+<p>​                解释执行： 代码以运行速度稍慢</p>
+<p>​              -XX:CICompilerCount=n 指定JIT编译器用来编译方法的线程数量</p>
+<p>​              -XX:CompileThreshold = 10000:   一个方法调用多少次会被 HotSpot和JIT 编译器能编译它</p>
+<p>​               -Xcomp： 指定JVM在第一次使用时把所有的字节码编译成本地代码. (即CompileThreshold=1)</p>
+<p>​              -Xint 仅仅使用解释模式，不激活JIT编译器 (即CompileThreshold=0)</p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>JVM</category>
@@ -745,18 +1030,6 @@ A[pc1]
       </tags>
   </entry>
   <entry>
-    <title>java内存模型</title>
-    <url>/2021/06/25/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<p>null</p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java中的位和位移运算符</title>
     <url>/2021/04/05/java%E4%B8%AD%E7%9A%84%E4%BD%8D%E5%92%8C%E4%BD%8D%E7%A7%BB%E8%BF%90%E7%AE%97%E7%AC%A6/</url>
     <content><![CDATA[<h3 id="位和位移运算符"><a href="#位和位移运算符" class="headerlink" title="位和位移运算符"></a>位和位移运算符</h3><table>
@@ -806,6 +1079,36 @@ A[pc1]
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java内存模型</title>
+    <url>/2021/06/25/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<p>null</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java好的开源项目</title>
+    <url>/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
+    <content><![CDATA[<h4 id="好的开源项目"><a href="#好的开源项目" class="headerlink" title="好的开源项目"></a>好的开源项目</h4><ul>
+<li><strong>项目简介</strong></li>
+</ul>
+<p>一个基于 Spring Boot 2.1.0 、 Spring Boot Jpa、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统</p>
+<p>  <a href="https://el-admin.vip/">开发文档</a></p>
+<p> <a href="https://doc.el-admin.xin/">备用文档</a></p>
+<p><strong>账号密码：</strong> <code>admin / 123456</code></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>随笔记录</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
@@ -1467,7 +1770,55 @@ A(c)  --> B[i = 8]</pre>
   <entry>
     <title>使用JavaAgent观察new对象占的的内存的大小</title>
     <url>/2021/06/24/%E4%BD%BF%E7%94%A8JavaAgent%E8%A7%82%E5%AF%9Fnew%E5%AF%B9%E8%B1%A1%E5%8D%A0%E7%9A%84%E7%9A%84%E5%86%85%E5%AD%98%E7%9A%84%E5%A4%A7%E5%B0%8F/</url>
-    <content><![CDATA[<p>null</p>
+    <content><![CDATA[<h2 id="new-Object-占的的内存的大小"><a href="#new-Object-占的的内存的大小" class="headerlink" title="new Object()占的的内存的大小"></a>new Object()占的的内存的大小</h2><h3 id="JavaAgent-介绍"><a href="#JavaAgent-介绍" class="headerlink" title="JavaAgent 介绍"></a>JavaAgent 介绍</h3><blockquote>
+<p>以前在做后台服务开发的时候，SpringBoot每次改动代码都需要手动重启才能生效，感觉贼麻烦，后来使用Spring提供的一款热部署插件，它只是部分重启，相当于重新加载了我们自己写的代码，效率提高很多。后来遇到了<a href="https://zeroturnaround.com/software/jrebel/">Jrebel</a>，它只重新加载我们修改的那个类，比Springboot热部署插件重启速度更快，连改mybatis的xml文件都能热部署，太方便了有不有！（顺便安利一下同一家公司的另一个软件<a href="https://zeroturnaround.com/software/xrebel/download/">XRebel</a>，实时监控服务请求）后来又接触了<a href="https://github.com/btraceio/btrace">BTrace</a>，它可以线上调试代码而不需要重启项目，也是很吊的一个东西。通过了解，上面所说的几个东西都是通过Java Agent来实现的，那么Java Agent到底是啥，为啥这么吊？</p>
+<p>在JDK1.5以后，我们可以使用agent技术构建一个独立于应用程序的代理程序（即为Agent），用来协助监测、运行甚至替换其他JVM上的程序。使用它可以实现虚拟机级别的AOP功能。</p>
+<p>Agent分为两种，一种是在主程序之前运行的Agent，一种是在主程序之后运行的Agent（前者的升级版，1.6以后提供），这两种我们都会举个</p>
+</blockquote>
+<h3 id="对象大小（64位机）"><a href="#对象大小（64位机）" class="headerlink" title="对象大小（64位机）"></a>对象大小（64位机）</h3><h3 id="观察虚拟机配置"><a href="#观察虚拟机配置" class="headerlink" title="观察虚拟机配置"></a>观察虚拟机配置</h3><p>java -XX:+PrintCommandLineFlags -version</p>
+<h3 id="普通对象"><a href="#普通对象" class="headerlink" title="普通对象"></a>普通对象</h3><ol>
+<li>对象头：markword  8</li>
+<li>ClassPointer指针：-XX:+UseCompressedClassPointers 为4字节 不开启为8字节</li>
+<li>实例数据<ol>
+<li>引用类型：-XX:+UseCompressedOops 为4字节 不开启为8字节<br>Oops Ordinary Object Pointers</li>
+</ol>
+</li>
+<li>Padding对齐，8的倍数</li>
+</ol>
+<h3 id="数组对象"><a href="#数组对象" class="headerlink" title="数组对象"></a>数组对象</h3><ol>
+<li>对象头：markword 8</li>
+<li>ClassPointer指针同上</li>
+<li>数组长度：4字节</li>
+<li>数组数据</li>
+<li>对齐 8的倍数</li>
+</ol>
+<h2 id="实验-使用JavaAgent测试Object的大小"><a href="#实验-使用JavaAgent测试Object的大小" class="headerlink" title="实验 使用JavaAgent测试Object的大小"></a>实验 使用JavaAgent测试Object的大小</h2><ol>
+<li><p>新建项目ObjectSize （1.8）</p>
+</li>
+<li><p>创建文件ObjectSizeAgent</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.mashibing.jvm.agent;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.instrument.Instrumentation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjectSizeAgent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Instrumentation inst;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentArgs, Instrumentation _inst)</span> </span>&#123;</span><br><span class="line">        inst = _inst;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">sizeOf</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> inst.getObjectSize(o);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>src目录下创建META-INF/MANIFEST.MF</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Manifest-Version: <span class="number">1.0</span></span><br><span class="line">Created-By: mashibing.com</span><br><span class="line">Premain-Class: com.mashibing.jvm.agent.ObjectSizeAgent</span><br></pre></td></tr></table></figure>
+
+<p>注意Premain-Class这行必须是新的一行（回车 + 换行），确认idea不能有任何错误提示</p>
+</li>
+<li><p>打包jar文件</p>
+</li>
+<li><p>在需要使用该Agent Jar的项目中引入该Jar包<br>project structure - project settings - library 添加该jar包</p>
+</li>
+<li><p>运行时需要该Agent Jar的类，加入参数：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-javaagent:C:\work\ijprojects\ObjectSize\out\artifacts\ObjectSize_jar\ObjectSize.jar</span><br></pre></td></tr></table></figure></li>
+<li><p>如何使用该类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">​```java</span><br><span class="line">   <span class="keyword">package</span> com.mashibing.jvm.c3_jmm;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">import</span> com.mashibing.jvm.agent.ObjectSizeAgent;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">T03_SizeOfAnObject</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">           System.out.println(ObjectSizeAgent.sizeOf(<span class="keyword">new</span> Object()));</span><br><span class="line">           System.out.println(ObjectSizeAgent.sizeOf(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123;&#125;));</span><br><span class="line">           System.out.println(ObjectSizeAgent.sizeOf(<span class="keyword">new</span> P()));</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">P</span> </span>&#123;</span><br><span class="line">                           <span class="comment">//8 _markword</span></span><br><span class="line">                           <span class="comment">//4 _oop指针</span></span><br><span class="line">           <span class="keyword">int</span> id;         <span class="comment">//4</span></span><br><span class="line">           String name;    <span class="comment">//4</span></span><br><span class="line">           <span class="keyword">int</span> age;        <span class="comment">//4</span></span><br><span class="line">   </span><br><span class="line">           <span class="keyword">byte</span> b1;        <span class="comment">//1</span></span><br><span class="line">           <span class="keyword">byte</span> b2;        <span class="comment">//1</span></span><br><span class="line">   </span><br><span class="line">           Object o;       <span class="comment">//4</span></span><br><span class="line">           <span class="keyword">byte</span> b3;        <span class="comment">//1</span></span><br><span class="line">   </span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Hotspot开启内存压缩的规则（64位机）"><a href="#Hotspot开启内存压缩的规则（64位机）" class="headerlink" title="Hotspot开启内存压缩的规则（64位机）"></a>Hotspot开启内存压缩的规则（64位机）</h2><ol>
+<li>4G以下，直接砍掉高32位</li>
+<li>4G - 32G，默认开启内存压缩 ClassPointers Oops</li>
+<li>32G，压缩无效，使用64位<br>内存并不是越大越好（^-^）</li>
+</ol>
+<p><a href="https://cloud.tencent.com/developer/article/1480590">https://cloud.tencent.com/developer/article/1480590</a><br><a href="https://cloud.tencent.com/developer/article/1484167">https://cloud.tencent.com/developer/article/1484167</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1485795">https://cloud.tencent.com/developer/article/1485795</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1482500">https://cloud.tencent.com/developer/article/1482500</a></p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>JVM</category>
@@ -2883,18 +3234,32 @@ G -->   V(Socket3 处理 Client 3 )</pre>
       </tags>
   </entry>
   <entry>
-    <title>java好的开源项目</title>
-    <url>/2021/01/08/java%E5%A5%BD%E7%9A%84%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</url>
-    <content><![CDATA[<h4 id="好的开源项目"><a href="#好的开源项目" class="headerlink" title="好的开源项目"></a>好的开源项目</h4><ul>
-<li><strong>项目简介</strong></li>
+    <title>ConcurrentHashMap 详解</title>
+    <url>/2021/05/27/ConcurrentHashMap%20%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h2 id="ConcurrentHashMap-详解"><a href="#ConcurrentHashMap-详解" class="headerlink" title="ConcurrentHashMap 详解"></a>ConcurrentHashMap 详解</h2><h3 id="private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30"><a href="#private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30" class="headerlink" title="private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;"></a>private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</h3><ul>
+<li><strong>MAXIMUM_CAPACITY是2的30次方 的原因</strong>`<ol>
+<li>int的最大的值是2的31次方-1，所以容量无法到达2的31次方，</li>
+<li>需要让容量满足2的幂次，所以设置为2的30次方 </li>
+</ol>
+</li>
 </ul>
-<p>一个基于 Spring Boot 2.1.0 、 Spring Boot Jpa、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统</p>
-<p>  <a href="https://el-admin.vip/">开发文档</a></p>
-<p> <a href="https://doc.el-admin.xin/">备用文档</a></p>
-<p><strong>账号密码：</strong> <code>admin / 123456</code></p>
+<h3 id="private-static-final-int-DEFAULT-CAPACITY-16"><a href="#private-static-final-int-DEFAULT-CAPACITY-16" class="headerlink" title="private static final int DEFAULT_CAPACITY = 16;"></a>private static final int DEFAULT_CAPACITY = 16;</h3><ul>
+<li><strong>DEFAULT_CAPACITY = 16;</strong><ol>
+<li>方便数据迁移</li>
+<li>方便进行计算对应的位置</li>
+<li>概率统计</li>
+</ol>
+</li>
+</ul>
+<h3 id="new-ConcurrentHashMap-lt-gt-2-自定义大小解释："><a href="#new-ConcurrentHashMap-lt-gt-2-自定义大小解释：" class="headerlink" title="new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释："></a>new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">int</span> cap = ((initialCapacity &gt;= (MAXIMUM_CAPACITY &gt;&gt;&gt; <span class="number">1</span>)) ?</span><br><span class="line">               MAXIMUM_CAPACITY :</span><br><span class="line">               tableSizeFor(initialCapacity + (initialCapacity &gt;&gt;&gt; <span class="number">1</span>) + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">this</span>.sizeCtl = cap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// tableSizeFor的功能（不考虑大于最大容量的情况）是返回大于输入参数且最近的2的整数次幂的数。比如10，则返回16。 </span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = c - <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">8</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>随笔记录</category>
+        <category>Java基础知识</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>

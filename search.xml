@@ -1247,7 +1247,7 @@ E --> G[最终执行的指令]</pre>
 <li>程序顺序规则：一个线程中的每个操作，happens- before 于该线程中的任意后续操作。</li>
 <li>监视器锁规则：对一个监视器锁的解锁，happens- before 于随后对这个监视器锁的加锁。</li>
 <li>volatile 变量规则：对一个 volatile 域的写，happens- before 于任意后续对这个 volatile 域的读。</li>
-<li>传递性：如果 A happens- before B，且 B happens- before C，那么 A happens- before C。</li>
+<li>传递性：如果 A happens- before B，且 B happens- before C，那么 A happens- before C。 </li>
 </ol>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>

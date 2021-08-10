@@ -160,344 +160,6 @@ G -->   V(Socket3 处理 Client 3 )</pre>
       </tags>
   </entry>
   <entry>
-    <title>GC的基础知识</title>
-    <url>/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<h1 id="GC和GC-Tuning"><a href="#GC和GC-Tuning" class="headerlink" title="GC和GC Tuning"></a>GC和GC Tuning</h1><h4 id="1-什么是垃圾"><a href="#1-什么是垃圾" class="headerlink" title="1.什么是垃圾"></a>1.什么是垃圾</h4><blockquote>
-<p>没有任何引用指向的一个对象或者多个对象（循环引用）</p>
-</blockquote>
-<h4 id="2-如何定位垃圾"><a href="#2-如何定位垃圾" class="headerlink" title="2.如何定位垃圾"></a>2.如何定位垃圾</h4><blockquote>
-<p>引用计数（ReferenceCount）</p>
-<p>根可达算法(RootSearching)</p>
-</blockquote>
-<h4 id="3-GC-roots"><a href="#3-GC-roots" class="headerlink" title="3. GC roots"></a>3. GC roots</h4><blockquote>
-<p>JVM stack  (jvm栈)</p>
-<p>native method stack （本地方法栈）</p>
-<p>run-time constant pool （常量池指向的变量）</p>
-<p>static references in method artea （静态变量指向的对象）</p>
-<p>Clazz  （对象字节load到内存）</p>
-</blockquote>
-<h4 id="3-常见的垃圾回收算法"><a href="#3-常见的垃圾回收算法" class="headerlink" title="3.常见的垃圾回收算法"></a>3.常见的垃圾回收算法</h4><blockquote>
-<p>标记清除(mark sweep) - 位置不连续 产生碎片 效率偏低（两遍扫描）</p>
-<p>拷贝算法 (copying) - 没有碎片，浪费空间</p>
-<p>标记压缩(mark compact) - 没有碎片，效率偏低（两遍扫描，指针需要调整）</p>
-</blockquote>
-<h4 id="4-JVM内存分代模型（用于分代垃圾回收算法）"><a href="#4-JVM内存分代模型（用于分代垃圾回收算法）" class="headerlink" title="4.JVM内存分代模型（用于分代垃圾回收算法）"></a>4.JVM内存分代模型（用于分代垃圾回收算法）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/jvm%E5%88%86%E4%BB%A3%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png"></h4><p><strong>1. 部分垃圾回收器使用的模型</strong></p>
-<blockquote>
-<p>除Epsilon ZGC Shenandoah之外的GC都是使用逻辑分代模型</p>
-<p>G1是逻辑分代，物理不分代</p>
-<p>除此之外不仅逻辑分代，而且物理分代</p>
-</blockquote>
-<p><strong>2. 新生代 + 老年代 + 永久代（1.7）Perm Generation/ 元数据区(1.8) Metaspace</strong></p>
-<blockquote>
-<p>永久代 元数据 - Class</p>
-<p>永久代必须指定大小限制 ，元数据可以设置，也可以不设置，无上限（受限于物理内存）</p>
-<p>字符串常量 1.7 - 永久代，1.8 - 堆</p>
-<p>MethodArea逻辑概念 - 永久代、元数据</p>
-</blockquote>
-<p><strong>3. 新生代 = Eden + 2个suvivor区</strong> </p>
-<blockquote>
-<p>YGC回收之后，大多数的对象会被回收，活着的进入s0</p>
-<p>再次YGC，活着的对象eden + s0 -&gt; s1</p>
-<p>再次YGC，eden + s1 -&gt; s0</p>
-<p>年龄足够 -&gt; 老年代 （15 CMS 6）</p>
-<p>s区装不下 -&gt; 老年代</p>
-</blockquote>
-<p><strong>4. 老年代</strong></p>
-<blockquote>
-<p>顽固分子</p>
-<p>老年代满了FGC Full GC</p>
-</blockquote>
-<p><strong>GC Tuning (Generation)</strong></p>
-<blockquote>
-<p>尽量减少FGC</p>
-<p>MinorGC = YGC</p>
-<p>MajorGC = FGC</p>
-</blockquote>
-<p><strong>动态年龄：</strong><br><a href="https://www.jianshu.com/p/989d3b06a49d">https://www.jianshu.com/p/989d3b06a49d</a></p>
-<p><strong>分配担保：</strong><br>YGC期间 survivor区空间不够了 空间担保直接进入老年代<br>参考：<a href="https://cloud.tencent.com/developer/article/1082730">https://cloud.tencent.com/developer/article/1082730</a></p>
-<p><strong>对象的分配过程</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.png" alt="对象内存分配的过程"></p>
-<p><strong>5 .TLAB 分配</strong></p>
-<blockquote>
-<p>　JVM在内存新生代Eden Space中开辟了一小块线程私有的区域，称作TLAB（Thread-local allocation buffer）。默认设定为占用Eden Space的1%。在Java程序中很多对象都是小对象且用过即丢，它们不存在线程共享也适合被快速GC，所以对于小对象通常JVM会优先分配在TLAB上，并且TLAB上的分配由于是线程私有所以没有锁开销。因此在实践中分配多个小对象的效率通常比分配一个大对象的效率要高。<br>　　也就是说，Java中每个线程都会有自己的缓冲区称作TLAB（Thread-local allocation buffer），每个TLAB都只有一个线程可以操作，TLAB结合bump-the-pointer技术可以实现快速的对象分配，而不需要任何的锁进行同步，也就是说，在对象分配的时候不用锁住整个堆，而只需要在自己的缓冲区分配即可。<br>　　关于对象分配的JDK源码可以参见 [JVM 之 Java对象创建<a href="http://blog.hesey.net/2011/07/object-allocation-on-non-heap.html">初始化]</a> 中对OpenJDK源码的分析。</p>
-</blockquote>
-<p><strong>为什么需要TLAB？</strong></p>
-<blockquote>
-<p>　　这是为了加速对象的分配。由于对象一般分配在堆上，而堆是线程共用的，因此可能会有多个线程在堆上申请空间，而每一次的对象分配都必须线程同步，会使分配的效率下降。考虑到对象分配几乎是Java中最常用的操作，因此JVM使用了TLAB这样的线程专有区域来避免多线程冲突，提高对象分配的效率。</p>
-</blockquote>
-<h4 id="6-常见的垃圾回收器"><a href="#6-常见的垃圾回收器" class="headerlink" title="6.常见的垃圾回收器"></a>6.常见的垃圾回收器</h4><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/gc%E7%AE%97%E6%B3%95.png" alt="gc"></p>
-<ol>
-<li>JDK诞生 Serial追随 提高效率，诞生了PS，为了配合CMS，诞生了PN，CMS是1.4版本后期引入，CMS是里程碑式的GC，它开启了并发回收的过程，但是CMS毛病较多，因此目前任何一个JDK版本默认是CMS<br>并发垃圾回收是因为无法忍受STW</li>
-<li>Serial 年轻代 串行回收</li>
-<li>PS 年轻代 并行回收</li>
-<li>ParNew 年轻代 配合CMS的并行回收</li>
-<li>SerialOld </li>
-<li>ParallelOld</li>
-<li>ConcurrentMarkSweep 老年代 并发的， 垃圾回收和应用程序同时运行，降低STW的时间(200ms)<br>CMS问题比较多，所以现在没有一个版本默认是CMS，只能手工指定<br>CMS既然是MarkSweep，就一定会有碎片化的问题，碎片到达一定程度，CMS的老年代分配对象分配不下的时候，使用SerialOld 进行老年代回收<br>想象一下：<br>PS + PO -&gt; 加内存 换垃圾回收器 -&gt; PN + CMS + SerialOld（几个小时 - 几天的STW）<br>几十个G的内存，单线程回收 -&gt; G1 + FGC 几十个G -&gt; 上T内存的服务器 ZGC<br>算法：三色标记 + Incremental Update</li>
-<li>G1(10ms)<br>算法：三色标记 + SATB</li>
-<li>ZGC (1ms) PK C++<br>算法：ColoredPointers + LoadBarrier</li>
-<li>Shenandoah<br>算法：ColoredPointers + WriteBarrier</li>
-<li>Eplison</li>
-<li>PS 和 PN区别的延伸阅读：<br>▪<a href="https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html">https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html#GUID-3D0BB91E-9BFF-4EBB-B523-14493A860E73</a></li>
-<li>垃圾收集器跟内存大小的关系<ol>
-<li>Serial 几十兆</li>
-<li>PS 上百兆 - 几个G</li>
-<li>CMS - 20G</li>
-<li>G1 - 上百G</li>
-<li>ZGC - 4T - 16T（JDK13）</li>
-</ol>
-</li>
-</ol>
-<p>1.8默认的垃圾回收：PS + ParallelOld</p>
-<h4 id="7-常见垃圾回收器组合参数设定：-1-8"><a href="#7-常见垃圾回收器组合参数设定：-1-8" class="headerlink" title="7.常见垃圾回收器组合参数设定：(1.8)"></a>7.常见垃圾回收器组合参数设定：(1.8)</h4><ul>
-<li><p>-XX:+UseSerialGC = Serial New (DefNew) + Serial Old</p>
-<ul>
-<li>小型程序。默认情况下不会是这种选项，HotSpot会根据计算及配置和JDK版本自动选择收集器</li>
-</ul>
-</li>
-<li><p>-XX:+UseParNewGC = ParNew + SerialOld</p>
-<ul>
-<li>这个组合已经很少用（在某些版本中已经废弃）</li>
-<li><a href="https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future">https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future</a></li>
-</ul>
-</li>
-<li><p>-XX:+UseConc<font color=red>(urrent)</font>MarkSweepGC = ParNew + CMS + Serial Old</p>
-</li>
-<li><p>-XX:+UseParallelGC = Parallel Scavenge + Parallel Old (1.8默认) 【PS + SerialOld】</p>
-</li>
-<li><p>-XX:+UseParallelOldGC = Parallel Scavenge + Parallel Old</p>
-</li>
-<li><p>-XX:+UseG1GC = G1</p>
-</li>
-<li><p>Linux中没找到默认GC的查看方法，而windows中会打印UseParallelGC </p>
-<ul>
-<li>java +XX:+PrintCommandLineFlags -version</li>
-<li>通过GC的日志来分辨</li>
-</ul>
-</li>
-<li><p>Linux下1.8版本默认的垃圾回收器到底是什么？</p>
-<ul>
-<li>1.8.0_181 默认（看不出来）Copy MarkCompact</li>
-<li>1.8.0_222 默认 PS + PO</li>
-</ul>
-</li>
-</ul>
-<h4 id="8-了解JVM常用命令行参数"><a href="#8-了解JVM常用命令行参数" class="headerlink" title="8.了解JVM常用命令行参数"></a>8.了解JVM常用命令行参数</h4><ul>
-<li><p>JVM的命令行参数参考：<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></p>
-</li>
-<li><p>HotSpot参数分类</p>
-<blockquote>
-<p>标准： - 开头，所有的HotSpot都支持</p>
-<p>非标准：-X 开头，特定版本HotSpot支持特定命令</p>
-<p>不稳定：-XX 开头，下个版本可能取消</p>
-</blockquote>
-<p>java -version</p>
-<p>试验用程序：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloGC</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;HelloGC!&quot;</span>);</span><br><span class="line">    List list = <span class="keyword">new</span> LinkedList();</span><br><span class="line">    <span class="keyword">for</span>(;;) &#123;</span><br><span class="line">      <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">      list.add(b);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<ol>
-<li>区分概念：内存泄漏memory leak，内存溢出out of memory</li>
-<li>java -XX:+PrintCommandLineFlags HelloGC</li>
-<li>java -Xmn10M -Xms40M -Xmx60M -XX:+PrintCommandLineFlags -XX:+PrintGC  HelloGC<br>PrintGCDetails PrintGCTimeStamps PrintGCCauses</li>
-<li>java -XX:+UseConcMarkSweepGC -XX:+PrintCommandLineFlags HelloGC</li>
-<li>java -XX:+PrintFlagsInitial 默认参数值</li>
-<li>java -XX:+PrintFlagsFinal 最终参数值</li>
-<li>java -XX:+PrintFlagsFinal | grep xxx 找到对应的参数</li>
-<li>java -XX:+PrintFlagsFinal -version |grep GC</li>
-</ol>
-</li>
-</ul>
-<h4 id="9-PS-GC日志详解"><a href="#9-PS-GC日志详解" class="headerlink" title="9. PS GC日志详解"></a>9. PS GC日志详解</h4><p>每种垃圾回收器的日志格式是不同的！</p>
-<p>PS日志格式</p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3.png" alt="gc日志详解"></p>
-<p>heap dump部分：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">eden space 5632K, <span class="number">94</span>% used [<span class="number">0x00000000ff980000</span>,<span class="number">0x00000000ffeb3e28</span>,<span class="number">0x00000000fff00000</span>)</span><br><span class="line">                            后面的内存地址指的是，起始地址，使用空间结束地址，整体空间结束地址</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A32.png" alt="gc日志详解2"></p>
-<p>total = eden + 1个survivor</p>
-<h4 id="10-调优前的基础概念："><a href="#10-调优前的基础概念：" class="headerlink" title="10. 调优前的基础概念："></a>10. 调优前的基础概念：</h4><ol>
-<li>吞吐量：用户代码时间 /（用户代码执行时间 + 垃圾回收时间）</li>
-<li>响应时间：STW越短，响应时间越好</li>
-</ol>
-<p>所谓调优，首先确定，追求啥？吞吐量优先，还是响应时间优先？还是在满足一定的响应时间的情况下，要求达到多大的吞吐量…</p>
-<p><strong>什么是调优？</strong></p>
-<ol>
-<li>根据需求进行JVM规划和预调优</li>
-<li>优化运行JVM运行环境（慢，卡顿）</li>
-<li>解决JVM运行过程中出现的各种问题(OOM)</li>
-</ol>
-<h4 id="11-调优步骤"><a href="#11-调优步骤" class="headerlink" title="11. 调优步骤"></a>11. 调优步骤</h4><ul>
-<li><p>调优，从业务场景开始，没有业务场景的调优都是耍流氓</p>
-</li>
-<li><p>无监控（压力测试，能看到结果），不调优</p>
-</li>
-<li><p>步骤：</p>
-<ol>
-<li>熟悉业务场景（没有最好的垃圾回收器，只有最合适的垃圾回收器）<ol>
-<li>响应时间、停顿时间 [CMS G1 ZGC] （需要给用户作响应）</li>
-<li>吞吐量 = 用户时间 /( 用户时间 + GC时间) [PS]</li>
-</ol>
-</li>
-<li>选择回收器组合</li>
-<li>计算内存需求（经验值 1.5G 16G）</li>
-<li>选定CPU（越高越好）</li>
-<li>设定年代大小、升级年龄</li>
-<li>设定日志参数<ol>
-<li>-Xloggc:/opt/xxx/logs/xxx-xxx-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCCause</li>
-<li>或者每天产生一个日志文件</li>
-</ol>
-</li>
-<li>观察日志情况 </li>
-</ol>
-</li>
-</ul>
-<h4 id="GC常用参数"><a href="#GC常用参数" class="headerlink" title="GC常用参数"></a>GC常用参数</h4><ul>
-<li>-Xmn -Xms -Xmx -Xss<br>年轻代 最小堆 最大堆 栈空间</li>
-<li>-XX:+UseTLAB<br>使用TLAB，默认打开</li>
-<li>-XX:+PrintTLAB<br>打印TLAB的使用情况</li>
-<li>-XX:TLABSize<br>设置TLAB大小</li>
-<li>-XX:+DisableExplictGC<br>System.gc()不管用 ，FGC</li>
-<li>-XX:+PrintGC</li>
-<li>-XX:+PrintGCDetails</li>
-<li>-XX:+PrintHeapAtGC</li>
-<li>-XX:+PrintGCTimeStamps</li>
-<li>-XX:+PrintGCApplicationConcurrentTime (低)<br>打印应用程序时间</li>
-<li>-XX:+PrintGCApplicationStoppedTime （低）<br>打印暂停时长</li>
-<li>-XX:+PrintReferenceGC （重要性低）<br>记录回收了多少种不同引用类型的引用</li>
-<li>-verbose:class<br>类加载详细过程</li>
-<li>-XX:+PrintVMOptions</li>
-<li>-XX:+PrintFlagsFinal  -XX:+PrintFlagsInitial<br>必须会用</li>
-<li>-Xloggc:opt/log/gc.log</li>
-<li>-XX:MaxTenuringThreshold<br>升代年龄，最大值15</li>
-<li>锁自旋次数 -XX:PreBlockSpin 热点代码检测参数-XX:CompileThreshold 逃逸分析 标量替换 …<br>这些不建议设置</li>
-</ul>
-<h4 id="Parallel常用参数"><a href="#Parallel常用参数" class="headerlink" title="Parallel常用参数"></a>Parallel常用参数</h4><ul>
-<li>-XX:SurvivorRatio</li>
-<li>-XX:PreTenureSizeThreshold<br>大对象到底多大</li>
-<li>-XX:MaxTenuringThreshold</li>
-<li>-XX:+ParallelGCThreads<br>并行收集器的线程数，同样适用于CMS，一般设为和CPU核数相同</li>
-<li>-XX:+UseAdaptiveSizePolicy<br>自动选择各区大小比例</li>
-</ul>
-<h4 id="CMS常用参数"><a href="#CMS常用参数" class="headerlink" title="CMS常用参数"></a>CMS常用参数</h4><ul>
-<li>-XX:+UseConcMarkSweepGC</li>
-<li>-XX:ParallelCMSThreads<br>CMS线程数量</li>
-<li>-XX:CMSInitiatingOccupancyFraction<br>使用多少比例的老年代后开始CMS收集，默认是68%(近似值)，如果频繁发生SerialOld卡顿，应该调小，（频繁CMS回收）</li>
-<li>-XX:+UseCMSCompactAtFullCollection<br>在FGC时进行压缩</li>
-<li>-XX:CMSFullGCsBeforeCompaction<br>多少次FGC之后进行压缩</li>
-<li>-XX:+CMSClassUnloadingEnabled</li>
-<li>-XX:CMSInitiatingPermOccupancyFraction<br>达到什么比例时进行Perm回收</li>
-<li>GCTimeRatio<br>设置GC时间占用程序运行时间的百分比</li>
-<li>-XX:MaxGCPauseMillis<br>停顿时间，是一个建议时间，GC会尝试用各种手段达到这个时间，比如减小年轻代</li>
-</ul>
-<h4 id="G1常用参数"><a href="#G1常用参数" class="headerlink" title="G1常用参数"></a>G1常用参数</h4><ul>
-<li>-XX:+UseG1GC</li>
-<li>-XX:MaxGCPauseMillis<br>建议值，G1会尝试调整Young区的块数来达到这个值</li>
-<li>-XX:GCPauseIntervalMillis<br>？GC的间隔时间</li>
-<li>-XX:+G1HeapRegionSize<br>分区大小，建议逐渐增大该值，1 2 4 8 16 32。<br>随着size增加，垃圾的存活时间更长，GC间隔更长，但每次GC的时间也会更长<br>ZGC做了改进（动态区块大小）</li>
-<li>G1NewSizePercent<br>新生代最小比例，默认为5%</li>
-<li>G1MaxNewSizePercent<br>新生代最大比例，默认为60%</li>
-<li>GCTimeRatio<br>GC时间建议比例，G1会根据这个值调整堆空间</li>
-<li>ConcGCThreads<br>线程数量</li>
-<li>InitiatingHeapOccupancyPercent<br>启动G1的堆空间占用比例</li>
-</ul>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://blogs.oracle.com/jonthecollector/our-collectors">https://blogs.oracle.com/</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">jonthecollector</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">/our-collectors</a></li>
-<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></li>
-<li><a href="http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp">http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp</a></li>
-<li>JVM调优参考文档：<a href="https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184">https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184</a> </li>
-<li><a href="https://www.cnblogs.com/nxlhero/p/11660854.html">https://www.cnblogs.com/nxlhero/p/11660854.html</a> 在线排查工具</li>
-<li><a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> arthas常用命令</li>
-<li>Arthas手册：<ol>
-<li>启动arthas java -jar arthas-boot.jar</li>
-<li>绑定java进程</li>
-<li>dashboard命令观察系统整体情况</li>
-<li>help 查看帮助</li>
-<li>help xx 查看具体命令帮助</li>
-</ol>
-</li>
-<li>jmap命令参考： <a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> <ol>
-<li>jmap -heap pid</li>
-<li>jmap -histo pid</li>
-<li>jmap -clstats pid</li>
-</ol>
-</li>
-</ol>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java 中的并发</title>
-    <url>/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/</url>
-    <content><![CDATA[<h3 id="java-中的Lock"><a href="#java-中的Lock" class="headerlink" title="java 中的Lock"></a>java 中的Lock</h3><ol>
-<li>ReentrantLock</li>
-<li>ReentrantReadWriteLock</li>
-<li>ReentrantLock</li>
-<li>lock</li>
-</ol>
-<h3 id="java-中的并发容器"><a href="#java-中的并发容器" class="headerlink" title="java 中的并发容器"></a>java 中的并发容器</h3><ol>
-<li>ConcurrentHashMap：并发版 HashMap</li>
-<li>CopyOnWriteArrayList：并发版 ArrayList</li>
-<li>CopyOnWriteArraySet：并发 Set</li>
-<li>ConcurrentLinkedQueue：并发队列 (基于链表)</li>
-<li>ConcurrentLinkedDeque：并发队列 (基于双向链表)</li>
-<li>ConcurrentSkipListMap：基于跳表的并发 Map</li>
-<li>ConcurrentSkipListSet：基于跳表的并发 Set</li>
-<li>ArrayBlockingQueue：阻塞队列 (基于数组)</li>
-<li>LinkedBlockingQueue：阻塞队列 (基于链表)</li>
-<li>LinkedBlockingDeque：阻塞队列 (基于双向链表)</li>
-<li>PriorityBlockingQueue：线程安全的优先队列</li>
-<li>SynchronousQueue：读写成对的队列</li>
-<li>LinkedTransferQueue：基于链表的数据交换队列</li>
-<li>DelayQueue：延时队列</li>
-</ol>
-<h3 id="java-中的并发框架"><a href="#java-中的并发框架" class="headerlink" title="java 中的并发框架"></a>java 中的并发框架</h3><ol>
-<li>Fork/join</li>
-</ol>
-<h3 id="java中的并发工具类"><a href="#java中的并发工具类" class="headerlink" title="java中的并发工具类"></a>java中的并发工具类</h3><ol>
-<li><p>CountDownLatch</p>
-</li>
-<li><p>CyclicBarrier</p>
-</li>
-<li><p>Semaphore</p>
-</li>
-<li><p>Exchanger</p>
-</li>
-</ol>
-<h3 id="Java中的原子操作类"><a href="#Java中的原子操作类" class="headerlink" title="Java中的原子操作类"></a>Java中的原子操作类</h3><ul>
-<li><p><strong>原子更新基本类型</strong></p>
-<p>·AtomicBoolean：原子更新布尔类型。<br>·AtomicInteger：原子更新整型。<br>·AtomicLong：原子更新长整型。</p>
-</li>
-<li><p><strong>原子更新数组</strong></p>
-<p>·AtomicIntegerArray：原子更新整型数组里的元素。<br>·AtomicLongArray：原子更新长整型数组里的元素。<br>·AtomicReferenceArray：原子更新引用类型数组里的元素。</p>
-</li>
-<li><p><strong>原子更新引用类型</strong></p>
-<p>·AtomicReference：原子更新引用类型。</p>
-<p>·AtomicReferenceFieldUpdater：原子更新引用类型里的字段。</p>
-<p>·AtomicMarkableReference：原子更新带有标记位的引用类型。可以原子更新一个布尔类型的标记位和引用类型。</p>
-</li>
-<li><p><strong>原子更新字段</strong></p>
-<p>·AtomicIntegerFieldUpdater：原子更新整型的字段的更新器。<br>·AtomicLongFieldUpdater：原子更新长整型字段的更新器。<br>·AtomicStampedReference：原子更新带有版本号的引用类型。该类将整数值与引用关联起来，可用于原子的更新数据和数据的版本号，可以解决使用CAS进行原子更新时可能出现的ABA问题。</p>
-</li>
-</ul>
-<h3 id="Executor"><a href="#Executor" class="headerlink" title="Executor"></a>Executor</h3><h3 id="Disruptor"><a href="#Disruptor" class="headerlink" title="Disruptor"></a>Disruptor</h3><h3 id="java中的ThreadPoolExecutor"><a href="#java中的ThreadPoolExecutor" class="headerlink" title="java中的ThreadPoolExecutor"></a>java中的ThreadPoolExecutor</h3><p><a href="https://cloud.tencent.com/developer/article/1056828">https://cloud.tencent.com/developer/article/1056828</a></p>
-<p>参考</p>
-<p><a href="https://cloud.tencent.com/developer/article/1056828">https://cloud.tencent.com/developer/article/1056828</a></p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java 类的加载过程</title>
     <url>/2021/06/24/Java%20%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<h3 id="Java-类的加载过程"><a href="#Java-类的加载过程" class="headerlink" title="Java 类的加载过程"></a>Java 类的加载过程</h3><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E7%9A%84%E4%BA%94%E4%B8%AA%E9%83%A8%E5%88%86%281%29.jpg" alt="类的加载过程"></h4><h3 id="1-Loading-使用双亲委派机制将-class加载到内存中"><a href="#1-Loading-使用双亲委派机制将-class加载到内存中" class="headerlink" title="1.Loading 使用双亲委派机制将 .class加载到内存中"></a><strong>1.Loading 使用双亲委派机制将 .class加载到内存中</strong></h3><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE.jpg" alt="类的加载机制"></p>
@@ -2594,6 +2256,69 @@ A(c)  --> B[i = 8]</pre>
       </tags>
   </entry>
   <entry>
+    <title>数据库幂等性</title>
+    <url>/2021/08/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%B9%82%E7%AD%89%E6%80%A7/</url>
+    <content><![CDATA[<h3 id="数据库方式实现接口幂等性"><a href="#数据库方式实现接口幂等性" class="headerlink" title="数据库方式实现接口幂等性"></a>数据库方式实现接口幂等性</h3><p>幂等性：对于同一笔业务操作，不管调用多少次，得到的结果都是一样的。</p>
+<p>以对接支付宝充值为例，如果我们系统对接支付宝充值功能，需要给支付宝提供一个回调接口，支付宝回调信息中会携带（out_trade_no【商户订单号】，trade_no【支付宝交易号】），trade_no在支付宝中是唯一的，out_trade_no在商户系统中是唯一的。</p>
+<p>回调接口实现有以下实现方式。</p>
+<p>（1）普通方式</p>
+<p>过程如下：</p>
+<p>1.接收到支付宝支付成功请求<br>2.根据trade_no查询当前订单是否处理过<br>3.如果订单已处理直接返回，若未处理，继续向下执行<br>4.开启本地事务<br>5.本地系统给用户加钱<br>6.将订单状态置为成功<br>7.提交本地事务</p>
+<p>对于同一笔订单，如果支付宝同时通知多次，同时到达第2步时候，查询订单都是未处理的，会继续向下执行，最终本地会给用户加两次钱。</p>
+<p>此方式适用于单机，通知按顺序执行的情况，只能用于自己测试。</p>
+<p>（2）JVM加锁方式</p>
+<p>方式（1）中由于并发出现了问题，此时我们使用java中的Lock加锁，来防止并发操作，过程如下：</p>
+<p>1.接收到支付宝支付成功请求<br>2.调用java中的Lock加锁<br>3.根据trade_no查询当前订单是否处理过<br>4.如果订单已处理直接返回，若未处理，继续向下执行<br>5.开启本地事务<br>6.本地系统给用户加钱<br>7.将订单状态置为成功<br>8.提交本地事务<br>9.释放Lock锁</p>
+<p>分析问题：<br>Lock只能在一个JVM中起效，如果多个请求都被同一套系统处理，上面这种使用Lock的方式是没有问题的，不过互联网系统中，多数是采用集群方式部署系统，同一套代码，服务器上会部署多套，如果支付宝同时发来多个通知经过负载均衡转发到不同的机器，上面的锁就不起效了。此时对于多个请求相当于无锁处理了，又会出现方式1中的结果。此时我们需要分布式锁来做处理。</p>
+<p>（3）悲观锁方式</p>
+<p>使用数据库中悲观锁实现。悲观锁类似于方式（2）中的Lock，只不过是依靠数据库来实现的。数据中悲观锁使用for update来实现，过程如下：</p>
+<p>1.接收到支付宝支付成功请求<br>2.打开本地事务<br>3.查询订单信息并加悲观锁</p>
+<p>select * from t_order where order_id = trade_no for update;</p>
+<p>4.判断订单是已处理<br>5.如果订单已处理直接返回，若未处理，继续向下执行<br>6.给本地系统给用户加钱<br>7.将订单状态置为成功<br>8.提交本地事务</p>
+<p>重点在于for update：<br>1.当线程A执行for update，数据库会对当前记录加锁，其他线程执行到此行代码的时候，会等待线程A释放锁之后，才可以获取锁，继续后续操作。<br>2.事务提交时，for update获取的锁会自动释放。</p>
+<p>方式（3）可以正常实现我们需要的效果，能保证接口的幂等性，不过存在一些缺点：<br>如果业务处理比较耗时，并发情况下，后面线程会长期处于等待状态，占用了很多线程，让这些线程处于无效等待状态。我们的web服务中的线程数量一般都是有限的，如果大量线程由于获取for update锁处于等待状态，不利于系统并发度。</p>
+<p>（4）乐观锁方式</p>
+<p>依靠数据库中的乐观锁来实现。</p>
+<p>1.接收到支付宝支付成功请求<br>2.查询订单信息</p>
+<p>select * from t_order where order_id = trade_no;</p>
+<p>3.判断订单是已处理<br>4.如果订单已处理直接返回，若未处理，继续向下执行<br>5.打开本地事务<br>6.给本地系统给用户加钱<br>7.将订单状态置为成功，注意这块是重点，伪代码：</p>
+<p>update t_order set status = 1 where order_id = trade_no and status = 0;//会返回影响的行数num</p>
+<p>if(num==1){<br> //表示更新成功</p>
+<p> 提交事务;</p>
+<p>}else{<br> //表示更新失败</p>
+<p> 回滚事务;</p>
+<p>}</p>
+<p>注意：<br>update t_order set status = 1 where order_id = trade_no where status = 0; 是依靠乐观锁来实现的，status=0作为条件去更新，类似于java中的CAS操作。执行这条sql的时候，如果有多个线程同时到达这条代码，数据库内部会保证update同一条记录会排队执行，最终会有一条update会执行成功，其他未成功的，他们的num为0，然后根据num来进行提交或者回滚操作。</p>
+<p>（5）唯一约束方式</p>
+<p>依赖数据库中唯一约束来实现。</p>
+<p>CREATE TABLE ‘t_unique_log’ (</p>
+<p>  ‘id’ bigint(20) NOT NULL AUTO_INCREMENT,</p>
+<p>  ‘ref_type’ varchar(32) NOT NULL DEFAULT ‘’ COMMENT ‘关联操作类型’,</p>
+<p>  ‘ref_id’ varchar(64) NOT NULL DEFAULT ‘’ COMMENT ‘关联操作id’,</p>
+<p>  PRIMARY KEY (‘id’),</p>
+<p>  UNIQUE KEY ‘uq_key’ (‘ref_type’,’ref_id’) COMMENT ‘保证业务唯一性’</p>
+<p>) ENGINE=InnoDB;</p>
+<p>对于任何一个业务，有一个业务类型(ref_type)，业务有一个全局唯一的订单号，业务来的时候，先查询表中是否存在相关记录，若不存在，继续放行。</p>
+<p>过程如下：</p>
+<p>1.接收到支付宝支付成功请求<br>2.查询表t_unique_log (条件ref_id,ref_type)，可以判断订单是否已处理</p>
+<p>select * from t_unique_log where ref_type = ‘充值订单’ and ref_id = trade_no;</p>
+<p>3.判断订单是已处理<br>4.如果订单已处理直接返回，若未处理，继续向下执行<br>5.打开本地事务<br>6.给本地系统给用户加钱<br>7.将订单状态置为成功<br>8.向t_unique_log（唯一约束） 插入数据，插入成功，提交本地事务，插入失败，回滚本地事务，伪代码：</p>
+<p>try{<br>    insert into t_unique_log (ref_type,ref_id) values (‘充值订单’,trade_no);</p>
+<p>​    // 提交本地事务：</p>
+<p>}catch(Exception e){<br>   // 回滚本地事务;</p>
+<p>}</p>
+<p>说明：<br>对于同一个业务，ref_type是一样的，当并发时，插入数据只会有一条成功，其他的会违反唯一约束，进入catch逻辑，当前事务会被回滚，最终只有一个操作成功，从而保证了幂等性。<br>关于这种方式可以写成通用的方式，不过业务量大的情况下，t_unique_log 插入数据会成为系统的瓶颈。</p>
+<p>总结</p>
+<p>1.数据库实现幂等性常见的方式有：悲观锁（for update）、乐观锁、唯一约束<br>2.几种方式，按照最优排序：乐观锁 &gt; 唯一约束 &gt; 悲观锁</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>解决方案</category>
+      </categories>
+      <tags>
+        <tag>分布式解决方案</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>桥接设计模式</title>
     <url>/2020/12/20/%E6%A1%A5%E6%8E%A5%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h4 id="桥接设计模式-Bridge-Pattern"><a href="#桥接设计模式-Bridge-Pattern" class="headerlink" title="桥接设计模式(Bridge Pattern)"></a>桥接设计模式(Bridge Pattern)</h4><p><strong>描述：</strong> 桥接设计模式是用于把抽象化于实现化解耦，使得二者可以独立变化。这种类型的设计模式属于结构型设计模式，它通过提供抽象化和实现化之间的桥接结构来实现二者的解耦。</p>
@@ -3426,6 +3151,344 @@ A(c)  --> B[i = 8]</pre>
       </categories>
       <tags>
         <tag>七大设计原则</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GC的基础知识</title>
+    <url>/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<h1 id="GC和GC-Tuning"><a href="#GC和GC-Tuning" class="headerlink" title="GC和GC Tuning"></a>GC和GC Tuning</h1><h4 id="1-什么是垃圾"><a href="#1-什么是垃圾" class="headerlink" title="1.什么是垃圾"></a>1.什么是垃圾</h4><blockquote>
+<p>没有任何引用指向的一个对象或者多个对象（循环引用）</p>
+</blockquote>
+<h4 id="2-如何定位垃圾"><a href="#2-如何定位垃圾" class="headerlink" title="2.如何定位垃圾"></a>2.如何定位垃圾</h4><blockquote>
+<p>引用计数（ReferenceCount）</p>
+<p>根可达算法(RootSearching)</p>
+</blockquote>
+<h4 id="3-GC-roots"><a href="#3-GC-roots" class="headerlink" title="3. GC roots"></a>3. GC roots</h4><blockquote>
+<p>JVM stack  (jvm栈)</p>
+<p>native method stack （本地方法栈）</p>
+<p>run-time constant pool （常量池指向的变量）</p>
+<p>static references in method artea （静态变量指向的对象）</p>
+<p>Clazz  （对象字节load到内存）</p>
+</blockquote>
+<h4 id="3-常见的垃圾回收算法"><a href="#3-常见的垃圾回收算法" class="headerlink" title="3.常见的垃圾回收算法"></a>3.常见的垃圾回收算法</h4><blockquote>
+<p>标记清除(mark sweep) - 位置不连续 产生碎片 效率偏低（两遍扫描）</p>
+<p>拷贝算法 (copying) - 没有碎片，浪费空间</p>
+<p>标记压缩(mark compact) - 没有碎片，效率偏低（两遍扫描，指针需要调整）</p>
+</blockquote>
+<h4 id="4-JVM内存分代模型（用于分代垃圾回收算法）"><a href="#4-JVM内存分代模型（用于分代垃圾回收算法）" class="headerlink" title="4.JVM内存分代模型（用于分代垃圾回收算法）"></a>4.JVM内存分代模型（用于分代垃圾回收算法）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/jvm%E5%88%86%E4%BB%A3%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png"></h4><p><strong>1. 部分垃圾回收器使用的模型</strong></p>
+<blockquote>
+<p>除Epsilon ZGC Shenandoah之外的GC都是使用逻辑分代模型</p>
+<p>G1是逻辑分代，物理不分代</p>
+<p>除此之外不仅逻辑分代，而且物理分代</p>
+</blockquote>
+<p><strong>2. 新生代 + 老年代 + 永久代（1.7）Perm Generation/ 元数据区(1.8) Metaspace</strong></p>
+<blockquote>
+<p>永久代 元数据 - Class</p>
+<p>永久代必须指定大小限制 ，元数据可以设置，也可以不设置，无上限（受限于物理内存）</p>
+<p>字符串常量 1.7 - 永久代，1.8 - 堆</p>
+<p>MethodArea逻辑概念 - 永久代、元数据</p>
+</blockquote>
+<p><strong>3. 新生代 = Eden + 2个suvivor区</strong> </p>
+<blockquote>
+<p>YGC回收之后，大多数的对象会被回收，活着的进入s0</p>
+<p>再次YGC，活着的对象eden + s0 -&gt; s1</p>
+<p>再次YGC，eden + s1 -&gt; s0</p>
+<p>年龄足够 -&gt; 老年代 （15 CMS 6）</p>
+<p>s区装不下 -&gt; 老年代</p>
+</blockquote>
+<p><strong>4. 老年代</strong></p>
+<blockquote>
+<p>顽固分子</p>
+<p>老年代满了FGC Full GC</p>
+</blockquote>
+<p><strong>GC Tuning (Generation)</strong></p>
+<blockquote>
+<p>尽量减少FGC</p>
+<p>MinorGC = YGC</p>
+<p>MajorGC = FGC</p>
+</blockquote>
+<p><strong>动态年龄：</strong><br><a href="https://www.jianshu.com/p/989d3b06a49d">https://www.jianshu.com/p/989d3b06a49d</a></p>
+<p><strong>分配担保：</strong><br>YGC期间 survivor区空间不够了 空间担保直接进入老年代<br>参考：<a href="https://cloud.tencent.com/developer/article/1082730">https://cloud.tencent.com/developer/article/1082730</a></p>
+<p><strong>对象的分配过程</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.png" alt="对象内存分配的过程"></p>
+<p><strong>5 .TLAB 分配</strong></p>
+<blockquote>
+<p>　JVM在内存新生代Eden Space中开辟了一小块线程私有的区域，称作TLAB（Thread-local allocation buffer）。默认设定为占用Eden Space的1%。在Java程序中很多对象都是小对象且用过即丢，它们不存在线程共享也适合被快速GC，所以对于小对象通常JVM会优先分配在TLAB上，并且TLAB上的分配由于是线程私有所以没有锁开销。因此在实践中分配多个小对象的效率通常比分配一个大对象的效率要高。<br>　　也就是说，Java中每个线程都会有自己的缓冲区称作TLAB（Thread-local allocation buffer），每个TLAB都只有一个线程可以操作，TLAB结合bump-the-pointer技术可以实现快速的对象分配，而不需要任何的锁进行同步，也就是说，在对象分配的时候不用锁住整个堆，而只需要在自己的缓冲区分配即可。<br>　　关于对象分配的JDK源码可以参见 [JVM 之 Java对象创建<a href="http://blog.hesey.net/2011/07/object-allocation-on-non-heap.html">初始化]</a> 中对OpenJDK源码的分析。</p>
+</blockquote>
+<p><strong>为什么需要TLAB？</strong></p>
+<blockquote>
+<p>　　这是为了加速对象的分配。由于对象一般分配在堆上，而堆是线程共用的，因此可能会有多个线程在堆上申请空间，而每一次的对象分配都必须线程同步，会使分配的效率下降。考虑到对象分配几乎是Java中最常用的操作，因此JVM使用了TLAB这样的线程专有区域来避免多线程冲突，提高对象分配的效率。</p>
+</blockquote>
+<h4 id="6-常见的垃圾回收器"><a href="#6-常见的垃圾回收器" class="headerlink" title="6.常见的垃圾回收器"></a>6.常见的垃圾回收器</h4><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/gc%E7%AE%97%E6%B3%95.png" alt="gc"></p>
+<ol>
+<li>JDK诞生 Serial追随 提高效率，诞生了PS，为了配合CMS，诞生了PN，CMS是1.4版本后期引入，CMS是里程碑式的GC，它开启了并发回收的过程，但是CMS毛病较多，因此目前任何一个JDK版本默认是CMS<br>并发垃圾回收是因为无法忍受STW</li>
+<li>Serial 年轻代 串行回收</li>
+<li>PS 年轻代 并行回收</li>
+<li>ParNew 年轻代 配合CMS的并行回收</li>
+<li>SerialOld </li>
+<li>ParallelOld</li>
+<li>ConcurrentMarkSweep 老年代 并发的， 垃圾回收和应用程序同时运行，降低STW的时间(200ms)<br>CMS问题比较多，所以现在没有一个版本默认是CMS，只能手工指定<br>CMS既然是MarkSweep，就一定会有碎片化的问题，碎片到达一定程度，CMS的老年代分配对象分配不下的时候，使用SerialOld 进行老年代回收<br>想象一下：<br>PS + PO -&gt; 加内存 换垃圾回收器 -&gt; PN + CMS + SerialOld（几个小时 - 几天的STW）<br>几十个G的内存，单线程回收 -&gt; G1 + FGC 几十个G -&gt; 上T内存的服务器 ZGC<br>算法：三色标记 + Incremental Update</li>
+<li>G1(10ms)<br>算法：三色标记 + SATB</li>
+<li>ZGC (1ms) PK C++<br>算法：ColoredPointers + LoadBarrier</li>
+<li>Shenandoah<br>算法：ColoredPointers + WriteBarrier</li>
+<li>Eplison</li>
+<li>PS 和 PN区别的延伸阅读：<br>▪<a href="https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html">https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html#GUID-3D0BB91E-9BFF-4EBB-B523-14493A860E73</a></li>
+<li>垃圾收集器跟内存大小的关系<ol>
+<li>Serial 几十兆</li>
+<li>PS 上百兆 - 几个G</li>
+<li>CMS - 20G</li>
+<li>G1 - 上百G</li>
+<li>ZGC - 4T - 16T（JDK13）</li>
+</ol>
+</li>
+</ol>
+<p>1.8默认的垃圾回收：PS + ParallelOld</p>
+<h4 id="7-常见垃圾回收器组合参数设定：-1-8"><a href="#7-常见垃圾回收器组合参数设定：-1-8" class="headerlink" title="7.常见垃圾回收器组合参数设定：(1.8)"></a>7.常见垃圾回收器组合参数设定：(1.8)</h4><ul>
+<li><p>-XX:+UseSerialGC = Serial New (DefNew) + Serial Old</p>
+<ul>
+<li>小型程序。默认情况下不会是这种选项，HotSpot会根据计算及配置和JDK版本自动选择收集器</li>
+</ul>
+</li>
+<li><p>-XX:+UseParNewGC = ParNew + SerialOld</p>
+<ul>
+<li>这个组合已经很少用（在某些版本中已经废弃）</li>
+<li><a href="https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future">https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future</a></li>
+</ul>
+</li>
+<li><p>-XX:+UseConc<font color=red>(urrent)</font>MarkSweepGC = ParNew + CMS + Serial Old</p>
+</li>
+<li><p>-XX:+UseParallelGC = Parallel Scavenge + Parallel Old (1.8默认) 【PS + SerialOld】</p>
+</li>
+<li><p>-XX:+UseParallelOldGC = Parallel Scavenge + Parallel Old</p>
+</li>
+<li><p>-XX:+UseG1GC = G1</p>
+</li>
+<li><p>Linux中没找到默认GC的查看方法，而windows中会打印UseParallelGC </p>
+<ul>
+<li>java +XX:+PrintCommandLineFlags -version</li>
+<li>通过GC的日志来分辨</li>
+</ul>
+</li>
+<li><p>Linux下1.8版本默认的垃圾回收器到底是什么？</p>
+<ul>
+<li>1.8.0_181 默认（看不出来）Copy MarkCompact</li>
+<li>1.8.0_222 默认 PS + PO</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-了解JVM常用命令行参数"><a href="#8-了解JVM常用命令行参数" class="headerlink" title="8.了解JVM常用命令行参数"></a>8.了解JVM常用命令行参数</h4><ul>
+<li><p>JVM的命令行参数参考：<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></p>
+</li>
+<li><p>HotSpot参数分类</p>
+<blockquote>
+<p>标准： - 开头，所有的HotSpot都支持</p>
+<p>非标准：-X 开头，特定版本HotSpot支持特定命令</p>
+<p>不稳定：-XX 开头，下个版本可能取消</p>
+</blockquote>
+<p>java -version</p>
+<p>试验用程序：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloGC</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;HelloGC!&quot;</span>);</span><br><span class="line">    List list = <span class="keyword">new</span> LinkedList();</span><br><span class="line">    <span class="keyword">for</span>(;;) &#123;</span><br><span class="line">      <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">      list.add(b);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol>
+<li>区分概念：内存泄漏memory leak，内存溢出out of memory</li>
+<li>java -XX:+PrintCommandLineFlags HelloGC</li>
+<li>java -Xmn10M -Xms40M -Xmx60M -XX:+PrintCommandLineFlags -XX:+PrintGC  HelloGC<br>PrintGCDetails PrintGCTimeStamps PrintGCCauses</li>
+<li>java -XX:+UseConcMarkSweepGC -XX:+PrintCommandLineFlags HelloGC</li>
+<li>java -XX:+PrintFlagsInitial 默认参数值</li>
+<li>java -XX:+PrintFlagsFinal 最终参数值</li>
+<li>java -XX:+PrintFlagsFinal | grep xxx 找到对应的参数</li>
+<li>java -XX:+PrintFlagsFinal -version |grep GC</li>
+</ol>
+</li>
+</ul>
+<h4 id="9-PS-GC日志详解"><a href="#9-PS-GC日志详解" class="headerlink" title="9. PS GC日志详解"></a>9. PS GC日志详解</h4><p>每种垃圾回收器的日志格式是不同的！</p>
+<p>PS日志格式</p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3.png" alt="gc日志详解"></p>
+<p>heap dump部分：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">eden space 5632K, <span class="number">94</span>% used [<span class="number">0x00000000ff980000</span>,<span class="number">0x00000000ffeb3e28</span>,<span class="number">0x00000000fff00000</span>)</span><br><span class="line">                            后面的内存地址指的是，起始地址，使用空间结束地址，整体空间结束地址</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A32.png" alt="gc日志详解2"></p>
+<p>total = eden + 1个survivor</p>
+<h4 id="10-调优前的基础概念："><a href="#10-调优前的基础概念：" class="headerlink" title="10. 调优前的基础概念："></a>10. 调优前的基础概念：</h4><ol>
+<li>吞吐量：用户代码时间 /（用户代码执行时间 + 垃圾回收时间）</li>
+<li>响应时间：STW越短，响应时间越好</li>
+</ol>
+<p>所谓调优，首先确定，追求啥？吞吐量优先，还是响应时间优先？还是在满足一定的响应时间的情况下，要求达到多大的吞吐量…</p>
+<p><strong>什么是调优？</strong></p>
+<ol>
+<li>根据需求进行JVM规划和预调优</li>
+<li>优化运行JVM运行环境（慢，卡顿）</li>
+<li>解决JVM运行过程中出现的各种问题(OOM)</li>
+</ol>
+<h4 id="11-调优步骤"><a href="#11-调优步骤" class="headerlink" title="11. 调优步骤"></a>11. 调优步骤</h4><ul>
+<li><p>调优，从业务场景开始，没有业务场景的调优都是耍流氓</p>
+</li>
+<li><p>无监控（压力测试，能看到结果），不调优</p>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li>熟悉业务场景（没有最好的垃圾回收器，只有最合适的垃圾回收器）<ol>
+<li>响应时间、停顿时间 [CMS G1 ZGC] （需要给用户作响应）</li>
+<li>吞吐量 = 用户时间 /( 用户时间 + GC时间) [PS]</li>
+</ol>
+</li>
+<li>选择回收器组合</li>
+<li>计算内存需求（经验值 1.5G 16G）</li>
+<li>选定CPU（越高越好）</li>
+<li>设定年代大小、升级年龄</li>
+<li>设定日志参数<ol>
+<li>-Xloggc:/opt/xxx/logs/xxx-xxx-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCCause</li>
+<li>或者每天产生一个日志文件</li>
+</ol>
+</li>
+<li>观察日志情况 </li>
+</ol>
+</li>
+</ul>
+<h4 id="GC常用参数"><a href="#GC常用参数" class="headerlink" title="GC常用参数"></a>GC常用参数</h4><ul>
+<li>-Xmn -Xms -Xmx -Xss<br>年轻代 最小堆 最大堆 栈空间</li>
+<li>-XX:+UseTLAB<br>使用TLAB，默认打开</li>
+<li>-XX:+PrintTLAB<br>打印TLAB的使用情况</li>
+<li>-XX:TLABSize<br>设置TLAB大小</li>
+<li>-XX:+DisableExplictGC<br>System.gc()不管用 ，FGC</li>
+<li>-XX:+PrintGC</li>
+<li>-XX:+PrintGCDetails</li>
+<li>-XX:+PrintHeapAtGC</li>
+<li>-XX:+PrintGCTimeStamps</li>
+<li>-XX:+PrintGCApplicationConcurrentTime (低)<br>打印应用程序时间</li>
+<li>-XX:+PrintGCApplicationStoppedTime （低）<br>打印暂停时长</li>
+<li>-XX:+PrintReferenceGC （重要性低）<br>记录回收了多少种不同引用类型的引用</li>
+<li>-verbose:class<br>类加载详细过程</li>
+<li>-XX:+PrintVMOptions</li>
+<li>-XX:+PrintFlagsFinal  -XX:+PrintFlagsInitial<br>必须会用</li>
+<li>-Xloggc:opt/log/gc.log</li>
+<li>-XX:MaxTenuringThreshold<br>升代年龄，最大值15</li>
+<li>锁自旋次数 -XX:PreBlockSpin 热点代码检测参数-XX:CompileThreshold 逃逸分析 标量替换 …<br>这些不建议设置</li>
+</ul>
+<h4 id="Parallel常用参数"><a href="#Parallel常用参数" class="headerlink" title="Parallel常用参数"></a>Parallel常用参数</h4><ul>
+<li>-XX:SurvivorRatio</li>
+<li>-XX:PreTenureSizeThreshold<br>大对象到底多大</li>
+<li>-XX:MaxTenuringThreshold</li>
+<li>-XX:+ParallelGCThreads<br>并行收集器的线程数，同样适用于CMS，一般设为和CPU核数相同</li>
+<li>-XX:+UseAdaptiveSizePolicy<br>自动选择各区大小比例</li>
+</ul>
+<h4 id="CMS常用参数"><a href="#CMS常用参数" class="headerlink" title="CMS常用参数"></a>CMS常用参数</h4><ul>
+<li>-XX:+UseConcMarkSweepGC</li>
+<li>-XX:ParallelCMSThreads<br>CMS线程数量</li>
+<li>-XX:CMSInitiatingOccupancyFraction<br>使用多少比例的老年代后开始CMS收集，默认是68%(近似值)，如果频繁发生SerialOld卡顿，应该调小，（频繁CMS回收）</li>
+<li>-XX:+UseCMSCompactAtFullCollection<br>在FGC时进行压缩</li>
+<li>-XX:CMSFullGCsBeforeCompaction<br>多少次FGC之后进行压缩</li>
+<li>-XX:+CMSClassUnloadingEnabled</li>
+<li>-XX:CMSInitiatingPermOccupancyFraction<br>达到什么比例时进行Perm回收</li>
+<li>GCTimeRatio<br>设置GC时间占用程序运行时间的百分比</li>
+<li>-XX:MaxGCPauseMillis<br>停顿时间，是一个建议时间，GC会尝试用各种手段达到这个时间，比如减小年轻代</li>
+</ul>
+<h4 id="G1常用参数"><a href="#G1常用参数" class="headerlink" title="G1常用参数"></a>G1常用参数</h4><ul>
+<li>-XX:+UseG1GC</li>
+<li>-XX:MaxGCPauseMillis<br>建议值，G1会尝试调整Young区的块数来达到这个值</li>
+<li>-XX:GCPauseIntervalMillis<br>？GC的间隔时间</li>
+<li>-XX:+G1HeapRegionSize<br>分区大小，建议逐渐增大该值，1 2 4 8 16 32。<br>随着size增加，垃圾的存活时间更长，GC间隔更长，但每次GC的时间也会更长<br>ZGC做了改进（动态区块大小）</li>
+<li>G1NewSizePercent<br>新生代最小比例，默认为5%</li>
+<li>G1MaxNewSizePercent<br>新生代最大比例，默认为60%</li>
+<li>GCTimeRatio<br>GC时间建议比例，G1会根据这个值调整堆空间</li>
+<li>ConcGCThreads<br>线程数量</li>
+<li>InitiatingHeapOccupancyPercent<br>启动G1的堆空间占用比例</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://blogs.oracle.com/jonthecollector/our-collectors">https://blogs.oracle.com/</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">jonthecollector</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">/our-collectors</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></li>
+<li><a href="http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp">http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp</a></li>
+<li>JVM调优参考文档：<a href="https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184">https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184</a> </li>
+<li><a href="https://www.cnblogs.com/nxlhero/p/11660854.html">https://www.cnblogs.com/nxlhero/p/11660854.html</a> 在线排查工具</li>
+<li><a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> arthas常用命令</li>
+<li>Arthas手册：<ol>
+<li>启动arthas java -jar arthas-boot.jar</li>
+<li>绑定java进程</li>
+<li>dashboard命令观察系统整体情况</li>
+<li>help 查看帮助</li>
+<li>help xx 查看具体命令帮助</li>
+</ol>
+</li>
+<li>jmap命令参考： <a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> <ol>
+<li>jmap -heap pid</li>
+<li>jmap -histo pid</li>
+<li>jmap -clstats pid</li>
+</ol>
+</li>
+</ol>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java 中的并发</title>
+    <url>/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/</url>
+    <content><![CDATA[<h3 id="java-中的Lock"><a href="#java-中的Lock" class="headerlink" title="java 中的Lock"></a>java 中的Lock</h3><ol>
+<li>ReentrantLock</li>
+<li>ReentrantReadWriteLock</li>
+<li>ReentrantLock</li>
+<li>lock</li>
+</ol>
+<h3 id="java-中的并发容器"><a href="#java-中的并发容器" class="headerlink" title="java 中的并发容器"></a>java 中的并发容器</h3><ol>
+<li>ConcurrentHashMap：并发版 HashMap</li>
+<li>CopyOnWriteArrayList：并发版 ArrayList</li>
+<li>CopyOnWriteArraySet：并发 Set</li>
+<li>ConcurrentLinkedQueue：并发队列 (基于链表)</li>
+<li>ConcurrentLinkedDeque：并发队列 (基于双向链表)</li>
+<li>ConcurrentSkipListMap：基于跳表的并发 Map</li>
+<li>ConcurrentSkipListSet：基于跳表的并发 Set</li>
+<li>ArrayBlockingQueue：阻塞队列 (基于数组)</li>
+<li>LinkedBlockingQueue：阻塞队列 (基于链表)</li>
+<li>LinkedBlockingDeque：阻塞队列 (基于双向链表)</li>
+<li>PriorityBlockingQueue：线程安全的优先队列</li>
+<li>SynchronousQueue：读写成对的队列</li>
+<li>LinkedTransferQueue：基于链表的数据交换队列</li>
+<li>DelayQueue：延时队列</li>
+</ol>
+<h3 id="java-中的并发框架"><a href="#java-中的并发框架" class="headerlink" title="java 中的并发框架"></a>java 中的并发框架</h3><ol>
+<li>Fork/join</li>
+</ol>
+<h3 id="java中的并发工具类"><a href="#java中的并发工具类" class="headerlink" title="java中的并发工具类"></a>java中的并发工具类</h3><ol>
+<li><p>CountDownLatch</p>
+</li>
+<li><p>CyclicBarrier</p>
+</li>
+<li><p>Semaphore</p>
+</li>
+<li><p>Exchanger</p>
+</li>
+</ol>
+<h3 id="Java中的原子操作类"><a href="#Java中的原子操作类" class="headerlink" title="Java中的原子操作类"></a>Java中的原子操作类</h3><ul>
+<li><p><strong>原子更新基本类型</strong></p>
+<p>·AtomicBoolean：原子更新布尔类型。<br>·AtomicInteger：原子更新整型。<br>·AtomicLong：原子更新长整型。</p>
+</li>
+<li><p><strong>原子更新数组</strong></p>
+<p>·AtomicIntegerArray：原子更新整型数组里的元素。<br>·AtomicLongArray：原子更新长整型数组里的元素。<br>·AtomicReferenceArray：原子更新引用类型数组里的元素。</p>
+</li>
+<li><p><strong>原子更新引用类型</strong></p>
+<p>·AtomicReference：原子更新引用类型。</p>
+<p>·AtomicReferenceFieldUpdater：原子更新引用类型里的字段。</p>
+<p>·AtomicMarkableReference：原子更新带有标记位的引用类型。可以原子更新一个布尔类型的标记位和引用类型。</p>
+</li>
+<li><p><strong>原子更新字段</strong></p>
+<p>·AtomicIntegerFieldUpdater：原子更新整型的字段的更新器。<br>·AtomicLongFieldUpdater：原子更新长整型字段的更新器。<br>·AtomicStampedReference：原子更新带有版本号的引用类型。该类将整数值与引用关联起来，可用于原子的更新数据和数据的版本号，可以解决使用CAS进行原子更新时可能出现的ABA问题。</p>
+</li>
+</ul>
+<h3 id="Executor"><a href="#Executor" class="headerlink" title="Executor"></a>Executor</h3><h3 id="Disruptor"><a href="#Disruptor" class="headerlink" title="Disruptor"></a>Disruptor</h3><h3 id="java中的ThreadPoolExecutor"><a href="#java中的ThreadPoolExecutor" class="headerlink" title="java中的ThreadPoolExecutor"></a>java中的ThreadPoolExecutor</h3><p><a href="https://cloud.tencent.com/developer/article/1056828">https://cloud.tencent.com/developer/article/1056828</a></p>
+<p>参考</p>
+<p><a href="https://cloud.tencent.com/developer/article/1056828">https://cloud.tencent.com/developer/article/1056828</a></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>

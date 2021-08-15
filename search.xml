@@ -2413,6 +2413,127 @@ A(c)  --> B[i = 8]</pre>
       </tags>
   </entry>
   <entry>
+    <title>工厂设计模式</title>
+    <url>/2020/12/10/%E5%B7%A5%E5%8E%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h4 id="工厂设计模式-Factory-Pattern"><a href="#工厂设计模式-Factory-Pattern" class="headerlink" title="工厂设计模式(Factory Pattern)"></a>工厂设计模式(Factory Pattern)</h4><p><strong>描述：</strong> 工厂设计模式是用来生产对象的，在java中万般皆对象，如果创建的时候使用new 关键字会出现耦合严重，如果我们的对象名称换了那么所有出现此对象的地方都要进行修改。维护起来会十分的麻烦，所以就会使用工厂设计模式。</p>
+<p><strong>工厂设计模式的种类：</strong></p>
+<ul>
+<li>简单工厂(Simple Factory Pattern)</li>
+<li>工厂方法(Factory Method)</li>
+<li>抽象工厂(Abstract Factory)</li>
+</ul>
+<h5 id="简单工厂设计模式-Simple-Factory-Pattern-静态工厂方法"><a href="#简单工厂设计模式-Simple-Factory-Pattern-静态工厂方法" class="headerlink" title="简单工厂设计模式(Simple Factory Pattern) /静态工厂方法"></a>简单工厂设计模式(Simple Factory Pattern) /静态工厂方法</h5><p><strong>示例：</strong></p>
+<ul>
+<li>电脑的抽象类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">interface</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">     <span class="function">String <span class="title">getRAM</span><span class="params">()</span></span>;<span class="comment">//内存</span></span><br><span class="line">     <span class="function">String <span class="title">getCPU</span><span class="params">()</span></span>;<span class="comment">//cpu</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>联想电脑厂家</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Lianxiang</span>  <span class="keyword">implements</span>  <span class="title">Computer</span></span>&#123;</span><br><span class="line">    String ram;</span><br><span class="line">    String cpu;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">Lianxiang</span><span class="params">(String ram,String cpu)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cpu=cpu;</span><br><span class="line">        <span class="keyword">this</span>.ram=ram;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRAM</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;联想的cpu是&quot;</span>+cpu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCPU</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;联想的ram是&quot;</span>+ram;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>华为电脑厂家</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Huawei</span> <span class="keyword">implements</span>   <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    String ram;</span><br><span class="line">    String cpu;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">Huawei</span><span class="params">(String ram,String cpu)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cpu=cpu;</span><br><span class="line">        <span class="keyword">this</span>.ram=ram;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRAM</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;华为的cpu是&quot;</span>+cpu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCPU</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;华为的ram是&quot;</span>+ram;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>电脑工厂生产电脑对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComputerFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span> Computer <span class="title">getComputer</span><span class="params">(String type,String cpu,String ram)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;Huawei&quot;</span>.equals(type))&#123;</span><br><span class="line">            <span class="keyword">return</span>  <span class="keyword">new</span> Huawei(ram,cpu);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">&quot;Lianxiang&quot;</span>.equals(type))&#123;</span><br><span class="line">            <span class="keyword">return</span>  <span class="keyword">new</span> Lianxiang(ram,cpu);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>  <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>客户端的调用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Computer computer = ComputerFactory.getComputer(<span class="string">&quot;Huawei&quot;</span>, <span class="string">&quot;32G&quot;</span>, <span class="string">&quot;Inter&quot;</span>);</span><br><span class="line">        System.out.println(computer.getCPU()+computer.getRAM());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong> 上下解耦， 如联想的命名改变，则客户端是不需要知道的</p>
+<p><strong>缺点：</strong> 违反开闭原则，当我要增加一种品牌的电脑时休要修改工厂类，因此它只适用于产品对象较少的需求。</p>
+<p><strong>附图：</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82UML.png" alt="简单工厂设计模式UML"></p>
+<h5 id="工厂方法设计模式-Factory-Method"><a href="#工厂方法设计模式-Factory-Method" class="headerlink" title="工厂方法设计模式(Factory Method)"></a>工厂方法设计模式(Factory Method)</h5><p><strong>描述：</strong> 主要用来创建单个产品的</p>
+<p><strong>示例：</strong></p>
+<ul>
+<li>电脑的抽象类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">interface</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">     <span class="function">String <span class="title">getRAM</span><span class="params">()</span></span>;</span><br><span class="line">     <span class="function">String <span class="title">getCPU</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>电脑工厂的抽象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ComputerFactory</span> </span>&#123;</span><br><span class="line">     <span class="function">Computer <span class="title">getComputer</span><span class="params">( String cpu, String ram)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>华为电脑厂家</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Huawei</span> <span class="keyword">implements</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    String ram;</span><br><span class="line">    String cpu;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">Huawei</span><span class="params">(String ram,String cpu)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cpu=cpu;</span><br><span class="line">        <span class="keyword">this</span>.ram=ram;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRAM</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;华为的cpu是&quot;</span>+cpu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCPU</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;华为的ram是&quot;</span>+ram;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li> 电脑工厂生产华为电脑厂家</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HuaweiFactory</span> <span class="keyword">implements</span>  <span class="title">ComputerFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Computer <span class="title">getComputer</span><span class="params">(String cpu, String ram)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Huawei(ram , cpu);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>客户端的调用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HuaweiFactory huaweiFactory = <span class="keyword">new</span> HuaweiFactory();</span><br><span class="line">        Computer inter = huaweiFactory.getComputer(<span class="string">&quot;inter&quot;</span>, <span class="string">&quot;32G&quot;</span>);</span><br><span class="line">        System.out.println(inter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong> 符合开闭原则 ， 上下解耦 。 如果要增加一个电脑工厂不用修改任何代码，直接实现Computer 和 ComputerFactory 即可</p>
+<p><strong>缺点：</strong> 如果电脑的厂家很多的话会造成类的爆炸式增长，</p>
+<p><strong>附图：</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82UML.png" alt="工厂方法设计模式UML"></p>
+<h5 id="抽象工厂设计模式-Abstract-Factory"><a href="#抽象工厂设计模式-Abstract-Factory" class="headerlink" title="抽象工厂设计模式(Abstract Factory)"></a>抽象工厂设计模式(Abstract Factory)</h5><p><strong>描述：</strong> 抽象工厂设计模式主要是用来创建 一系列的产品 </p>
+<p><strong>应用场景：</strong> 当我们的一系列的产品簇趋向于稳定的时候，生产厂家可以变动，也就是华为只生产电脑和手机，不在扩展其他业务的时候使用它，而生产厂家可以有多个，不只华为一家 </p>
+<p><strong>示例：</strong></p>
+<ul>
+<li>各种类型电脑的抽象类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DianNaoFactory</span> </span>&#123;</span><br><span class="line"><span class="comment">//各种系列的电脑</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">hdiannao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ldiannao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">qdiannao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">xdiannao</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>各种手机的抽象类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ShowJiFactory</span> </span>&#123;</span><br><span class="line">   <span class="comment">//各种系列的手机</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">p9shouji</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">p3shouji</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">p4shouji</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">p8shouji</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>华为厂家造电脑</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HuaweiDiaNao</span> <span class="keyword">implements</span>  <span class="title">DianNaoFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hdiannao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;h系类的电脑&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ldiannao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;l系类的电脑&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">qdiannao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;q系类的电脑&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">xdiannao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;x系类的电脑&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>华为厂家造手机</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HuaweiShouJi</span> <span class="keyword">implements</span> <span class="title">ShowJiFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">p9shouji</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;p9系类的手机&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">p3shouji</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;p3系类的手机&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">p4shouji</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;p4系类的手机&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">p8shouji</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;p8系类的手机&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>电子产品类的 抽象接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">JiadainFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//电脑的生产者</span></span><br><span class="line">    <span class="function">DianNaoFactory   <span class="title">dianNaoFactory</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//手机的生产者</span></span><br><span class="line">    <span class="function">ShowJiFactory   <span class="title">showJiFactory</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>华为生产电子产品</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Huawei</span> <span class="keyword">implements</span>  <span class="title">JiadainFactory</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> DianNaoFactory <span class="title">dianNaoFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HuaweiDiaNao() ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ShowJiFactory <span class="title">showJiFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HuaweiShouJi();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>客户端的调用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        JiadainFactory jiadain = <span class="keyword">new</span> Huawei();</span><br><span class="line">             jiadain.dianNaoFactory().hdiannao();</span><br><span class="line">             jiadain.showJiFactory().p3shouji();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优点：</strong> 具体的产品代码隔离，无需关注创建的细节，将一个系列的产品在一起创建。也就是我们增加生产厂家的时候是很容易的。</p>
+<p><strong>缺点：</strong> 显而易见，当我们要怎加一个产平簇的时候是很麻烦的，我们要修改生产厂家的接口，违反开闭原则。</p>
+<p><strong>附图：</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82UML.png" alt="抽象工厂设计模式UML"></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>程序设计</category>
+      </categories>
+      <tags>
+        <tag>23种设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常用的批处理命令</title>
     <url>/2020/12/05/%E5%B8%B8%E7%94%A8%E7%9A%84%E6%89%B9%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="常用的批处理命令"><a href="#常用的批处理命令" class="headerlink" title="常用的批处理命令"></a>常用的批处理命令</h2><h4 id="1-启动jar"><a href="#1-启动jar" class="headerlink" title="1.启动jar"></a>1.启动jar</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@echo off</span><br><span class="line">start javaw -jar oes.jar</span><br><span class="line"></span><br><span class="line">echo ------------启动成功!--------------------</span><br><span class="line">pause</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
@@ -3383,127 +3504,6 @@ A(c)  --> B[i = 8]</pre>
       </categories>
       <tags>
         <tag>七大设计原则</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>工厂设计模式</title>
-    <url>/2020/12/10/%E5%B7%A5%E5%8E%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
-    <content><![CDATA[<h4 id="工厂设计模式-Factory-Pattern"><a href="#工厂设计模式-Factory-Pattern" class="headerlink" title="工厂设计模式(Factory Pattern)"></a>工厂设计模式(Factory Pattern)</h4><p><strong>描述：</strong> 工厂设计模式是用来生产对象的，在java中万般皆对象，如果创建的时候使用new 关键字会出现耦合严重，如果我们的对象名称换了那么所有出现此对象的地方都要进行修改。维护起来会十分的麻烦，所以就会使用工厂设计模式。</p>
-<p><strong>工厂设计模式的种类：</strong></p>
-<ul>
-<li>简单工厂(Simple Factory Pattern)</li>
-<li>工厂方法(Factory Method)</li>
-<li>抽象工厂(Abstract Factory)</li>
-</ul>
-<h5 id="简单工厂设计模式-Simple-Factory-Pattern-静态工厂方法"><a href="#简单工厂设计模式-Simple-Factory-Pattern-静态工厂方法" class="headerlink" title="简单工厂设计模式(Simple Factory Pattern) /静态工厂方法"></a>简单工厂设计模式(Simple Factory Pattern) /静态工厂方法</h5><p><strong>示例：</strong></p>
-<ul>
-<li>电脑的抽象类</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">interface</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">     <span class="function">String <span class="title">getRAM</span><span class="params">()</span></span>;<span class="comment">//内存</span></span><br><span class="line">     <span class="function">String <span class="title">getCPU</span><span class="params">()</span></span>;<span class="comment">//cpu</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>联想电脑厂家</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Lianxiang</span>  <span class="keyword">implements</span>  <span class="title">Computer</span></span>&#123;</span><br><span class="line">    String ram;</span><br><span class="line">    String cpu;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">Lianxiang</span><span class="params">(String ram,String cpu)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cpu=cpu;</span><br><span class="line">        <span class="keyword">this</span>.ram=ram;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRAM</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;联想的cpu是&quot;</span>+cpu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCPU</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;联想的ram是&quot;</span>+ram;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>华为电脑厂家</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Huawei</span> <span class="keyword">implements</span>   <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    String ram;</span><br><span class="line">    String cpu;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">Huawei</span><span class="params">(String ram,String cpu)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cpu=cpu;</span><br><span class="line">        <span class="keyword">this</span>.ram=ram;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRAM</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;华为的cpu是&quot;</span>+cpu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCPU</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;华为的ram是&quot;</span>+ram;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>电脑工厂生产电脑对象</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComputerFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span> Computer <span class="title">getComputer</span><span class="params">(String type,String cpu,String ram)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&quot;Huawei&quot;</span>.equals(type))&#123;</span><br><span class="line">            <span class="keyword">return</span>  <span class="keyword">new</span> Huawei(ram,cpu);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">&quot;Lianxiang&quot;</span>.equals(type))&#123;</span><br><span class="line">            <span class="keyword">return</span>  <span class="keyword">new</span> Lianxiang(ram,cpu);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>  <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>客户端的调用</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Computer computer = ComputerFactory.getComputer(<span class="string">&quot;Huawei&quot;</span>, <span class="string">&quot;32G&quot;</span>, <span class="string">&quot;Inter&quot;</span>);</span><br><span class="line">        System.out.println(computer.getCPU()+computer.getRAM());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>优点：</strong> 上下解耦， 如联想的命名改变，则客户端是不需要知道的</p>
-<p><strong>缺点：</strong> 违反开闭原则，当我要增加一种品牌的电脑时休要修改工厂类，因此它只适用于产品对象较少的需求。</p>
-<p><strong>附图：</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82UML.png" alt="简单工厂设计模式UML"></p>
-<h5 id="工厂方法设计模式-Factory-Method"><a href="#工厂方法设计模式-Factory-Method" class="headerlink" title="工厂方法设计模式(Factory Method)"></a>工厂方法设计模式(Factory Method)</h5><p><strong>描述：</strong> 主要用来创建单个产品的</p>
-<p><strong>示例：</strong></p>
-<ul>
-<li>电脑的抽象类</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">interface</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">     <span class="function">String <span class="title">getRAM</span><span class="params">()</span></span>;</span><br><span class="line">     <span class="function">String <span class="title">getCPU</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>电脑工厂的抽象</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ComputerFactory</span> </span>&#123;</span><br><span class="line">     <span class="function">Computer <span class="title">getComputer</span><span class="params">( String cpu, String ram)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>华为电脑厂家</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Huawei</span> <span class="keyword">implements</span> <span class="title">Computer</span> </span>&#123;</span><br><span class="line">    String ram;</span><br><span class="line">    String cpu;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="title">Huawei</span><span class="params">(String ram,String cpu)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cpu=cpu;</span><br><span class="line">        <span class="keyword">this</span>.ram=ram;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRAM</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;华为的cpu是&quot;</span>+cpu;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCPU</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;华为的ram是&quot;</span>+ram;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li> 电脑工厂生产华为电脑厂家</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HuaweiFactory</span> <span class="keyword">implements</span>  <span class="title">ComputerFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Computer <span class="title">getComputer</span><span class="params">(String cpu, String ram)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Huawei(ram , cpu);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>客户端的调用</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HuaweiFactory huaweiFactory = <span class="keyword">new</span> HuaweiFactory();</span><br><span class="line">        Computer inter = huaweiFactory.getComputer(<span class="string">&quot;inter&quot;</span>, <span class="string">&quot;32G&quot;</span>);</span><br><span class="line">        System.out.println(inter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>优点：</strong> 符合开闭原则 ， 上下解耦 。 如果要增加一个电脑工厂不用修改任何代码，直接实现Computer 和 ComputerFactory 即可</p>
-<p><strong>缺点：</strong> 如果电脑的厂家很多的话会造成类的爆炸式增长，</p>
-<p><strong>附图：</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82UML.png" alt="工厂方法设计模式UML"></p>
-<h5 id="抽象工厂设计模式-Abstract-Factory"><a href="#抽象工厂设计模式-Abstract-Factory" class="headerlink" title="抽象工厂设计模式(Abstract Factory)"></a>抽象工厂设计模式(Abstract Factory)</h5><p><strong>描述：</strong> 抽象工厂设计模式主要是用来创建 一系列的产品 </p>
-<p><strong>应用场景：</strong> 当我们的一系列的产品簇趋向于稳定的时候，生产厂家可以变动，也就是华为只生产电脑和手机，不在扩展其他业务的时候使用它，而生产厂家可以有多个，不只华为一家 </p>
-<p><strong>示例：</strong></p>
-<ul>
-<li>各种类型电脑的抽象类</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DianNaoFactory</span> </span>&#123;</span><br><span class="line"><span class="comment">//各种系列的电脑</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">hdiannao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ldiannao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">qdiannao</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">xdiannao</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>各种手机的抽象类</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ShowJiFactory</span> </span>&#123;</span><br><span class="line">   <span class="comment">//各种系列的手机</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">p9shouji</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">p3shouji</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">p4shouji</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">p8shouji</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>华为厂家造电脑</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HuaweiDiaNao</span> <span class="keyword">implements</span>  <span class="title">DianNaoFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hdiannao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;h系类的电脑&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ldiannao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;l系类的电脑&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">qdiannao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;q系类的电脑&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">xdiannao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;x系类的电脑&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>华为厂家造手机</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HuaweiShouJi</span> <span class="keyword">implements</span> <span class="title">ShowJiFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">p9shouji</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;p9系类的手机&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">p3shouji</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;p3系类的手机&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">p4shouji</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;p4系类的手机&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">p8shouji</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;p8系类的手机&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>电子产品类的 抽象接口</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">JiadainFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//电脑的生产者</span></span><br><span class="line">    <span class="function">DianNaoFactory   <span class="title">dianNaoFactory</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//手机的生产者</span></span><br><span class="line">    <span class="function">ShowJiFactory   <span class="title">showJiFactory</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>华为生产电子产品</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Huawei</span> <span class="keyword">implements</span>  <span class="title">JiadainFactory</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> DianNaoFactory <span class="title">dianNaoFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HuaweiDiaNao() ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ShowJiFactory <span class="title">showJiFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HuaweiShouJi();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>客户端的调用</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        JiadainFactory jiadain = <span class="keyword">new</span> Huawei();</span><br><span class="line">             jiadain.dianNaoFactory().hdiannao();</span><br><span class="line">             jiadain.showJiFactory().p3shouji();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>优点：</strong> 具体的产品代码隔离，无需关注创建的细节，将一个系列的产品在一起创建。也就是我们增加生产厂家的时候是很容易的。</p>
-<p><strong>缺点：</strong> 显而易见，当我们要怎加一个产平簇的时候是很麻烦的，我们要修改生产厂家的接口，违反开闭原则。</p>
-<p><strong>附图：</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82UML.png" alt="抽象工厂设计模式UML"></p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>程序设计</category>
-      </categories>
-      <tags>
-        <tag>23种设计模式</tag>
       </tags>
   </entry>
   <entry>

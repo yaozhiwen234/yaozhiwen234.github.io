@@ -1,438 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AKF服务拆分原则</title>
-    <url>/2021/04/18/AKF%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86%E5%8E%9F%E5%88%99/</url>
-    <content><![CDATA[<h1 id="AKF服务拆分原则"><a href="#AKF服务拆分原则" class="headerlink" title="AKF服务拆分原则"></a>AKF服务拆分原则</h1><p>在设计微服务的时候，我们一般会遵循以下4个原则：</p>
-<p>1）AKF拆分原则</p>
-<p>2）前后端分离原则</p>
-<p>3）无状态服务</p>
-<p>4）restful的通信风格</p>
-<p>下面我们来详细了解以下AKF拆分原则。</p>
-<p>1 AKF拆分原则 业界对可扩展系统架构设计有一个朴素的概念，就是：**通过加机器可以解决容量和可用性问题（如果一台不行就两台）</p>
-<p>这一理念在“云计算”概念疯狂流行的今天。得到了广泛的认可。对于一个规模迅速增长的系统而言。容量和性能问题当然是首当其冲的。但是随着时间的向前，系统规模的增长，除了面对性能与容量的问题外，还需要面对功能与模块数量上增长带来的系统复杂性问题。以及业务变化带来的提供差异化服务问题。而许多系统在架构设计时并未充分考虑到这些问题，导致系统的重构成为常态。从而影响业务交付能力，还浪费人力财力。对此《可扩展的艺术》一书提出了一个更加系统的可扩展模型—-AKF可扩展立方。这个立方体中沿着三个坐标轴设置分别为X，Y，Z。</p>
-<p>2 Y轴功能Y轴扩展会将庞大的整体应用拆分为多个服务。每个服务实现一组相关的功能。如订单管理，客户管理等。在工程上常见的方案是服务化架构（SOA），比如对于一个电子商务平台，我们可以拆分成不同的服务组成下面这样的架构。</p>
-<p>但是通过上图容易发现，当服务数量增多时，服务调用关系变得复杂，为系统添加一个新功能。要调用的服务数也变得不可控。由此引发的服务管理上的混乱，一般情况下，需要采用服务注册的机制，形成服务网关来进行服务治理。系统架构将变成如下图所示。</p>
-<p>3 X轴（水平扩展）X轴扩展与我们前面理念是一致的。通过绝对平等的复制服务与数据，以及容量和可用性问题。其实就是将微服务运行多个实例。做集群，负载均衡的模式。</p>
-<p>为了提升当个服务的可用性和容量。对每一个服务进行x轴扩展划分。</p>
-<p><img src="https://pics7.baidu.com/feed/35a85edf8db1cb13a6fbd16fcafd974a93584b6e.jpeg?token=7361c837d5226bd2d991d894cd8126e7&s=95A05F300306454D5EC4C5CA0300F0B3" alt="img"></p>
-<p>1.4 Z轴（数据分区）</p>
-<p>Z周扩展通常是指基于请求和用户独特的需求，进行系统划分，并使得划分出来的子系统相互隔离，但又是完整的。</p>
-<p>1.4.1工程领域常见的这种扩展有以下两种方案。</p>
-<p>1.4.1.1 单元化架构</p>
-<p>在分布式服务设计领域，一个单元就是满足某个分区所有业务操作的自包含闭环。如上面我们所说的y轴扩展的SOA架构。客户端对服务端节点的选择一般是随机的。但是，如果在此加上这周扩展，那么服务的节点选择将不再是随机的。而是每个单元自成一体。如下图。</p>
-<p>1.4.1.2数据分区</p>
-<p>为了性能数据安全上的考虑。我们将一个完整的数据集按照一定的维度，划分出不同的子集。一个分区，就是整体数据集的一个子集。比如用尾号来划分用户，那同样尾号的那部分用户，就可以认为是一个分区。数据分析一般包括以下几种数据划分的方式。</p>
-<p>数据类型（如：业务类型）</p>
-<p>数据范围（如：时间段，用户id）</p>
-<p>数据热度（如：用户活跃度，商品热度）</p>
-<p>读写分离（如：商品描述，商品库存）</p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BIO</title>
-    <url>/2021/06/08/BIO/</url>
-    <content><![CDATA[<h3 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h3><p><strong>1. 什么是BIO</strong></p>
-<blockquote>
-<p>B I/O，意为Blocking I/O，即阻塞的I/O。</p>
-<p>很明显重点在阻塞，但怎么就阻塞了？阻塞在哪了？阻塞带来了什么坏处？</p>
-</blockquote>
-<p><strong>2. BIO的代码实现：</strong></p>
-<ol>
-<li>服务端</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">9090</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;step1: new ServerSocket(9090) &quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        Socket client = server.accept();  <span class="comment">//阻塞1</span></span><br><span class="line">        System.out.println(<span class="string">&quot;step2:client\t&quot;</span> + client.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            InputStream in = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in = client.getInputStream();</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                    String dataline = reader.readLine(); <span class="comment">//阻塞2</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">null</span> != dataline)&#123;</span><br><span class="line">                    System.out.println(dataline);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        client.close();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;客户端断开&quot;</span>);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>客户端</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          Socket client = <span class="keyword">new</span> Socket(<span class="string">&quot;192.168.150.11&quot;</span>,<span class="number">9090</span>);</span><br><span class="line"></span><br><span class="line">          client.setSendBufferSize(<span class="number">20</span>);</span><br><span class="line">          client.setTcpNoDelay(<span class="keyword">true</span>);</span><br><span class="line">          OutputStream out = client.getOutputStream();</span><br><span class="line"></span><br><span class="line">          InputStream in = System.in;</span><br><span class="line">          BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line"></span><br><span class="line">          <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">              String line = reader.readLine();</span><br><span class="line">              <span class="keyword">if</span>(line != <span class="keyword">null</span> )&#123;</span><br><span class="line">                  <span class="keyword">byte</span>[] bb = line.getBytes();</span><br><span class="line">                  <span class="keyword">for</span> (<span class="keyword">byte</span> b : bb) &#123;</span><br><span class="line">                      out.write(b);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>3. BIO的工作模式</strong></p>
-<pre class="mermaid">graph TD
-A[Client 1] --> S(Service 9090)
-C[Client 2] --> S
-D[Client 2] --> S
-S --> F(Thread 1)
-S --> E(Thread 2)
-S --> G(Thread 3)
-F -->   H(Socket1 处理 Client 1 )
-E -->   I(Socket2 处理 Client 2 )
-G -->   V(Socket3 处理 Client 3 )</pre>
-
-<p><strong>4. 为什么要使用多线程：</strong></p>
-<blockquote>
-<p>这是一个经典的每连接每线程的模型，之所以使用多线程，主要原因在于socket.accept()、socket.read()、socket.write()三个主要函数都是同步阻塞的，当一个连接在处理I/O的时候，系统是阻塞的，如果是单线程的话必然就挂死在那里；但CPU是被释放出来的，开启多线程，就可以让CPU去处理更多的事情。其实这也是所有使用多线程的本质：</p>
-</blockquote>
-<p><strong>5. BIO的缺点</strong></p>
-<blockquote>
-<p>（1）线程创建资源开销巨大。如果有10000个连接怎么办？创建10000个线程？很明显不现实，太多的线程对系统资源的开销是巨大的。</p>
-<p>（2）单个线程的资源浪费。</p>
-<p>一个请求来了，如果这个线程从被创建为这个连接服务开始就一直在工工作，那么就不存在资源浪费，就像你找来一个服务员，他只服务一个客人，但他期间一直都有工作作，那么他的劳动力就算不上浪费。</p>
-<p>但是绝大多数情况下客人多服务员的需求都是暂时的，服务员很多时候都在发呆玩手机，等待着回应客人的请求，这样这个服务员的劳动力就被浪费了。那么在Bio中线程等待服务的时候是什么样的呢，那就是阻塞，线程等待着为连接服务（读数据/写数据/业务处理），很多时候BIo的服务子线程都是在阻塞状态下的。</p>
-</blockquote>
-<p><strong>基于以上不足出现了NIO</strong></p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CAP定理</title>
-    <url>/2021/04/18/CAP%E5%AE%9A%E7%90%86/</url>
-    <content><![CDATA[<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><h3 id="CAP理论概述"><a href="#CAP理论概述" class="headerlink" title="CAP理论概述"></a><strong>CAP理论概述</strong></h3><p>   一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两     项。</p>
-<h3 id="CAP的定义"><a href="#CAP的定义" class="headerlink" title="CAP的定义"></a><strong>CAP的定义</strong></h3><p><strong>Consistency 一致性</strong></p>
-<p>一致性指“<code>all nodes see the same data at the same time</code>”，即所有节点在同一时间的数据完全一致。</p>
-<p>一致性是因为多个数据拷贝下并发读写才有的问题，因此理解时一定要注意结合考虑多个数据拷贝下并发读写的场景。</p>
-<p>对于一致性，可以分为从客户端和服务端两个不同的视角。</p>
-<ul>
-<li>客户端</li>
-</ul>
-<p>从客户端来看，一致性主要指的是多并发访问时更新过的数据如何获取的问题。</p>
-<ul>
-<li>服务端</li>
-</ul>
-<p>从服务端来看，则是更新如何分布到整个系统，以保证数据最终一致。</p>
-<p>对于一致性，可以分为强/弱/最终一致性三类</p>
-<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
-<ul>
-<li>强一致性</li>
-</ul>
-<p>对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是强一致性。</p>
-<ul>
-<li>弱一致性</li>
-</ul>
-<p>如果能容忍后续的部分或者全部访问不到，则是弱一致性。</p>
-<ul>
-<li>最终一致性</li>
-</ul>
-<p>如果经过一段时间后要求能访问到更新后的数据，则是最终一致性。</p>
-<h3 id="Availability-可用性"><a href="#Availability-可用性" class="headerlink" title="Availability 可用性"></a><strong>Availability 可用性</strong></h3><p>可用性指“<code>Reads and writes always succeed</code>”，即服务在正常响应时间内一直可用。</p>
-<p>好的可用性主要是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。可用性通常情况下可用性和分布式数据冗余，负载均衡等有着很大的关联。</p>
-<h2 id="Partition-Tolerance分区容错性"><a href="#Partition-Tolerance分区容错性" class="headerlink" title="Partition Tolerance分区容错性"></a><strong>Partition Tolerance分区容错性</strong></h2><p>分区容错性指“<code>the system continues to operate despite arbitrary message loss or failure of part of the system</code>”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务。</p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ConcurrentHashMap 详解</title>
-    <url>/2021/05/27/ConcurrentHashMap%20%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<h2 id="ConcurrentHashMap-详解"><a href="#ConcurrentHashMap-详解" class="headerlink" title="ConcurrentHashMap 详解"></a>ConcurrentHashMap 详解</h2><h3 id="private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30"><a href="#private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30" class="headerlink" title="private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;"></a>private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</h3><ul>
-<li><strong>MAXIMUM_CAPACITY是2的30次方 的原因</strong>`<ol>
-<li>int的最大的值是2的31次方-1，所以容量无法到达2的31次方，</li>
-<li>需要让容量满足2的幂次，所以设置为2的30次方 </li>
-</ol>
-</li>
-</ul>
-<h3 id="private-static-final-int-DEFAULT-CAPACITY-16"><a href="#private-static-final-int-DEFAULT-CAPACITY-16" class="headerlink" title="private static final int DEFAULT_CAPACITY = 16;"></a>private static final int DEFAULT_CAPACITY = 16;</h3><ul>
-<li><strong>DEFAULT_CAPACITY = 16;</strong><ol>
-<li>方便数据迁移</li>
-<li>方便进行计算对应的位置</li>
-<li>概率统计</li>
-</ol>
-</li>
-</ul>
-<h3 id="new-ConcurrentHashMap-lt-gt-2-自定义大小解释："><a href="#new-ConcurrentHashMap-lt-gt-2-自定义大小解释：" class="headerlink" title="new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释："></a>new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">int</span> cap = ((initialCapacity &gt;= (MAXIMUM_CAPACITY &gt;&gt;&gt; <span class="number">1</span>)) ?</span><br><span class="line">               MAXIMUM_CAPACITY :</span><br><span class="line">               tableSizeFor(initialCapacity + (initialCapacity &gt;&gt;&gt; <span class="number">1</span>) + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">this</span>.sizeCtl = cap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// tableSizeFor的功能（不考虑大于最大容量的情况）是返回大于输入参数且最近的2的整数次幂的数。比如10，则返回16。 </span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = c - <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">8</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>GC的基础知识</title>
-    <url>/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<h1 id="GC和GC-Tuning"><a href="#GC和GC-Tuning" class="headerlink" title="GC和GC Tuning"></a>GC和GC Tuning</h1><h4 id="1-什么是垃圾"><a href="#1-什么是垃圾" class="headerlink" title="1.什么是垃圾"></a>1.什么是垃圾</h4><blockquote>
-<p>没有任何引用指向的一个对象或者多个对象（循环引用）</p>
-</blockquote>
-<h4 id="2-如何定位垃圾"><a href="#2-如何定位垃圾" class="headerlink" title="2.如何定位垃圾"></a>2.如何定位垃圾</h4><blockquote>
-<p>引用计数（ReferenceCount）</p>
-<p>根可达算法(RootSearching)</p>
-</blockquote>
-<h4 id="3-GC-roots"><a href="#3-GC-roots" class="headerlink" title="3. GC roots"></a>3. GC roots</h4><blockquote>
-<p>JVM stack  (jvm栈)</p>
-<p>native method stack （本地方法栈）</p>
-<p>run-time constant pool （常量池指向的变量）</p>
-<p>static references in method artea （静态变量指向的对象）</p>
-<p>Clazz  （对象字节load到内存）</p>
-</blockquote>
-<h4 id="3-常见的垃圾回收算法"><a href="#3-常见的垃圾回收算法" class="headerlink" title="3.常见的垃圾回收算法"></a>3.常见的垃圾回收算法</h4><blockquote>
-<p>标记清除(mark sweep) - 位置不连续 产生碎片 效率偏低（两遍扫描）</p>
-<p>拷贝算法 (copying) - 没有碎片，浪费空间</p>
-<p>标记压缩(mark compact) - 没有碎片，效率偏低（两遍扫描，指针需要调整）</p>
-</blockquote>
-<h4 id="4-JVM内存分代模型（用于分代垃圾回收算法）"><a href="#4-JVM内存分代模型（用于分代垃圾回收算法）" class="headerlink" title="4.JVM内存分代模型（用于分代垃圾回收算法）"></a>4.JVM内存分代模型（用于分代垃圾回收算法）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/jvm%E5%88%86%E4%BB%A3%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png"></h4><p><strong>1. 部分垃圾回收器使用的模型</strong></p>
-<blockquote>
-<p>除Epsilon ZGC Shenandoah之外的GC都是使用逻辑分代模型</p>
-<p>G1是逻辑分代，物理不分代</p>
-<p>除此之外不仅逻辑分代，而且物理分代</p>
-</blockquote>
-<p><strong>2. 新生代 + 老年代 + 永久代（1.7）Perm Generation/ 元数据区(1.8) Metaspace</strong></p>
-<blockquote>
-<p>永久代 元数据 - Class</p>
-<p>永久代必须指定大小限制 ，元数据可以设置，也可以不设置，无上限（受限于物理内存）</p>
-<p>字符串常量 1.7 - 永久代，1.8 - 堆</p>
-<p>MethodArea逻辑概念 - 永久代、元数据</p>
-</blockquote>
-<p><strong>3. 新生代 = Eden + 2个suvivor区</strong> </p>
-<blockquote>
-<p>YGC回收之后，大多数的对象会被回收，活着的进入s0</p>
-<p>再次YGC，活着的对象eden + s0 -&gt; s1</p>
-<p>再次YGC，eden + s1 -&gt; s0</p>
-<p>年龄足够 -&gt; 老年代 （15 CMS 6）</p>
-<p>s区装不下 -&gt; 老年代</p>
-</blockquote>
-<p><strong>4. 老年代</strong></p>
-<blockquote>
-<p>顽固分子</p>
-<p>老年代满了FGC Full GC</p>
-</blockquote>
-<p><strong>GC Tuning (Generation)</strong></p>
-<blockquote>
-<p>尽量减少FGC</p>
-<p>MinorGC = YGC</p>
-<p>MajorGC = FGC</p>
-</blockquote>
-<p><strong>动态年龄：</strong><br><a href="https://www.jianshu.com/p/989d3b06a49d">https://www.jianshu.com/p/989d3b06a49d</a></p>
-<p><strong>分配担保：</strong><br>YGC期间 survivor区空间不够了 空间担保直接进入老年代<br>参考：<a href="https://cloud.tencent.com/developer/article/1082730">https://cloud.tencent.com/developer/article/1082730</a></p>
-<p><strong>对象的分配过程</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.png" alt="对象内存分配的过程"></p>
-<p><strong>5 .TLAB 分配</strong></p>
-<blockquote>
-<p>　JVM在内存新生代Eden Space中开辟了一小块线程私有的区域，称作TLAB（Thread-local allocation buffer）。默认设定为占用Eden Space的1%。在Java程序中很多对象都是小对象且用过即丢，它们不存在线程共享也适合被快速GC，所以对于小对象通常JVM会优先分配在TLAB上，并且TLAB上的分配由于是线程私有所以没有锁开销。因此在实践中分配多个小对象的效率通常比分配一个大对象的效率要高。<br>　　也就是说，Java中每个线程都会有自己的缓冲区称作TLAB（Thread-local allocation buffer），每个TLAB都只有一个线程可以操作，TLAB结合bump-the-pointer技术可以实现快速的对象分配，而不需要任何的锁进行同步，也就是说，在对象分配的时候不用锁住整个堆，而只需要在自己的缓冲区分配即可。<br>　　关于对象分配的JDK源码可以参见 [JVM 之 Java对象创建<a href="http://blog.hesey.net/2011/07/object-allocation-on-non-heap.html">初始化]</a> 中对OpenJDK源码的分析。</p>
-</blockquote>
-<p><strong>为什么需要TLAB？</strong></p>
-<blockquote>
-<p>　　这是为了加速对象的分配。由于对象一般分配在堆上，而堆是线程共用的，因此可能会有多个线程在堆上申请空间，而每一次的对象分配都必须线程同步，会使分配的效率下降。考虑到对象分配几乎是Java中最常用的操作，因此JVM使用了TLAB这样的线程专有区域来避免多线程冲突，提高对象分配的效率。</p>
-</blockquote>
-<h4 id="6-常见的垃圾回收器"><a href="#6-常见的垃圾回收器" class="headerlink" title="6.常见的垃圾回收器"></a>6.常见的垃圾回收器</h4><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/gc%E7%AE%97%E6%B3%95.png" alt="gc"></p>
-<ol>
-<li>JDK诞生 Serial追随 提高效率，诞生了PS，为了配合CMS，诞生了PN，CMS是1.4版本后期引入，CMS是里程碑式的GC，它开启了并发回收的过程，但是CMS毛病较多，因此目前任何一个JDK版本默认是CMS<br>并发垃圾回收是因为无法忍受STW</li>
-<li>Serial 年轻代 串行回收</li>
-<li>PS 年轻代 并行回收</li>
-<li>ParNew 年轻代 配合CMS的并行回收</li>
-<li>SerialOld </li>
-<li>ParallelOld</li>
-<li>ConcurrentMarkSweep 老年代 并发的， 垃圾回收和应用程序同时运行，降低STW的时间(200ms)<br>CMS问题比较多，所以现在没有一个版本默认是CMS，只能手工指定<br>CMS既然是MarkSweep，就一定会有碎片化的问题，碎片到达一定程度，CMS的老年代分配对象分配不下的时候，使用SerialOld 进行老年代回收<br>想象一下：<br>PS + PO -&gt; 加内存 换垃圾回收器 -&gt; PN + CMS + SerialOld（几个小时 - 几天的STW）<br>几十个G的内存，单线程回收 -&gt; G1 + FGC 几十个G -&gt; 上T内存的服务器 ZGC<br>算法：三色标记 + Incremental Update</li>
-<li>G1(10ms)<br>算法：三色标记 + SATB</li>
-<li>ZGC (1ms) PK C++<br>算法：ColoredPointers + LoadBarrier</li>
-<li>Shenandoah<br>算法：ColoredPointers + WriteBarrier</li>
-<li>Eplison</li>
-<li>PS 和 PN区别的延伸阅读：<br>▪<a href="https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html">https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html#GUID-3D0BB91E-9BFF-4EBB-B523-14493A860E73</a></li>
-<li>垃圾收集器跟内存大小的关系<ol>
-<li>Serial 几十兆</li>
-<li>PS 上百兆 - 几个G</li>
-<li>CMS - 20G</li>
-<li>G1 - 上百G</li>
-<li>ZGC - 4T - 16T（JDK13）</li>
-</ol>
-</li>
-</ol>
-<p>1.8默认的垃圾回收：PS + ParallelOld</p>
-<h4 id="7-常见垃圾回收器组合参数设定：-1-8"><a href="#7-常见垃圾回收器组合参数设定：-1-8" class="headerlink" title="7.常见垃圾回收器组合参数设定：(1.8)"></a>7.常见垃圾回收器组合参数设定：(1.8)</h4><ul>
-<li><p>-XX:+UseSerialGC = Serial New (DefNew) + Serial Old</p>
-<ul>
-<li>小型程序。默认情况下不会是这种选项，HotSpot会根据计算及配置和JDK版本自动选择收集器</li>
-</ul>
-</li>
-<li><p>-XX:+UseParNewGC = ParNew + SerialOld</p>
-<ul>
-<li>这个组合已经很少用（在某些版本中已经废弃）</li>
-<li><a href="https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future">https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future</a></li>
-</ul>
-</li>
-<li><p>-XX:+UseConc<font color=red>(urrent)</font>MarkSweepGC = ParNew + CMS + Serial Old</p>
-</li>
-<li><p>-XX:+UseParallelGC = Parallel Scavenge + Parallel Old (1.8默认) 【PS + SerialOld】</p>
-</li>
-<li><p>-XX:+UseParallelOldGC = Parallel Scavenge + Parallel Old</p>
-</li>
-<li><p>-XX:+UseG1GC = G1</p>
-</li>
-<li><p>Linux中没找到默认GC的查看方法，而windows中会打印UseParallelGC </p>
-<ul>
-<li>java +XX:+PrintCommandLineFlags -version</li>
-<li>通过GC的日志来分辨</li>
-</ul>
-</li>
-<li><p>Linux下1.8版本默认的垃圾回收器到底是什么？</p>
-<ul>
-<li>1.8.0_181 默认（看不出来）Copy MarkCompact</li>
-<li>1.8.0_222 默认 PS + PO</li>
-</ul>
-</li>
-</ul>
-<h4 id="8-了解JVM常用命令行参数"><a href="#8-了解JVM常用命令行参数" class="headerlink" title="8.了解JVM常用命令行参数"></a>8.了解JVM常用命令行参数</h4><ul>
-<li><p>JVM的命令行参数参考：<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></p>
-</li>
-<li><p>HotSpot参数分类</p>
-<blockquote>
-<p>标准： - 开头，所有的HotSpot都支持</p>
-<p>非标准：-X 开头，特定版本HotSpot支持特定命令</p>
-<p>不稳定：-XX 开头，下个版本可能取消</p>
-</blockquote>
-<p>java -version</p>
-<p>试验用程序：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloGC</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;HelloGC!&quot;</span>);</span><br><span class="line">    List list = <span class="keyword">new</span> LinkedList();</span><br><span class="line">    <span class="keyword">for</span>(;;) &#123;</span><br><span class="line">      <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">      list.add(b);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<ol>
-<li>区分概念：内存泄漏memory leak，内存溢出out of memory</li>
-<li>java -XX:+PrintCommandLineFlags HelloGC</li>
-<li>java -Xmn10M -Xms40M -Xmx60M -XX:+PrintCommandLineFlags -XX:+PrintGC  HelloGC<br>PrintGCDetails PrintGCTimeStamps PrintGCCauses</li>
-<li>java -XX:+UseConcMarkSweepGC -XX:+PrintCommandLineFlags HelloGC</li>
-<li>java -XX:+PrintFlagsInitial 默认参数值</li>
-<li>java -XX:+PrintFlagsFinal 最终参数值</li>
-<li>java -XX:+PrintFlagsFinal | grep xxx 找到对应的参数</li>
-<li>java -XX:+PrintFlagsFinal -version |grep GC</li>
-</ol>
-</li>
-</ul>
-<h4 id="9-PS-GC日志详解"><a href="#9-PS-GC日志详解" class="headerlink" title="9. PS GC日志详解"></a>9. PS GC日志详解</h4><p>每种垃圾回收器的日志格式是不同的！</p>
-<p>PS日志格式</p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3.png" alt="gc日志详解"></p>
-<p>heap dump部分：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">eden space 5632K, <span class="number">94</span>% used [<span class="number">0x00000000ff980000</span>,<span class="number">0x00000000ffeb3e28</span>,<span class="number">0x00000000fff00000</span>)</span><br><span class="line">                            后面的内存地址指的是，起始地址，使用空间结束地址，整体空间结束地址</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A32.png" alt="gc日志详解2"></p>
-<p>total = eden + 1个survivor</p>
-<h4 id="10-调优前的基础概念："><a href="#10-调优前的基础概念：" class="headerlink" title="10. 调优前的基础概念："></a>10. 调优前的基础概念：</h4><ol>
-<li>吞吐量：用户代码时间 /（用户代码执行时间 + 垃圾回收时间）</li>
-<li>响应时间：STW越短，响应时间越好</li>
-</ol>
-<p>所谓调优，首先确定，追求啥？吞吐量优先，还是响应时间优先？还是在满足一定的响应时间的情况下，要求达到多大的吞吐量…</p>
-<p><strong>什么是调优？</strong></p>
-<ol>
-<li>根据需求进行JVM规划和预调优</li>
-<li>优化运行JVM运行环境（慢，卡顿）</li>
-<li>解决JVM运行过程中出现的各种问题(OOM)</li>
-</ol>
-<h4 id="11-调优步骤"><a href="#11-调优步骤" class="headerlink" title="11. 调优步骤"></a>11. 调优步骤</h4><ul>
-<li><p>调优，从业务场景开始，没有业务场景的调优都是耍流氓</p>
-</li>
-<li><p>无监控（压力测试，能看到结果），不调优</p>
-</li>
-<li><p>步骤：</p>
-<ol>
-<li>熟悉业务场景（没有最好的垃圾回收器，只有最合适的垃圾回收器）<ol>
-<li>响应时间、停顿时间 [CMS G1 ZGC] （需要给用户作响应）</li>
-<li>吞吐量 = 用户时间 /( 用户时间 + GC时间) [PS]</li>
-</ol>
-</li>
-<li>选择回收器组合</li>
-<li>计算内存需求（经验值 1.5G 16G）</li>
-<li>选定CPU（越高越好）</li>
-<li>设定年代大小、升级年龄</li>
-<li>设定日志参数<ol>
-<li>-Xloggc:/opt/xxx/logs/xxx-xxx-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCCause</li>
-<li>或者每天产生一个日志文件</li>
-</ol>
-</li>
-<li>观察日志情况 </li>
-</ol>
-</li>
-</ul>
-<h4 id="GC常用参数"><a href="#GC常用参数" class="headerlink" title="GC常用参数"></a>GC常用参数</h4><ul>
-<li>-Xmn -Xms -Xmx -Xss<br>年轻代 最小堆 最大堆 栈空间</li>
-<li>-XX:+UseTLAB<br>使用TLAB，默认打开</li>
-<li>-XX:+PrintTLAB<br>打印TLAB的使用情况</li>
-<li>-XX:TLABSize<br>设置TLAB大小</li>
-<li>-XX:+DisableExplictGC<br>System.gc()不管用 ，FGC</li>
-<li>-XX:+PrintGC</li>
-<li>-XX:+PrintGCDetails</li>
-<li>-XX:+PrintHeapAtGC</li>
-<li>-XX:+PrintGCTimeStamps</li>
-<li>-XX:+PrintGCApplicationConcurrentTime (低)<br>打印应用程序时间</li>
-<li>-XX:+PrintGCApplicationStoppedTime （低）<br>打印暂停时长</li>
-<li>-XX:+PrintReferenceGC （重要性低）<br>记录回收了多少种不同引用类型的引用</li>
-<li>-verbose:class<br>类加载详细过程</li>
-<li>-XX:+PrintVMOptions</li>
-<li>-XX:+PrintFlagsFinal  -XX:+PrintFlagsInitial<br>必须会用</li>
-<li>-Xloggc:opt/log/gc.log</li>
-<li>-XX:MaxTenuringThreshold<br>升代年龄，最大值15</li>
-<li>锁自旋次数 -XX:PreBlockSpin 热点代码检测参数-XX:CompileThreshold 逃逸分析 标量替换 …<br>这些不建议设置</li>
-</ul>
-<h4 id="Parallel常用参数"><a href="#Parallel常用参数" class="headerlink" title="Parallel常用参数"></a>Parallel常用参数</h4><ul>
-<li>-XX:SurvivorRatio</li>
-<li>-XX:PreTenureSizeThreshold<br>大对象到底多大</li>
-<li>-XX:MaxTenuringThreshold</li>
-<li>-XX:+ParallelGCThreads<br>并行收集器的线程数，同样适用于CMS，一般设为和CPU核数相同</li>
-<li>-XX:+UseAdaptiveSizePolicy<br>自动选择各区大小比例</li>
-</ul>
-<h4 id="CMS常用参数"><a href="#CMS常用参数" class="headerlink" title="CMS常用参数"></a>CMS常用参数</h4><ul>
-<li>-XX:+UseConcMarkSweepGC</li>
-<li>-XX:ParallelCMSThreads<br>CMS线程数量</li>
-<li>-XX:CMSInitiatingOccupancyFraction<br>使用多少比例的老年代后开始CMS收集，默认是68%(近似值)，如果频繁发生SerialOld卡顿，应该调小，（频繁CMS回收）</li>
-<li>-XX:+UseCMSCompactAtFullCollection<br>在FGC时进行压缩</li>
-<li>-XX:CMSFullGCsBeforeCompaction<br>多少次FGC之后进行压缩</li>
-<li>-XX:+CMSClassUnloadingEnabled</li>
-<li>-XX:CMSInitiatingPermOccupancyFraction<br>达到什么比例时进行Perm回收</li>
-<li>GCTimeRatio<br>设置GC时间占用程序运行时间的百分比</li>
-<li>-XX:MaxGCPauseMillis<br>停顿时间，是一个建议时间，GC会尝试用各种手段达到这个时间，比如减小年轻代</li>
-</ul>
-<h4 id="G1常用参数"><a href="#G1常用参数" class="headerlink" title="G1常用参数"></a>G1常用参数</h4><ul>
-<li>-XX:+UseG1GC</li>
-<li>-XX:MaxGCPauseMillis<br>建议值，G1会尝试调整Young区的块数来达到这个值</li>
-<li>-XX:GCPauseIntervalMillis<br>？GC的间隔时间</li>
-<li>-XX:+G1HeapRegionSize<br>分区大小，建议逐渐增大该值，1 2 4 8 16 32。<br>随着size增加，垃圾的存活时间更长，GC间隔更长，但每次GC的时间也会更长<br>ZGC做了改进（动态区块大小）</li>
-<li>G1NewSizePercent<br>新生代最小比例，默认为5%</li>
-<li>G1MaxNewSizePercent<br>新生代最大比例，默认为60%</li>
-<li>GCTimeRatio<br>GC时间建议比例，G1会根据这个值调整堆空间</li>
-<li>ConcGCThreads<br>线程数量</li>
-<li>InitiatingHeapOccupancyPercent<br>启动G1的堆空间占用比例</li>
-</ul>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://blogs.oracle.com/jonthecollector/our-collectors">https://blogs.oracle.com/</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">jonthecollector</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">/our-collectors</a></li>
-<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></li>
-<li><a href="http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp">http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp</a></li>
-<li>JVM调优参考文档：<a href="https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184">https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184</a> </li>
-<li><a href="https://www.cnblogs.com/nxlhero/p/11660854.html">https://www.cnblogs.com/nxlhero/p/11660854.html</a> 在线排查工具</li>
-<li><a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> arthas常用命令</li>
-<li>Arthas手册：<ol>
-<li>启动arthas java -jar arthas-boot.jar</li>
-<li>绑定java进程</li>
-<li>dashboard命令观察系统整体情况</li>
-<li>help 查看帮助</li>
-<li>help xx 查看具体命令帮助</li>
-</ol>
-</li>
-<li>jmap命令参考： <a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> <ol>
-<li>jmap -heap pid</li>
-<li>jmap -histo pid</li>
-<li>jmap -clstats pid</li>
-</ol>
-</li>
-</ol>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java 中的并发</title>
     <url>/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/</url>
     <content><![CDATA[<h3 id="java-中的Lock"><a href="#java-中的Lock" class="headerlink" title="java 中的Lock"></a>java 中的Lock</h3><ol>
@@ -1086,6 +654,19 @@ A[pc1]
 <p>JDK1.4版本引入了java.nio包，对文件流进行读写操作，提供无阻塞模式，同时也提供了一种高效率的文件读写模式，内存映射文件，把文件某个区域块映射到内存，进行高效率的读写，主要用到下面类<br>java.nio.MappedByteBuffer;<br>java.nio.channels.FileChannel</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bjmashibing.system.io;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> java.io.BufferedOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.RandomAccessFile;</span><br><span class="line"><span class="keyword">import</span> java.nio.ByteBuffer;</span><br><span class="line"><span class="keyword">import</span> java.nio.MappedByteBuffer;</span><br><span class="line"><span class="keyword">import</span> java.nio.channels.FileChannel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OSFileIO</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">byte</span>[] data = <span class="string">&quot;123456789\n&quot;</span>.getBytes();</span><br><span class="line">    <span class="keyword">static</span> String path =  <span class="string">&quot;/root/testfileio/out.txt&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//最基本的file写</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">testBasicFileIO</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(path);</span><br><span class="line">        FileOutputStream out = <span class="keyword">new</span> FileOutputStream(file);</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            Thread.sleep(<span class="number">10</span>);</span><br><span class="line">            out.write(data);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//测试buffer文件IO</span></span><br><span class="line">    <span class="comment">// 在jvm上开启  8kB 的数据空间  写满8字节之后调用系统syscall以8字节的新式写到pageCahe  write(8KBbyte[])</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testBufferedFileIO</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(path);</span><br><span class="line">        BufferedOutputStream out = <span class="keyword">new</span> BufferedOutputStream(<span class="keyword">new</span> FileOutputStream(file));</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">            Thread.sleep(<span class="number">10</span>);</span><br><span class="line">            out.write(data);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//测试文件NIO</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testRandomAccessFileWrite</span><span class="params">()</span> <span class="keyword">throws</span>  Exception </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        RandomAccessFile raf = <span class="keyword">new</span> RandomAccessFile(path, <span class="string">&quot;rw&quot;</span>);</span><br><span class="line"></span><br><span class="line">        raf.write(<span class="string">&quot;hello mashibing\n&quot;</span>.getBytes());</span><br><span class="line">        raf.write(<span class="string">&quot;hello seanzhou\n&quot;</span>.getBytes());</span><br><span class="line">        System.out.println(<span class="string">&quot;write------------&quot;</span>);</span><br><span class="line">        System.in.read();</span><br><span class="line"></span><br><span class="line">        raf.seek(<span class="number">4</span>);</span><br><span class="line">        raf.write(<span class="string">&quot;ooxx&quot;</span>.getBytes());</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;seek---------&quot;</span>);</span><br><span class="line">        System.in.read();</span><br><span class="line"></span><br><span class="line">        FileChannel rafchannel = raf.getChannel();</span><br><span class="line">        <span class="comment">//mmap  堆外  和文件映射的   byte  not  objtect</span></span><br><span class="line">        MappedByteBuffer map = rafchannel.map(FileChannel.MapMode.READ_WRITE, <span class="number">0</span>, <span class="number">4096</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        map.put(<span class="string">&quot;@@@&quot;</span>.getBytes());  <span class="comment">//不是系统调用  但是数据会到达 内核的pagecache</span></span><br><span class="line">            <span class="comment">//曾经我们是需要out.write()  这样的系统调用，才能让程序的data 进入内核的pagecache</span></span><br><span class="line">            <span class="comment">//曾经必须有用户态内核态切换</span></span><br><span class="line">            <span class="comment">//mmap的内存映射，依然是内核的pagecache体系所约束的！！！</span></span><br><span class="line">            <span class="comment">//换言之，丢数据</span></span><br><span class="line">            <span class="comment">//你可以去github上找一些 其他C程序员写的jni扩展库，使用linux内核的Direct IO</span></span><br><span class="line">            <span class="comment">//直接IO是忽略linux的pagecache</span></span><br><span class="line">            <span class="comment">//是把pagecache  交给了程序自己开辟一个字节数组当作pagecache，动用代码逻辑来维护一致性/dirty。。。一系列复杂问题</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;map--put--------&quot;</span>);</span><br><span class="line">        System.in.read();</span><br><span class="line"></span><br><span class="line"><span class="comment">//        map.force(); //  flush</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        raf.seek(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        ByteBuffer buffer = ByteBuffer.allocate(<span class="number">8192</span>);</span><br><span class="line"><span class="comment">//        ByteBuffer buffer = ByteBuffer.allocateDirect(1024);</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> read = rafchannel.read(buffer);   <span class="comment">//buffer.put()</span></span><br><span class="line">        System.out.println(buffer);</span><br><span class="line">        buffer.flip();</span><br><span class="line">        System.out.println(buffer);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; buffer.limit(); i++) &#123;</span><br><span class="line">            Thread.sleep(<span class="number">200</span>);</span><br><span class="line">            System.out.print(((<span class="keyword">char</span>)buffer.get(i)));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">whatByteBuffer</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        ByteBuffer buffer = ByteBuffer.allocate(1024);</span></span><br><span class="line">        ByteBuffer buffer = ByteBuffer.allocateDirect(<span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;postition: &quot;</span> + buffer.position());</span><br><span class="line">        System.out.println(<span class="string">&quot;limit: &quot;</span> +  buffer.limit());</span><br><span class="line">        System.out.println(<span class="string">&quot;capacity: &quot;</span> + buffer.capacity());</span><br><span class="line">        System.out.println(<span class="string">&quot;mark: &quot;</span> + buffer);</span><br><span class="line"></span><br><span class="line">        buffer.put(<span class="string">&quot;123&quot;</span>.getBytes());</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;-------------put:123......&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;mark: &quot;</span> + buffer);</span><br><span class="line"></span><br><span class="line">        buffer.flip();   <span class="comment">//读写交替</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;-------------flip......&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;mark: &quot;</span> + buffer);</span><br><span class="line"></span><br><span class="line">        buffer.get();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;-------------get......&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;mark: &quot;</span> + buffer);</span><br><span class="line"></span><br><span class="line">        buffer.compact();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;-------------compact......&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;mark: &quot;</span> + buffer);</span><br><span class="line"></span><br><span class="line">        buffer.clear();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;-------------clear......&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;mark: &quot;</span> + buffer);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java中的 Lambda表达式和匿名内部类的区别</title>
+    <url>/2021/08/21/java%E4%B8%AD%E7%9A%84%20Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h3 id="java中的-Lambda表达式和匿名内部类的区别"><a href="#java中的-Lambda表达式和匿名内部类的区别" class="headerlink" title="java中的 Lambda表达式和匿名内部类的区别"></a>java中的 Lambda表达式和匿名内部类的区别</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yzw.test;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1.8 Lambda表达式和匿名内部类的区别</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 所需类型不同</span></span><br><span class="line"><span class="comment"> * 匿名内部类：可以是接口，也可以是抽象类，还可以是具体类</span></span><br><span class="line"><span class="comment"> * Lambda表达式：只能是接口</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 使用限制不同</span></span><br><span class="line"><span class="comment"> * 如果接口中有且仅有一个抽象方法，可以使用Lambda表达式，也可以使用匿名内部类</span></span><br><span class="line"><span class="comment"> * 如果接口中多于一个抽象方法，只能使用匿名内部类，而不能使用Lambda表达式</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 实现原理不同</span></span><br><span class="line"><span class="comment"> * 匿名内部类：编译之后，产生一个单独的.class字节码文件</span></span><br><span class="line"><span class="comment"> * Lambda表达式：编译之后，没有一个单独的.class字节码文件。对应的字节码会在运行的时候动态生成</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LambdaDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">temp</span><span class="params">(useInter args)</span> </span>&#123;</span><br><span class="line">        System.out.println(args.show());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">temp</span><span class="params">(useAbs args)</span> </span>&#123;</span><br><span class="line">        System.out.println(args.show());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">temp</span><span class="params">(useClass args)</span> </span>&#123;</span><br><span class="line">        System.out.println(args.show());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        temp(<span class="keyword">new</span> useAbs() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">int</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">999</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        temp(<span class="keyword">new</span> useClass());</span><br><span class="line"></span><br><span class="line">        temp(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">888</span>;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">useInter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">useAbs</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">show</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">useClass</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">777</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
@@ -2672,6 +2253,26 @@ A(c)  --> B[i = 8]</pre>
       </tags>
   </entry>
   <entry>
+    <title>枚举工具类</title>
+    <url>/2021/08/21/%E6%9E%9A%E4%B8%BE%E5%B7%A5%E5%85%B7%E7%B1%BB/</url>
+    <content><![CDATA[<p><strong>java 枚举工具类：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">YZWEnumUtil</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用code 获取 value</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> cla</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;E&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;V&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends enumElement&lt;E, V&gt;, E, V&gt; <span class="function">T <span class="title">getCodeByValue</span><span class="params">(V value, Class&lt;T&gt; cla)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!cla.isEnum()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;Class: %s 不是枚举类型&quot;</span> , cla));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (T enumConstant : cla.getEnumConstants()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (value.equals(enumConstant.getValue())) &#123;</span><br><span class="line">                <span class="keyword">return</span> enumConstant;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用 value 获取 code</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> code</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> cla</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;E&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;V&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends enumElement&lt;E, V&gt;, E, V&gt; <span class="function">T <span class="title">getValueByCode</span><span class="params">(E code, Class&lt;T&gt; cla)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!cla.isEnum()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;Class: %s 不是枚举类型&quot;</span> , cla));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (T enumConstant : cla.getEnumConstants()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (code.equals(enumConstant.getCode())) &#123;</span><br><span class="line">                <span class="keyword">return</span> enumConstant;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * value 转list</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> cla</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;E&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;V&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends enumElement&lt;E, V&gt;, E, V&gt; <span class="function">List&lt;V&gt; <span class="title">valueToList</span><span class="params">(Class&lt;T&gt; cla)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!cla.isEnum()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;Class: %s 不是枚举类型&quot;</span> , cla));</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;V&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (T enumConstant : cla.getEnumConstants()) &#123;</span><br><span class="line">            list.add(enumConstant.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * code 转 list</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> cla</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;E&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;V&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends enumElement&lt;E, V&gt;, E, V&gt; <span class="function">List&lt;E&gt; <span class="title">codeToList</span><span class="params">(Class&lt;T&gt; cla)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!cla.isEnum()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;Class: %s 不是枚举类型&quot;</span> , cla));</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;E&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (T enumConstant : cla.getEnumConstants()) &#123;</span><br><span class="line">            list.add(enumConstant.getCode());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Element</span>&lt;<span class="title">T</span>, <span class="title">E</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&#123;&quot;</span> +</span><br><span class="line">                    <span class="string">&quot;label=&quot;</span> + label +</span><br><span class="line">                    <span class="string">&quot;, code=&quot;</span> + code +</span><br><span class="line">                    <span class="string">&quot;, value=&quot;</span> + value +</span><br><span class="line">                    <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> T label;</span><br><span class="line">        <span class="keyword">private</span> E code;</span><br><span class="line">        <span class="keyword">private</span> V value;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> T <span class="title">getLabel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> label;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLabel</span><span class="params">(T label)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.label = label;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> E <span class="title">getCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> code;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCode</span><span class="params">(E code)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.code = code;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> V <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(V value)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取枚举的list</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> cla</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;E&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;V&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends enumElement&lt;E, V&gt;, E, V&gt; <span class="function">List&lt;Element&gt; <span class="title">enumToList</span><span class="params">(Class&lt;T&gt; cla)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!cla.isEnum()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(String.format(<span class="string">&quot;Class: %s 不是枚举类型&quot;</span> , cla));</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Element&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (T enumConstant : cla.getEnumConstants()) &#123;</span><br><span class="line">            Element element = <span class="keyword">new</span> Element();</span><br><span class="line">            element.setLabel(enumConstant);</span><br><span class="line">            element.setCode(enumConstant.getCode());</span><br><span class="line">            element.setValue(enumConstant.getValue());</span><br><span class="line">            list.add(element);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>定以枚举接口：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">enumElement</span>&lt;<span class="title">E</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">E <span class="title">getCode</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">V <span class="title">getValue</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>定义枚举实现接口：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Test</span> <span class="keyword">implements</span> <span class="title">enumElement</span>&lt;<span class="title">String</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line">    A(<span class="string">&quot;AA&quot;</span>, <span class="string">&quot;aa&quot;</span>),</span><br><span class="line">    B(<span class="string">&quot;BB&quot;</span>, <span class="string">&quot;bb&quot;</span>),</span><br><span class="line">    C(<span class="string">&quot;CC&quot;</span>, <span class="string">&quot;cc&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCode</span><span class="params">(String code)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(String value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String code;</span><br><span class="line">    <span class="keyword">private</span> String value;</span><br><span class="line"></span><br><span class="line">    Test(String code, String value) &#123;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>桥接设计模式</title>
     <url>/2020/12/20/%E6%A1%A5%E6%8E%A5%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h4 id="桥接设计模式-Bridge-Pattern"><a href="#桥接设计模式-Bridge-Pattern" class="headerlink" title="桥接设计模式(Bridge Pattern)"></a>桥接设计模式(Bridge Pattern)</h4><p><strong>描述：</strong> 桥接设计模式是用于把抽象化于实现化解耦，使得二者可以独立变化。这种类型的设计模式属于结构型设计模式，它通过提供抽象化和实现化之间的桥接结构来实现二者的解耦。</p>
@@ -3504,6 +3105,438 @@ A(c)  --> B[i = 8]</pre>
       </categories>
       <tags>
         <tag>七大设计原则</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BIO</title>
+    <url>/2021/06/08/BIO/</url>
+    <content><![CDATA[<h3 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h3><p><strong>1. 什么是BIO</strong></p>
+<blockquote>
+<p>B I/O，意为Blocking I/O，即阻塞的I/O。</p>
+<p>很明显重点在阻塞，但怎么就阻塞了？阻塞在哪了？阻塞带来了什么坏处？</p>
+</blockquote>
+<p><strong>2. BIO的代码实现：</strong></p>
+<ol>
+<li>服务端</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">9090</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;step1: new ServerSocket(9090) &quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        Socket client = server.accept();  <span class="comment">//阻塞1</span></span><br><span class="line">        System.out.println(<span class="string">&quot;step2:client\t&quot;</span> + client.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            InputStream in = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in = client.getInputStream();</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                    String dataline = reader.readLine(); <span class="comment">//阻塞2</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">null</span> != dataline)&#123;</span><br><span class="line">                    System.out.println(dataline);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        client.close();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;客户端断开&quot;</span>);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>客户端</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          Socket client = <span class="keyword">new</span> Socket(<span class="string">&quot;192.168.150.11&quot;</span>,<span class="number">9090</span>);</span><br><span class="line"></span><br><span class="line">          client.setSendBufferSize(<span class="number">20</span>);</span><br><span class="line">          client.setTcpNoDelay(<span class="keyword">true</span>);</span><br><span class="line">          OutputStream out = client.getOutputStream();</span><br><span class="line"></span><br><span class="line">          InputStream in = System.in;</span><br><span class="line">          BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line"></span><br><span class="line">          <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">              String line = reader.readLine();</span><br><span class="line">              <span class="keyword">if</span>(line != <span class="keyword">null</span> )&#123;</span><br><span class="line">                  <span class="keyword">byte</span>[] bb = line.getBytes();</span><br><span class="line">                  <span class="keyword">for</span> (<span class="keyword">byte</span> b : bb) &#123;</span><br><span class="line">                      out.write(b);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. BIO的工作模式</strong></p>
+<pre class="mermaid">graph TD
+A[Client 1] --> S(Service 9090)
+C[Client 2] --> S
+D[Client 2] --> S
+S --> F(Thread 1)
+S --> E(Thread 2)
+S --> G(Thread 3)
+F -->   H(Socket1 处理 Client 1 )
+E -->   I(Socket2 处理 Client 2 )
+G -->   V(Socket3 处理 Client 3 )</pre>
+
+<p><strong>4. 为什么要使用多线程：</strong></p>
+<blockquote>
+<p>这是一个经典的每连接每线程的模型，之所以使用多线程，主要原因在于socket.accept()、socket.read()、socket.write()三个主要函数都是同步阻塞的，当一个连接在处理I/O的时候，系统是阻塞的，如果是单线程的话必然就挂死在那里；但CPU是被释放出来的，开启多线程，就可以让CPU去处理更多的事情。其实这也是所有使用多线程的本质：</p>
+</blockquote>
+<p><strong>5. BIO的缺点</strong></p>
+<blockquote>
+<p>（1）线程创建资源开销巨大。如果有10000个连接怎么办？创建10000个线程？很明显不现实，太多的线程对系统资源的开销是巨大的。</p>
+<p>（2）单个线程的资源浪费。</p>
+<p>一个请求来了，如果这个线程从被创建为这个连接服务开始就一直在工工作，那么就不存在资源浪费，就像你找来一个服务员，他只服务一个客人，但他期间一直都有工作作，那么他的劳动力就算不上浪费。</p>
+<p>但是绝大多数情况下客人多服务员的需求都是暂时的，服务员很多时候都在发呆玩手机，等待着回应客人的请求，这样这个服务员的劳动力就被浪费了。那么在Bio中线程等待服务的时候是什么样的呢，那就是阻塞，线程等待着为连接服务（读数据/写数据/业务处理），很多时候BIo的服务子线程都是在阻塞状态下的。</p>
+</blockquote>
+<p><strong>基于以上不足出现了NIO</strong></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CAP定理</title>
+    <url>/2021/04/18/CAP%E5%AE%9A%E7%90%86/</url>
+    <content><![CDATA[<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><h3 id="CAP理论概述"><a href="#CAP理论概述" class="headerlink" title="CAP理论概述"></a><strong>CAP理论概述</strong></h3><p>   一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两     项。</p>
+<h3 id="CAP的定义"><a href="#CAP的定义" class="headerlink" title="CAP的定义"></a><strong>CAP的定义</strong></h3><p><strong>Consistency 一致性</strong></p>
+<p>一致性指“<code>all nodes see the same data at the same time</code>”，即所有节点在同一时间的数据完全一致。</p>
+<p>一致性是因为多个数据拷贝下并发读写才有的问题，因此理解时一定要注意结合考虑多个数据拷贝下并发读写的场景。</p>
+<p>对于一致性，可以分为从客户端和服务端两个不同的视角。</p>
+<ul>
+<li>客户端</li>
+</ul>
+<p>从客户端来看，一致性主要指的是多并发访问时更新过的数据如何获取的问题。</p>
+<ul>
+<li>服务端</li>
+</ul>
+<p>从服务端来看，则是更新如何分布到整个系统，以保证数据最终一致。</p>
+<p>对于一致性，可以分为强/弱/最终一致性三类</p>
+<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
+<ul>
+<li>强一致性</li>
+</ul>
+<p>对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是强一致性。</p>
+<ul>
+<li>弱一致性</li>
+</ul>
+<p>如果能容忍后续的部分或者全部访问不到，则是弱一致性。</p>
+<ul>
+<li>最终一致性</li>
+</ul>
+<p>如果经过一段时间后要求能访问到更新后的数据，则是最终一致性。</p>
+<h3 id="Availability-可用性"><a href="#Availability-可用性" class="headerlink" title="Availability 可用性"></a><strong>Availability 可用性</strong></h3><p>可用性指“<code>Reads and writes always succeed</code>”，即服务在正常响应时间内一直可用。</p>
+<p>好的可用性主要是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。可用性通常情况下可用性和分布式数据冗余，负载均衡等有着很大的关联。</p>
+<h2 id="Partition-Tolerance分区容错性"><a href="#Partition-Tolerance分区容错性" class="headerlink" title="Partition Tolerance分区容错性"></a><strong>Partition Tolerance分区容错性</strong></h2><p>分区容错性指“<code>the system continues to operate despite arbitrary message loss or failure of part of the system</code>”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务。</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ConcurrentHashMap 详解</title>
+    <url>/2021/05/27/ConcurrentHashMap%20%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h2 id="ConcurrentHashMap-详解"><a href="#ConcurrentHashMap-详解" class="headerlink" title="ConcurrentHashMap 详解"></a>ConcurrentHashMap 详解</h2><h3 id="private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30"><a href="#private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30" class="headerlink" title="private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;"></a>private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</h3><ul>
+<li><strong>MAXIMUM_CAPACITY是2的30次方 的原因</strong>`<ol>
+<li>int的最大的值是2的31次方-1，所以容量无法到达2的31次方，</li>
+<li>需要让容量满足2的幂次，所以设置为2的30次方 </li>
+</ol>
+</li>
+</ul>
+<h3 id="private-static-final-int-DEFAULT-CAPACITY-16"><a href="#private-static-final-int-DEFAULT-CAPACITY-16" class="headerlink" title="private static final int DEFAULT_CAPACITY = 16;"></a>private static final int DEFAULT_CAPACITY = 16;</h3><ul>
+<li><strong>DEFAULT_CAPACITY = 16;</strong><ol>
+<li>方便数据迁移</li>
+<li>方便进行计算对应的位置</li>
+<li>概率统计</li>
+</ol>
+</li>
+</ul>
+<h3 id="new-ConcurrentHashMap-lt-gt-2-自定义大小解释："><a href="#new-ConcurrentHashMap-lt-gt-2-自定义大小解释：" class="headerlink" title="new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释："></a>new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">int</span> cap = ((initialCapacity &gt;= (MAXIMUM_CAPACITY &gt;&gt;&gt; <span class="number">1</span>)) ?</span><br><span class="line">               MAXIMUM_CAPACITY :</span><br><span class="line">               tableSizeFor(initialCapacity + (initialCapacity &gt;&gt;&gt; <span class="number">1</span>) + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">this</span>.sizeCtl = cap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// tableSizeFor的功能（不考虑大于最大容量的情况）是返回大于输入参数且最近的2的整数次幂的数。比如10，则返回16。 </span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = c - <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">8</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AKF服务拆分原则</title>
+    <url>/2021/04/18/AKF%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86%E5%8E%9F%E5%88%99/</url>
+    <content><![CDATA[<h1 id="AKF服务拆分原则"><a href="#AKF服务拆分原则" class="headerlink" title="AKF服务拆分原则"></a>AKF服务拆分原则</h1><p>在设计微服务的时候，我们一般会遵循以下4个原则：</p>
+<p>1）AKF拆分原则</p>
+<p>2）前后端分离原则</p>
+<p>3）无状态服务</p>
+<p>4）restful的通信风格</p>
+<p>下面我们来详细了解以下AKF拆分原则。</p>
+<p>1 AKF拆分原则 业界对可扩展系统架构设计有一个朴素的概念，就是：**通过加机器可以解决容量和可用性问题（如果一台不行就两台）</p>
+<p>这一理念在“云计算”概念疯狂流行的今天。得到了广泛的认可。对于一个规模迅速增长的系统而言。容量和性能问题当然是首当其冲的。但是随着时间的向前，系统规模的增长，除了面对性能与容量的问题外，还需要面对功能与模块数量上增长带来的系统复杂性问题。以及业务变化带来的提供差异化服务问题。而许多系统在架构设计时并未充分考虑到这些问题，导致系统的重构成为常态。从而影响业务交付能力，还浪费人力财力。对此《可扩展的艺术》一书提出了一个更加系统的可扩展模型—-AKF可扩展立方。这个立方体中沿着三个坐标轴设置分别为X，Y，Z。</p>
+<p>2 Y轴功能Y轴扩展会将庞大的整体应用拆分为多个服务。每个服务实现一组相关的功能。如订单管理，客户管理等。在工程上常见的方案是服务化架构（SOA），比如对于一个电子商务平台，我们可以拆分成不同的服务组成下面这样的架构。</p>
+<p>但是通过上图容易发现，当服务数量增多时，服务调用关系变得复杂，为系统添加一个新功能。要调用的服务数也变得不可控。由此引发的服务管理上的混乱，一般情况下，需要采用服务注册的机制，形成服务网关来进行服务治理。系统架构将变成如下图所示。</p>
+<p>3 X轴（水平扩展）X轴扩展与我们前面理念是一致的。通过绝对平等的复制服务与数据，以及容量和可用性问题。其实就是将微服务运行多个实例。做集群，负载均衡的模式。</p>
+<p>为了提升当个服务的可用性和容量。对每一个服务进行x轴扩展划分。</p>
+<p><img src="https://pics7.baidu.com/feed/35a85edf8db1cb13a6fbd16fcafd974a93584b6e.jpeg?token=7361c837d5226bd2d991d894cd8126e7&s=95A05F300306454D5EC4C5CA0300F0B3" alt="img"></p>
+<p>1.4 Z轴（数据分区）</p>
+<p>Z周扩展通常是指基于请求和用户独特的需求，进行系统划分，并使得划分出来的子系统相互隔离，但又是完整的。</p>
+<p>1.4.1工程领域常见的这种扩展有以下两种方案。</p>
+<p>1.4.1.1 单元化架构</p>
+<p>在分布式服务设计领域，一个单元就是满足某个分区所有业务操作的自包含闭环。如上面我们所说的y轴扩展的SOA架构。客户端对服务端节点的选择一般是随机的。但是，如果在此加上这周扩展，那么服务的节点选择将不再是随机的。而是每个单元自成一体。如下图。</p>
+<p>1.4.1.2数据分区</p>
+<p>为了性能数据安全上的考虑。我们将一个完整的数据集按照一定的维度，划分出不同的子集。一个分区，就是整体数据集的一个子集。比如用尾号来划分用户，那同样尾号的那部分用户，就可以认为是一个分区。数据分析一般包括以下几种数据划分的方式。</p>
+<p>数据类型（如：业务类型）</p>
+<p>数据范围（如：时间段，用户id）</p>
+<p>数据热度（如：用户活跃度，商品热度）</p>
+<p>读写分离（如：商品描述，商品库存）</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GC的基础知识</title>
+    <url>/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<h1 id="GC和GC-Tuning"><a href="#GC和GC-Tuning" class="headerlink" title="GC和GC Tuning"></a>GC和GC Tuning</h1><h4 id="1-什么是垃圾"><a href="#1-什么是垃圾" class="headerlink" title="1.什么是垃圾"></a>1.什么是垃圾</h4><blockquote>
+<p>没有任何引用指向的一个对象或者多个对象（循环引用）</p>
+</blockquote>
+<h4 id="2-如何定位垃圾"><a href="#2-如何定位垃圾" class="headerlink" title="2.如何定位垃圾"></a>2.如何定位垃圾</h4><blockquote>
+<p>引用计数（ReferenceCount）</p>
+<p>根可达算法(RootSearching)</p>
+</blockquote>
+<h4 id="3-GC-roots"><a href="#3-GC-roots" class="headerlink" title="3. GC roots"></a>3. GC roots</h4><blockquote>
+<p>JVM stack  (jvm栈)</p>
+<p>native method stack （本地方法栈）</p>
+<p>run-time constant pool （常量池指向的变量）</p>
+<p>static references in method artea （静态变量指向的对象）</p>
+<p>Clazz  （对象字节load到内存）</p>
+</blockquote>
+<h4 id="3-常见的垃圾回收算法"><a href="#3-常见的垃圾回收算法" class="headerlink" title="3.常见的垃圾回收算法"></a>3.常见的垃圾回收算法</h4><blockquote>
+<p>标记清除(mark sweep) - 位置不连续 产生碎片 效率偏低（两遍扫描）</p>
+<p>拷贝算法 (copying) - 没有碎片，浪费空间</p>
+<p>标记压缩(mark compact) - 没有碎片，效率偏低（两遍扫描，指针需要调整）</p>
+</blockquote>
+<h4 id="4-JVM内存分代模型（用于分代垃圾回收算法）"><a href="#4-JVM内存分代模型（用于分代垃圾回收算法）" class="headerlink" title="4.JVM内存分代模型（用于分代垃圾回收算法）"></a>4.JVM内存分代模型（用于分代垃圾回收算法）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/jvm%E5%88%86%E4%BB%A3%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png"></h4><p><strong>1. 部分垃圾回收器使用的模型</strong></p>
+<blockquote>
+<p>除Epsilon ZGC Shenandoah之外的GC都是使用逻辑分代模型</p>
+<p>G1是逻辑分代，物理不分代</p>
+<p>除此之外不仅逻辑分代，而且物理分代</p>
+</blockquote>
+<p><strong>2. 新生代 + 老年代 + 永久代（1.7）Perm Generation/ 元数据区(1.8) Metaspace</strong></p>
+<blockquote>
+<p>永久代 元数据 - Class</p>
+<p>永久代必须指定大小限制 ，元数据可以设置，也可以不设置，无上限（受限于物理内存）</p>
+<p>字符串常量 1.7 - 永久代，1.8 - 堆</p>
+<p>MethodArea逻辑概念 - 永久代、元数据</p>
+</blockquote>
+<p><strong>3. 新生代 = Eden + 2个suvivor区</strong> </p>
+<blockquote>
+<p>YGC回收之后，大多数的对象会被回收，活着的进入s0</p>
+<p>再次YGC，活着的对象eden + s0 -&gt; s1</p>
+<p>再次YGC，eden + s1 -&gt; s0</p>
+<p>年龄足够 -&gt; 老年代 （15 CMS 6）</p>
+<p>s区装不下 -&gt; 老年代</p>
+</blockquote>
+<p><strong>4. 老年代</strong></p>
+<blockquote>
+<p>顽固分子</p>
+<p>老年代满了FGC Full GC</p>
+</blockquote>
+<p><strong>GC Tuning (Generation)</strong></p>
+<blockquote>
+<p>尽量减少FGC</p>
+<p>MinorGC = YGC</p>
+<p>MajorGC = FGC</p>
+</blockquote>
+<p><strong>动态年龄：</strong><br><a href="https://www.jianshu.com/p/989d3b06a49d">https://www.jianshu.com/p/989d3b06a49d</a></p>
+<p><strong>分配担保：</strong><br>YGC期间 survivor区空间不够了 空间担保直接进入老年代<br>参考：<a href="https://cloud.tencent.com/developer/article/1082730">https://cloud.tencent.com/developer/article/1082730</a></p>
+<p><strong>对象的分配过程</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.png" alt="对象内存分配的过程"></p>
+<p><strong>5 .TLAB 分配</strong></p>
+<blockquote>
+<p>　JVM在内存新生代Eden Space中开辟了一小块线程私有的区域，称作TLAB（Thread-local allocation buffer）。默认设定为占用Eden Space的1%。在Java程序中很多对象都是小对象且用过即丢，它们不存在线程共享也适合被快速GC，所以对于小对象通常JVM会优先分配在TLAB上，并且TLAB上的分配由于是线程私有所以没有锁开销。因此在实践中分配多个小对象的效率通常比分配一个大对象的效率要高。<br>　　也就是说，Java中每个线程都会有自己的缓冲区称作TLAB（Thread-local allocation buffer），每个TLAB都只有一个线程可以操作，TLAB结合bump-the-pointer技术可以实现快速的对象分配，而不需要任何的锁进行同步，也就是说，在对象分配的时候不用锁住整个堆，而只需要在自己的缓冲区分配即可。<br>　　关于对象分配的JDK源码可以参见 [JVM 之 Java对象创建<a href="http://blog.hesey.net/2011/07/object-allocation-on-non-heap.html">初始化]</a> 中对OpenJDK源码的分析。</p>
+</blockquote>
+<p><strong>为什么需要TLAB？</strong></p>
+<blockquote>
+<p>　　这是为了加速对象的分配。由于对象一般分配在堆上，而堆是线程共用的，因此可能会有多个线程在堆上申请空间，而每一次的对象分配都必须线程同步，会使分配的效率下降。考虑到对象分配几乎是Java中最常用的操作，因此JVM使用了TLAB这样的线程专有区域来避免多线程冲突，提高对象分配的效率。</p>
+</blockquote>
+<h4 id="6-常见的垃圾回收器"><a href="#6-常见的垃圾回收器" class="headerlink" title="6.常见的垃圾回收器"></a>6.常见的垃圾回收器</h4><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/gc%E7%AE%97%E6%B3%95.png" alt="gc"></p>
+<ol>
+<li>JDK诞生 Serial追随 提高效率，诞生了PS，为了配合CMS，诞生了PN，CMS是1.4版本后期引入，CMS是里程碑式的GC，它开启了并发回收的过程，但是CMS毛病较多，因此目前任何一个JDK版本默认是CMS<br>并发垃圾回收是因为无法忍受STW</li>
+<li>Serial 年轻代 串行回收</li>
+<li>PS 年轻代 并行回收</li>
+<li>ParNew 年轻代 配合CMS的并行回收</li>
+<li>SerialOld </li>
+<li>ParallelOld</li>
+<li>ConcurrentMarkSweep 老年代 并发的， 垃圾回收和应用程序同时运行，降低STW的时间(200ms)<br>CMS问题比较多，所以现在没有一个版本默认是CMS，只能手工指定<br>CMS既然是MarkSweep，就一定会有碎片化的问题，碎片到达一定程度，CMS的老年代分配对象分配不下的时候，使用SerialOld 进行老年代回收<br>想象一下：<br>PS + PO -&gt; 加内存 换垃圾回收器 -&gt; PN + CMS + SerialOld（几个小时 - 几天的STW）<br>几十个G的内存，单线程回收 -&gt; G1 + FGC 几十个G -&gt; 上T内存的服务器 ZGC<br>算法：三色标记 + Incremental Update</li>
+<li>G1(10ms)<br>算法：三色标记 + SATB</li>
+<li>ZGC (1ms) PK C++<br>算法：ColoredPointers + LoadBarrier</li>
+<li>Shenandoah<br>算法：ColoredPointers + WriteBarrier</li>
+<li>Eplison</li>
+<li>PS 和 PN区别的延伸阅读：<br>▪<a href="https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html">https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html#GUID-3D0BB91E-9BFF-4EBB-B523-14493A860E73</a></li>
+<li>垃圾收集器跟内存大小的关系<ol>
+<li>Serial 几十兆</li>
+<li>PS 上百兆 - 几个G</li>
+<li>CMS - 20G</li>
+<li>G1 - 上百G</li>
+<li>ZGC - 4T - 16T（JDK13）</li>
+</ol>
+</li>
+</ol>
+<p>1.8默认的垃圾回收：PS + ParallelOld</p>
+<h4 id="7-常见垃圾回收器组合参数设定：-1-8"><a href="#7-常见垃圾回收器组合参数设定：-1-8" class="headerlink" title="7.常见垃圾回收器组合参数设定：(1.8)"></a>7.常见垃圾回收器组合参数设定：(1.8)</h4><ul>
+<li><p>-XX:+UseSerialGC = Serial New (DefNew) + Serial Old</p>
+<ul>
+<li>小型程序。默认情况下不会是这种选项，HotSpot会根据计算及配置和JDK版本自动选择收集器</li>
+</ul>
+</li>
+<li><p>-XX:+UseParNewGC = ParNew + SerialOld</p>
+<ul>
+<li>这个组合已经很少用（在某些版本中已经废弃）</li>
+<li><a href="https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future">https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future</a></li>
+</ul>
+</li>
+<li><p>-XX:+UseConc<font color=red>(urrent)</font>MarkSweepGC = ParNew + CMS + Serial Old</p>
+</li>
+<li><p>-XX:+UseParallelGC = Parallel Scavenge + Parallel Old (1.8默认) 【PS + SerialOld】</p>
+</li>
+<li><p>-XX:+UseParallelOldGC = Parallel Scavenge + Parallel Old</p>
+</li>
+<li><p>-XX:+UseG1GC = G1</p>
+</li>
+<li><p>Linux中没找到默认GC的查看方法，而windows中会打印UseParallelGC </p>
+<ul>
+<li>java +XX:+PrintCommandLineFlags -version</li>
+<li>通过GC的日志来分辨</li>
+</ul>
+</li>
+<li><p>Linux下1.8版本默认的垃圾回收器到底是什么？</p>
+<ul>
+<li>1.8.0_181 默认（看不出来）Copy MarkCompact</li>
+<li>1.8.0_222 默认 PS + PO</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-了解JVM常用命令行参数"><a href="#8-了解JVM常用命令行参数" class="headerlink" title="8.了解JVM常用命令行参数"></a>8.了解JVM常用命令行参数</h4><ul>
+<li><p>JVM的命令行参数参考：<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></p>
+</li>
+<li><p>HotSpot参数分类</p>
+<blockquote>
+<p>标准： - 开头，所有的HotSpot都支持</p>
+<p>非标准：-X 开头，特定版本HotSpot支持特定命令</p>
+<p>不稳定：-XX 开头，下个版本可能取消</p>
+</blockquote>
+<p>java -version</p>
+<p>试验用程序：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloGC</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;HelloGC!&quot;</span>);</span><br><span class="line">    List list = <span class="keyword">new</span> LinkedList();</span><br><span class="line">    <span class="keyword">for</span>(;;) &#123;</span><br><span class="line">      <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">      list.add(b);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol>
+<li>区分概念：内存泄漏memory leak，内存溢出out of memory</li>
+<li>java -XX:+PrintCommandLineFlags HelloGC</li>
+<li>java -Xmn10M -Xms40M -Xmx60M -XX:+PrintCommandLineFlags -XX:+PrintGC  HelloGC<br>PrintGCDetails PrintGCTimeStamps PrintGCCauses</li>
+<li>java -XX:+UseConcMarkSweepGC -XX:+PrintCommandLineFlags HelloGC</li>
+<li>java -XX:+PrintFlagsInitial 默认参数值</li>
+<li>java -XX:+PrintFlagsFinal 最终参数值</li>
+<li>java -XX:+PrintFlagsFinal | grep xxx 找到对应的参数</li>
+<li>java -XX:+PrintFlagsFinal -version |grep GC</li>
+</ol>
+</li>
+</ul>
+<h4 id="9-PS-GC日志详解"><a href="#9-PS-GC日志详解" class="headerlink" title="9. PS GC日志详解"></a>9. PS GC日志详解</h4><p>每种垃圾回收器的日志格式是不同的！</p>
+<p>PS日志格式</p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3.png" alt="gc日志详解"></p>
+<p>heap dump部分：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">eden space 5632K, <span class="number">94</span>% used [<span class="number">0x00000000ff980000</span>,<span class="number">0x00000000ffeb3e28</span>,<span class="number">0x00000000fff00000</span>)</span><br><span class="line">                            后面的内存地址指的是，起始地址，使用空间结束地址，整体空间结束地址</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A32.png" alt="gc日志详解2"></p>
+<p>total = eden + 1个survivor</p>
+<h4 id="10-调优前的基础概念："><a href="#10-调优前的基础概念：" class="headerlink" title="10. 调优前的基础概念："></a>10. 调优前的基础概念：</h4><ol>
+<li>吞吐量：用户代码时间 /（用户代码执行时间 + 垃圾回收时间）</li>
+<li>响应时间：STW越短，响应时间越好</li>
+</ol>
+<p>所谓调优，首先确定，追求啥？吞吐量优先，还是响应时间优先？还是在满足一定的响应时间的情况下，要求达到多大的吞吐量…</p>
+<p><strong>什么是调优？</strong></p>
+<ol>
+<li>根据需求进行JVM规划和预调优</li>
+<li>优化运行JVM运行环境（慢，卡顿）</li>
+<li>解决JVM运行过程中出现的各种问题(OOM)</li>
+</ol>
+<h4 id="11-调优步骤"><a href="#11-调优步骤" class="headerlink" title="11. 调优步骤"></a>11. 调优步骤</h4><ul>
+<li><p>调优，从业务场景开始，没有业务场景的调优都是耍流氓</p>
+</li>
+<li><p>无监控（压力测试，能看到结果），不调优</p>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li>熟悉业务场景（没有最好的垃圾回收器，只有最合适的垃圾回收器）<ol>
+<li>响应时间、停顿时间 [CMS G1 ZGC] （需要给用户作响应）</li>
+<li>吞吐量 = 用户时间 /( 用户时间 + GC时间) [PS]</li>
+</ol>
+</li>
+<li>选择回收器组合</li>
+<li>计算内存需求（经验值 1.5G 16G）</li>
+<li>选定CPU（越高越好）</li>
+<li>设定年代大小、升级年龄</li>
+<li>设定日志参数<ol>
+<li>-Xloggc:/opt/xxx/logs/xxx-xxx-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCCause</li>
+<li>或者每天产生一个日志文件</li>
+</ol>
+</li>
+<li>观察日志情况 </li>
+</ol>
+</li>
+</ul>
+<h4 id="GC常用参数"><a href="#GC常用参数" class="headerlink" title="GC常用参数"></a>GC常用参数</h4><ul>
+<li>-Xmn -Xms -Xmx -Xss<br>年轻代 最小堆 最大堆 栈空间</li>
+<li>-XX:+UseTLAB<br>使用TLAB，默认打开</li>
+<li>-XX:+PrintTLAB<br>打印TLAB的使用情况</li>
+<li>-XX:TLABSize<br>设置TLAB大小</li>
+<li>-XX:+DisableExplictGC<br>System.gc()不管用 ，FGC</li>
+<li>-XX:+PrintGC</li>
+<li>-XX:+PrintGCDetails</li>
+<li>-XX:+PrintHeapAtGC</li>
+<li>-XX:+PrintGCTimeStamps</li>
+<li>-XX:+PrintGCApplicationConcurrentTime (低)<br>打印应用程序时间</li>
+<li>-XX:+PrintGCApplicationStoppedTime （低）<br>打印暂停时长</li>
+<li>-XX:+PrintReferenceGC （重要性低）<br>记录回收了多少种不同引用类型的引用</li>
+<li>-verbose:class<br>类加载详细过程</li>
+<li>-XX:+PrintVMOptions</li>
+<li>-XX:+PrintFlagsFinal  -XX:+PrintFlagsInitial<br>必须会用</li>
+<li>-Xloggc:opt/log/gc.log</li>
+<li>-XX:MaxTenuringThreshold<br>升代年龄，最大值15</li>
+<li>锁自旋次数 -XX:PreBlockSpin 热点代码检测参数-XX:CompileThreshold 逃逸分析 标量替换 …<br>这些不建议设置</li>
+</ul>
+<h4 id="Parallel常用参数"><a href="#Parallel常用参数" class="headerlink" title="Parallel常用参数"></a>Parallel常用参数</h4><ul>
+<li>-XX:SurvivorRatio</li>
+<li>-XX:PreTenureSizeThreshold<br>大对象到底多大</li>
+<li>-XX:MaxTenuringThreshold</li>
+<li>-XX:+ParallelGCThreads<br>并行收集器的线程数，同样适用于CMS，一般设为和CPU核数相同</li>
+<li>-XX:+UseAdaptiveSizePolicy<br>自动选择各区大小比例</li>
+</ul>
+<h4 id="CMS常用参数"><a href="#CMS常用参数" class="headerlink" title="CMS常用参数"></a>CMS常用参数</h4><ul>
+<li>-XX:+UseConcMarkSweepGC</li>
+<li>-XX:ParallelCMSThreads<br>CMS线程数量</li>
+<li>-XX:CMSInitiatingOccupancyFraction<br>使用多少比例的老年代后开始CMS收集，默认是68%(近似值)，如果频繁发生SerialOld卡顿，应该调小，（频繁CMS回收）</li>
+<li>-XX:+UseCMSCompactAtFullCollection<br>在FGC时进行压缩</li>
+<li>-XX:CMSFullGCsBeforeCompaction<br>多少次FGC之后进行压缩</li>
+<li>-XX:+CMSClassUnloadingEnabled</li>
+<li>-XX:CMSInitiatingPermOccupancyFraction<br>达到什么比例时进行Perm回收</li>
+<li>GCTimeRatio<br>设置GC时间占用程序运行时间的百分比</li>
+<li>-XX:MaxGCPauseMillis<br>停顿时间，是一个建议时间，GC会尝试用各种手段达到这个时间，比如减小年轻代</li>
+</ul>
+<h4 id="G1常用参数"><a href="#G1常用参数" class="headerlink" title="G1常用参数"></a>G1常用参数</h4><ul>
+<li>-XX:+UseG1GC</li>
+<li>-XX:MaxGCPauseMillis<br>建议值，G1会尝试调整Young区的块数来达到这个值</li>
+<li>-XX:GCPauseIntervalMillis<br>？GC的间隔时间</li>
+<li>-XX:+G1HeapRegionSize<br>分区大小，建议逐渐增大该值，1 2 4 8 16 32。<br>随着size增加，垃圾的存活时间更长，GC间隔更长，但每次GC的时间也会更长<br>ZGC做了改进（动态区块大小）</li>
+<li>G1NewSizePercent<br>新生代最小比例，默认为5%</li>
+<li>G1MaxNewSizePercent<br>新生代最大比例，默认为60%</li>
+<li>GCTimeRatio<br>GC时间建议比例，G1会根据这个值调整堆空间</li>
+<li>ConcGCThreads<br>线程数量</li>
+<li>InitiatingHeapOccupancyPercent<br>启动G1的堆空间占用比例</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://blogs.oracle.com/jonthecollector/our-collectors">https://blogs.oracle.com/</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">jonthecollector</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">/our-collectors</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></li>
+<li><a href="http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp">http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp</a></li>
+<li>JVM调优参考文档：<a href="https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184">https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184</a> </li>
+<li><a href="https://www.cnblogs.com/nxlhero/p/11660854.html">https://www.cnblogs.com/nxlhero/p/11660854.html</a> 在线排查工具</li>
+<li><a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> arthas常用命令</li>
+<li>Arthas手册：<ol>
+<li>启动arthas java -jar arthas-boot.jar</li>
+<li>绑定java进程</li>
+<li>dashboard命令观察系统整体情况</li>
+<li>help 查看帮助</li>
+<li>help xx 查看具体命令帮助</li>
+</ol>
+</li>
+<li>jmap命令参考： <a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> <ol>
+<li>jmap -heap pid</li>
+<li>jmap -histo pid</li>
+<li>jmap -clstats pid</li>
+</ol>
+</li>
+</ol>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>

@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-08-22T14:01:47.909Z</updated>
+  <updated>2021-08-28T07:54:00.023Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>spring + redis 实现分布式锁</title>
+    <link href="https://yaozw.top/2021/08/26/spring%20+%20redis%20%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
+    <id>https://yaozw.top/2021/08/26/spring%20+%20redis%20%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</id>
+    <published>2021-08-26T06:27:22.000Z</published>
+    <updated>2021-08-28T07:54:00.023Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;spring-redis-实现分布式锁&quot;&gt;&lt;a href=&quot;#spring-redis-实现分布式锁&quot; class=&quot;headerlink&quot; title=&quot;spring + redis 实现分布式锁&quot;&gt;&lt;/a&gt;spring + redis</summary>
+        
+      
+    
+    
+    
+    <category term="spring" scheme="https://yaozw.top/categories/spring/"/>
+    
+    
+    <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
+    
+  </entry>
   
   <entry>
     <title>java中的 Lambda表达式和匿名内部类的区别</title>
@@ -484,31 +509,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;java中的ThreadLocal&quot;&gt;&lt;a href=&quot;#java中的ThreadLocal&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java 中的四大引用</title>
-    <link href="https://yaozw.top/2021/06/02/java%20%E4%B8%AD%E7%9A%84%E5%9B%9B%E5%A4%A7%E5%BC%95%E7%94%A8/"/>
-    <id>https://yaozw.top/2021/06/02/java%20%E4%B8%AD%E7%9A%84%E5%9B%9B%E5%A4%A7%E5%BC%95%E7%94%A8/</id>
-    <published>2021-06-02T10:41:01.000Z</published>
-    <updated>2021-06-02T10:41:56.153Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;java-中的四大引用&quot;&gt;&lt;a href=&quot;#java-中的四大引用&quot; class=&quot;headerlink&quot; title=&quot;java 中的四大引用&quot;&gt;&lt;/a&gt;java 中的四大引用&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;1.</summary>
         
       
     

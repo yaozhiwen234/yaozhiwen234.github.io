@@ -36,92 +36,273 @@
       </tags>
   </entry>
   <entry>
-    <title>BIO</title>
-    <url>/2021/06/08/BIO/</url>
-    <content><![CDATA[<h3 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h3><p><strong>1. 什么是BIO</strong></p>
-<blockquote>
-<p>B I/O，意为Blocking I/O，即阻塞的I/O。</p>
-<p>很明显重点在阻塞，但怎么就阻塞了？阻塞在哪了？阻塞带来了什么坏处？</p>
+    <title>GC的基础知识</title>
+    <url>/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<h1 id="GC和GC-Tuning"><a href="#GC和GC-Tuning" class="headerlink" title="GC和GC Tuning"></a>GC和GC Tuning</h1><h4 id="1-什么是垃圾"><a href="#1-什么是垃圾" class="headerlink" title="1.什么是垃圾"></a>1.什么是垃圾</h4><blockquote>
+<p>没有任何引用指向的一个对象或者多个对象（循环引用）</p>
 </blockquote>
-<p><strong>2. BIO的代码实现：</strong></p>
+<h4 id="2-如何定位垃圾"><a href="#2-如何定位垃圾" class="headerlink" title="2.如何定位垃圾"></a>2.如何定位垃圾</h4><blockquote>
+<p>引用计数（ReferenceCount）</p>
+<p>根可达算法(RootSearching)</p>
+</blockquote>
+<h4 id="3-GC-roots"><a href="#3-GC-roots" class="headerlink" title="3. GC roots"></a>3. GC roots</h4><blockquote>
+<p>JVM stack  (jvm栈)</p>
+<p>native method stack （本地方法栈）</p>
+<p>run-time constant pool （常量池指向的变量）</p>
+<p>static references in method artea （静态变量指向的对象）</p>
+<p>Clazz  （对象字节load到内存）</p>
+</blockquote>
+<h4 id="3-常见的垃圾回收算法"><a href="#3-常见的垃圾回收算法" class="headerlink" title="3.常见的垃圾回收算法"></a>3.常见的垃圾回收算法</h4><blockquote>
+<p>标记清除(mark sweep) - 位置不连续 产生碎片 效率偏低（两遍扫描）</p>
+<p>拷贝算法 (copying) - 没有碎片，浪费空间</p>
+<p>标记压缩(mark compact) - 没有碎片，效率偏低（两遍扫描，指针需要调整）</p>
+</blockquote>
+<h4 id="4-JVM内存分代模型（用于分代垃圾回收算法）"><a href="#4-JVM内存分代模型（用于分代垃圾回收算法）" class="headerlink" title="4.JVM内存分代模型（用于分代垃圾回收算法）"></a>4.JVM内存分代模型（用于分代垃圾回收算法）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/jvm%E5%88%86%E4%BB%A3%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png"></h4><p><strong>1. 部分垃圾回收器使用的模型</strong></p>
+<blockquote>
+<p>除Epsilon ZGC Shenandoah之外的GC都是使用逻辑分代模型</p>
+<p>G1是逻辑分代，物理不分代</p>
+<p>除此之外不仅逻辑分代，而且物理分代</p>
+</blockquote>
+<p><strong>2. 新生代 + 老年代 + 永久代（1.7）Perm Generation/ 元数据区(1.8) Metaspace</strong></p>
+<blockquote>
+<p>永久代 元数据 - Class</p>
+<p>永久代必须指定大小限制 ，元数据可以设置，也可以不设置，无上限（受限于物理内存）</p>
+<p>字符串常量 1.7 - 永久代，1.8 - 堆</p>
+<p>MethodArea逻辑概念 - 永久代、元数据</p>
+</blockquote>
+<p><strong>3. 新生代 = Eden + 2个suvivor区</strong> </p>
+<blockquote>
+<p>YGC回收之后，大多数的对象会被回收，活着的进入s0</p>
+<p>再次YGC，活着的对象eden + s0 -&gt; s1</p>
+<p>再次YGC，eden + s1 -&gt; s0</p>
+<p>年龄足够 -&gt; 老年代 （15 CMS 6）</p>
+<p>s区装不下 -&gt; 老年代</p>
+</blockquote>
+<p><strong>4. 老年代</strong></p>
+<blockquote>
+<p>顽固分子</p>
+<p>老年代满了FGC Full GC</p>
+</blockquote>
+<p><strong>GC Tuning (Generation)</strong></p>
+<blockquote>
+<p>尽量减少FGC</p>
+<p>MinorGC = YGC</p>
+<p>MajorGC = FGC</p>
+</blockquote>
+<p><strong>动态年龄：</strong><br><a href="https://www.jianshu.com/p/989d3b06a49d">https://www.jianshu.com/p/989d3b06a49d</a></p>
+<p><strong>分配担保：</strong><br>YGC期间 survivor区空间不够了 空间担保直接进入老年代<br>参考：<a href="https://cloud.tencent.com/developer/article/1082730">https://cloud.tencent.com/developer/article/1082730</a></p>
+<p><strong>对象的分配过程</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.png" alt="对象内存分配的过程"></p>
+<p><strong>5 .TLAB 分配</strong></p>
+<blockquote>
+<p>　JVM在内存新生代Eden Space中开辟了一小块线程私有的区域，称作TLAB（Thread-local allocation buffer）。默认设定为占用Eden Space的1%。在Java程序中很多对象都是小对象且用过即丢，它们不存在线程共享也适合被快速GC，所以对于小对象通常JVM会优先分配在TLAB上，并且TLAB上的分配由于是线程私有所以没有锁开销。因此在实践中分配多个小对象的效率通常比分配一个大对象的效率要高。<br>　　也就是说，Java中每个线程都会有自己的缓冲区称作TLAB（Thread-local allocation buffer），每个TLAB都只有一个线程可以操作，TLAB结合bump-the-pointer技术可以实现快速的对象分配，而不需要任何的锁进行同步，也就是说，在对象分配的时候不用锁住整个堆，而只需要在自己的缓冲区分配即可。<br>　　关于对象分配的JDK源码可以参见 [JVM 之 Java对象创建<a href="http://blog.hesey.net/2011/07/object-allocation-on-non-heap.html">初始化]</a> 中对OpenJDK源码的分析。</p>
+</blockquote>
+<p><strong>为什么需要TLAB？</strong></p>
+<blockquote>
+<p>　　这是为了加速对象的分配。由于对象一般分配在堆上，而堆是线程共用的，因此可能会有多个线程在堆上申请空间，而每一次的对象分配都必须线程同步，会使分配的效率下降。考虑到对象分配几乎是Java中最常用的操作，因此JVM使用了TLAB这样的线程专有区域来避免多线程冲突，提高对象分配的效率。</p>
+</blockquote>
+<h4 id="6-常见的垃圾回收器"><a href="#6-常见的垃圾回收器" class="headerlink" title="6.常见的垃圾回收器"></a>6.常见的垃圾回收器</h4><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/gc%E7%AE%97%E6%B3%95.png" alt="gc"></p>
 <ol>
-<li>服务端</li>
+<li>JDK诞生 Serial追随 提高效率，诞生了PS，为了配合CMS，诞生了PN，CMS是1.4版本后期引入，CMS是里程碑式的GC，它开启了并发回收的过程，但是CMS毛病较多，因此目前任何一个JDK版本默认是CMS<br>并发垃圾回收是因为无法忍受STW</li>
+<li>Serial 年轻代 串行回收</li>
+<li>PS 年轻代 并行回收</li>
+<li>ParNew 年轻代 配合CMS的并行回收</li>
+<li>SerialOld </li>
+<li>ParallelOld</li>
+<li>ConcurrentMarkSweep 老年代 并发的， 垃圾回收和应用程序同时运行，降低STW的时间(200ms)<br>CMS问题比较多，所以现在没有一个版本默认是CMS，只能手工指定<br>CMS既然是MarkSweep，就一定会有碎片化的问题，碎片到达一定程度，CMS的老年代分配对象分配不下的时候，使用SerialOld 进行老年代回收<br>想象一下：<br>PS + PO -&gt; 加内存 换垃圾回收器 -&gt; PN + CMS + SerialOld（几个小时 - 几天的STW）<br>几十个G的内存，单线程回收 -&gt; G1 + FGC 几十个G -&gt; 上T内存的服务器 ZGC<br>算法：三色标记 + Incremental Update</li>
+<li>G1(10ms)<br>算法：三色标记 + SATB</li>
+<li>ZGC (1ms) PK C++<br>算法：ColoredPointers + LoadBarrier</li>
+<li>Shenandoah<br>算法：ColoredPointers + WriteBarrier</li>
+<li>Eplison</li>
+<li>PS 和 PN区别的延伸阅读：<br>▪<a href="https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html">https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html#GUID-3D0BB91E-9BFF-4EBB-B523-14493A860E73</a></li>
+<li>垃圾收集器跟内存大小的关系<ol>
+<li>Serial 几十兆</li>
+<li>PS 上百兆 - 几个G</li>
+<li>CMS - 20G</li>
+<li>G1 - 上百G</li>
+<li>ZGC - 4T - 16T（JDK13）</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">9090</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;step1: new ServerSocket(9090) &quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        Socket client = server.accept();  <span class="comment">//阻塞1</span></span><br><span class="line">        System.out.println(<span class="string">&quot;step2:client\t&quot;</span> + client.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            InputStream in = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in = client.getInputStream();</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                    String dataline = reader.readLine(); <span class="comment">//阻塞2</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">null</span> != dataline)&#123;</span><br><span class="line">                    System.out.println(dataline);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        client.close();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;客户端断开&quot;</span>);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>客户端</li>
+</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          Socket client = <span class="keyword">new</span> Socket(<span class="string">&quot;192.168.150.11&quot;</span>,<span class="number">9090</span>);</span><br><span class="line"></span><br><span class="line">          client.setSendBufferSize(<span class="number">20</span>);</span><br><span class="line">          client.setTcpNoDelay(<span class="keyword">true</span>);</span><br><span class="line">          OutputStream out = client.getOutputStream();</span><br><span class="line"></span><br><span class="line">          InputStream in = System.in;</span><br><span class="line">          BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line"></span><br><span class="line">          <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">              String line = reader.readLine();</span><br><span class="line">              <span class="keyword">if</span>(line != <span class="keyword">null</span> )&#123;</span><br><span class="line">                  <span class="keyword">byte</span>[] bb = line.getBytes();</span><br><span class="line">                  <span class="keyword">for</span> (<span class="keyword">byte</span> b : bb) &#123;</span><br><span class="line">                      out.write(b);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>3. BIO的工作模式</strong></p>
-<pre class="mermaid">graph TD
-A[Client 1] --> S(Service 9090)
-C[Client 2] --> S
-D[Client 2] --> S
-S --> F(Thread 1)
-S --> E(Thread 2)
-S --> G(Thread 3)
-F -->   H(Socket1 处理 Client 1 )
-E -->   I(Socket2 处理 Client 2 )
-G -->   V(Socket3 处理 Client 3 )</pre>
-
-<p><strong>4. 为什么要使用多线程：</strong></p>
+<p>1.8默认的垃圾回收：PS + ParallelOld</p>
+<h4 id="7-常见垃圾回收器组合参数设定：-1-8"><a href="#7-常见垃圾回收器组合参数设定：-1-8" class="headerlink" title="7.常见垃圾回收器组合参数设定：(1.8)"></a>7.常见垃圾回收器组合参数设定：(1.8)</h4><ul>
+<li><p>-XX:+UseSerialGC = Serial New (DefNew) + Serial Old</p>
+<ul>
+<li>小型程序。默认情况下不会是这种选项，HotSpot会根据计算及配置和JDK版本自动选择收集器</li>
+</ul>
+</li>
+<li><p>-XX:+UseParNewGC = ParNew + SerialOld</p>
+<ul>
+<li>这个组合已经很少用（在某些版本中已经废弃）</li>
+<li><a href="https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future">https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future</a></li>
+</ul>
+</li>
+<li><p>-XX:+UseConc<font color=red>(urrent)</font>MarkSweepGC = ParNew + CMS + Serial Old</p>
+</li>
+<li><p>-XX:+UseParallelGC = Parallel Scavenge + Parallel Old (1.8默认) 【PS + SerialOld】</p>
+</li>
+<li><p>-XX:+UseParallelOldGC = Parallel Scavenge + Parallel Old</p>
+</li>
+<li><p>-XX:+UseG1GC = G1</p>
+</li>
+<li><p>Linux中没找到默认GC的查看方法，而windows中会打印UseParallelGC </p>
+<ul>
+<li>java +XX:+PrintCommandLineFlags -version</li>
+<li>通过GC的日志来分辨</li>
+</ul>
+</li>
+<li><p>Linux下1.8版本默认的垃圾回收器到底是什么？</p>
+<ul>
+<li>1.8.0_181 默认（看不出来）Copy MarkCompact</li>
+<li>1.8.0_222 默认 PS + PO</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-了解JVM常用命令行参数"><a href="#8-了解JVM常用命令行参数" class="headerlink" title="8.了解JVM常用命令行参数"></a>8.了解JVM常用命令行参数</h4><ul>
+<li><p>JVM的命令行参数参考：<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></p>
+</li>
+<li><p>HotSpot参数分类</p>
 <blockquote>
-<p>这是一个经典的每连接每线程的模型，之所以使用多线程，主要原因在于socket.accept()、socket.read()、socket.write()三个主要函数都是同步阻塞的，当一个连接在处理I/O的时候，系统是阻塞的，如果是单线程的话必然就挂死在那里；但CPU是被释放出来的，开启多线程，就可以让CPU去处理更多的事情。其实这也是所有使用多线程的本质：</p>
+<p>标准： - 开头，所有的HotSpot都支持</p>
+<p>非标准：-X 开头，特定版本HotSpot支持特定命令</p>
+<p>不稳定：-XX 开头，下个版本可能取消</p>
 </blockquote>
-<p><strong>5. BIO的缺点</strong></p>
-<blockquote>
-<p>（1）线程创建资源开销巨大。如果有10000个连接怎么办？创建10000个线程？很明显不现实，太多的线程对系统资源的开销是巨大的。</p>
-<p>（2）单个线程的资源浪费。</p>
-<p>一个请求来了，如果这个线程从被创建为这个连接服务开始就一直在工工作，那么就不存在资源浪费，就像你找来一个服务员，他只服务一个客人，但他期间一直都有工作作，那么他的劳动力就算不上浪费。</p>
-<p>但是绝大多数情况下客人多服务员的需求都是暂时的，服务员很多时候都在发呆玩手机，等待着回应客人的请求，这样这个服务员的劳动力就被浪费了。那么在Bio中线程等待服务的时候是什么样的呢，那就是阻塞，线程等待着为连接服务（读数据/写数据/业务处理），很多时候BIo的服务子线程都是在阻塞状态下的。</p>
-</blockquote>
-<p><strong>基于以上不足出现了NIO</strong></p>
+<p>java -version</p>
+<p>试验用程序：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloGC</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;HelloGC!&quot;</span>);</span><br><span class="line">    List list = <span class="keyword">new</span> LinkedList();</span><br><span class="line">    <span class="keyword">for</span>(;;) &#123;</span><br><span class="line">      <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">      list.add(b);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol>
+<li>区分概念：内存泄漏memory leak，内存溢出out of memory</li>
+<li>java -XX:+PrintCommandLineFlags HelloGC</li>
+<li>java -Xmn10M -Xms40M -Xmx60M -XX:+PrintCommandLineFlags -XX:+PrintGC  HelloGC<br>PrintGCDetails PrintGCTimeStamps PrintGCCauses</li>
+<li>java -XX:+UseConcMarkSweepGC -XX:+PrintCommandLineFlags HelloGC</li>
+<li>java -XX:+PrintFlagsInitial 默认参数值</li>
+<li>java -XX:+PrintFlagsFinal 最终参数值</li>
+<li>java -XX:+PrintFlagsFinal | grep xxx 找到对应的参数</li>
+<li>java -XX:+PrintFlagsFinal -version |grep GC</li>
+</ol>
+</li>
+</ul>
+<h4 id="9-PS-GC日志详解"><a href="#9-PS-GC日志详解" class="headerlink" title="9. PS GC日志详解"></a>9. PS GC日志详解</h4><p>每种垃圾回收器的日志格式是不同的！</p>
+<p>PS日志格式</p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3.png" alt="gc日志详解"></p>
+<p>heap dump部分：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">eden space 5632K, <span class="number">94</span>% used [<span class="number">0x00000000ff980000</span>,<span class="number">0x00000000ffeb3e28</span>,<span class="number">0x00000000fff00000</span>)</span><br><span class="line">                            后面的内存地址指的是，起始地址，使用空间结束地址，整体空间结束地址</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A32.png" alt="gc日志详解2"></p>
+<p>total = eden + 1个survivor</p>
+<h4 id="10-调优前的基础概念："><a href="#10-调优前的基础概念：" class="headerlink" title="10. 调优前的基础概念："></a>10. 调优前的基础概念：</h4><ol>
+<li>吞吐量：用户代码时间 /（用户代码执行时间 + 垃圾回收时间）</li>
+<li>响应时间：STW越短，响应时间越好</li>
+</ol>
+<p>所谓调优，首先确定，追求啥？吞吐量优先，还是响应时间优先？还是在满足一定的响应时间的情况下，要求达到多大的吞吐量…</p>
+<p><strong>什么是调优？</strong></p>
+<ol>
+<li>根据需求进行JVM规划和预调优</li>
+<li>优化运行JVM运行环境（慢，卡顿）</li>
+<li>解决JVM运行过程中出现的各种问题(OOM)</li>
+</ol>
+<h4 id="11-调优步骤"><a href="#11-调优步骤" class="headerlink" title="11. 调优步骤"></a>11. 调优步骤</h4><ul>
+<li><p>调优，从业务场景开始，没有业务场景的调优都是耍流氓</p>
+</li>
+<li><p>无监控（压力测试，能看到结果），不调优</p>
+</li>
+<li><p>步骤：</p>
+<ol>
+<li>熟悉业务场景（没有最好的垃圾回收器，只有最合适的垃圾回收器）<ol>
+<li>响应时间、停顿时间 [CMS G1 ZGC] （需要给用户作响应）</li>
+<li>吞吐量 = 用户时间 /( 用户时间 + GC时间) [PS]</li>
+</ol>
+</li>
+<li>选择回收器组合</li>
+<li>计算内存需求（经验值 1.5G 16G）</li>
+<li>选定CPU（越高越好）</li>
+<li>设定年代大小、升级年龄</li>
+<li>设定日志参数<ol>
+<li>-Xloggc:/opt/xxx/logs/xxx-xxx-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCCause</li>
+<li>或者每天产生一个日志文件</li>
+</ol>
+</li>
+<li>观察日志情况 </li>
+</ol>
+</li>
+</ul>
+<h4 id="GC常用参数"><a href="#GC常用参数" class="headerlink" title="GC常用参数"></a>GC常用参数</h4><ul>
+<li>-Xmn -Xms -Xmx -Xss<br>年轻代 最小堆 最大堆 栈空间</li>
+<li>-XX:+UseTLAB<br>使用TLAB，默认打开</li>
+<li>-XX:+PrintTLAB<br>打印TLAB的使用情况</li>
+<li>-XX:TLABSize<br>设置TLAB大小</li>
+<li>-XX:+DisableExplictGC<br>System.gc()不管用 ，FGC</li>
+<li>-XX:+PrintGC</li>
+<li>-XX:+PrintGCDetails</li>
+<li>-XX:+PrintHeapAtGC</li>
+<li>-XX:+PrintGCTimeStamps</li>
+<li>-XX:+PrintGCApplicationConcurrentTime (低)<br>打印应用程序时间</li>
+<li>-XX:+PrintGCApplicationStoppedTime （低）<br>打印暂停时长</li>
+<li>-XX:+PrintReferenceGC （重要性低）<br>记录回收了多少种不同引用类型的引用</li>
+<li>-verbose:class<br>类加载详细过程</li>
+<li>-XX:+PrintVMOptions</li>
+<li>-XX:+PrintFlagsFinal  -XX:+PrintFlagsInitial<br>必须会用</li>
+<li>-Xloggc:opt/log/gc.log</li>
+<li>-XX:MaxTenuringThreshold<br>升代年龄，最大值15</li>
+<li>锁自旋次数 -XX:PreBlockSpin 热点代码检测参数-XX:CompileThreshold 逃逸分析 标量替换 …<br>这些不建议设置</li>
+</ul>
+<h4 id="Parallel常用参数"><a href="#Parallel常用参数" class="headerlink" title="Parallel常用参数"></a>Parallel常用参数</h4><ul>
+<li>-XX:SurvivorRatio</li>
+<li>-XX:PreTenureSizeThreshold<br>大对象到底多大</li>
+<li>-XX:MaxTenuringThreshold</li>
+<li>-XX:+ParallelGCThreads<br>并行收集器的线程数，同样适用于CMS，一般设为和CPU核数相同</li>
+<li>-XX:+UseAdaptiveSizePolicy<br>自动选择各区大小比例</li>
+</ul>
+<h4 id="CMS常用参数"><a href="#CMS常用参数" class="headerlink" title="CMS常用参数"></a>CMS常用参数</h4><ul>
+<li>-XX:+UseConcMarkSweepGC</li>
+<li>-XX:ParallelCMSThreads<br>CMS线程数量</li>
+<li>-XX:CMSInitiatingOccupancyFraction<br>使用多少比例的老年代后开始CMS收集，默认是68%(近似值)，如果频繁发生SerialOld卡顿，应该调小，（频繁CMS回收）</li>
+<li>-XX:+UseCMSCompactAtFullCollection<br>在FGC时进行压缩</li>
+<li>-XX:CMSFullGCsBeforeCompaction<br>多少次FGC之后进行压缩</li>
+<li>-XX:+CMSClassUnloadingEnabled</li>
+<li>-XX:CMSInitiatingPermOccupancyFraction<br>达到什么比例时进行Perm回收</li>
+<li>GCTimeRatio<br>设置GC时间占用程序运行时间的百分比</li>
+<li>-XX:MaxGCPauseMillis<br>停顿时间，是一个建议时间，GC会尝试用各种手段达到这个时间，比如减小年轻代</li>
+</ul>
+<h4 id="G1常用参数"><a href="#G1常用参数" class="headerlink" title="G1常用参数"></a>G1常用参数</h4><ul>
+<li>-XX:+UseG1GC</li>
+<li>-XX:MaxGCPauseMillis<br>建议值，G1会尝试调整Young区的块数来达到这个值</li>
+<li>-XX:GCPauseIntervalMillis<br>？GC的间隔时间</li>
+<li>-XX:+G1HeapRegionSize<br>分区大小，建议逐渐增大该值，1 2 4 8 16 32。<br>随着size增加，垃圾的存活时间更长，GC间隔更长，但每次GC的时间也会更长<br>ZGC做了改进（动态区块大小）</li>
+<li>G1NewSizePercent<br>新生代最小比例，默认为5%</li>
+<li>G1MaxNewSizePercent<br>新生代最大比例，默认为60%</li>
+<li>GCTimeRatio<br>GC时间建议比例，G1会根据这个值调整堆空间</li>
+<li>ConcGCThreads<br>线程数量</li>
+<li>InitiatingHeapOccupancyPercent<br>启动G1的堆空间占用比例</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://blogs.oracle.com/jonthecollector/our-collectors">https://blogs.oracle.com/</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">jonthecollector</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">/our-collectors</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></li>
+<li><a href="http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp">http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp</a></li>
+<li>JVM调优参考文档：<a href="https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184">https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184</a> </li>
+<li><a href="https://www.cnblogs.com/nxlhero/p/11660854.html">https://www.cnblogs.com/nxlhero/p/11660854.html</a> 在线排查工具</li>
+<li><a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> arthas常用命令</li>
+<li>Arthas手册：<ol>
+<li>启动arthas java -jar arthas-boot.jar</li>
+<li>绑定java进程</li>
+<li>dashboard命令观察系统整体情况</li>
+<li>help 查看帮助</li>
+<li>help xx 查看具体命令帮助</li>
+</ol>
+</li>
+<li>jmap命令参考： <a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> <ol>
+<li>jmap -heap pid</li>
+<li>jmap -histo pid</li>
+<li>jmap -clstats pid</li>
+</ol>
+</li>
+</ol>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CAP定理</title>
-    <url>/2021/04/18/CAP%E5%AE%9A%E7%90%86/</url>
-    <content><![CDATA[<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><h3 id="CAP理论概述"><a href="#CAP理论概述" class="headerlink" title="CAP理论概述"></a><strong>CAP理论概述</strong></h3><p>   一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两     项。</p>
-<h3 id="CAP的定义"><a href="#CAP的定义" class="headerlink" title="CAP的定义"></a><strong>CAP的定义</strong></h3><p><strong>Consistency 一致性</strong></p>
-<p>一致性指“<code>all nodes see the same data at the same time</code>”，即所有节点在同一时间的数据完全一致。</p>
-<p>一致性是因为多个数据拷贝下并发读写才有的问题，因此理解时一定要注意结合考虑多个数据拷贝下并发读写的场景。</p>
-<p>对于一致性，可以分为从客户端和服务端两个不同的视角。</p>
-<ul>
-<li>客户端</li>
-</ul>
-<p>从客户端来看，一致性主要指的是多并发访问时更新过的数据如何获取的问题。</p>
-<ul>
-<li>服务端</li>
-</ul>
-<p>从服务端来看，则是更新如何分布到整个系统，以保证数据最终一致。</p>
-<p>对于一致性，可以分为强/弱/最终一致性三类</p>
-<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
-<ul>
-<li>强一致性</li>
-</ul>
-<p>对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是强一致性。</p>
-<ul>
-<li>弱一致性</li>
-</ul>
-<p>如果能容忍后续的部分或者全部访问不到，则是弱一致性。</p>
-<ul>
-<li>最终一致性</li>
-</ul>
-<p>如果经过一段时间后要求能访问到更新后的数据，则是最终一致性。</p>
-<h3 id="Availability-可用性"><a href="#Availability-可用性" class="headerlink" title="Availability 可用性"></a><strong>Availability 可用性</strong></h3><p>可用性指“<code>Reads and writes always succeed</code>”，即服务在正常响应时间内一直可用。</p>
-<p>好的可用性主要是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。可用性通常情况下可用性和分布式数据冗余，负载均衡等有着很大的关联。</p>
-<h2 id="Partition-Tolerance分区容错性"><a href="#Partition-Tolerance分区容错性" class="headerlink" title="Partition Tolerance分区容错性"></a><strong>Partition Tolerance分区容错性</strong></h2><p>分区容错性指“<code>the system continues to operate despite arbitrary message loss or failure of part of the system</code>”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务。</p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>分布式</category>
+        <category>JVM</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>
@@ -622,6 +803,20 @@ A[pc1]
       </tags>
   </entry>
   <entry>
+    <title>bitmap</title>
+    <url>/2021/10/06/bitmap/</url>
+    <content><![CDATA[<p><strong>bitMap实现：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yzw.arithmetic.first;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BitMap</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span>[] bytes = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BitMap</span><span class="params">(<span class="keyword">int</span> max)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/*当我们往里添加数据的时候至少需要 1个长度的数字</span></span><br><span class="line"><span class="comment">          long类型的大小为8个字节即64</span></span><br><span class="line"><span class="comment">          所以long数组开始的大小为 ((max + 64) &gt;&gt; 6)  = ((max + 64) / 64)*/</span></span><br><span class="line">        bytes = <span class="keyword">new</span> <span class="keyword">long</span>[((max + <span class="number">64</span>) &gt;&gt; <span class="number">6</span>)];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// number &gt;&gt; 6  =  number/64   这一步是为了找到 number的位置</span></span><br><span class="line">        <span class="comment">// number &amp; 63  =  number % 63  这一步是为了 number的位置所在位置的第几位</span></span><br><span class="line">        <span class="comment">//  (1L &lt;&lt; (number &amp; 63))就是   只有(number &amp; 63)位上是1        0001000</span></span><br><span class="line">        <span class="comment">// bytes[number &gt;&gt; 6] |= (1L &lt;&lt; (number &amp; 63));   bytes[number &gt;&gt; 6] =  bytes[number &gt;&gt; 6] | bytes(1L &lt;&lt; (number &amp; 63));</span></span><br><span class="line">        <span class="comment">// |  解释 有1它就是1</span></span><br><span class="line">        bytes[number &gt;&gt; <span class="number">6</span>] |= (<span class="number">1L</span> &lt;&lt; (number &amp; <span class="number">63</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">del</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//number &amp; 63  --&gt;  number % 64</span></span><br><span class="line">        <span class="comment">// ~       0001000  1110111</span></span><br><span class="line">        <span class="comment">// &amp;  有0则为0</span></span><br><span class="line">        bytes[number &gt;&gt; <span class="number">6</span>] &amp;= ~(<span class="number">1L</span> &lt;&lt; (number &amp; <span class="number">63</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">countains</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (bytes[number &gt;&gt; <span class="number">6</span>] &amp; (<span class="number">1L</span> &lt;&lt; (number &amp; <span class="number">63</span>))) != <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//对数器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">900000</span>;</span><br><span class="line">        BitMap bitMap = <span class="keyword">new</span> BitMap(max);</span><br><span class="line">        HashSet&lt;Integer&gt; hashSet = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; max; i++) &#123;</span><br><span class="line">            <span class="keyword">double</span> random = Math.random();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> i1 = <span class="keyword">new</span> Random().nextInt(max);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (random &lt; <span class="number">0.3333</span>) &#123;</span><br><span class="line">                bitMap.add(i1);</span><br><span class="line">                hashSet.add(i1);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (random &gt; <span class="number">0.3333</span> &amp;&amp; random &lt; <span class="number">0.6666</span>) &#123;</span><br><span class="line">                bitMap.del(i1);</span><br><span class="line">                hashSet.remove(i1);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (random &gt; <span class="number">0.6666</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (bitMap.countains(i1) != hashSet.contains(i1)) &#123;</span><br><span class="line">                    System.out.println(<span class="string">&quot;出错了&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        hashSet.forEach(v -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (!bitMap.countains(v)) System.out.println(<span class="string">&quot;出错了&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>练习算法</category>
+      </categories>
+      <tags>
+        <tag>Demo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>http协议</title>
     <url>/2021/03/21/http%E5%8D%8F%E8%AE%AE/</url>
     <content><![CDATA[<h3 id="http协议"><a href="#http协议" class="headerlink" title="http协议"></a>http协议</h3><p>HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。</p>
@@ -1047,6 +1242,32 @@ E --> G[最终执行的指令]</pre>
       </categories>
       <tags>
         <tag>Demo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java线程停止的两种的方式</title>
+    <url>/2021/10/01/java%E7%BA%BF%E7%A8%8B%E5%81%9C%E6%AD%A2%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%9A%84%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<p><strong>interrupt（）方法</strong></p>
+<p>其作用是中断此线程（此线程不一定是当前线程，而是指调用该方法的Thread实例所代表的线程），但实际上只是给线程设置一个中断标志，线程仍会继续运行。</p>
+<p><strong>结论：</strong></p>
+<p>对一个线程，调用 interrupt() 时，<br>　　① 如果线程处于被阻塞状态（例如处于sleep, wait, join 等状态），那么线程将立即退出被阻塞状态，并抛出InterruptedException异常。仅此而已。<br>　　② 如果线程处于正常活动状态，那么会将该线程的中断标志设置为 true，仅此而已。被设置中断标志的线程将继续正常运行，不受影响。</p>
+<p>也就是说，一个线程如果有被中断的需求，那么就可以这样做。<br>　　① 在正常运行任务时，经常检查本线程的中断标志位，如果被设置了中断标志就自行停止线程。<br>　　② 在调用阻塞方法时正确处理InterruptedException异常。（例如，catch异常后就结束线程。）interrupt() 并不能真正的中断线程，需要被调用的线程自己进行配合才行。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThreadTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        MyThread thread = <span class="keyword">new</span> MyThread();</span><br><span class="line">        thread.start();</span><br><span class="line">        System.out.println(thread.isInterrupted());</span><br><span class="line">        thread.interrupt(); <span class="comment">// 仅仅只是把标志位变为true</span></span><br><span class="line">        System.out.println(thread.isInterrupted());</span><br><span class="line">        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        System.out.println(thread.isInterrupted());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (Thread.currentThread().isInterrupted()) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;BBBBB&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>执行结果：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">false</span></span><br><span class="line"><span class="keyword">true</span></span><br><span class="line">BBBBB</span><br><span class="line"><span class="keyword">false</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>你在main线程中调用了interrupt()他只是通知了MyThread线程需要停止，也就是吧它的中断标志位改为true，MyThread线程并没有真的停止，此时你的main线程拿到了cpu所以后续输出了true，当你调用Thread.sleep(1000)之后MyThread线程拿到cpu,执行到了for循环进入if然后breank并且清除MyThread的标志位，所以当main得到cpu之后输出false</p>
+<p><strong>stop(); 暴力停止，不建议使用</strong></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>java中的多线程</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>
@@ -2115,7 +2336,7 @@ A(c)  --> B[i = 8]</pre>
 <p><strong><a href="https://www.cnblogs.com/dijia478/p/13807826.html">参考:</a> :<a href="https://www.cnblogs.com/dijia478/p/13807826.html">https://www.cnblogs.com/dijia478/p/13807826.html</a></strong></p>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
-        <category>随笔记录</category>
+        <category>练习算法</category>
       </categories>
       <tags>
         <tag>Demo</tag>
@@ -3255,6 +3476,98 @@ A(c)  --> B[i = 8]</pre>
       </tags>
   </entry>
   <entry>
+    <title>BIO</title>
+    <url>/2021/06/08/BIO/</url>
+    <content><![CDATA[<h3 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h3><p><strong>1. 什么是BIO</strong></p>
+<blockquote>
+<p>B I/O，意为Blocking I/O，即阻塞的I/O。</p>
+<p>很明显重点在阻塞，但怎么就阻塞了？阻塞在哪了？阻塞带来了什么坏处？</p>
+</blockquote>
+<p><strong>2. BIO的代码实现：</strong></p>
+<ol>
+<li>服务端</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">9090</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;step1: new ServerSocket(9090) &quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        Socket client = server.accept();  <span class="comment">//阻塞1</span></span><br><span class="line">        System.out.println(<span class="string">&quot;step2:client\t&quot;</span> + client.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            InputStream in = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in = client.getInputStream();</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                    String dataline = reader.readLine(); <span class="comment">//阻塞2</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">null</span> != dataline)&#123;</span><br><span class="line">                    System.out.println(dataline);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        client.close();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;客户端断开&quot;</span>);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>客户端</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          Socket client = <span class="keyword">new</span> Socket(<span class="string">&quot;192.168.150.11&quot;</span>,<span class="number">9090</span>);</span><br><span class="line"></span><br><span class="line">          client.setSendBufferSize(<span class="number">20</span>);</span><br><span class="line">          client.setTcpNoDelay(<span class="keyword">true</span>);</span><br><span class="line">          OutputStream out = client.getOutputStream();</span><br><span class="line"></span><br><span class="line">          InputStream in = System.in;</span><br><span class="line">          BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line"></span><br><span class="line">          <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">              String line = reader.readLine();</span><br><span class="line">              <span class="keyword">if</span>(line != <span class="keyword">null</span> )&#123;</span><br><span class="line">                  <span class="keyword">byte</span>[] bb = line.getBytes();</span><br><span class="line">                  <span class="keyword">for</span> (<span class="keyword">byte</span> b : bb) &#123;</span><br><span class="line">                      out.write(b);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. BIO的工作模式</strong></p>
+<pre class="mermaid">graph TD
+A[Client 1] --> S(Service 9090)
+C[Client 2] --> S
+D[Client 2] --> S
+S --> F(Thread 1)
+S --> E(Thread 2)
+S --> G(Thread 3)
+F -->   H(Socket1 处理 Client 1 )
+E -->   I(Socket2 处理 Client 2 )
+G -->   V(Socket3 处理 Client 3 )</pre>
+
+<p><strong>4. 为什么要使用多线程：</strong></p>
+<blockquote>
+<p>这是一个经典的每连接每线程的模型，之所以使用多线程，主要原因在于socket.accept()、socket.read()、socket.write()三个主要函数都是同步阻塞的，当一个连接在处理I/O的时候，系统是阻塞的，如果是单线程的话必然就挂死在那里；但CPU是被释放出来的，开启多线程，就可以让CPU去处理更多的事情。其实这也是所有使用多线程的本质：</p>
+</blockquote>
+<p><strong>5. BIO的缺点</strong></p>
+<blockquote>
+<p>（1）线程创建资源开销巨大。如果有10000个连接怎么办？创建10000个线程？很明显不现实，太多的线程对系统资源的开销是巨大的。</p>
+<p>（2）单个线程的资源浪费。</p>
+<p>一个请求来了，如果这个线程从被创建为这个连接服务开始就一直在工工作，那么就不存在资源浪费，就像你找来一个服务员，他只服务一个客人，但他期间一直都有工作作，那么他的劳动力就算不上浪费。</p>
+<p>但是绝大多数情况下客人多服务员的需求都是暂时的，服务员很多时候都在发呆玩手机，等待着回应客人的请求，这样这个服务员的劳动力就被浪费了。那么在Bio中线程等待服务的时候是什么样的呢，那就是阻塞，线程等待着为连接服务（读数据/写数据/业务处理），很多时候BIo的服务子线程都是在阻塞状态下的。</p>
+</blockquote>
+<p><strong>基于以上不足出现了NIO</strong></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CAP定理</title>
+    <url>/2021/04/18/CAP%E5%AE%9A%E7%90%86/</url>
+    <content><![CDATA[<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><h3 id="CAP理论概述"><a href="#CAP理论概述" class="headerlink" title="CAP理论概述"></a><strong>CAP理论概述</strong></h3><p>   一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两     项。</p>
+<h3 id="CAP的定义"><a href="#CAP的定义" class="headerlink" title="CAP的定义"></a><strong>CAP的定义</strong></h3><p><strong>Consistency 一致性</strong></p>
+<p>一致性指“<code>all nodes see the same data at the same time</code>”，即所有节点在同一时间的数据完全一致。</p>
+<p>一致性是因为多个数据拷贝下并发读写才有的问题，因此理解时一定要注意结合考虑多个数据拷贝下并发读写的场景。</p>
+<p>对于一致性，可以分为从客户端和服务端两个不同的视角。</p>
+<ul>
+<li>客户端</li>
+</ul>
+<p>从客户端来看，一致性主要指的是多并发访问时更新过的数据如何获取的问题。</p>
+<ul>
+<li>服务端</li>
+</ul>
+<p>从服务端来看，则是更新如何分布到整个系统，以保证数据最终一致。</p>
+<p>对于一致性，可以分为强/弱/最终一致性三类</p>
+<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
+<ul>
+<li>强一致性</li>
+</ul>
+<p>对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是强一致性。</p>
+<ul>
+<li>弱一致性</li>
+</ul>
+<p>如果能容忍后续的部分或者全部访问不到，则是弱一致性。</p>
+<ul>
+<li>最终一致性</li>
+</ul>
+<p>如果经过一段时间后要求能访问到更新后的数据，则是最终一致性。</p>
+<h3 id="Availability-可用性"><a href="#Availability-可用性" class="headerlink" title="Availability 可用性"></a><strong>Availability 可用性</strong></h3><p>可用性指“<code>Reads and writes always succeed</code>”，即服务在正常响应时间内一直可用。</p>
+<p>好的可用性主要是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。可用性通常情况下可用性和分布式数据冗余，负载均衡等有着很大的关联。</p>
+<h2 id="Partition-Tolerance分区容错性"><a href="#Partition-Tolerance分区容错性" class="headerlink" title="Partition Tolerance分区容错性"></a><strong>Partition Tolerance分区容错性</strong></h2><p>分区容错性指“<code>the system continues to operate despite arbitrary message loss or failure of part of the system</code>”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务。</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ConcurrentHashMap 详解</title>
     <url>/2021/05/27/ConcurrentHashMap%20%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<h2 id="ConcurrentHashMap-详解"><a href="#ConcurrentHashMap-详解" class="headerlink" title="ConcurrentHashMap 详解"></a>ConcurrentHashMap 详解</h2><h3 id="private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30"><a href="#private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30" class="headerlink" title="private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;"></a>private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</h3><ul>
@@ -3281,279 +3594,6 @@ A(c)  --> B[i = 8]</pre>
 <link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
       <categories>
         <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>GC的基础知识</title>
-    <url>/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<h1 id="GC和GC-Tuning"><a href="#GC和GC-Tuning" class="headerlink" title="GC和GC Tuning"></a>GC和GC Tuning</h1><h4 id="1-什么是垃圾"><a href="#1-什么是垃圾" class="headerlink" title="1.什么是垃圾"></a>1.什么是垃圾</h4><blockquote>
-<p>没有任何引用指向的一个对象或者多个对象（循环引用）</p>
-</blockquote>
-<h4 id="2-如何定位垃圾"><a href="#2-如何定位垃圾" class="headerlink" title="2.如何定位垃圾"></a>2.如何定位垃圾</h4><blockquote>
-<p>引用计数（ReferenceCount）</p>
-<p>根可达算法(RootSearching)</p>
-</blockquote>
-<h4 id="3-GC-roots"><a href="#3-GC-roots" class="headerlink" title="3. GC roots"></a>3. GC roots</h4><blockquote>
-<p>JVM stack  (jvm栈)</p>
-<p>native method stack （本地方法栈）</p>
-<p>run-time constant pool （常量池指向的变量）</p>
-<p>static references in method artea （静态变量指向的对象）</p>
-<p>Clazz  （对象字节load到内存）</p>
-</blockquote>
-<h4 id="3-常见的垃圾回收算法"><a href="#3-常见的垃圾回收算法" class="headerlink" title="3.常见的垃圾回收算法"></a>3.常见的垃圾回收算法</h4><blockquote>
-<p>标记清除(mark sweep) - 位置不连续 产生碎片 效率偏低（两遍扫描）</p>
-<p>拷贝算法 (copying) - 没有碎片，浪费空间</p>
-<p>标记压缩(mark compact) - 没有碎片，效率偏低（两遍扫描，指针需要调整）</p>
-</blockquote>
-<h4 id="4-JVM内存分代模型（用于分代垃圾回收算法）"><a href="#4-JVM内存分代模型（用于分代垃圾回收算法）" class="headerlink" title="4.JVM内存分代模型（用于分代垃圾回收算法）"></a>4.JVM内存分代模型（用于分代垃圾回收算法）</h4><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/jvm%E5%88%86%E4%BB%A3%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png"></h4><p><strong>1. 部分垃圾回收器使用的模型</strong></p>
-<blockquote>
-<p>除Epsilon ZGC Shenandoah之外的GC都是使用逻辑分代模型</p>
-<p>G1是逻辑分代，物理不分代</p>
-<p>除此之外不仅逻辑分代，而且物理分代</p>
-</blockquote>
-<p><strong>2. 新生代 + 老年代 + 永久代（1.7）Perm Generation/ 元数据区(1.8) Metaspace</strong></p>
-<blockquote>
-<p>永久代 元数据 - Class</p>
-<p>永久代必须指定大小限制 ，元数据可以设置，也可以不设置，无上限（受限于物理内存）</p>
-<p>字符串常量 1.7 - 永久代，1.8 - 堆</p>
-<p>MethodArea逻辑概念 - 永久代、元数据</p>
-</blockquote>
-<p><strong>3. 新生代 = Eden + 2个suvivor区</strong> </p>
-<blockquote>
-<p>YGC回收之后，大多数的对象会被回收，活着的进入s0</p>
-<p>再次YGC，活着的对象eden + s0 -&gt; s1</p>
-<p>再次YGC，eden + s1 -&gt; s0</p>
-<p>年龄足够 -&gt; 老年代 （15 CMS 6）</p>
-<p>s区装不下 -&gt; 老年代</p>
-</blockquote>
-<p><strong>4. 老年代</strong></p>
-<blockquote>
-<p>顽固分子</p>
-<p>老年代满了FGC Full GC</p>
-</blockquote>
-<p><strong>GC Tuning (Generation)</strong></p>
-<blockquote>
-<p>尽量减少FGC</p>
-<p>MinorGC = YGC</p>
-<p>MajorGC = FGC</p>
-</blockquote>
-<p><strong>动态年龄：</strong><br><a href="https://www.jianshu.com/p/989d3b06a49d">https://www.jianshu.com/p/989d3b06a49d</a></p>
-<p><strong>分配担保：</strong><br>YGC期间 survivor区空间不够了 空间担保直接进入老年代<br>参考：<a href="https://cloud.tencent.com/developer/article/1082730">https://cloud.tencent.com/developer/article/1082730</a></p>
-<p><strong>对象的分配过程</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/java%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%86%E9%85%8D%E8%BF%87%E7%A8%8B.png" alt="对象内存分配的过程"></p>
-<p><strong>5 .TLAB 分配</strong></p>
-<blockquote>
-<p>　JVM在内存新生代Eden Space中开辟了一小块线程私有的区域，称作TLAB（Thread-local allocation buffer）。默认设定为占用Eden Space的1%。在Java程序中很多对象都是小对象且用过即丢，它们不存在线程共享也适合被快速GC，所以对于小对象通常JVM会优先分配在TLAB上，并且TLAB上的分配由于是线程私有所以没有锁开销。因此在实践中分配多个小对象的效率通常比分配一个大对象的效率要高。<br>　　也就是说，Java中每个线程都会有自己的缓冲区称作TLAB（Thread-local allocation buffer），每个TLAB都只有一个线程可以操作，TLAB结合bump-the-pointer技术可以实现快速的对象分配，而不需要任何的锁进行同步，也就是说，在对象分配的时候不用锁住整个堆，而只需要在自己的缓冲区分配即可。<br>　　关于对象分配的JDK源码可以参见 [JVM 之 Java对象创建<a href="http://blog.hesey.net/2011/07/object-allocation-on-non-heap.html">初始化]</a> 中对OpenJDK源码的分析。</p>
-</blockquote>
-<p><strong>为什么需要TLAB？</strong></p>
-<blockquote>
-<p>　　这是为了加速对象的分配。由于对象一般分配在堆上，而堆是线程共用的，因此可能会有多个线程在堆上申请空间，而每一次的对象分配都必须线程同步，会使分配的效率下降。考虑到对象分配几乎是Java中最常用的操作，因此JVM使用了TLAB这样的线程专有区域来避免多线程冲突，提高对象分配的效率。</p>
-</blockquote>
-<h4 id="6-常见的垃圾回收器"><a href="#6-常见的垃圾回收器" class="headerlink" title="6.常见的垃圾回收器"></a>6.常见的垃圾回收器</h4><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/gc/gc%E7%AE%97%E6%B3%95.png" alt="gc"></p>
-<ol>
-<li>JDK诞生 Serial追随 提高效率，诞生了PS，为了配合CMS，诞生了PN，CMS是1.4版本后期引入，CMS是里程碑式的GC，它开启了并发回收的过程，但是CMS毛病较多，因此目前任何一个JDK版本默认是CMS<br>并发垃圾回收是因为无法忍受STW</li>
-<li>Serial 年轻代 串行回收</li>
-<li>PS 年轻代 并行回收</li>
-<li>ParNew 年轻代 配合CMS的并行回收</li>
-<li>SerialOld </li>
-<li>ParallelOld</li>
-<li>ConcurrentMarkSweep 老年代 并发的， 垃圾回收和应用程序同时运行，降低STW的时间(200ms)<br>CMS问题比较多，所以现在没有一个版本默认是CMS，只能手工指定<br>CMS既然是MarkSweep，就一定会有碎片化的问题，碎片到达一定程度，CMS的老年代分配对象分配不下的时候，使用SerialOld 进行老年代回收<br>想象一下：<br>PS + PO -&gt; 加内存 换垃圾回收器 -&gt; PN + CMS + SerialOld（几个小时 - 几天的STW）<br>几十个G的内存，单线程回收 -&gt; G1 + FGC 几十个G -&gt; 上T内存的服务器 ZGC<br>算法：三色标记 + Incremental Update</li>
-<li>G1(10ms)<br>算法：三色标记 + SATB</li>
-<li>ZGC (1ms) PK C++<br>算法：ColoredPointers + LoadBarrier</li>
-<li>Shenandoah<br>算法：ColoredPointers + WriteBarrier</li>
-<li>Eplison</li>
-<li>PS 和 PN区别的延伸阅读：<br>▪<a href="https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html">https://docs.oracle.com/en/java/javase/13/gctuning/ergonomics.html#GUID-3D0BB91E-9BFF-4EBB-B523-14493A860E73</a></li>
-<li>垃圾收集器跟内存大小的关系<ol>
-<li>Serial 几十兆</li>
-<li>PS 上百兆 - 几个G</li>
-<li>CMS - 20G</li>
-<li>G1 - 上百G</li>
-<li>ZGC - 4T - 16T（JDK13）</li>
-</ol>
-</li>
-</ol>
-<p>1.8默认的垃圾回收：PS + ParallelOld</p>
-<h4 id="7-常见垃圾回收器组合参数设定：-1-8"><a href="#7-常见垃圾回收器组合参数设定：-1-8" class="headerlink" title="7.常见垃圾回收器组合参数设定：(1.8)"></a>7.常见垃圾回收器组合参数设定：(1.8)</h4><ul>
-<li><p>-XX:+UseSerialGC = Serial New (DefNew) + Serial Old</p>
-<ul>
-<li>小型程序。默认情况下不会是这种选项，HotSpot会根据计算及配置和JDK版本自动选择收集器</li>
-</ul>
-</li>
-<li><p>-XX:+UseParNewGC = ParNew + SerialOld</p>
-<ul>
-<li>这个组合已经很少用（在某些版本中已经废弃）</li>
-<li><a href="https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future">https://stackoverflow.com/questions/34962257/why-remove-support-for-parnewserialold-anddefnewcms-in-the-future</a></li>
-</ul>
-</li>
-<li><p>-XX:+UseConc<font color=red>(urrent)</font>MarkSweepGC = ParNew + CMS + Serial Old</p>
-</li>
-<li><p>-XX:+UseParallelGC = Parallel Scavenge + Parallel Old (1.8默认) 【PS + SerialOld】</p>
-</li>
-<li><p>-XX:+UseParallelOldGC = Parallel Scavenge + Parallel Old</p>
-</li>
-<li><p>-XX:+UseG1GC = G1</p>
-</li>
-<li><p>Linux中没找到默认GC的查看方法，而windows中会打印UseParallelGC </p>
-<ul>
-<li>java +XX:+PrintCommandLineFlags -version</li>
-<li>通过GC的日志来分辨</li>
-</ul>
-</li>
-<li><p>Linux下1.8版本默认的垃圾回收器到底是什么？</p>
-<ul>
-<li>1.8.0_181 默认（看不出来）Copy MarkCompact</li>
-<li>1.8.0_222 默认 PS + PO</li>
-</ul>
-</li>
-</ul>
-<h4 id="8-了解JVM常用命令行参数"><a href="#8-了解JVM常用命令行参数" class="headerlink" title="8.了解JVM常用命令行参数"></a>8.了解JVM常用命令行参数</h4><ul>
-<li><p>JVM的命令行参数参考：<a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></p>
-</li>
-<li><p>HotSpot参数分类</p>
-<blockquote>
-<p>标准： - 开头，所有的HotSpot都支持</p>
-<p>非标准：-X 开头，特定版本HotSpot支持特定命令</p>
-<p>不稳定：-XX 开头，下个版本可能取消</p>
-</blockquote>
-<p>java -version</p>
-<p>试验用程序：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloGC</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;HelloGC!&quot;</span>);</span><br><span class="line">    List list = <span class="keyword">new</span> LinkedList();</span><br><span class="line">    <span class="keyword">for</span>(;;) &#123;</span><br><span class="line">      <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">      list.add(b);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<ol>
-<li>区分概念：内存泄漏memory leak，内存溢出out of memory</li>
-<li>java -XX:+PrintCommandLineFlags HelloGC</li>
-<li>java -Xmn10M -Xms40M -Xmx60M -XX:+PrintCommandLineFlags -XX:+PrintGC  HelloGC<br>PrintGCDetails PrintGCTimeStamps PrintGCCauses</li>
-<li>java -XX:+UseConcMarkSweepGC -XX:+PrintCommandLineFlags HelloGC</li>
-<li>java -XX:+PrintFlagsInitial 默认参数值</li>
-<li>java -XX:+PrintFlagsFinal 最终参数值</li>
-<li>java -XX:+PrintFlagsFinal | grep xxx 找到对应的参数</li>
-<li>java -XX:+PrintFlagsFinal -version |grep GC</li>
-</ol>
-</li>
-</ul>
-<h4 id="9-PS-GC日志详解"><a href="#9-PS-GC日志详解" class="headerlink" title="9. PS GC日志详解"></a>9. PS GC日志详解</h4><p>每种垃圾回收器的日志格式是不同的！</p>
-<p>PS日志格式</p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A3.png" alt="gc日志详解"></p>
-<p>heap dump部分：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">eden space 5632K, <span class="number">94</span>% used [<span class="number">0x00000000ff980000</span>,<span class="number">0x00000000ffeb3e28</span>,<span class="number">0x00000000fff00000</span>)</span><br><span class="line">                            后面的内存地址指的是，起始地址，使用空间结束地址，整体空间结束地址</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/gc%E6%97%A5%E5%BF%97%E8%AF%A6%E8%A7%A32.png" alt="gc日志详解2"></p>
-<p>total = eden + 1个survivor</p>
-<h4 id="10-调优前的基础概念："><a href="#10-调优前的基础概念：" class="headerlink" title="10. 调优前的基础概念："></a>10. 调优前的基础概念：</h4><ol>
-<li>吞吐量：用户代码时间 /（用户代码执行时间 + 垃圾回收时间）</li>
-<li>响应时间：STW越短，响应时间越好</li>
-</ol>
-<p>所谓调优，首先确定，追求啥？吞吐量优先，还是响应时间优先？还是在满足一定的响应时间的情况下，要求达到多大的吞吐量…</p>
-<p><strong>什么是调优？</strong></p>
-<ol>
-<li>根据需求进行JVM规划和预调优</li>
-<li>优化运行JVM运行环境（慢，卡顿）</li>
-<li>解决JVM运行过程中出现的各种问题(OOM)</li>
-</ol>
-<h4 id="11-调优步骤"><a href="#11-调优步骤" class="headerlink" title="11. 调优步骤"></a>11. 调优步骤</h4><ul>
-<li><p>调优，从业务场景开始，没有业务场景的调优都是耍流氓</p>
-</li>
-<li><p>无监控（压力测试，能看到结果），不调优</p>
-</li>
-<li><p>步骤：</p>
-<ol>
-<li>熟悉业务场景（没有最好的垃圾回收器，只有最合适的垃圾回收器）<ol>
-<li>响应时间、停顿时间 [CMS G1 ZGC] （需要给用户作响应）</li>
-<li>吞吐量 = 用户时间 /( 用户时间 + GC时间) [PS]</li>
-</ol>
-</li>
-<li>选择回收器组合</li>
-<li>计算内存需求（经验值 1.5G 16G）</li>
-<li>选定CPU（越高越好）</li>
-<li>设定年代大小、升级年龄</li>
-<li>设定日志参数<ol>
-<li>-Xloggc:/opt/xxx/logs/xxx-xxx-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCCause</li>
-<li>或者每天产生一个日志文件</li>
-</ol>
-</li>
-<li>观察日志情况 </li>
-</ol>
-</li>
-</ul>
-<h4 id="GC常用参数"><a href="#GC常用参数" class="headerlink" title="GC常用参数"></a>GC常用参数</h4><ul>
-<li>-Xmn -Xms -Xmx -Xss<br>年轻代 最小堆 最大堆 栈空间</li>
-<li>-XX:+UseTLAB<br>使用TLAB，默认打开</li>
-<li>-XX:+PrintTLAB<br>打印TLAB的使用情况</li>
-<li>-XX:TLABSize<br>设置TLAB大小</li>
-<li>-XX:+DisableExplictGC<br>System.gc()不管用 ，FGC</li>
-<li>-XX:+PrintGC</li>
-<li>-XX:+PrintGCDetails</li>
-<li>-XX:+PrintHeapAtGC</li>
-<li>-XX:+PrintGCTimeStamps</li>
-<li>-XX:+PrintGCApplicationConcurrentTime (低)<br>打印应用程序时间</li>
-<li>-XX:+PrintGCApplicationStoppedTime （低）<br>打印暂停时长</li>
-<li>-XX:+PrintReferenceGC （重要性低）<br>记录回收了多少种不同引用类型的引用</li>
-<li>-verbose:class<br>类加载详细过程</li>
-<li>-XX:+PrintVMOptions</li>
-<li>-XX:+PrintFlagsFinal  -XX:+PrintFlagsInitial<br>必须会用</li>
-<li>-Xloggc:opt/log/gc.log</li>
-<li>-XX:MaxTenuringThreshold<br>升代年龄，最大值15</li>
-<li>锁自旋次数 -XX:PreBlockSpin 热点代码检测参数-XX:CompileThreshold 逃逸分析 标量替换 …<br>这些不建议设置</li>
-</ul>
-<h4 id="Parallel常用参数"><a href="#Parallel常用参数" class="headerlink" title="Parallel常用参数"></a>Parallel常用参数</h4><ul>
-<li>-XX:SurvivorRatio</li>
-<li>-XX:PreTenureSizeThreshold<br>大对象到底多大</li>
-<li>-XX:MaxTenuringThreshold</li>
-<li>-XX:+ParallelGCThreads<br>并行收集器的线程数，同样适用于CMS，一般设为和CPU核数相同</li>
-<li>-XX:+UseAdaptiveSizePolicy<br>自动选择各区大小比例</li>
-</ul>
-<h4 id="CMS常用参数"><a href="#CMS常用参数" class="headerlink" title="CMS常用参数"></a>CMS常用参数</h4><ul>
-<li>-XX:+UseConcMarkSweepGC</li>
-<li>-XX:ParallelCMSThreads<br>CMS线程数量</li>
-<li>-XX:CMSInitiatingOccupancyFraction<br>使用多少比例的老年代后开始CMS收集，默认是68%(近似值)，如果频繁发生SerialOld卡顿，应该调小，（频繁CMS回收）</li>
-<li>-XX:+UseCMSCompactAtFullCollection<br>在FGC时进行压缩</li>
-<li>-XX:CMSFullGCsBeforeCompaction<br>多少次FGC之后进行压缩</li>
-<li>-XX:+CMSClassUnloadingEnabled</li>
-<li>-XX:CMSInitiatingPermOccupancyFraction<br>达到什么比例时进行Perm回收</li>
-<li>GCTimeRatio<br>设置GC时间占用程序运行时间的百分比</li>
-<li>-XX:MaxGCPauseMillis<br>停顿时间，是一个建议时间，GC会尝试用各种手段达到这个时间，比如减小年轻代</li>
-</ul>
-<h4 id="G1常用参数"><a href="#G1常用参数" class="headerlink" title="G1常用参数"></a>G1常用参数</h4><ul>
-<li>-XX:+UseG1GC</li>
-<li>-XX:MaxGCPauseMillis<br>建议值，G1会尝试调整Young区的块数来达到这个值</li>
-<li>-XX:GCPauseIntervalMillis<br>？GC的间隔时间</li>
-<li>-XX:+G1HeapRegionSize<br>分区大小，建议逐渐增大该值，1 2 4 8 16 32。<br>随着size增加，垃圾的存活时间更长，GC间隔更长，但每次GC的时间也会更长<br>ZGC做了改进（动态区块大小）</li>
-<li>G1NewSizePercent<br>新生代最小比例，默认为5%</li>
-<li>G1MaxNewSizePercent<br>新生代最大比例，默认为60%</li>
-<li>GCTimeRatio<br>GC时间建议比例，G1会根据这个值调整堆空间</li>
-<li>ConcGCThreads<br>线程数量</li>
-<li>InitiatingHeapOccupancyPercent<br>启动G1的堆空间占用比例</li>
-</ul>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="https://blogs.oracle.com/jonthecollector/our-collectors">https://blogs.oracle.com/</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">jonthecollector</a><a href="https://blogs.oracle.com/jonthecollector/our-collectors">/our-collectors</a></li>
-<li><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html</a></li>
-<li><a href="http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp">http://java.sun.com/javase/technologies/hotspot/vmoptions.jsp</a></li>
-<li>JVM调优参考文档：<a href="https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184">https://docs.oracle.com/en/java/javase/13/gctuning/introduction-garbage-collection-tuning.html#GUID-8A443184-7E07-4B71-9777-4F12947C8184</a> </li>
-<li><a href="https://www.cnblogs.com/nxlhero/p/11660854.html">https://www.cnblogs.com/nxlhero/p/11660854.html</a> 在线排查工具</li>
-<li><a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> arthas常用命令</li>
-<li>Arthas手册：<ol>
-<li>启动arthas java -jar arthas-boot.jar</li>
-<li>绑定java进程</li>
-<li>dashboard命令观察系统整体情况</li>
-<li>help 查看帮助</li>
-<li>help xx 查看具体命令帮助</li>
-</ol>
-</li>
-<li>jmap命令参考： <a href="https://www.jianshu.com/p/507f7e0cc3a3">https://www.jianshu.com/p/507f7e0cc3a3</a> <ol>
-<li>jmap -heap pid</li>
-<li>jmap -histo pid</li>
-<li>jmap -clstats pid</li>
-</ol>
-</li>
-</ol>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>JVM</category>
       </categories>
       <tags>
         <tag>随笔记录</tag>

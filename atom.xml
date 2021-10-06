@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-08-28T07:54:00.023Z</updated>
+  <updated>2021-10-06T03:37:44.820Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -15,6 +15,59 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>bitmap</title>
+    <link href="https://yaozw.top/2021/10/06/bitmap/"/>
+    <id>https://yaozw.top/2021/10/06/bitmap/</id>
+    <published>2021-10-06T03:36:53.000Z</published>
+    <updated>2021-10-06T03:37:44.820Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;bitMap实现：&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span</summary>
+        
+      
+    
+    
+    
+    <category term="练习算法" scheme="https://yaozw.top/categories/%E7%BB%83%E4%B9%A0%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java线程停止的两种的方式</title>
+    <link href="https://yaozw.top/2021/10/01/java%E7%BA%BF%E7%A8%8B%E5%81%9C%E6%AD%A2%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%9A%84%E6%96%B9%E5%BC%8F/"/>
+    <id>https://yaozw.top/2021/10/01/java%E7%BA%BF%E7%A8%8B%E5%81%9C%E6%AD%A2%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%9A%84%E6%96%B9%E5%BC%8F/</id>
+    <published>2021-10-01T10:21:30.000Z</published>
+    <updated>2021-10-06T03:37:43.111Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;interrupt（）方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;其作用是中断此线程（此线程不一定是当前线程，而是指调用该方法的Thread实例所代表的线程），但实际上只是给线程设置一个中断标志，线程仍会继续运行。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;结论：&lt;/stro</summary>
+        
+      
+    
+    
+    
+    <category term="java中的多线程" scheme="https://yaozw.top/categories/java%E4%B8%AD%E7%9A%84%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
   
   <entry>
     <title>spring + redis 实现分布式锁</title>
@@ -97,7 +150,7 @@
     <link href="https://yaozw.top/2021/08/11/%E5%AE%9E%E7%8E%B0%E6%BB%91%E5%8A%A8%E6%97%B6%E9%97%B4%E7%AA%97%E5%8F%A3%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95/"/>
     <id>https://yaozw.top/2021/08/11/%E5%AE%9E%E7%8E%B0%E6%BB%91%E5%8A%A8%E6%97%B6%E9%97%B4%E7%AA%97%E5%8F%A3%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95/</id>
     <published>2021-08-10T16:06:59.000Z</published>
-    <updated>2021-08-10T16:07:27.819Z</updated>
+    <updated>2021-10-06T03:37:45.898Z</updated>
     
     
       
@@ -110,7 +163,7 @@
     
     
     
-    <category term="随笔记录" scheme="https://yaozw.top/categories/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    <category term="练习算法" scheme="https://yaozw.top/categories/%E7%BB%83%E4%B9%A0%E7%AE%97%E6%B3%95/"/>
     
     
     <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
@@ -343,31 +396,6 @@
   </entry>
   
   <entry>
-    <title>java中基于文件的NIO</title>
-    <link href="https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/"/>
-    <id>https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/</id>
-    <published>2021-06-08T10:08:11.000Z</published>
-    <updated>2021-06-08T10:09:40.708Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;java-中文件NIO&quot;&gt;&lt;a href=&quot;#java-中文件NIO&quot; class=&quot;headerlink&quot; title=&quot;java 中文件NIO&quot;&gt;&lt;/a&gt;java 中文件NIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1.</summary>
-        
-      
-    
-    
-    
-    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
     <title>NIO</title>
     <link href="https://yaozw.top/2021/06/08/NIO/"/>
     <id>https://yaozw.top/2021/06/08/NIO/</id>
@@ -382,6 +410,31 @@
     <summary type="html">&lt;h3 id=&quot;NIO&quot;&gt;&lt;a href=&quot;#NIO&quot; class=&quot;headerlink&quot; title=&quot;NIO&quot;&gt;&lt;/a&gt;NIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. NIO是什么&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;NIO（Non-blocking</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java中基于文件的NIO</title>
+    <link href="https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/"/>
+    <id>https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/</id>
+    <published>2021-06-08T10:08:11.000Z</published>
+    <updated>2021-06-08T10:09:40.708Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;java-中文件NIO&quot;&gt;&lt;a href=&quot;#java-中文件NIO&quot; class=&quot;headerlink&quot; title=&quot;java 中文件NIO&quot;&gt;&lt;/a&gt;java 中文件NIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1.</summary>
         
       
     
@@ -459,56 +512,6 @@
         
         
     <summary type="html">&lt;h2 id=&quot;守护线程与用户线程&quot;&gt;&lt;a href=&quot;#守护线程与用户线程&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java中的ThreadPoolExecutor</title>
-    <link href="https://yaozw.top/2021/06/04/java%E4%B8%AD%E7%9A%84ThreadPoolExecutor/"/>
-    <id>https://yaozw.top/2021/06/04/java%E4%B8%AD%E7%9A%84ThreadPoolExecutor/</id>
-    <published>2021-06-04T10:49:48.000Z</published>
-    <updated>2021-06-04T10:50:52.842Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;java中的ThreadPoolExecutor&quot;&gt;&lt;a href=&quot;#java中的ThreadPoolExecutor&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ThreadLocal</title>
-    <link href="https://yaozw.top/2021/06/03/ThreadLocal/"/>
-    <id>https://yaozw.top/2021/06/03/ThreadLocal/</id>
-    <published>2021-06-03T09:14:30.000Z</published>
-    <updated>2021-06-03T09:15:19.327Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;java中的ThreadLocal&quot;&gt;&lt;a href=&quot;#java中的ThreadLocal&quot; class=&quot;headerlink&quot;</summary>
         
       
     

@@ -36,6 +36,130 @@
       </tags>
   </entry>
   <entry>
+    <title>BIO</title>
+    <url>/2021/06/08/BIO/</url>
+    <content><![CDATA[<h3 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h3><p><strong>1. 什么是BIO</strong></p>
+<blockquote>
+<p>B I/O，意为Blocking I/O，即阻塞的I/O。</p>
+<p>很明显重点在阻塞，但怎么就阻塞了？阻塞在哪了？阻塞带来了什么坏处？</p>
+</blockquote>
+<p><strong>2. BIO的代码实现：</strong></p>
+<ol>
+<li>服务端</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">9090</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;step1: new ServerSocket(9090) &quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        Socket client = server.accept();  <span class="comment">//阻塞1</span></span><br><span class="line">        System.out.println(<span class="string">&quot;step2:client\t&quot;</span> + client.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            InputStream in = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in = client.getInputStream();</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                    String dataline = reader.readLine(); <span class="comment">//阻塞2</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">null</span> != dataline)&#123;</span><br><span class="line">                    System.out.println(dataline);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        client.close();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;客户端断开&quot;</span>);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>客户端</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          Socket client = <span class="keyword">new</span> Socket(<span class="string">&quot;192.168.150.11&quot;</span>,<span class="number">9090</span>);</span><br><span class="line"></span><br><span class="line">          client.setSendBufferSize(<span class="number">20</span>);</span><br><span class="line">          client.setTcpNoDelay(<span class="keyword">true</span>);</span><br><span class="line">          OutputStream out = client.getOutputStream();</span><br><span class="line"></span><br><span class="line">          InputStream in = System.in;</span><br><span class="line">          BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line"></span><br><span class="line">          <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">              String line = reader.readLine();</span><br><span class="line">              <span class="keyword">if</span>(line != <span class="keyword">null</span> )&#123;</span><br><span class="line">                  <span class="keyword">byte</span>[] bb = line.getBytes();</span><br><span class="line">                  <span class="keyword">for</span> (<span class="keyword">byte</span> b : bb) &#123;</span><br><span class="line">                      out.write(b);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. BIO的工作模式</strong></p>
+<pre class="mermaid">graph TD
+A[Client 1] --> S(Service 9090)
+C[Client 2] --> S
+D[Client 2] --> S
+S --> F(Thread 1)
+S --> E(Thread 2)
+S --> G(Thread 3)
+F -->   H(Socket1 处理 Client 1 )
+E -->   I(Socket2 处理 Client 2 )
+G -->   V(Socket3 处理 Client 3 )</pre>
+
+<p><strong>4. 为什么要使用多线程：</strong></p>
+<blockquote>
+<p>这是一个经典的每连接每线程的模型，之所以使用多线程，主要原因在于socket.accept()、socket.read()、socket.write()三个主要函数都是同步阻塞的，当一个连接在处理I/O的时候，系统是阻塞的，如果是单线程的话必然就挂死在那里；但CPU是被释放出来的，开启多线程，就可以让CPU去处理更多的事情。其实这也是所有使用多线程的本质：</p>
+</blockquote>
+<p><strong>5. BIO的缺点</strong></p>
+<blockquote>
+<p>（1）线程创建资源开销巨大。如果有10000个连接怎么办？创建10000个线程？很明显不现实，太多的线程对系统资源的开销是巨大的。</p>
+<p>（2）单个线程的资源浪费。</p>
+<p>一个请求来了，如果这个线程从被创建为这个连接服务开始就一直在工工作，那么就不存在资源浪费，就像你找来一个服务员，他只服务一个客人，但他期间一直都有工作作，那么他的劳动力就算不上浪费。</p>
+<p>但是绝大多数情况下客人多服务员的需求都是暂时的，服务员很多时候都在发呆玩手机，等待着回应客人的请求，这样这个服务员的劳动力就被浪费了。那么在Bio中线程等待服务的时候是什么样的呢，那就是阻塞，线程等待着为连接服务（读数据/写数据/业务处理），很多时候BIo的服务子线程都是在阻塞状态下的。</p>
+</blockquote>
+<p><strong>基于以上不足出现了NIO</strong></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CAP定理</title>
+    <url>/2021/04/18/CAP%E5%AE%9A%E7%90%86/</url>
+    <content><![CDATA[<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><h3 id="CAP理论概述"><a href="#CAP理论概述" class="headerlink" title="CAP理论概述"></a><strong>CAP理论概述</strong></h3><p>   一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两     项。</p>
+<h3 id="CAP的定义"><a href="#CAP的定义" class="headerlink" title="CAP的定义"></a><strong>CAP的定义</strong></h3><p><strong>Consistency 一致性</strong></p>
+<p>一致性指“<code>all nodes see the same data at the same time</code>”，即所有节点在同一时间的数据完全一致。</p>
+<p>一致性是因为多个数据拷贝下并发读写才有的问题，因此理解时一定要注意结合考虑多个数据拷贝下并发读写的场景。</p>
+<p>对于一致性，可以分为从客户端和服务端两个不同的视角。</p>
+<ul>
+<li>客户端</li>
+</ul>
+<p>从客户端来看，一致性主要指的是多并发访问时更新过的数据如何获取的问题。</p>
+<ul>
+<li>服务端</li>
+</ul>
+<p>从服务端来看，则是更新如何分布到整个系统，以保证数据最终一致。</p>
+<p>对于一致性，可以分为强/弱/最终一致性三类</p>
+<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
+<ul>
+<li>强一致性</li>
+</ul>
+<p>对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是强一致性。</p>
+<ul>
+<li>弱一致性</li>
+</ul>
+<p>如果能容忍后续的部分或者全部访问不到，则是弱一致性。</p>
+<ul>
+<li>最终一致性</li>
+</ul>
+<p>如果经过一段时间后要求能访问到更新后的数据，则是最终一致性。</p>
+<h3 id="Availability-可用性"><a href="#Availability-可用性" class="headerlink" title="Availability 可用性"></a><strong>Availability 可用性</strong></h3><p>可用性指“<code>Reads and writes always succeed</code>”，即服务在正常响应时间内一直可用。</p>
+<p>好的可用性主要是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。可用性通常情况下可用性和分布式数据冗余，负载均衡等有着很大的关联。</p>
+<h2 id="Partition-Tolerance分区容错性"><a href="#Partition-Tolerance分区容错性" class="headerlink" title="Partition Tolerance分区容错性"></a><strong>Partition Tolerance分区容错性</strong></h2><p>分区容错性指“<code>the system continues to operate despite arbitrary message loss or failure of part of the system</code>”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务。</p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ConcurrentHashMap 详解</title>
+    <url>/2021/05/27/ConcurrentHashMap%20%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h2 id="ConcurrentHashMap-详解"><a href="#ConcurrentHashMap-详解" class="headerlink" title="ConcurrentHashMap 详解"></a>ConcurrentHashMap 详解</h2><h3 id="private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30"><a href="#private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30" class="headerlink" title="private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;"></a>private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</h3><ul>
+<li><strong>MAXIMUM_CAPACITY是2的30次方 的原因</strong>`<ol>
+<li>int的最大的值是2的31次方-1，所以容量无法到达2的31次方，</li>
+<li>需要让容量满足2的幂次，所以设置为2的30次方 </li>
+</ol>
+</li>
+</ul>
+<h3 id="private-static-final-int-DEFAULT-CAPACITY-16"><a href="#private-static-final-int-DEFAULT-CAPACITY-16" class="headerlink" title="private static final int DEFAULT_CAPACITY = 16;"></a>private static final int DEFAULT_CAPACITY = 16;</h3><ul>
+<li><strong>DEFAULT_CAPACITY = 16;</strong><ol>
+<li>方便数据迁移</li>
+<li>方便进行计算对应的位置</li>
+<li>概率统计</li>
+</ol>
+</li>
+</ul>
+<h3 id="new-ConcurrentHashMap-lt-gt-2-自定义大小解释："><a href="#new-ConcurrentHashMap-lt-gt-2-自定义大小解释：" class="headerlink" title="new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释："></a>new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">int</span> cap = ((initialCapacity &gt;= (MAXIMUM_CAPACITY &gt;&gt;&gt; <span class="number">1</span>)) ?</span><br><span class="line">               MAXIMUM_CAPACITY :</span><br><span class="line">               tableSizeFor(initialCapacity + (initialCapacity &gt;&gt;&gt; <span class="number">1</span>) + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">this</span>.sizeCtl = cap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// tableSizeFor的功能（不考虑大于最大容量的情况）是返回大于输入参数且最近的2的整数次幂的数。比如10，则返回16。 </span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = c - <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">8</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>GC的基础知识</title>
     <url>/2021/06/20/GC%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h1 id="GC和GC-Tuning"><a href="#GC和GC-Tuning" class="headerlink" title="GC和GC Tuning"></a>GC和GC Tuning</h1><h4 id="1-什么是垃圾"><a href="#1-什么是垃圾" class="headerlink" title="1.什么是垃圾"></a>1.什么是垃圾</h4><blockquote>
@@ -3473,130 +3597,6 @@ A(c)  --> B[i = 8]</pre>
       </categories>
       <tags>
         <tag>七大设计原则</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BIO</title>
-    <url>/2021/06/08/BIO/</url>
-    <content><![CDATA[<h3 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h3><p><strong>1. 什么是BIO</strong></p>
-<blockquote>
-<p>B I/O，意为Blocking I/O，即阻塞的I/O。</p>
-<p>很明显重点在阻塞，但怎么就阻塞了？阻塞在哪了？阻塞带来了什么坏处？</p>
-</blockquote>
-<p><strong>2. BIO的代码实现：</strong></p>
-<ol>
-<li>服务端</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">9090</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;step1: new ServerSocket(9090) &quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        Socket client = server.accept();  <span class="comment">//阻塞1</span></span><br><span class="line">        System.out.println(<span class="string">&quot;step2:client\t&quot;</span> + client.getPort());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            InputStream in = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in = client.getInputStream();</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line">                <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">                    String dataline = reader.readLine(); <span class="comment">//阻塞2</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span>(<span class="keyword">null</span> != dataline)&#123;</span><br><span class="line">                    System.out.println(dataline);</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        client.close();</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;客户端断开&quot;</span>);</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>客户端</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          Socket client = <span class="keyword">new</span> Socket(<span class="string">&quot;192.168.150.11&quot;</span>,<span class="number">9090</span>);</span><br><span class="line"></span><br><span class="line">          client.setSendBufferSize(<span class="number">20</span>);</span><br><span class="line">          client.setTcpNoDelay(<span class="keyword">true</span>);</span><br><span class="line">          OutputStream out = client.getOutputStream();</span><br><span class="line"></span><br><span class="line">          InputStream in = System.in;</span><br><span class="line">          BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line"></span><br><span class="line">          <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">              String line = reader.readLine();</span><br><span class="line">              <span class="keyword">if</span>(line != <span class="keyword">null</span> )&#123;</span><br><span class="line">                  <span class="keyword">byte</span>[] bb = line.getBytes();</span><br><span class="line">                  <span class="keyword">for</span> (<span class="keyword">byte</span> b : bb) &#123;</span><br><span class="line">                      out.write(b);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>3. BIO的工作模式</strong></p>
-<pre class="mermaid">graph TD
-A[Client 1] --> S(Service 9090)
-C[Client 2] --> S
-D[Client 2] --> S
-S --> F(Thread 1)
-S --> E(Thread 2)
-S --> G(Thread 3)
-F -->   H(Socket1 处理 Client 1 )
-E -->   I(Socket2 处理 Client 2 )
-G -->   V(Socket3 处理 Client 3 )</pre>
-
-<p><strong>4. 为什么要使用多线程：</strong></p>
-<blockquote>
-<p>这是一个经典的每连接每线程的模型，之所以使用多线程，主要原因在于socket.accept()、socket.read()、socket.write()三个主要函数都是同步阻塞的，当一个连接在处理I/O的时候，系统是阻塞的，如果是单线程的话必然就挂死在那里；但CPU是被释放出来的，开启多线程，就可以让CPU去处理更多的事情。其实这也是所有使用多线程的本质：</p>
-</blockquote>
-<p><strong>5. BIO的缺点</strong></p>
-<blockquote>
-<p>（1）线程创建资源开销巨大。如果有10000个连接怎么办？创建10000个线程？很明显不现实，太多的线程对系统资源的开销是巨大的。</p>
-<p>（2）单个线程的资源浪费。</p>
-<p>一个请求来了，如果这个线程从被创建为这个连接服务开始就一直在工工作，那么就不存在资源浪费，就像你找来一个服务员，他只服务一个客人，但他期间一直都有工作作，那么他的劳动力就算不上浪费。</p>
-<p>但是绝大多数情况下客人多服务员的需求都是暂时的，服务员很多时候都在发呆玩手机，等待着回应客人的请求，这样这个服务员的劳动力就被浪费了。那么在Bio中线程等待服务的时候是什么样的呢，那就是阻塞，线程等待着为连接服务（读数据/写数据/业务处理），很多时候BIo的服务子线程都是在阻塞状态下的。</p>
-</blockquote>
-<p><strong>基于以上不足出现了NIO</strong></p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CAP定理</title>
-    <url>/2021/04/18/CAP%E5%AE%9A%E7%90%86/</url>
-    <content><![CDATA[<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><h3 id="CAP理论概述"><a href="#CAP理论概述" class="headerlink" title="CAP理论概述"></a><strong>CAP理论概述</strong></h3><p>   一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两     项。</p>
-<h3 id="CAP的定义"><a href="#CAP的定义" class="headerlink" title="CAP的定义"></a><strong>CAP的定义</strong></h3><p><strong>Consistency 一致性</strong></p>
-<p>一致性指“<code>all nodes see the same data at the same time</code>”，即所有节点在同一时间的数据完全一致。</p>
-<p>一致性是因为多个数据拷贝下并发读写才有的问题，因此理解时一定要注意结合考虑多个数据拷贝下并发读写的场景。</p>
-<p>对于一致性，可以分为从客户端和服务端两个不同的视角。</p>
-<ul>
-<li>客户端</li>
-</ul>
-<p>从客户端来看，一致性主要指的是多并发访问时更新过的数据如何获取的问题。</p>
-<ul>
-<li>服务端</li>
-</ul>
-<p>从服务端来看，则是更新如何分布到整个系统，以保证数据最终一致。</p>
-<p>对于一致性，可以分为强/弱/最终一致性三类</p>
-<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
-<ul>
-<li>强一致性</li>
-</ul>
-<p>对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是强一致性。</p>
-<ul>
-<li>弱一致性</li>
-</ul>
-<p>如果能容忍后续的部分或者全部访问不到，则是弱一致性。</p>
-<ul>
-<li>最终一致性</li>
-</ul>
-<p>如果经过一段时间后要求能访问到更新后的数据，则是最终一致性。</p>
-<h3 id="Availability-可用性"><a href="#Availability-可用性" class="headerlink" title="Availability 可用性"></a><strong>Availability 可用性</strong></h3><p>可用性指“<code>Reads and writes always succeed</code>”，即服务在正常响应时间内一直可用。</p>
-<p>好的可用性主要是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。可用性通常情况下可用性和分布式数据冗余，负载均衡等有着很大的关联。</p>
-<h2 id="Partition-Tolerance分区容错性"><a href="#Partition-Tolerance分区容错性" class="headerlink" title="Partition Tolerance分区容错性"></a><strong>Partition Tolerance分区容错性</strong></h2><p>分区容错性指“<code>the system continues to operate despite arbitrary message loss or failure of part of the system</code>”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务。</p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>分布式</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ConcurrentHashMap 详解</title>
-    <url>/2021/05/27/ConcurrentHashMap%20%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<h2 id="ConcurrentHashMap-详解"><a href="#ConcurrentHashMap-详解" class="headerlink" title="ConcurrentHashMap 详解"></a>ConcurrentHashMap 详解</h2><h3 id="private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30"><a href="#private-static-final-int-MAXIMUM-CAPACITY-1-lt-lt-30" class="headerlink" title="private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;"></a>private static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</h3><ul>
-<li><strong>MAXIMUM_CAPACITY是2的30次方 的原因</strong>`<ol>
-<li>int的最大的值是2的31次方-1，所以容量无法到达2的31次方，</li>
-<li>需要让容量满足2的幂次，所以设置为2的30次方 </li>
-</ol>
-</li>
-</ul>
-<h3 id="private-static-final-int-DEFAULT-CAPACITY-16"><a href="#private-static-final-int-DEFAULT-CAPACITY-16" class="headerlink" title="private static final int DEFAULT_CAPACITY = 16;"></a>private static final int DEFAULT_CAPACITY = 16;</h3><ul>
-<li><strong>DEFAULT_CAPACITY = 16;</strong><ol>
-<li>方便数据迁移</li>
-<li>方便进行计算对应的位置</li>
-<li>概率统计</li>
-</ol>
-</li>
-</ul>
-<h3 id="new-ConcurrentHashMap-lt-gt-2-自定义大小解释："><a href="#new-ConcurrentHashMap-lt-gt-2-自定义大小解释：" class="headerlink" title="new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释："></a>new ConcurrentHashMap&lt;&gt;(2); 自定义大小解释：</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">int</span> cap = ((initialCapacity &gt;= (MAXIMUM_CAPACITY &gt;&gt;&gt; <span class="number">1</span>)) ?</span><br><span class="line">               MAXIMUM_CAPACITY :</span><br><span class="line">               tableSizeFor(initialCapacity + (initialCapacity &gt;&gt;&gt; <span class="number">1</span>) + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">this</span>.sizeCtl = cap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// tableSizeFor的功能（不考虑大于最大容量的情况）是返回大于输入参数且最近的2的整数次幂的数。比如10，则返回16。 </span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = c - <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">2</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">8</span>;</span><br><span class="line">        n |= n &gt;&gt;&gt; <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
       </tags>
   </entry>
   <entry>

@@ -433,71 +433,6 @@ G -->   V(Socket3 处理 Client 3 )</pre>
       </tags>
   </entry>
   <entry>
-    <title>Java 中的并发</title>
-    <url>/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/</url>
-    <content><![CDATA[<h3 id="java-中的Lock"><a href="#java-中的Lock" class="headerlink" title="java 中的Lock"></a>java 中的Lock</h3><ol>
-<li>ReentrantLock</li>
-<li>ReentrantReadWriteLock</li>
-<li>ReentrantLock</li>
-<li>lock</li>
-</ol>
-<h3 id="java-中的并发容器"><a href="#java-中的并发容器" class="headerlink" title="java 中的并发容器"></a>java 中的并发容器</h3><ol>
-<li>ConcurrentHashMap：并发版 HashMap</li>
-<li>CopyOnWriteArrayList：并发版 ArrayList</li>
-<li>CopyOnWriteArraySet：并发 Set</li>
-<li>ConcurrentLinkedQueue：并发队列 (基于链表)</li>
-<li>ConcurrentLinkedDeque：并发队列 (基于双向链表)</li>
-<li>ConcurrentSkipListMap：基于跳表的并发 Map</li>
-<li>ConcurrentSkipListSet：基于跳表的并发 Set</li>
-<li>ArrayBlockingQueue：阻塞队列 (基于数组)</li>
-<li>LinkedBlockingQueue：阻塞队列 (基于链表)</li>
-<li>LinkedBlockingDeque：阻塞队列 (基于双向链表)</li>
-<li>PriorityBlockingQueue：线程安全的优先队列</li>
-<li>SynchronousQueue：读写成对的队列</li>
-<li>LinkedTransferQueue：基于链表的数据交换队列</li>
-<li>DelayQueue：延时队列</li>
-</ol>
-<h3 id="java-中的并发框架"><a href="#java-中的并发框架" class="headerlink" title="java 中的并发框架"></a>java 中的并发框架</h3><ol>
-<li>Fork/join</li>
-</ol>
-<h3 id="java中的并发工具类"><a href="#java中的并发工具类" class="headerlink" title="java中的并发工具类"></a>java中的并发工具类</h3><ol>
-<li><p>CountDownLatch</p>
-</li>
-<li><p>CyclicBarrier</p>
-</li>
-<li><p>Semaphore</p>
-</li>
-<li><p>Exchanger</p>
-</li>
-</ol>
-<h3 id="Java中的原子操作类"><a href="#Java中的原子操作类" class="headerlink" title="Java中的原子操作类"></a>Java中的原子操作类</h3><ul>
-<li><p><strong>原子更新基本类型</strong></p>
-<p>·AtomicBoolean：原子更新布尔类型。<br>·AtomicInteger：原子更新整型。<br>·AtomicLong：原子更新长整型。</p>
-</li>
-<li><p><strong>原子更新数组</strong></p>
-<p>·AtomicIntegerArray：原子更新整型数组里的元素。<br>·AtomicLongArray：原子更新长整型数组里的元素。<br>·AtomicReferenceArray：原子更新引用类型数组里的元素。</p>
-</li>
-<li><p><strong>原子更新引用类型</strong></p>
-<p>·AtomicReference：原子更新引用类型。</p>
-<p>·AtomicReferenceFieldUpdater：原子更新引用类型里的字段。</p>
-<p>·AtomicMarkableReference：原子更新带有标记位的引用类型。可以原子更新一个布尔类型的标记位和引用类型。</p>
-</li>
-<li><p><strong>原子更新字段</strong></p>
-<p>·AtomicIntegerFieldUpdater：原子更新整型的字段的更新器。<br>·AtomicLongFieldUpdater：原子更新长整型字段的更新器。<br>·AtomicStampedReference：原子更新带有版本号的引用类型。该类将整数值与引用关联起来，可用于原子的更新数据和数据的版本号，可以解决使用CAS进行原子更新时可能出现的ABA问题。</p>
-</li>
-</ul>
-<h3 id="Executor"><a href="#Executor" class="headerlink" title="Executor"></a>Executor</h3><h3 id="Disruptor"><a href="#Disruptor" class="headerlink" title="Disruptor"></a>Disruptor</h3><h3 id="java中的ThreadPoolExecutor"><a href="#java中的ThreadPoolExecutor" class="headerlink" title="java中的ThreadPoolExecutor"></a>java中的ThreadPoolExecutor</h3><p><a href="https://cloud.tencent.com/developer/article/1056828">https://cloud.tencent.com/developer/article/1056828</a></p>
-<p>参考</p>
-<p><a href="https://cloud.tencent.com/developer/article/1056828">https://cloud.tencent.com/developer/article/1056828</a></p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java 类的加载过程</title>
     <url>/2021/06/24/Java%20%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<h3 id="Java-类的加载过程"><a href="#Java-类的加载过程" class="headerlink" title="Java 类的加载过程"></a>Java 类的加载过程</h3><h4 id=""><a href="#" class="headerlink" title=""></a><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E7%9A%84%E4%BA%94%E4%B8%AA%E9%83%A8%E5%88%86%281%29.jpg" alt="类的加载过程"></h4><h3 id="1-Loading-使用双亲委派机制将-class加载到内存中"><a href="#1-Loading-使用双亲委派机制将-class加载到内存中" class="headerlink" title="1.Loading 使用双亲委派机制将 .class加载到内存中"></a><strong>1.Loading 使用双亲委派机制将 .class加载到内存中</strong></h3><p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/jvm/%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE.jpg" alt="类的加载机制"></p>
@@ -563,49 +498,6 @@ G -->   V(Socket3 处理 Client 3 )</pre>
       </categories>
       <tags>
         <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java中的深克隆和浅克隆</title>
-    <url>/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/</url>
-    <content><![CDATA[<h4 id="Java中的深克隆和浅克隆"><a href="#Java中的深克隆和浅克隆" class="headerlink" title="Java中的深克隆和浅克隆"></a>Java中的深克隆和浅克隆</h4><p><strong>浅克隆：</strong> 创建一个新对象，新对象的属性和原来对象完全相同（新对象的地址 ！= 原来对象的地址），对于非基本类型属性，仍指向原有属性所指向的对象的内存地址。**(String 类型除外)**。</p>
-<p><strong>深克隆：</strong> 创建一个新对象，属性中引用的其他对象也会被克隆，不再指向原有对象地址。</p>
-<p><strong>浅克隆示例：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span>  </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">teacher</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] drive;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line">    <span class="keyword">private</span> student stu;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        teacher tea = <span class="keyword">new</span> teacher();</span><br><span class="line">        <span class="keyword">int</span>[] i = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">        i[<span class="number">0</span>]=<span class="number">88</span>;</span><br><span class="line">        tea.setDrive(i);</span><br><span class="line">        tea.setName(<span class="string">&quot;老师&quot;</span>);</span><br><span class="line">        student student = <span class="keyword">new</span> student();</span><br><span class="line">        student.setAge(<span class="number">33</span>);</span><br><span class="line">        student.setName(<span class="string">&quot;学生&quot;</span>);</span><br><span class="line">        tea.setAge(<span class="number">56</span>);</span><br><span class="line">        tea.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">        tea.setStu(student);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">       teacher clone = (teacher) tea.clone();</span><br><span class="line">         i[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">        clone.setDrive(i);</span><br><span class="line">        clone.setAge(<span class="number">78</span>);</span><br><span class="line">        clone.setName(<span class="string">&quot;克隆老师&quot;</span>);</span><br><span class="line">        clone.getStu().setAge(<span class="number">99</span>);</span><br><span class="line">        clone.getStu().setName(<span class="string">&quot;小学生&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        System.out.println(tea);</span><br><span class="line">        System.out.println(clone);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>结果</li>
-</ul>
-<p><strong>注意 此处只有基本数据类型被克隆 引用类型的地址并没有发生变化  Sting除外 因为String是final</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">teacher(drive=[<span class="number">99</span>], name=老师, age=<span class="number">56</span>, sex=男, stu=student(name=小学生, age=<span class="number">99</span>))</span><br><span class="line">teacher(drive=[<span class="number">99</span>], name=克隆老师, age=<span class="number">78</span>, sex=男, stu=student(name=小学生,age=<span class="number">99</span>))</span><br></pre></td></tr></table></figure>
-
-<p><strong>附图：</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%B5%85%E6%8B%B7%E8%B4%9D.png" alt="浅克隆UNL"></p>
-<p><strong>深克隆示例：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">teacher</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] drive;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> student stu;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意此处</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">            student clone1 = (student) <span class="keyword">this</span>.getStu().clone();</span><br><span class="line">            <span class="keyword">this</span>.setStu(clone1);</span><br><span class="line">            <span class="keyword">int</span>[] clone2 = <span class="keyword">this</span>.getDrive().clone();</span><br><span class="line">            <span class="keyword">this</span>.setDrive(clone2);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      teacher tea = <span class="keyword">new</span> teacher();</span><br><span class="line">      <span class="keyword">int</span>[] i = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">      i[<span class="number">0</span>] = <span class="number">88</span>;</span><br><span class="line">      tea.setDrive(i);</span><br><span class="line">      tea.setName(<span class="string">&quot;老师&quot;</span>);</span><br><span class="line">      student student = <span class="keyword">new</span> student();</span><br><span class="line">      student.setAge(<span class="number">33</span>);</span><br><span class="line">      student.setName(<span class="string">&quot;学生&quot;</span>);</span><br><span class="line">      tea.setAge(<span class="number">56</span>);</span><br><span class="line">      tea.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">      tea.setStu(student);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      teacher clone = (teacher) tea.clone();</span><br><span class="line">      i[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">      clone.setDrive(i);</span><br><span class="line">      clone.setAge(<span class="number">78</span>);</span><br><span class="line">      clone.setName(<span class="string">&quot;克隆老师&quot;</span>);</span><br><span class="line">      clone.getStu().setAge(<span class="number">99</span>);</span><br><span class="line">      clone.getStu().setName(<span class="string">&quot;小学生&quot;</span>);</span><br><span class="line"></span><br><span class="line">      System.out.println(tea);</span><br><span class="line">      System.out.println(clone);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>结果</li>
-</ul>
-<p><strong>注意结果发生明显的变化， 因为没个对象都被克隆 所有的引用都指向了不同的地址</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">teacher(drive=[<span class="number">88</span>], name=老师, age=<span class="number">56</span>, sex=男, stu=student(name=学生, age=<span class="number">33</span>))</span><br><span class="line">teacher(drive=[<span class="number">99</span>], name=克隆老师, age=<span class="number">78</span>, sex=男, stu=student(name=小学生, age=<span class="number">99</span>))</span><br></pre></td></tr></table></figure>
-
-<p><strong>附图：</strong></p>
-<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%B7%B1%E6%8B%B7%E8%B4%9D.png" alt="深克隆UML"></p>
-<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>Java基础知识</category>
-      </categories>
-      <tags>
-        <tag>Java中的深克隆和浅克隆</tag>
       </tags>
   </entry>
   <entry>
@@ -714,66 +606,6 @@ A[pc1]
       </categories>
       <tags>
         <tag>随笔记录</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LVS</title>
-    <url>/2021/03/21/LVS/</url>
-    <content><![CDATA[<h3 id="LVS的介绍"><a href="#LVS的介绍" class="headerlink" title="LVS的介绍"></a>LVS的介绍</h3><p><strong>LVS是什么？</strong><br>LVS（Linux Virtual Server，Linux虚拟服务器）是由章文嵩开发的一款开源软件（遵循GPL协议）。LVS工作在layer 4，又称为四层路由/四层交换，能够根据请求报文的目标IP地址和目标PORT将其调度转发至后端的某台服务器上，调度转发是根据调度算法来进行的。</p>
-<p>LVS由两部分组成，分别是工作在内核空间的ipvs框架和工作在用户空间的ipvsadm命令。ipvsadm是工作在用户空间的命令行工具，用于管理集群服务及集群服务上的Real Server（RS），而ipvs则是工作于内核上的netfilter的INPUT钩子上的程序，其功能是根据用户定义的集群实现对请求报文的转发。</p>
-<p>LVS支持基于TCP、UDP、SCTP、AH、EST、AH_EST等协议进行调度。</p>
-<p><strong>为什么要使用LVS？</strong></p>
-<p>LVS是负载均衡能力最强的一款软件，对于选择LVS作为负载均衡的原因总结如下。</p>
-<p>1、相比于Nginx、Haproxy等负载均衡器，LVS支持较大的并发量。Nginx、Haproxy是工作在七层的负载均衡器，因此需要监听在一个端口上，同时对于每一个客户端都需要打开一个套接字文件来接受请求数据，当在应用层分析完数据时，有需要扮演成客户端角色向后端的服务器主机发送请求报文，不仅需要打开大量套接字文件，还需要有多个随机端口可以使用，而端口数最多只有65535个，并且其中有一部分端口是不能使用的。因此，工作在七层的负载均衡软件（如Nginx、Haproxy等）的最大并发数受限于能够打开的套接字文件数（内核需要打开很多的文件描述符来维护）以及能使用的随机端口数。对于LVS而言，因此它工作在四层，所以不需要监听在某个端口以响应客户端请求，因此不需要打开套接字接受和发送数据，同时也不需要使用端口，所有功能均在ipvs中实现，因此LVS的性能更高，支持的并发量更大。据统计，LVS的最大并发量可以达到400~500w。</p>
-<p>2、LVS是一款开源且免费的软件，结合Linux使用可以大大降低企业的应用成本。</p>
-<p>3、LVS具有可伸缩性。当一台服务器负载压力增长时，系统可以在不降低服务质量的情况下通过扩展来满足需求。</p>
-<p>4、LVS具有高可靠性。这在国内很多大型的、关键性的Web站点实践中得到印证。</p>
-<h3 id="LVS的三种搭建模型"><a href="#LVS的三种搭建模型" class="headerlink" title="LVS的三种搭建模型"></a>LVS的三种搭建模型</h3><ul>
-<li><p><strong>NAT模式</strong><br>优点：集群中的物理服务器可以使用任何支持TCP/IP操作系统，物理服务器可以分配Internet的保留私有地址，只有负载均衡器需要一个合法的IP地址。</p>
-<p>不足：扩展性有限。当服务器节点（普通PC服务器）数据增长到20个或更多时,负载均衡器将成为整个系统的瓶颈，因为所有的请求包和应答包都需要经过负载均衡器再生。假使TCP包的平均长度是536字节的话，平均包再生延迟时间大约为60us（在Pentium处理器上计算的，采用更快的处理器将使得这个延迟时间变短），负载均衡器的最大容许能力为8.93M/s，假定每台物理服务器的平台容许能力为400K/s来计算，负责均衡器能为22台物理服务器计算。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20nat%E6%A8%A1%E5%9E%8B.png" alt="NAT模式"></p>
-</li>
-<li><p><strong>TUN模式</strong><br>我们发现，许多Internet服务（例如WEB服务器）的请求包很短小，而应答包通常很大。<br>优点：负载均衡器只负责将请求包分发给物理服务器，而物理服务器将应答包直接发给用户。所以，负载均衡器能处理很巨大的请求量，这种方式，一台负载均衡能为超过100台的物理服务器服务，负载均衡器不再是系统的瓶颈。使用VS-TUN方式，如果你的负载均衡器拥有100M的全双工网卡的话，就能使得整个Virtual Server能达到1G的吞吐量。<br>不足：但是，这种方式需要所有的服务器支持”IP Tunneling”(IP Encapsulation)协议，我仅在Linux系统上实现了这个，如果你能让其它操作系统支持，还在探索之中。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20TUN.png" alt="TUN"></p>
-</li>
-<li><p><strong>DR模式</strong><br>优点：和VS-TUN一样，负载均衡器也只是分发请求，应答包通过单独的路由方法返回给客户端。与VS-TUN相比，VS-DR这种实现方式不需要隧道结构，因此可以使用大多数操作系统做为物理服务器，其中包括：Linux 2.0.36、2.2.9、2.2.10、2.2.12；Solaris 2.5.1、2.6、2.7；FreeBSD 3.1、3.2、3.3；NT4.0无需打补丁；IRIX 6.5；HPUX11等。<br>不足：要求负载均衡器的网卡必须与物理网卡在一个物理段上<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20DR.png" alt="DR"></p>
-</li>
-</ul>
-<h3 id="使用LVS搭建基于四层网络模型的负载均衡器-DR模式"><a href="#使用LVS搭建基于四层网络模型的负载均衡器-DR模式" class="headerlink" title="使用LVS搭建基于四层网络模型的负载均衡器 DR模式"></a>使用LVS搭建基于四层网络模型的负载均衡器 DR模式</h3><p><strong>命令解释</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rr:轮循</span><br><span class="line">wrr:</span><br><span class="line">dh:</span><br><span class="line">sh:</span><br><span class="line"></span><br><span class="line">动态调度方法：</span><br><span class="line">lc: 最少连接</span><br><span class="line">wlc: 加权最少连接</span><br><span class="line">sed: 最短期望延迟</span><br><span class="line">nq: never queue</span><br><span class="line">LBLC: 基于本地的最少连接</span><br><span class="line">LBLCR: 基于本地的带复制功能的最少连接</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><figcaption><span>：</span></figcaption><table><tr><td class="code"><pre><span class="line">kernel parameter:</span><br><span class="line">目标mac地址为全F，交换机触发广播</span><br><span class="line">  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;*IF*&#x2F;</span><br><span class="line">arp_ignore: 定义接收到ARP请求时的响应级别；</span><br><span class="line">  0：只要本地配置的有相应地址，就给予响应；</span><br><span class="line">  1：仅在请求的目标(MAC)地址配置请求</span><br><span class="line">        到达的接口上的时候，才给予响应；</span><br><span class="line"></span><br><span class="line">arp_announce：定义将自己地址向外通告时的通告级别；</span><br><span class="line">  0：将本地任何接口上的任何地址向外通告；</span><br><span class="line">  1：试图仅向目标网络通告与其网络匹配的地址；</span><br><span class="line">  2：仅向与本地接口上地址匹配的网络进行通告；</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line"></span><br><span class="line">管理集群服务</span><br><span class="line">添加：-A -t|u|f service-address [-s scheduler]</span><br><span class="line">-t: TCP协议的集群</span><br><span class="line">-u: UDP协议的集群</span><br><span class="line">service-address:     IP:PORT</span><br><span class="line">-f: FWM: 防火墙标记</span><br><span class="line">service-address: Mark Number</span><br><span class="line">修改：-E</span><br><span class="line">删除：-D -t|u|f service-address</span><br><span class="line"></span><br><span class="line">ipvsadm -A -t 192.168.9.100:80 -s rr</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加：ipvsadm  -a -t|u|f service-address -r server-address [-g|i|m] [-w weight]</span><br><span class="line">  -t|u|f service-address：事先定义好的某集群服务</span><br><span class="line">  -r server-address: 某RS的地址，在NAT模型中，可使用IP：PORT实现端口映射；</span><br><span class="line">  [-g|i|m]: LVS类型 </span><br><span class="line">  -g: DR</span><br><span class="line">  -i: TUN</span><br><span class="line">  -m: NAT</span><br><span class="line">  [-w weight]: 定义服务器权重</span><br><span class="line">修改：-e</span><br><span class="line">删除：-d -t|u|f service-address -r server-address</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.8 –g</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.9 -g</span><br><span class="line">查看</span><br><span class="line">  -L|l</span><br><span class="line">  -n: 数字格式显示主机地址和端口</span><br><span class="line">  --stats：统计数据</span><br><span class="line">  --rate: 速率</span><br><span class="line">  --timeout: 显示tcp、tcpfin和udp的会话超时时长</span><br><span class="line">  -:c 显示当前的ipvs连接状况</span><br><span class="line">删除所有集群服务</span><br><span class="line">  -C：清空ipvs规则</span><br><span class="line">保存规则</span><br><span class="line">  -S</span><br><span class="line"># ipvsadm -S &gt; &#x2F;path&#x2F;to&#x2F;somefile</span><br><span class="line">载入此前的规则：</span><br><span class="line">  -R</span><br><span class="line"># ipvsadm -R &lt; &#x2F;path&#x2F;form&#x2F;somefile </span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>拓扑图</strong><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs-DR%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%9E%8B.png" alt="lvs-DR拓扑图"></li>
-<li><strong>开始搭建</strong></li>
-</ul>
-<p>1.在192.168.150.11 中添加192.168.150.100的网卡</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加网卡  ifconfig eth0:2 192.168.150.100&#x2F;24</span><br><span class="line"></span><br><span class="line">注意&#x2F;24代表子网掩码是255.255.255.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<p>   <font color='red'> 删除 eth0:2网卡 ifconfig eth0:2 down </font></p>
-<p> 2.调192.168.150.12  和 192.168.150.13的内核协议</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo 1  &gt;  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;eth0&#x2F;arp_ignore </span><br><span class="line">echo 1  &gt;  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;all&#x2F;arp_ignore </span><br><span class="line">echo 2 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;eth0&#x2F;arp_announce </span><br><span class="line">echo 2 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;all&#x2F;arp_announce </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>3.配置192.168.150.12  和 192.168.150.13环行路由</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ifconfig lo:2 192.168.150.100 netmask 255.255.255.255</span><br></pre></td></tr></table></figure>
-<p>4.在 192.168.150.12 和 192.168.150.13中安装 httpd</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install httpd -y</span><br><span class="line">启动  service httpd start</span><br><span class="line">创建主页vi &#x2F;var&#x2F;www&#x2F;html&#x2F;index.html</span><br></pre></td></tr></table></figure>
-<p>5在浏览器中输入192.168.150.12:80测试</p>
-<p>6.在192.168.150.11 中安装 ipvsadm</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line">添加进包的规则：ipvsadm -A  -t  192.168.150.100:80  -s rr</span><br><span class="line">添加负载的规则:</span><br><span class="line">ipvsadm -a  -t 192.168.150.100:80  -r  192.168.150.12 -g -w 1</span><br><span class="line">ipvsadm -a  -t 192.168.150.100:80  -r  192.168.150.13 -g -w 1</span><br><span class="line"></span><br><span class="line">查看规则：ipvsadm  -ln</span><br></pre></td></tr></table></figure>
-<p>7.验证：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">浏览器访问  192.168.150.100   看到负载  F5属性</span><br><span class="line">192.168.150.11：</span><br><span class="line">	netstat -natp   结论看不到socket连接</span><br><span class="line">192.168.150.12~192.168.150.13:</span><br><span class="line">	netstat -natp   结论看到很多的socket连接</span><br><span class="line">192.168.150.11:</span><br><span class="line">	ipvsadm -lnc    查看偷窥记录本</span><br><span class="line">	TCP 00:57  FIN_WAIT    192.168.150.1:51587 192.168.150.100:80 192.168.150.12:80</span><br><span class="line"></span><br><span class="line">	           FIN_WAIT： 连接过，偷窥了所有的包</span><br><span class="line">	           SYN_RECV： 基本上lvs都记录了，证明lvs没事，一定是后边网络层出问题</span><br></pre></td></tr></table></figure><link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
-      <categories>
-        <category>网络</category>
-      </categories>
-      <tags>
-        <tag>网络</tag>
       </tags>
   </entry>
   <entry>
@@ -3600,6 +3432,1126 @@ A(c)  --> B[i = 8]</pre>
       </tags>
   </entry>
   <entry>
+    <title>Java 中的并发</title>
+    <url>/2021/05/26/Java%20%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91/</url>
+    <content><![CDATA[<h3 id="java-中的Lock"><a href="#java-中的Lock" class="headerlink" title="java 中的Lock"></a>java 中的Lock</h3><ol>
+<li>ReentrantLock</li>
+<li>ReentrantReadWriteLock</li>
+<li>ReentrantLock</li>
+<li>lock</li>
+</ol>
+<h3 id="java-中的并发容器"><a href="#java-中的并发容器" class="headerlink" title="java 中的并发容器"></a>java 中的并发容器</h3><ol>
+<li>ConcurrentHashMap：并发版 HashMap</li>
+<li>CopyOnWriteArrayList：并发版 ArrayList</li>
+<li>CopyOnWriteArraySet：并发 Set</li>
+<li>ConcurrentLinkedQueue：并发队列 (基于链表)</li>
+<li>ConcurrentLinkedDeque：并发队列 (基于双向链表)</li>
+<li>ConcurrentSkipListMap：基于跳表的并发 Map</li>
+<li>ConcurrentSkipListSet：基于跳表的并发 Set</li>
+<li>ArrayBlockingQueue：阻塞队列 (基于数组)</li>
+<li>LinkedBlockingQueue：阻塞队列 (基于链表)</li>
+<li>LinkedBlockingDeque：阻塞队列 (基于双向链表)</li>
+<li>PriorityBlockingQueue：线程安全的优先队列</li>
+<li>SynchronousQueue：读写成对的队列</li>
+<li>LinkedTransferQueue：基于链表的数据交换队列</li>
+<li>DelayQueue：延时队列</li>
+</ol>
+<h3 id="java-中的并发框架"><a href="#java-中的并发框架" class="headerlink" title="java 中的并发框架"></a>java 中的并发框架</h3><ol>
+<li>Fork/join</li>
+</ol>
+<h3 id="java中的并发工具类"><a href="#java中的并发工具类" class="headerlink" title="java中的并发工具类"></a>java中的并发工具类</h3><ol>
+<li><p>CountDownLatch</p>
+</li>
+<li><p>CyclicBarrier</p>
+</li>
+<li><p>Semaphore</p>
+</li>
+<li><p>Exchanger</p>
+</li>
+</ol>
+<h3 id="Java中的原子操作类"><a href="#Java中的原子操作类" class="headerlink" title="Java中的原子操作类"></a>Java中的原子操作类</h3><ul>
+<li><p><strong>原子更新基本类型</strong></p>
+<p>·AtomicBoolean：原子更新布尔类型。<br>·AtomicInteger：原子更新整型。<br>·AtomicLong：原子更新长整型。</p>
+</li>
+<li><p><strong>原子更新数组</strong></p>
+<p>·AtomicIntegerArray：原子更新整型数组里的元素。<br>·AtomicLongArray：原子更新长整型数组里的元素。<br>·AtomicReferenceArray：原子更新引用类型数组里的元素。</p>
+</li>
+<li><p><strong>原子更新引用类型</strong></p>
+<p>·AtomicReference：原子更新引用类型。</p>
+<p>·AtomicReferenceFieldUpdater：原子更新引用类型里的字段。</p>
+<p>·AtomicMarkableReference：原子更新带有标记位的引用类型。可以原子更新一个布尔类型的标记位和引用类型。</p>
+</li>
+<li><p><strong>原子更新字段</strong></p>
+<p>·AtomicIntegerFieldUpdater：原子更新整型的字段的更新器。<br>·AtomicLongFieldUpdater：原子更新长整型字段的更新器。<br>·AtomicStampedReference：原子更新带有版本号的引用类型。该类将整数值与引用关联起来，可用于原子的更新数据和数据的版本号，可以解决使用CAS进行原子更新时可能出现的ABA问题。</p>
+</li>
+</ul>
+<h3 id="Executor"><a href="#Executor" class="headerlink" title="Executor"></a>Executor</h3><h3 id="Disruptor"><a href="#Disruptor" class="headerlink" title="Disruptor"></a>Disruptor</h3><h3 id="java中的ThreadPoolExecutor"><a href="#java中的ThreadPoolExecutor" class="headerlink" title="java中的ThreadPoolExecutor"></a>java中的ThreadPoolExecutor</h3><p><a href="https://cloud.tencent.com/developer/article/1056828">https://cloud.tencent.com/developer/article/1056828</a></p>
+<p>参考</p>
+<p><a href="https://cloud.tencent.com/developer/article/1056828">https://cloud.tencent.com/developer/article/1056828</a></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>随笔记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java中的深克隆和浅克隆</title>
+    <url>/2020/12/18/Java%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%85%8B%E9%9A%86%E5%92%8C%E6%B5%85%E5%85%8B%E9%9A%86/</url>
+    <content><![CDATA[<h4 id="Java中的深克隆和浅克隆"><a href="#Java中的深克隆和浅克隆" class="headerlink" title="Java中的深克隆和浅克隆"></a>Java中的深克隆和浅克隆</h4><p><strong>浅克隆：</strong> 创建一个新对象，新对象的属性和原来对象完全相同（新对象的地址 ！= 原来对象的地址），对于非基本类型属性，仍指向原有属性所指向的对象的内存地址。**(String 类型除外)**。</p>
+<p><strong>深克隆：</strong> 创建一个新对象，属性中引用的其他对象也会被克隆，不再指向原有对象地址。</p>
+<p><strong>浅克隆示例：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span>  </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">teacher</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] drive;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line">    <span class="keyword">private</span> student stu;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        teacher tea = <span class="keyword">new</span> teacher();</span><br><span class="line">        <span class="keyword">int</span>[] i = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">        i[<span class="number">0</span>]=<span class="number">88</span>;</span><br><span class="line">        tea.setDrive(i);</span><br><span class="line">        tea.setName(<span class="string">&quot;老师&quot;</span>);</span><br><span class="line">        student student = <span class="keyword">new</span> student();</span><br><span class="line">        student.setAge(<span class="number">33</span>);</span><br><span class="line">        student.setName(<span class="string">&quot;学生&quot;</span>);</span><br><span class="line">        tea.setAge(<span class="number">56</span>);</span><br><span class="line">        tea.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">        tea.setStu(student);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">       teacher clone = (teacher) tea.clone();</span><br><span class="line">         i[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">        clone.setDrive(i);</span><br><span class="line">        clone.setAge(<span class="number">78</span>);</span><br><span class="line">        clone.setName(<span class="string">&quot;克隆老师&quot;</span>);</span><br><span class="line">        clone.getStu().setAge(<span class="number">99</span>);</span><br><span class="line">        clone.getStu().setName(<span class="string">&quot;小学生&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        System.out.println(tea);</span><br><span class="line">        System.out.println(clone);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结果</li>
+</ul>
+<p><strong>注意 此处只有基本数据类型被克隆 引用类型的地址并没有发生变化  Sting除外 因为String是final</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">teacher(drive=[<span class="number">99</span>], name=老师, age=<span class="number">56</span>, sex=男, stu=student(name=小学生, age=<span class="number">99</span>))</span><br><span class="line">teacher(drive=[<span class="number">99</span>], name=克隆老师, age=<span class="number">78</span>, sex=男, stu=student(name=小学生,age=<span class="number">99</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>附图：</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%B5%85%E6%8B%B7%E8%B4%9D.png" alt="浅克隆UNL"></p>
+<p><strong>深克隆示例：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">teacher</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] drive;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String sex;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> student stu;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意此处</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Object clone = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clone = <span class="keyword">super</span>.clone();</span><br><span class="line">            student clone1 = (student) <span class="keyword">this</span>.getStu().clone();</span><br><span class="line">            <span class="keyword">this</span>.setStu(clone1);</span><br><span class="line">            <span class="keyword">int</span>[] clone2 = <span class="keyword">this</span>.getDrive().clone();</span><br><span class="line">            <span class="keyword">this</span>.setDrive(clone2);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> clone;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      teacher tea = <span class="keyword">new</span> teacher();</span><br><span class="line">      <span class="keyword">int</span>[] i = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">      i[<span class="number">0</span>] = <span class="number">88</span>;</span><br><span class="line">      tea.setDrive(i);</span><br><span class="line">      tea.setName(<span class="string">&quot;老师&quot;</span>);</span><br><span class="line">      student student = <span class="keyword">new</span> student();</span><br><span class="line">      student.setAge(<span class="number">33</span>);</span><br><span class="line">      student.setName(<span class="string">&quot;学生&quot;</span>);</span><br><span class="line">      tea.setAge(<span class="number">56</span>);</span><br><span class="line">      tea.setSex(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">      tea.setStu(student);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">      teacher clone = (teacher) tea.clone();</span><br><span class="line">      i[<span class="number">0</span>] = <span class="number">99</span>;</span><br><span class="line">      clone.setDrive(i);</span><br><span class="line">      clone.setAge(<span class="number">78</span>);</span><br><span class="line">      clone.setName(<span class="string">&quot;克隆老师&quot;</span>);</span><br><span class="line">      clone.getStu().setAge(<span class="number">99</span>);</span><br><span class="line">      clone.getStu().setName(<span class="string">&quot;小学生&quot;</span>);</span><br><span class="line"></span><br><span class="line">      System.out.println(tea);</span><br><span class="line">      System.out.println(clone);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结果</li>
+</ul>
+<p><strong>注意结果发生明显的变化， 因为没个对象都被克隆 所有的引用都指向了不同的地址</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">teacher(drive=[<span class="number">88</span>], name=老师, age=<span class="number">56</span>, sex=男, stu=student(name=学生, age=<span class="number">33</span>))</span><br><span class="line">teacher(drive=[<span class="number">99</span>], name=克隆老师, age=<span class="number">78</span>, sex=男, stu=student(name=小学生, age=<span class="number">99</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>附图：</strong></p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E6%B7%B1%E6%8B%B7%E8%B4%9D.png" alt="深克隆UML"></p>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Java基础知识</category>
+      </categories>
+      <tags>
+        <tag>Java中的深克隆和浅克隆</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LVS</title>
+    <url>/2021/03/21/LVS/</url>
+    <content><![CDATA[<h3 id="LVS的介绍"><a href="#LVS的介绍" class="headerlink" title="LVS的介绍"></a>LVS的介绍</h3><p><strong>LVS是什么？</strong><br>LVS（Linux Virtual Server，Linux虚拟服务器）是由章文嵩开发的一款开源软件（遵循GPL协议）。LVS工作在layer 4，又称为四层路由/四层交换，能够根据请求报文的目标IP地址和目标PORT将其调度转发至后端的某台服务器上，调度转发是根据调度算法来进行的。</p>
+<p>LVS由两部分组成，分别是工作在内核空间的ipvs框架和工作在用户空间的ipvsadm命令。ipvsadm是工作在用户空间的命令行工具，用于管理集群服务及集群服务上的Real Server（RS），而ipvs则是工作于内核上的netfilter的INPUT钩子上的程序，其功能是根据用户定义的集群实现对请求报文的转发。</p>
+<p>LVS支持基于TCP、UDP、SCTP、AH、EST、AH_EST等协议进行调度。</p>
+<p><strong>为什么要使用LVS？</strong></p>
+<p>LVS是负载均衡能力最强的一款软件，对于选择LVS作为负载均衡的原因总结如下。</p>
+<p>1、相比于Nginx、Haproxy等负载均衡器，LVS支持较大的并发量。Nginx、Haproxy是工作在七层的负载均衡器，因此需要监听在一个端口上，同时对于每一个客户端都需要打开一个套接字文件来接受请求数据，当在应用层分析完数据时，有需要扮演成客户端角色向后端的服务器主机发送请求报文，不仅需要打开大量套接字文件，还需要有多个随机端口可以使用，而端口数最多只有65535个，并且其中有一部分端口是不能使用的。因此，工作在七层的负载均衡软件（如Nginx、Haproxy等）的最大并发数受限于能够打开的套接字文件数（内核需要打开很多的文件描述符来维护）以及能使用的随机端口数。对于LVS而言，因此它工作在四层，所以不需要监听在某个端口以响应客户端请求，因此不需要打开套接字接受和发送数据，同时也不需要使用端口，所有功能均在ipvs中实现，因此LVS的性能更高，支持的并发量更大。据统计，LVS的最大并发量可以达到400~500w。</p>
+<p>2、LVS是一款开源且免费的软件，结合Linux使用可以大大降低企业的应用成本。</p>
+<p>3、LVS具有可伸缩性。当一台服务器负载压力增长时，系统可以在不降低服务质量的情况下通过扩展来满足需求。</p>
+<p>4、LVS具有高可靠性。这在国内很多大型的、关键性的Web站点实践中得到印证。</p>
+<h3 id="LVS的三种搭建模型"><a href="#LVS的三种搭建模型" class="headerlink" title="LVS的三种搭建模型"></a>LVS的三种搭建模型</h3><ul>
+<li><p><strong>NAT模式</strong><br>优点：集群中的物理服务器可以使用任何支持TCP/IP操作系统，物理服务器可以分配Internet的保留私有地址，只有负载均衡器需要一个合法的IP地址。</p>
+<p>不足：扩展性有限。当服务器节点（普通PC服务器）数据增长到20个或更多时,负载均衡器将成为整个系统的瓶颈，因为所有的请求包和应答包都需要经过负载均衡器再生。假使TCP包的平均长度是536字节的话，平均包再生延迟时间大约为60us（在Pentium处理器上计算的，采用更快的处理器将使得这个延迟时间变短），负载均衡器的最大容许能力为8.93M/s，假定每台物理服务器的平台容许能力为400K/s来计算，负责均衡器能为22台物理服务器计算。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20nat%E6%A8%A1%E5%9E%8B.png" alt="NAT模式"></p>
+</li>
+<li><p><strong>TUN模式</strong><br>我们发现，许多Internet服务（例如WEB服务器）的请求包很短小，而应答包通常很大。<br>优点：负载均衡器只负责将请求包分发给物理服务器，而物理服务器将应答包直接发给用户。所以，负载均衡器能处理很巨大的请求量，这种方式，一台负载均衡能为超过100台的物理服务器服务，负载均衡器不再是系统的瓶颈。使用VS-TUN方式，如果你的负载均衡器拥有100M的全双工网卡的话，就能使得整个Virtual Server能达到1G的吞吐量。<br>不足：但是，这种方式需要所有的服务器支持”IP Tunneling”(IP Encapsulation)协议，我仅在Linux系统上实现了这个，如果你能让其它操作系统支持，还在探索之中。<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20TUN.png" alt="TUN"></p>
+</li>
+<li><p><strong>DR模式</strong><br>优点：和VS-TUN一样，负载均衡器也只是分发请求，应答包通过单独的路由方法返回给客户端。与VS-TUN相比，VS-DR这种实现方式不需要隧道结构，因此可以使用大多数操作系统做为物理服务器，其中包括：Linux 2.0.36、2.2.9、2.2.10、2.2.12；Solaris 2.5.1、2.6、2.7；FreeBSD 3.1、3.2、3.3；NT4.0无需打补丁；IRIX 6.5；HPUX11等。<br>不足：要求负载均衡器的网卡必须与物理网卡在一个物理段上<br><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs%20DR.png" alt="DR"></p>
+</li>
+</ul>
+<h3 id="使用LVS搭建基于四层网络模型的负载均衡器-DR模式"><a href="#使用LVS搭建基于四层网络模型的负载均衡器-DR模式" class="headerlink" title="使用LVS搭建基于四层网络模型的负载均衡器 DR模式"></a>使用LVS搭建基于四层网络模型的负载均衡器 DR模式</h3><p><strong>命令解释</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rr:轮循</span><br><span class="line">wrr:</span><br><span class="line">dh:</span><br><span class="line">sh:</span><br><span class="line"></span><br><span class="line">动态调度方法：</span><br><span class="line">lc: 最少连接</span><br><span class="line">wlc: 加权最少连接</span><br><span class="line">sed: 最短期望延迟</span><br><span class="line">nq: never queue</span><br><span class="line">LBLC: 基于本地的最少连接</span><br><span class="line">LBLCR: 基于本地的带复制功能的最少连接</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><figcaption><span>：</span></figcaption><table><tr><td class="code"><pre><span class="line">kernel parameter:</span><br><span class="line">目标mac地址为全F，交换机触发广播</span><br><span class="line">  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;*IF*&#x2F;</span><br><span class="line">arp_ignore: 定义接收到ARP请求时的响应级别；</span><br><span class="line">  0：只要本地配置的有相应地址，就给予响应；</span><br><span class="line">  1：仅在请求的目标(MAC)地址配置请求</span><br><span class="line">        到达的接口上的时候，才给予响应；</span><br><span class="line"></span><br><span class="line">arp_announce：定义将自己地址向外通告时的通告级别；</span><br><span class="line">  0：将本地任何接口上的任何地址向外通告；</span><br><span class="line">  1：试图仅向目标网络通告与其网络匹配的地址；</span><br><span class="line">  2：仅向与本地接口上地址匹配的网络进行通告；</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line"></span><br><span class="line">管理集群服务</span><br><span class="line">添加：-A -t|u|f service-address [-s scheduler]</span><br><span class="line">-t: TCP协议的集群</span><br><span class="line">-u: UDP协议的集群</span><br><span class="line">service-address:     IP:PORT</span><br><span class="line">-f: FWM: 防火墙标记</span><br><span class="line">service-address: Mark Number</span><br><span class="line">修改：-E</span><br><span class="line">删除：-D -t|u|f service-address</span><br><span class="line"></span><br><span class="line">ipvsadm -A -t 192.168.9.100:80 -s rr</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加：ipvsadm  -a -t|u|f service-address -r server-address [-g|i|m] [-w weight]</span><br><span class="line">  -t|u|f service-address：事先定义好的某集群服务</span><br><span class="line">  -r server-address: 某RS的地址，在NAT模型中，可使用IP：PORT实现端口映射；</span><br><span class="line">  [-g|i|m]: LVS类型 </span><br><span class="line">  -g: DR</span><br><span class="line">  -i: TUN</span><br><span class="line">  -m: NAT</span><br><span class="line">  [-w weight]: 定义服务器权重</span><br><span class="line">修改：-e</span><br><span class="line">删除：-d -t|u|f service-address -r server-address</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.8 –g</span><br><span class="line"># ipvsadm -a -t 172.16.100.1:80 -r 192.168.10.9 -g</span><br><span class="line">查看</span><br><span class="line">  -L|l</span><br><span class="line">  -n: 数字格式显示主机地址和端口</span><br><span class="line">  --stats：统计数据</span><br><span class="line">  --rate: 速率</span><br><span class="line">  --timeout: 显示tcp、tcpfin和udp的会话超时时长</span><br><span class="line">  -:c 显示当前的ipvs连接状况</span><br><span class="line">删除所有集群服务</span><br><span class="line">  -C：清空ipvs规则</span><br><span class="line">保存规则</span><br><span class="line">  -S</span><br><span class="line"># ipvsadm -S &gt; &#x2F;path&#x2F;to&#x2F;somefile</span><br><span class="line">载入此前的规则：</span><br><span class="line">  -R</span><br><span class="line"># ipvsadm -R &lt; &#x2F;path&#x2F;form&#x2F;somefile </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>拓扑图</strong><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/data/%E7%BD%91%E7%BB%9C/lvs-DR%E6%90%AD%E5%BB%BA%E6%A8%A1%E5%9E%8B.png" alt="lvs-DR拓扑图"></li>
+<li><strong>开始搭建</strong></li>
+</ul>
+<p>1.在192.168.150.11 中添加192.168.150.100的网卡</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">添加网卡  ifconfig eth0:2 192.168.150.100&#x2F;24</span><br><span class="line"></span><br><span class="line">注意&#x2F;24代表子网掩码是255.255.255.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>   <font color='red'> 删除 eth0:2网卡 ifconfig eth0:2 down </font></p>
+<p> 2.调192.168.150.12  和 192.168.150.13的内核协议</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo 1  &gt;  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;eth0&#x2F;arp_ignore </span><br><span class="line">echo 1  &gt;  &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;all&#x2F;arp_ignore </span><br><span class="line">echo 2 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;eth0&#x2F;arp_announce </span><br><span class="line">echo 2 &gt; &#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;conf&#x2F;all&#x2F;arp_announce </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>3.配置192.168.150.12  和 192.168.150.13环行路由</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ifconfig lo:2 192.168.150.100 netmask 255.255.255.255</span><br></pre></td></tr></table></figure>
+<p>4.在 192.168.150.12 和 192.168.150.13中安装 httpd</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install httpd -y</span><br><span class="line">启动  service httpd start</span><br><span class="line">创建主页vi &#x2F;var&#x2F;www&#x2F;html&#x2F;index.html</span><br></pre></td></tr></table></figure>
+<p>5在浏览器中输入192.168.150.12:80测试</p>
+<p>6.在192.168.150.11 中安装 ipvsadm</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install ipvsadm -y</span><br><span class="line">添加进包的规则：ipvsadm -A  -t  192.168.150.100:80  -s rr</span><br><span class="line">添加负载的规则:</span><br><span class="line">ipvsadm -a  -t 192.168.150.100:80  -r  192.168.150.12 -g -w 1</span><br><span class="line">ipvsadm -a  -t 192.168.150.100:80  -r  192.168.150.13 -g -w 1</span><br><span class="line"></span><br><span class="line">查看规则：ipvsadm  -ln</span><br></pre></td></tr></table></figure>
+<p>7.验证：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">浏览器访问  192.168.150.100   看到负载  F5属性</span><br><span class="line">192.168.150.11：</span><br><span class="line">	netstat -natp   结论看不到socket连接</span><br><span class="line">192.168.150.12~192.168.150.13:</span><br><span class="line">	netstat -natp   结论看到很多的socket连接</span><br><span class="line">192.168.150.11:</span><br><span class="line">	ipvsadm -lnc    查看偷窥记录本</span><br><span class="line">	TCP 00:57  FIN_WAIT    192.168.150.1:51587 192.168.150.100:80 192.168.150.12:80</span><br><span class="line"></span><br><span class="line">	           FIN_WAIT： 连接过，偷窥了所有的包</span><br><span class="line">	           SYN_RECV： 基本上lvs都记录了，证明lvs没事，一定是后边网络层出问题</span><br></pre></td></tr></table></figure><link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux常用的命令</title>
+    <url>/2021/12/14/Linux%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h5 id="参考网址"><a href="#参考网址" class="headerlink" title="参考网址"></a>参考网址</h5><p><a href="https://wangchujiang.com/linux-command/list.html#!kw=ls">https://wangchujiang.com/linux-command/list.html#!kw=ls</a></p>
+<p><a href="https://wangchujiang.com/">https://wangchujiang.com/</a></p>
+<p><a href="https://github.com/jaywcjlove/linux-command">https://github.com/jaywcjlove/linux-command</a></p>
+<h5 id="linux的目录结构"><a href="#linux的目录结构" class="headerlink" title="linux的目录结构"></a>linux的目录结构</h5><ul>
+<li><p>/bin:  bin是Binaries（二进制文件的缩写），这个目录中存放的是经常使用的命令</p>
+</li>
+<li><p>/boot: 存放的是linux的核心文件，包括一些连接文件及镜像文件</p>
+</li>
+<li><p>/dev:   是Device(设备)的缩写  存放的linux的外部设备</p>
+</li>
+<li><p>/etc: linux的系统配置文件</p>
+</li>
+<li><p>/home:  用户的主目录</p>
+</li>
+<li><p>/lib:  library(可选) 系统最基本的动态连接口库</p>
+</li>
+<li><p>/media: 挂载目录 ，例如u盘光驱等</p>
+</li>
+<li><p>/mnt: 用户临时文件挂载目录</p>
+</li>
+<li><p>opt: optional(可选) 用户的软件安装目录  比如oracle</p>
+</li>
+<li><p>proc: 是Processes（进程）  的缩写  /proc 是一种伪文件系统（虚拟的文件系统），存储的是当前内核运行状态的一系列特殊文件，这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。</p>
+<p>这个目录的内容不在硬盘上而是在内存里，我们也可以直接修改里面的某些文件，比如可以通过下面的命令来屏蔽主机的ping命令，使别人无法ping你的机器：<code>echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</code></p>
+</li>
+<li><p>/root:  超级用户的主目录</p>
+</li>
+<li><p>/sbin: Super USer 超级用户的二级制文件,系统管理员使用的系统管理的程序</p>
+</li>
+<li><p>selinux: 这个目录就是Redhat/Centos所特有的目录，selinux安全机制，类似于windowsd的防火墙，存放的是selinux的相关文件</p>
+</li>
+<li><p>/srv: 存放的是服务启动之后需要提取的数据</p>
+</li>
+<li><p>/sys: 该文件系统是内核设备树的一个直观反映。</p>
+<p>当一个内核对象被创建的时候，对应的文件和目录也在内核对象子系统中被创建。</p>
+</li>
+<li><p>/temp: temoporary(临时)  这个目录用来存放临时文件的</p>
+</li>
+<li><p>/usr: usr 是 unix shared resources(共享资源) 的缩写，这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于 windows 下的 program files 目录。</p>
+</li>
+<li><p>/usr/bin: 系统用户使用的应用程序</p>
+</li>
+<li><p>usr/src: 内核源代码默认放置的目录</p>
+</li>
+<li><p>var:   （variable）变量的缩写，这个目录中放着不断扩充的文件，经常被修改的的文件放到这个目录下，包括一些日志文件</p>
+</li>
+<li><p>/run: 是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。</p>
+</li>
+</ul>
+<h5 id="Linux-vi-vim-文件编辑"><a href="#Linux-vi-vim-文件编辑" class="headerlink" title="Linux vi/vim 文件编辑"></a>Linux vi/vim 文件编辑</h5><table>
+<thead>
+<tr>
+<th>h 或 向左箭头键(←)</th>
+<th>光标向左移动一个字符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>j 或 向下箭头键(↓)</td>
+<td>光标向下移动一个字符</td>
+</tr>
+<tr>
+<td>k 或 向上箭头键(↑)</td>
+<td>光标向上移动一个字符</td>
+</tr>
+<tr>
+<td>l 或 向右箭头键(→)</td>
+<td>光标向右移动一个字符</td>
+</tr>
+<tr>
+<td>[Ctrl] + [f]</td>
+<td>屏幕『向下』移动一页，相当于 [Page Down]按键 (常用)</td>
+</tr>
+<tr>
+<td>[Ctrl] + [b]</td>
+<td>屏幕『向上』移动一页，相当于 [Page Up] 按键 (常用)</td>
+</tr>
+<tr>
+<td>[Ctrl] + [d]</td>
+<td>屏幕『向下』移动半页</td>
+</tr>
+<tr>
+<td>[Ctrl] + [u]</td>
+<td>屏幕『向上』移动半页</td>
+</tr>
+<tr>
+<td>/word</td>
+<td>向光标之下寻找一个名称为 word 的字符串。例如要在档案内搜寻 vbird 这个字符串，就输入 /vbird 即可！ (常用)</td>
+</tr>
+<tr>
+<td>?word</td>
+<td>向光标之上寻找一个字符串名称为 word 的字符串。</td>
+</tr>
+<tr>
+<td>n</td>
+<td>这个 n 是英文按键。代表重复前一个搜寻的动作。举例来说， 如果刚刚我们执行 /vbird 去向下搜寻 vbird 这个字符串，则按下 n 后，会向下继续搜寻下一个名称为 vbird 的字符串。如果是执行 ?vbird 的话，那么按下 n 则会向上继续搜寻名称为 vbird 的字符串！</td>
+</tr>
+<tr>
+<td>N</td>
+<td>这个 N 是英文按键。与 n 刚好相反，为『反向』进行前一个搜寻动作。 例如 /vbird 后，按下 N 则表示『向上』搜寻 vbird 。</td>
+</tr>
+<tr>
+<td>:n1,n2s/word1/word2/g</td>
+<td>n1 与 n2 为数字。在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2 ！举例来说，在 100 到 200 行之间搜寻 vbird 并取代为 VBIRD 则： 『:100,200s/vbird/VBIRD/g』。(常用)</td>
+</tr>
+<tr>
+<td><strong>:1,$s/word1/word2/g</strong> 或 <strong>:%s/word1/word2/g</strong></td>
+<td>从第一行到最后一行寻找 word1 字符串，并将该字符串取代为 word2 ！(常用)</td>
+</tr>
+<tr>
+<td><strong>:1,$s/word1/word2/gc</strong> 或 <strong>:%s/word1/word2/gc</strong></td>
+<td>从第一行到最后一行寻找 word1 字符串，并将该字符串取代为 word2 ！且在取代前显示提示字符给用户确认 (confirm) 是否需要取代！(常用)</td>
+</tr>
+<tr>
+<td>x, X</td>
+<td>在一行字当中，x 为向后删除一个字符 (相当于 [del] 按键)， X 为向前删除一个字符(相当于 [backspace] 亦即是退格键) (常用)</td>
+</tr>
+<tr>
+<td>nx</td>
+<td>n 为数字，连续向后删除 n 个字符。举例来说，我要连续删除 10 个字符， 『10x』。</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>删除游标所在的那一整行(常用)</td>
+</tr>
+<tr>
+<td>ndd</td>
+<td>n 为数字。删除光标所在的向下 n 行，例如 20dd 则是删除 20 行 (常用)</td>
+</tr>
+<tr>
+<td>yy</td>
+<td>复制游标所在的那一行(常用)</td>
+</tr>
+<tr>
+<td>nyy</td>
+<td>n 为数字。复制光标所在的向下 n 行，例如 20yy 则是复制 20 行(常用)</td>
+</tr>
+<tr>
+<td>p, P</td>
+<td>p 为将已复制的数据在光标下一行贴上，P 则为贴在游标上一行！ 举例来说，我目前光标在第 20 行，且已经复制了 10 行数据。则按下 p 后， 那 10 行数据会贴在原本的 20 行之后，亦即由 21 行开始贴。但如果是按下 P 呢？ 那么原本的第 20 行会被推到变成 30 行。 (常用)</td>
+</tr>
+<tr>
+<td>u</td>
+<td>ctrl+z  复原前一个动作。(常用)</td>
+</tr>
+<tr>
+<td>[Ctrl]+r</td>
+<td>重做上一个动作。(常用)</td>
+</tr>
+<tr>
+<td>:set nu</td>
+<td>显示行号，设定之后，会在每一行的前缀显示该行的行号</td>
+</tr>
+<tr>
+<td>:set nonu</td>
+<td>与 set nu 相反，为取消行号！</td>
+</tr>
+</tbody></table>
+<h5 id="linux-文件的基本属性"><a href="#linux-文件的基本属性" class="headerlink" title="linux 文件的基本属性"></a>linux 文件的基本属性</h5><ul>
+<li>当为 <strong>d</strong> 则是目录</li>
+<li>当为 <strong>-</strong> 则是文件；</li>
+<li>若是 <strong>l</strong> 则表示为链接文档(link file)；</li>
+<li>若是 <strong>b</strong> 则表示为装置文件里面的可供储存的接口设备(可随机存取装置)；</li>
+<li>若是 <strong>c</strong> 则表示为装置文件里面的串行端口设备，例如键盘、鼠标(一次性读取装置)。</li>
+</ul>
+<h5 id="linux-通配符"><a href="#linux-通配符" class="headerlink" title="linux 通配符"></a>linux 通配符</h5><table>
+<thead>
+<tr>
+<th>|</th>
+<th>管道符，或者（正则）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&gt;</td>
+<td>输出(正确) 输出重定向</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>输出(正确) 追加重定向</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>输入重定向</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>追加输入重定向</td>
+</tr>
+<tr>
+<td>~</td>
+<td>当前用户家目录</td>
+</tr>
+<tr>
+<td>`` $()</td>
+<td>引用命令被执行后的结果</td>
+</tr>
+<tr>
+<td>$</td>
+<td>以。。。结尾（正则）</td>
+</tr>
+<tr>
+<td>^</td>
+<td>以。。。开头（正则）</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配全部字符，通配符</td>
+</tr>
+<tr>
+<td>？</td>
+<td>任意一个字符，通配符</td>
+</tr>
+<tr>
+<td>#</td>
+<td>注释</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>让程序或脚本切换到后台执行</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>并且 同时成立</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>表示一个范围（正则，通配符）</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>产生一个序列（通配符）</td>
+</tr>
+<tr>
+<td>.</td>
+<td>当前目录的硬链接</td>
+</tr>
+<tr>
+<td>..</td>
+<td>上级目录的硬链接</td>
+</tr>
+</tbody></table>
+<h5 id="linux-重定向"><a href="#linux-重定向" class="headerlink" title="linux 重定向"></a>linux 重定向</h5><p>计算机的硬件设备有很多，常见的输入设备有键盘、鼠标、麦克风、手写板等，输出设备有显示器、投影仪、打印机等。不过，在 Linux 中，标准输入设备指的是键盘，标准输出设备指的是显示器。</p>
+<p>Linux 中一切皆文件，包括标准输入设备（键盘）和标准输出设备（显示器）在内的所有计算机硬件都是文件。</p>
+<p>为了表示和区分已经打开的文件，Linux 会给每个文件分配一个 ID，这个 ID 就是一个整数，被称为文件描述符（File Descriptor）。</p>
+<table>
+<tr>
+    <th>文件描述符</th>
+    <th>设备文件名</th>
+    <th>文件名</th>   
+    <th>类型</th>
+    <th>硬件</th>
+    <th colspan="2">符号表示</th>
+</tr> 
+<tr>
+    <th>0</th>
+    <th>/dev/stdin</th>
+    <th>stdin</th>
+    <th>标准输入文件</th>
+    <th>键盘</th>
+    <th> < </th>
+    <th> << </th>
+ </tr>
+    <tr>
+    <th>1</th>
+    <th>/dev/stdout</th>
+    <th>stdout</th>
+    <th>标准输出文件</th>
+    <th>显示器</th>
+    <th> > </th>
+    <th> >> </th>
+ </tr>
+    <tr>
+    <th>3</th>
+    <th>/dev/stderr</th>
+    <th>stdin</th>
+    <th>标准错误输出文件</th>
+    <th>显示器</th>
+    <th> 2> </th>
+    <th> 2>> </th>
+ </tr>
+</table>
+##### linux 磁盘命令
+
+<p><strong>df （英文全称：disk full）：列出文件系统的整体磁盘使用量</strong></p>
+<p><strong>du（英文全称：disk used）：检查磁盘空间使用量</strong></p>
+<p><strong>fdisk：用于磁盘分区</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">df [-ahikHTm] [目录或文件名]</span><br></pre></td></tr></table></figure>
+
+<p>选项与参数：</p>
+<ul>
+<li><p>-a ：列出所有的文件系统，包括系统特有的 /proc 等文件系统；</p>
+</li>
+<li><p>-k ：以 KBytes 的容量显示各文件系统；</p>
+</li>
+<li><p>-m ：以 MBytes 的容量显示各文件系统；</p>
+</li>
+<li><p>-h ：以人们较易阅读的 GBytes, MBytes, KBytes 等格式自行显示；</p>
+</li>
+<li><p>-H ：以 M=1000K 取代 M=1024K 的进位方式；</p>
+</li>
+<li><p>-T ：显示文件系统类型, 连同该 partition 的 filesystem 名称 (例如 ext3) 也列出；</p>
+</li>
+<li><p>-i ：不用硬盘容量，而以 inode 的数量来显示</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">du [-ahskm] 文件或目录名称</span><br></pre></td></tr></table></figure>
+
+<p>选项与参数：</p>
+<ul>
+<li>-a ：列出所有的文件与目录容量，因为默认仅统计目录底下的文件量而已。</li>
+<li>-h ：以人们较易读的容量格式 (G/M) 显示；</li>
+<li>-s ：列出总量而已，而不列出每个各别的目录占用容量；</li>
+<li>-S ：不包括子目录下的总计，与 -s 有点差别。</li>
+<li>-k ：以 KBytes 列出容量显示；</li>
+<li>-m ：以 MBytes 列出容量显示；</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fdisk [-l] 装置名称</span><br></pre></td></tr></table></figure>
+
+<p>选项与参数：</p>
+<ul>
+<li>-l ：输出后面接的装置所有的分区内容。若仅有 fdisk -l 时， 则系统将会把整个系统内能够搜寻到的装置的分区均列出来。</li>
+</ul>
+<h5 id="linux-进程命令"><a href="#linux-进程命令" class="headerlink" title="linux 进程命令"></a>linux 进程命令</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps   进程查看</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>a表示显示所有前台进程</p>
+</li>
+<li><p>x表示显示所有后台进程 </p>
+</li>
+<li><p>u表示显示进程是由哪个⽤户产⽣的</p>
+</li>
+<li><p>l表示显示更详细的信息 </p>
+</li>
+<li><p>e表示显示所有的进程</p>
+</li>
+</ul>
+<p><strong>ps aux 分析输出结果</strong></p>
+<ul>
+<li>①USER：该进程是由哪个⽤户产⽣的 </li>
+<li>②PID：进程的ID号 </li>
+<li>③%CPU：该进程占⽤CPU资源的百分⽐，占⽤越⾼，进程越耗费资源 </li>
+<li>④%MEM：该进程占⽤物理内存的百分⽐，占⽤越⾼，进程越耗费资源 </li>
+<li>⑤VSZ：该进程占⽤虚拟内存的⼤⼩，单位KB </li>
+<li>⑥RSS：该进程占⽤实际物理内存的⼤⼩，单位KB</li>
+<li> ⑦TTY：该进程是在哪个终端中运⾏的。其中TTY1-TTY6代表本地控制台终端。TTY2-6是本地的字符界⾯终端， TTY1是图形终端。PTS/0-255代表虚拟终端。如果是“？”，则表示该进程是由内核直接产⽣，⽽不是任何的终端产⽣。 </li>
+<li>⑧STAT：进程状态。常⻅的状态有R：运⾏、S：睡眠、T：停⽌、s：包含⼦进程、+：位于后台 </li>
+<li>⑨START：该进程的启动时间</li>
+<li> ⑩TIME：该进程占⽤CPU的运算时间，注意不是系统时间</li>
+<li> ⑪COMMAND：产⽣此进程的命令名</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">top  持续状态的进程</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-d表示秒数，指定top命令每隔⼏秒更新，默认是3秒</li>
+</ul>
+<p><strong>在top命令的交互模式当中可以执⾏的命令</strong>： </p>
+<ul>
+<li>①？或h：显示交互模式的帮助 </li>
+<li>②P：以CPU使⽤率排序，默认就是此项 </li>
+<li>③M：以内存的使⽤率排序</li>
+<li> ④N：以PID排序 </li>
+<li>⑤q：退出top</li>
+</ul>
+<p><strong>top命令输出的头5⾏结果</strong></p>
+<ul>
+<li>第⼀⾏是任务队列信息</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>12:26:46</td>
+<td>系统当前时间</td>
+</tr>
+<tr>
+<td>Up 1 day，13:32</td>
+<td>系统的运⾏时间，本机已经运⾏1天13 ⼩时32分钟</td>
+</tr>
+<tr>
+<td>2 users</td>
+<td>当前系统登录了两个⽤户</td>
+</tr>
+<tr>
+<td>Load average：0.00,0.00,0.00</td>
+<td>系统再之前1分钟，5分钟，15分钟的平 均负载。⼀般认为⼩于1时负载较⼩。 如果⼤于1，系统已经超出负荷</td>
+</tr>
+</tbody></table>
+<ul>
+<li>第⼆⾏是进程信息</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tasks：95 total</td>
+<td>系统中的进程总数</td>
+</tr>
+<tr>
+<td>1 running</td>
+<td>正在运⾏的进程数</td>
+</tr>
+<tr>
+<td>94 sleeping</td>
+<td>睡眠的进程</td>
+</tr>
+<tr>
+<td>0 stopped</td>
+<td>正在停⽌的进程</td>
+</tr>
+<tr>
+<td>0 zombie</td>
+<td>僵⼫进程。如果不是0，需要⼿⼯检查 僵⼫进程</td>
+</tr>
+</tbody></table>
+<ul>
+<li>第三⾏是cpu信息</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.1%us</td>
+<td>户模式占⽤的CPU百分</td>
+</tr>
+<tr>
+<td>0.1%sy</td>
+<td>系统模式占⽤的CPU百分</td>
+</tr>
+<tr>
+<td>0.0%ni</td>
+<td>改变过优先级的⽤户进程占⽤的CPU百分</td>
+</tr>
+<tr>
+<td>99.7%id</td>
+<td>空闲CPU的CPU百分</td>
+</tr>
+<tr>
+<td>0.1%wa</td>
+<td>等待输⼊/输出的进程的占⽤CPU百分</td>
+</tr>
+<tr>
+<td>0.0%hi</td>
+<td>硬件中断请求服务占⽤的CPU百分</td>
+</tr>
+<tr>
+<td>0.1%si</td>
+<td>软中断请求服务占⽤的CPU百分</td>
+</tr>
+<tr>
+<td>0.0%st</td>
+<td>st（steal time）虚拟时间百分⽐。就是当有虚拟机时，虚拟CPU等待时机CPU的时间百分⽐</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>第四⾏是物理内存信息</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mem：625344k total</td>
+<td>物理内存的总量，单位KB</td>
+</tr>
+<tr>
+<td>571504k used</td>
+<td>经使⽤的物理内存数量</td>
+</tr>
+<tr>
+<td>53840k free</td>
+<td>闲的物理内存数量，我们使⽤的是虚拟 机，总共只分配了658MB内存，所以只 有53MB的空闲内存了</td>
+</tr>
+<tr>
+<td>65800k buffers</td>
+<td>作为缓冲的内存数量</td>
+</tr>
+</tbody></table>
+<ul>
+<li>第五⾏是交换分区（swap）信息</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Swap：524280k total</td>
+<td>交换分区（虚拟内存）的总⼤⼩</td>
+</tr>
+<tr>
+<td>0k used</td>
+<td>已经使⽤的交互式分区的⼤⼩</td>
+</tr>
+<tr>
+<td>524280k free</td>
+<td>空闲交换分区的⼤⼩</td>
+</tr>
+<tr>
+<td>409280k cached</td>
+<td>作为缓存的交换分区的⼤⼩</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pstree [选项]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-p表示显示进程的PID</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">kill 命令</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1 SIGHUP 该信号让进程⽴即关闭，然后重新读取配置⽂件之后重启 </li>
+<li>2 SIGINT 程序终⽌信号，⽤户终⽌前台进程。相当去输出ctrl+c快捷键 </li>
+<li>9 SIGKILL ⽤来⽴即结束程序的运⾏，本信号不能被阻塞、忽略。⼀般 ⽤于强制终⽌进程 </li>
+<li>15 SIGTERM 正在结束进程的信号，kill命令的默认信号。有时如果进程已 经发⽣问题，这个信号是⽆法正常终⽌进程的，我们这时才 会尝试SIGKILL信号，也就是信号9 </li>
+<li>18 SIGCONT 信号可以让暂停的进程恢复执⾏，本信号不能被阻断 </li>
+<li>19 SIGSTOP 该信号可以暂停前台进程，相当于输⼊crtl+z快捷键。本信号 不能被阻断</li>
+</ul>
+<p><strong>用法</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@circle ~]# kill -1 32411</span><br><span class="line">重启PID为32411的进程</span><br><span class="line">[root@circle ~]# kill -9 32425</span><br><span class="line">强制终⽌PID为32425的进程</span><br><span class="line">[root@circle ~]# kill -15 32452</span><br><span class="line">相当于[root@circle ~]# kill 32452，正常结束PID为32452的进程</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">killall [选项] [信号] 进程名按照进程名杀死进程</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>①-i参数会询问是否要杀死某个进程 </li>
+<li>②-I参数会忽略进程名的⼤⼩写</li>
+</ul>
+<h5 id="linux-管理网卡配置文件命令"><a href="#linux-管理网卡配置文件命令" class="headerlink" title="linux 管理网卡配置文件命令"></a>linux 管理网卡配置文件命令</h5><p><strong>nmcli命令是CentOS8新增的，nm是服务NetworkManager的缩写，cli表示命令行界面</strong></p>
+<p>nmcli修改网卡信息操作：<br>使用nmcli修改网卡信息，实际上是修改文件/etc/sysconfig/network-scripts/ifcfg-ens32</p>
+<ul>
+<li><p>查看NetworkManager服务状态，默认是开启的</p>
+<p>nmcli</p>
+</li>
+<li><p>查看网络设备状态</p>
+<p>nmcli device status</p>
+</li>
+<li><p>查看某个网卡详细信息（IP，dns，gateway）</p>
+<p>nmcli device show ens32  #ens32是网卡</p>
+</li>
+<li><p>增加一个网络连接名称为wqc的连接在网卡eth0上</p>
+<p>nmcli c add type ethernet con-name wqc ifname eth0</p>
+</li>
+<li><p>删除一个网络连接</p>
+<p>nmcli c del wqc</p>
+</li>
+<li><p>设置ip地址为手动指定</p>
+<p>nmcli connection modify ens32 ipv4.method manual  #对应BOOTPROTO=static</p>
+</li>
+<li><p>设置ip地址为dhcp自动获取</p>
+<p>nmcli connection modify ens32 ipv4.method auto  #对应BOOTPROTO=dhcp</p>
+</li>
+<li><p>设置开机自动连接<br>nmcli connection modify ens32 connection.autoconnect yes #对应ONBOOT=yes<br>nmcli connection modify ens32 connection.autoconnect no  #对应ONBOOT=no</p>
+</li>
+<li><p>设置静态ip地址</p>
+<p>nmcli connection modify ens32 ipv4.addresses ‘192.168.1.11’</p>
+</li>
+<li><p>设置网关</p>
+<p>nmcli connection modify ens32 ipv4.gateway ‘192.168.1.1’</p>
+</li>
+<li><p>设置dns</p>
+<p>nmcli connection modify ens32 ipv4.dns ‘114.114.114.114’</p>
+</li>
+<li><p>重新加载ifcfg-ens32配置文件</p>
+<p>nmcli connection reload #修改后，都需要reload一下</p>
+</li>
+<li><p>不重启系统，让网卡生效的3种方法</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">方法1：nmcli connection up ens32 （推荐）</span><br><span class="line">方法2：nmcli device connect ens32</span><br><span class="line">方法3：nmcli device reapply ens32</span><br></pre></td></tr></table></figure>
+
+<h5 id="linux-yum"><a href="#linux-yum" class="headerlink" title="linux yum"></a>linux yum</h5><ul>
+<li><p>删除软件：yum remove foo-x.x.x.rpm或者yum erase foo-x.x.x.rpm</p>
+</li>
+<li><p>升级软件：yum upgrade foo或者yum update foo</p>
+</li>
+<li><p>查询信息：yum info foo</p>
+</li>
+<li><p>搜索软件（以包含foo字段为例）：yum search foo</p>
+</li>
+<li><p>显示软件包依赖关系：yum deplist foo</p>
+</li>
+<li><p>ls /etc/yum.repos.d/ 查看yum.repos.d 下面的目录</p>
+</li>
+<li><p>yum list | wc -l //测试，并统计结果</p>
+</li>
+<li><p>yum provides ifconfig //查询ifconfig命令是哪个包安装的的。</p>
+</li>
+<li><p>yum history  查看安装历史</p>
+</li>
+<li><p>yum history undo [软件id]  回撤，逆向操作</p>
+</li>
+<li><p>yum install   安装软件</p>
+</li>
+<li><p>yum reinstall  重新安装</p>
+</li>
+</ul>
+<h5 id="linu-rpm"><a href="#linu-rpm" class="headerlink" title="linu rpm"></a>linu rpm</h5><ul>
+<li>rpm -ql 软件名  查看软件安装的路径</li>
+</ul>
+<h5 id="linux-防火墙"><a href="#linux-防火墙" class="headerlink" title="linux 防火墙"></a>linux 防火墙</h5><p><strong>firewalld区域的概念</strong></p>
+<p>firewalld防火墙为了简化管理，将所有网络流量分为多个区（zone），然后根据数据包的源IP地址或传入的网络接口等条件将流量传入相应区域。每个区域都定义了自己打开或者关闭的端口和服务列表</p>
+<p>1.最终一个区域的安全程度是取决于管理员在此区域中设置的规则</p>
+<p>2.区域如同进入主机的安全门，每个区域都具有不同限制程度的规则，只会允许符合规则的流量传入</p>
+<p>3.可以根据网络规模，使用一个或多个区域，但是任何一个 活跃区域 至少需要关联 源地址或接口</p>
+<p>4.默认情况下，public区域是默认区域，包含所有接口（网卡）</p>
+<p><strong>firewalld防火墙9个区域</strong></p>
+<p>trusted（信任区域）允许所有的传入流量</p>
+<p>public（公共区域）允许与ssh或dhcpv6-client预定义服务匹配的传入流量，其余均拒绝。是新添加网络接口的默认区域</p>
+<p>external（外部区域）允许与 ssh 预定义服务匹配的传入流量，其余均拒绝。 默认将通过此区域转发的IPv4传出流量将进行地址伪装，可用于为 路由器启用了伪装功能的外部网络</p>
+<p>home（家庭区域）允许与ssh、ipp-client、mdns、samba-client或dhcpv6-client预定义服务匹配的传入流量，其余均拒绝</p>
+<p>internal（内部区域）默认值时与home区域相同</p>
+<p>work（工作区域）允许与 ssh、ipp-client、dhcpv6-client 预定义服务匹配的传入流量，其余均拒绝</p>
+<p>dmz（隔离区域也称为非军事区域）允许与 ssh 预定义服务匹配的传入流量，其余均拒绝</p>
+<p>block（限制区域）拒绝所有传入流量</p>
+<p>drop（丢弃区域）丢弃所有传入流量，并且不产生包含ICMP的错误响应</p>
+<ul>
+<li>开启防火墙：systemctl start firewalld</li>
+<li>关闭防火墙：systemctl stop firewalld</li>
+<li>查看防火墙状态： systemctl status firewalld</li>
+<li>设置开机启动： systemctl enable firewalld</li>
+<li>禁用开机启动： systemctl disable firewalld</li>
+<li>重启防火墙：firewalld-cmd –reload</li>
+<li>开放端口号：（修改后须重启防火墙方可生效） ： firewall-cmd –zone=public  –add-port=8080/tcp  –permanent</li>
+<li>查看开放端口： firewall-cmd –list-ports</li>
+</ul>
+<h5 id="linux-自动任务"><a href="#linux-自动任务" class="headerlink" title="linux 自动任务"></a>linux 自动任务</h5><ul>
+<li>at：专门处理一次性的计划任务</li>
+<li>crontab：专门定义周期性计划任务，周期性循环做任务</li>
+<li>batch：系统自行选择空闲时间去执行指定的任务</li>
+</ul>
+<p>at： 命令是用来执行一次性任务，比如要在二十分钟后重启，要在 2 分钟后启动一个可执行程序，或者在一天后执行一个脚本。适合应对突发性和临时性的任务。</p>
+<p>查看atd的运行状态： systemctl status atd</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">at [选项] [时间]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-l 列出所有的计划任务。（等价与 <code>atq</code> 命令）</li>
+<li>-c &lt;任务号&gt; 查看指定计划任务的脚本内容</li>
+<li>-d&lt;任务号&gt; 删除计划任务</li>
+</ul>
+<p>在添加计划任务时，<code>at</code> 会从标准输入读取任务内容，可以输入多条命令，输入完成后，另起一个空行，按 <code>Ctrl+D</code> 结束输入。输入的命令会被自动转化为脚本。详情请看下面的例子。</p>
+<p>常用的时间格式</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;时&gt;:&lt;分&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">&lt;时&gt;:&lt;分&gt; &lt;年&gt;-&lt;月&gt;-&lt;日&gt;</span><br></pre></td></tr></table></figure>
+
+<p>添加计划任务：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">[root: ~]# at 08:24</span><br><span class="line"></span><br><span class="line">at&gt; sleep 5    </span><br><span class="line">at&gt; &lt;EOT&gt;   #输入完成后另起一个空行，然后输入 Ctrl+D</span><br><span class="line"></span><br><span class="line">job 3 at Tue May 16 08:24:00 2017</span><br><span class="line">#计划任务被指定为 3 号</span><br></pre></td></tr></table></figure>
+
+<h5 id="linux-shell入门"><a href="#linux-shell入门" class="headerlink" title="linux shell入门"></a>linux shell入门</h5><ul>
+<li>#!/bin/bash开头（指定解析器）</li>
+</ul>
+<p><strong>获取系统变量</strong></p>
+<ul>
+<li>echo $HOME  获取家目录</li>
+<li>echo $PWD 获取当前路径</li>
+<li>echo $SHELL 获取shell目录</li>
+<li>echo $USER  获取当前用户</li>
+</ul>
+<p><strong>自定义变量</strong></p>
+<ul>
+<li>变量名的规则</li>
+</ul>
+<p>​        （1）变量名称可以由字母、数字和下划线组成，但是不能以数字开头，环境变量名建议大写。</p>
+<p>​        （2）等号两侧不能有空格</p>
+<p>​        （3）在bash中，变量默认类型都是字符串类型，无法直接进行数值运算。</p>
+<p>​        （4）变量的值如果有空格，需要使用双引号或单引号括起来。</p>
+<ul>
+<li><p>定义变量：变量=值</p>
+</li>
+<li><p>撤销变量：unset 变量</p>
+</li>
+<li><p>声明静态变量：readonly 变量，注意：不能unset</p>
+</li>
+<li><p>声明全局变量： export 变量名</p>
+</li>
+</ul>
+<p><strong>特殊变量</strong></p>
+<pre><code>- $n  （功能描述：n为数字，$0代表该脚本名称，$1-$9代表第一到第九个参数，十以上的参数，十以上的参数需要用大括号包含，如$&#123;10&#125;）
+</code></pre>
+<ul>
+<li><p>$#  （功能描述：获取所有输入参数个数，常用于循环）。</p>
+</li>
+<li><p>$*  （功能描述：这个变量代表命令行中所有的参数，$*把所有的参数看成一个整体）</p>
+</li>
+<li><p> $@ （功能描述：这个变量也代表命令行中所有的参数，不过$@把每个参数区分对待）</p>
+</li>
+<li><p>$？ （功能描述：最后一次执行的命令的返回状态。如果这个变量的值为0，证明上一个命令正确执行；如果这个变量的值为非0（具体是哪个数，由命令自己来决定），则证明上一个命令执行不正确了。</p>
+</li>
+</ul>
+<p><strong>运算符</strong></p>
+<ul>
+<li>基本语法</li>
+</ul>
+<p>​      （1）“$((运算式))”或“$[运算式]”</p>
+<p>​      （2）expr  + , - , *, /, %  加，减，乘，除，取余</p>
+<p><strong>条件判断</strong></p>
+<ul>
+<li>基本语法</li>
+</ul>
+<p>​         [ condition ]（注意condition前后要有空格）</p>
+<p>​         注意：条件非空即为true，[ atguigu ]返回true，[] 返回false。</p>
+<ul>
+<li><p>常用判断条件</p>
+<p> （1）两个整数之间比较</p>
+</li>
+</ul>
+<p>​        = 字符串比较</p>
+<p>​         -lt 小于（less than）          -le 小于等于（less equal）</p>
+<p>​         -eq 等于（equal）            -gt 大于（greater than）</p>
+<p>​        -ge 大于等于（greater equal）    -ne 不等于（Not equal）</p>
+<p>​    （2）按照文件权限进行判断</p>
+<p>​         -r 有读的权限（read）        -w 有写的权限（write）</p>
+<p>​         -x 有执行的权限（execute）</p>
+<p>​    （3）按照文件类型进行判断</p>
+<p>​         -f 文件存在并且是一个常规的文件（file）</p>
+<p>​         -e 文件存在（existence）      -d 文件存在并是一个目录（directory）</p>
+<p><strong>流程控制</strong></p>
+<ul>
+<li><p>if判断</p>
+<p>if [ 条件判断式 ];then </p>
+<p> 程序 </p>
+<p>fi </p>
+<p>或者 </p>
+<p>if [ 条件判断式 ] </p>
+<p> then </p>
+<p>  程序 </p>
+<p>fi</p>
+</li>
+<li><p>case 语句</p>
+</li>
+</ul>
+<p>case $变量名 in </p>
+<p> “值1”） </p>
+<p>  如果变量的值等于值1，则执行程序1 </p>
+<p>  ;;</p>
+<p> “值2”） </p>
+<p>  如果变量的值等于值2，则执行程序2 </p>
+<p>  ;;</p>
+<p> …省略其他分支… </p>
+<p> *） </p>
+<p>  如果变量的值都不是以上的值，则执行此程序 </p>
+<p>  ;;</p>
+<p>esac</p>
+<ol>
+<li><p>case行尾必须为单词“in”，每一个模式匹配必须以右括号“）”结束。</p>
+</li>
+<li><p>双分号“**;;**”表示命令序列结束，相当于java中的break。</p>
+</li>
+<li><p>最后的“*）”表示默认模式，相当于java中的default。</p>
+</li>
+</ol>
+<ul>
+<li>if</li>
+</ul>
+<p> for (( 初始值;循环控制条件;变量变化 )) </p>
+<p> do </p>
+<p>  程序 </p>
+<p> done</p>
+<ul>
+<li>while</li>
+</ul>
+<p>while [ 条件判断式 ] </p>
+<p> do </p>
+<p>  程序</p>
+<p> done</p>
+<p><strong>read读取控制台输入</strong></p>
+<p>read(选项)(参数)</p>
+<p>​    选项：</p>
+<p>-p：指定读取值时的提示符；</p>
+<p>-t：指定读取值时等待的时间（秒）。</p>
+<p>参数</p>
+<p>​    变量：指定读取值的变量名</p>
+<p><strong>系统函数</strong></p>
+<ul>
+<li>basename 在路径中获取文件名称</li>
+<li>dirname 从给定的包含绝对路径的文件名中去除文件名（非目录的部分）</li>
+</ul>
+<p><strong>自定义函数</strong></p>
+<ul>
+<li>基本语法</li>
+</ul>
+<p>[ function ] funname[()]</p>
+<p>{</p>
+<p>   [return int;]</p>
+<p>}</p>
+<p>调用：funname</p>
+<ul>
+<li>经验技巧</li>
+</ul>
+<p>​    （1）必须在调用函数地方之前，先声明函数，shell脚本是逐行运行。不会像其它语言一样先编译。</p>
+<p>​    （2）函数返回值，只能通过$?系统变量获得，可以显示加：return返回，如果不加，将以最后一条命令运行结果，作为返回值。    return后跟数值n(0-255)</p>
+<p><strong>shell 工具</strong></p>
+<ul>
+<li><p>cut  </p>
+<p>cut的工作就是“剪”，具体的说就是在文件中负责剪切数据用的。cut 命令从文件的每一行剪切字节、字符和字段并将这些字节、字符和字段输出</p>
+</li>
+</ul>
+<p>1.基本用法</p>
+<p>cut [选项参数]  filename</p>
+<p>说明：默认分隔符是制表符</p>
+<p>2.选项参数说明</p>
+<table>
+<thead>
+<tr>
+<th>-f</th>
+<th>列号，提取第几列</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d</td>
+<td>分隔符，按照指定分隔符分割列</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>sed</p>
+<p>sed是一种流编辑器，它一次处理一行内容。处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”，接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。文件内容并没有改变，除非你使用重定向存储输出。</p>
+</li>
+</ul>
+<ol>
+<li>基本用法</li>
+</ol>
+<p>sed [选项参数]  ‘command’ filename</p>
+<ol start="2">
+<li>选项参数说明</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>选项参数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-e</td>
+<td>直接在指令列模式上进行sed的动作编辑。</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>命令功能描述</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>a</em></td>
+<td>新增，a的后面可以接字串，在下一行出现</td>
+</tr>
+<tr>
+<td>d</td>
+<td>删除</td>
+</tr>
+<tr>
+<td>s</td>
+<td>查找并替换</td>
+</tr>
+</tbody></table>
+<ul>
+<li>awk </li>
+</ul>
+<p>一个强大的文本分析工具，把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行分析处理。</p>
+<ol>
+<li>基本用法</li>
+</ol>
+<p>awk [选项参数] ‘pattern1{action1} pattern2{action2}…’ filename</p>
+<p>pattern：表示AWK在数据中查找的内容，就是匹配模式</p>
+<p>action：在找到匹配内容时所执行的一系列命令</p>
+<ol start="2">
+<li>选项参数说明</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>选项参数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-F</td>
+<td>指定输入文件折分隔符</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>赋值一个用户定义变量</td>
+</tr>
+</tbody></table>
+<ul>
+<li>sort</li>
+</ul>
+<p>sort命令是在Linux里非常有用，它将文件进行排序，并将排序结果标准输出。</p>
+<ol>
+<li>基本语法</li>
+</ol>
+<p>sort(选项)(参数)</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-n</td>
+<td>依照数值的大小排序</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>以相反的顺序来排序</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>设置排序时所用的分隔字符</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>指定需要排序的列</td>
+</tr>
+</tbody></table>
+<link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mysql锁机制</title>
     <url>/2020/11/24/mysql%E9%94%81%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h3 id="1、MySQL锁的基本介绍"><a href="#1、MySQL锁的基本介绍" class="headerlink" title="1、MySQL锁的基本介绍"></a>1、MySQL锁的基本介绍</h3><p>​        <strong>锁是计算机协调多个进程或线程并发访问某一资源的机制。</strong>在数据库中，除传统的 计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供许多用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一 个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。从这个角度来说，锁对数据库而言显得尤其重要，也更加复杂。</p>
@@ -4006,6 +4958,162 @@ A[Mater] --> B[Slave]
       </categories>
       <tags>
         <tag>中间件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常见的轮询算法</title>
+    <url>/2021/11/01/%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h4 id="常见的轮询算法"><a href="#常见的轮询算法" class="headerlink" title="常见的轮询算法"></a>常见的轮询算法</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServerIps</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, Integer&gt; WEIGHT_LIST = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="comment">// total weight is 50</span></span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.1&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.2&quot;</span>, <span class="number">8</span>);</span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.3&quot;</span>, <span class="number">3</span>);</span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.4&quot;</span>, <span class="number">6</span>);</span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.5&quot;</span>, <span class="number">5</span>);</span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.6&quot;</span>, <span class="number">5</span>);</span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.7&quot;</span>, <span class="number">4</span>);</span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.8&quot;</span>, <span class="number">7</span>);</span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.9&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        WEIGHT_LIST.put(<span class="string">&quot;192.168.0.10&quot;</span>, <span class="number">9</span>); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="Random–完全随机算法"><a href="#Random–完全随机算法" class="headerlink" title="Random–完全随机算法"></a>Random–完全随机算法</h5><p>缺点：所有服务器的访问概率都是相同的。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RandomLoadBalancing</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getServer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> randomPos = ThreadLocalRandom.current().nextInt(ServerIps.LIST.size());</span><br><span class="line">        <span class="keyword">return</span> ServerIps.LIST.get(randomPos);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            System.out.println(getServer());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="WeightedRandom–加权随机算法"><a href="#WeightedRandom–加权随机算法" class="headerlink" title="WeightedRandom–加权随机算法"></a>WeightedRandom–加权随机算法</h5><p>缺点：权重低的服务器可能很长一段时间都访问不到</p>
+<ul>
+<li><strong>复制法实现</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WeightRandomLoadBalancing</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 主要的思路就是对服务进行一个复制</span></span><br><span class="line"><span class="comment">     * 当权重设置过大时，list容易被撑爆</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">getServer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;String&gt; iplist = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        ServerIps.WEIGHT_LIST.forEach((k, v) -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (v != <span class="number">0</span>) &#123;</span><br><span class="line">                iplist.add(k);</span><br><span class="line">                v--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// 随机返回一个数组的值</span></span><br><span class="line">        <span class="keyword">return</span> iplist.get(ThreadLocalRandom.current().nextInt(iplist.size()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            System.out.println(getServer());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>累加</strong> </p>
+<p>平时，经常会遇到权重随机算法，从不同权重的N个元素中随机选择一个，并使得总体选择结果是按照权重分布的。如广告投放、负载均衡等。如有4个元素A、B、C、D，权重分别为1、2、3、4，随机结果中A:B:C:D的比例要为1:2:3:4。<br>总体思路：累加每个元素的权重A(1)-B(3)-C(6)-D(10)，则4个元素的的权重管辖区间分别为[0,1)、[1,3)、[3,6)、[6,10)。然后随机出一个[0,10)之间的随机数。落在哪个区间，则该区间之后的元素即为按权重命中的元素。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WeightRandomLoadBalancingV2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getServer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Integer&gt; map = ServerIps.WEIGHT_LIST;</span><br><span class="line">        <span class="comment">//计算总权值</span></span><br><span class="line">        <span class="keyword">int</span> totalWeight = map.values().stream().mapToInt(p -&gt; p).sum();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//随机一个随机数</span></span><br><span class="line">        <span class="keyword">int</span> index = ThreadLocalRandom.current().nextInt(totalWeight);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历  服务  map</span></span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            <span class="comment">//如果权重大于  索引</span></span><br><span class="line">            <span class="keyword">if</span> (entry.getValue() &gt;= index) &#123;</span><br><span class="line">                <span class="comment">// 返回这个服务</span></span><br><span class="line">                <span class="keyword">return</span> entry.getKey();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//否则，索引 = 当前索引 - 当前服务的权重</span></span><br><span class="line">            index = index - entry.getValue();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="RoundRobin–完全轮询算法"><a href="#RoundRobin–完全轮询算法" class="headerlink" title="RoundRobin–完全轮询算法"></a>RoundRobin–完全轮询算法</h5><p>缺点：从头到尾轮询一遍，不能根据服务器性能设置权重</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomRobin</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String[] ipList = (String[]) ServerIps.WEIGHT_LIST.keySet().toArray();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> index;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getServer</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (index == ipList.length) &#123;</span><br><span class="line">            index = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ipList[index++];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="WeightedRoundRobin-加权轮询算法"><a href="#WeightedRoundRobin-加权轮询算法" class="headerlink" title="WeightedRoundRobin-加权轮询算法"></a>WeightedRoundRobin-加权轮询算法</h5><p>优点：可以根据服务器性能设置访问权重</p>
+<p>缺点：可能某个服务器权重大，长时间执行，遇到耗时大的请求，压力会很大</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServerIps</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> index;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getServer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> totalweigth = WEIGHT_LIST.values().stream().mapToInt(v -&gt; v).sum();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> number = (index++) % totalweigth;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String, Integer&gt; ip : WEIGHT_LIST.entrySet()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (ip.getValue() &gt;= number) &#123;</span><br><span class="line">                <span class="keyword">return</span> ip.getKey();</span><br><span class="line">            &#125;</span><br><span class="line">            number -= ip.getValue();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Stream.iterate(<span class="number">0</span>, x -&gt; x + <span class="number">1</span>).limit(<span class="number">20</span>).forEach(x -&gt; &#123;</span><br><span class="line">            System.out.println(getServer());</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是这种算法有⼀个缺点: -台服务器的权重特别⼤的时候，他需要连续的的处理请求，但是实际.上我们想达 到的效果是，对于100次请求，只要有100*8/50=16次就够了，这16次不⼀定要连续的访问，⽐如假设我们有三 台服务器servers= [A, B, C],对应的权重为weights=[5, 1, 1] ,总权重为7,那么上述这个算法的结果是: AAAAABC，那么如果能够是这么⼀个结果呢: AABACAA，把B和C平均插⼊到5个A中间，这样是⽐较均衡的 了。</p>
+<h5 id="SmoothWeightedRoundRobin–平滑加权轮询算法"><a href="#SmoothWeightedRoundRobin–平滑加权轮询算法" class="headerlink" title="SmoothWeightedRoundRobin–平滑加权轮询算法"></a>SmoothWeightedRoundRobin–平滑加权轮询算法</h5><p><a href="http://aibenlin.com/algorithm/2019/07/22/algorithm-weight.html">参考文章</a></p>
+<p>优点：根据权重分配服务，同时又保证权重低的服务可以被访问到</p>
+<p>缺点：集群环境下，同一个用户访问无法分流到固定一台机器</p>
+<p>每个服务器对应两个权重，分别为weight 和currentWeight。其中weight是固定的，currentWeight 会动态 调整，初始值为0。当有新的请求进来时，遍历服务器列表,让它的currentWeight加上⾃身权重。遍历完 成后，找到最⼤的currentWeight,并将其减去权重总和，然后返回相应的服务器即可。 服务器servers= [A, B, C],对应的权重为weights=[5, 1, 1] ,总权重为7</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SmoothWeight</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> weight;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> currentWeight;</span><br><span class="line">    <span class="keyword">private</span> String address;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SmoothWeight</span><span class="params">(<span class="keyword">int</span> weight, <span class="keyword">int</span> currentWeight, String address)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.weight = weight;</span><br><span class="line">        <span class="keyword">this</span>.currentWeight = currentWeight;</span><br><span class="line">        <span class="keyword">this</span>.address = address;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServerIps</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, SmoothWeight&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        map.put(<span class="string">&quot;10.180.11.126:8888&quot;</span>, <span class="keyword">new</span> SmoothWeight(<span class="number">5</span>, <span class="number">5</span>, <span class="string">&quot;10.180.11.126:8888&quot;</span>));</span><br><span class="line">        map.put(<span class="string">&quot;10.180.11.128:8888&quot;</span>, <span class="keyword">new</span> SmoothWeight(<span class="number">2</span>, <span class="number">2</span>, <span class="string">&quot;10.180.11.128:8888&quot;</span>));</span><br><span class="line">        map.put(<span class="string">&quot;10.180.11.130:8888&quot;</span>, <span class="keyword">new</span> SmoothWeight(<span class="number">9</span>, <span class="number">9</span>, <span class="string">&quot;10.180.11.130:8888&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getServer</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        SmoothWeight maxSmoothWeight = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> totalWeigth = map.values().stream().mapToInt(SmoothWeight::getWeight).sum();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String, SmoothWeight&gt; entry : map.entrySet()) &#123;</span><br><span class="line"></span><br><span class="line">            SmoothWeight currentSmoothWeight = entry.getValue();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (maxSmoothWeight == <span class="keyword">null</span> || currentSmoothWeight.getCurrentWeight() &gt; maxSmoothWeight.getCurrentWeight()) &#123;</span><br><span class="line">                maxSmoothWeight = currentSmoothWeight;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">assert</span> maxSmoothWeight != <span class="keyword">null</span>;</span><br><span class="line">        maxSmoothWeight.setCurrentWeight(maxSmoothWeight.getCurrentWeight() - totalWeigth);</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String, SmoothWeight&gt; entry : map.entrySet()) &#123;</span><br><span class="line"></span><br><span class="line">            SmoothWeight currentSmoothWeight = entry.getValue();</span><br><span class="line"></span><br><span class="line">            currentSmoothWeight.setCurrentWeight(currentSmoothWeight.getCurrentWeight() + currentSmoothWeight.getWeight());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> maxSmoothWeight.getAddress();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Stream.iterate(<span class="number">0</span>, x -&gt; x + <span class="number">1</span>).limit(<span class="number">15</span>).forEach(v -&gt; &#123;</span><br><span class="line">            System.out.println(getServer());</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="ConsistentHash–⼀致性哈希算法"><a href="#ConsistentHash–⼀致性哈希算法" class="headerlink" title="ConsistentHash–⼀致性哈希算法"></a>ConsistentHash–⼀致性哈希算法</h5><p>服务器集群接收到⼀次请求调⽤时，可以根据根据请求的信息，⽐如客户端的ip地址，或请求路径与请求参数 等信息进⾏哈希，可以得出⼀个哈希值，特点是对于相同的ip地址，或请求路径和请求参数哈希出来的值是样的，只要能再增加⼀个算法，能够把这个哈希值映射成⼀个服务端ip地址，就可以使相同的请求(相同 的ip 地址，或请求路径和请求参数)落到同⼀服务器上。 因为客户端发起的请求情况是⽆穷⽆尽的(客户端地址不同，请求参数不同等等)，所以对于的哈希值也是⽆ 穷⼤的，所以我们不可能把所有的哈希值都进⾏映射到服务端ip上，所以这⾥需要⽤到哈希环。如下图</p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E5%93%88%E5%B8%8C%E4%B8%80%E8%87%B4%E7%AE%97%E6%B3%95/1.png" alt="image-20211029170319777"></p>
+<ul>
+<li><p>哈希值如果需要ip1和ip2之间的，则应该选择ip2作为结果; </p>
+</li>
+<li><p>哈希值如果需要ip2和ip3之间的，则应该选择ip3作为结果; </p>
+</li>
+<li><p>哈希值如果需要ip3和ip4之间的，则应该选择ip4作为结果; </p>
+</li>
+<li><p>哈希值如果需要ip4和ip1之间的，则应该选择ip1作为结果; </p>
+<p>上⾯这情况是⽐较均匀情况，如果出现ip4服务器不存在，那就是这样了:</p>
+</li>
+</ul>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E5%93%88%E5%B8%8C%E4%B8%80%E8%87%B4%E7%AE%97%E6%B3%95/2.png" alt="image-20211029170522157"></p>
+<p>会发现，ip3和ip1 直接的范围是⽐较⼤的，会有更多的请求落在ip1上，这是不“公平的”，解决这个问题需要加 ⼊虚拟节点，⽐如:</p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E5%93%88%E5%B8%8C%E4%B8%80%E8%87%B4%E7%AE%97%E6%B3%95/3.png" alt="image-20211029170632619"></p>
+<p>其中ip2-1, ip3-1就是虚拟结点，并不能处理节点，⽽是等同于对应的ip2和ip3服务器。 实际上，这只是处理这种不均衡性的⼀种思路，实际上就算哈希环本身是均衡的，你也可以增加更多的虚拟节 点来使这个环更加平滑，⽐如:</p>
+<p><img src="https://yaozhiwen-1304431220.cos.ap-beijing.myqcloud.com/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/images/%E5%93%88%E5%B8%8C%E4%B8%80%E8%87%B4%E7%AE%97%E6%B3%95/4.png" alt="image-20211029170703312"></p>
+<p>这个彩环也是“公平的”，并且只有ip1,2,3,4是实际的服务器ip,其他的都是虚拟ip。 那么我们怎么来实现呢? 对于我们的服务端ip地址，我们肯定知道总共有多少个，需要多少个虚拟节点也有我们⾃⼰控制，虚拟节点越 多则流量越均衡，另外哈希算法也是很关键的，哈希算法越散列流量也将越均衡。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServerIps</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;String&gt; LIST = Arrays.asList(</span><br><span class="line">            <span class="string">&quot;192.168.0.1&quot;</span>,</span><br><span class="line">            <span class="string">&quot;192.168.0.2&quot;</span>,</span><br><span class="line">            <span class="string">&quot;192.168.0.3&quot;</span>,</span><br><span class="line">            <span class="string">&quot;192.168.0.4&quot;</span>,</span><br><span class="line">            <span class="string">&quot;192.168.0.5&quot;</span>,</span><br><span class="line">            <span class="string">&quot;192.168.0.6&quot;</span>,</span><br><span class="line">            <span class="string">&quot;192.168.0.7&quot;</span>,</span><br><span class="line">            <span class="string">&quot;192.168.0.8&quot;</span>,</span><br><span class="line">            <span class="string">&quot;192.168.0.9&quot;</span>,</span><br><span class="line">            <span class="string">&quot;192.168.0.10&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConsistentHash</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> SortedMap&lt;Integer, String&gt; virtualNodes = <span class="keyword">new</span> TreeMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VIRTUAL_NODES = <span class="number">160</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (String ip : ServerIps.LIST) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; VIRTUAL_NODES; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> hash = getHash(ip + <span class="string">&quot;VN&quot;</span> + i);</span><br><span class="line">                virtualNodes.put(hash, ip);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">getServer</span><span class="params">(String client)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> hash = getHash(client);</span><br><span class="line">        <span class="comment">// 等到⼤于该hash值的排好序的Map</span></span><br><span class="line">        SortedMap&lt;Integer, String&gt; subMap = virtualNodes.tailMap(hash);</span><br><span class="line">        <span class="comment">// ⼤于该Hash值的第⼀个元素的位置</span></span><br><span class="line">        Integer nodeIndex = subMap.firstKey();</span><br><span class="line">        <span class="comment">//如果不存在⼤于该hash值的元素，则返回根节点</span></span><br><span class="line">        <span class="keyword">if</span> (nodeIndex == <span class="keyword">null</span>) &#123;</span><br><span class="line">            nodeIndex = virtualNodes.firstKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> subMap.get(nodeIndex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getHash</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> p = <span class="number">16777619</span>;</span><br><span class="line">        <span class="keyword">int</span> hash = (<span class="keyword">int</span>) <span class="number">2166136261L</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.length(); i++) &#123;</span><br><span class="line">            hash = (hash ^ str.charAt(i)) * p;</span><br><span class="line">        &#125;</span><br><span class="line">        hash += hash &lt;&lt; <span class="number">13</span>;</span><br><span class="line">        hash ^= hash &gt;&gt; <span class="number">7</span>;</span><br><span class="line">        hash += hash &lt;&lt; <span class="number">3</span>;</span><br><span class="line">        hash ^= hash &gt;&gt; <span class="number">17</span>;</span><br><span class="line">        hash += hash &lt;&lt; <span class="number">5</span>;</span><br><span class="line">        <span class="keyword">if</span> (hash &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            hash = Math.abs(hash);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> hash;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            System.out.println(getServer(<span class="string">&quot;client&quot;</span> + i));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="LeastActive–最⼩活跃算法"><a href="#LeastActive–最⼩活跃算法" class="headerlink" title="LeastActive–最⼩活跃算法"></a>LeastActive–最⼩活跃算法</h5><p>前⾯⼏种⽅法主要⽬标是使服务端分配到的调⽤次数尽量均衡，但是实际情况是这样吗?调⽤次数相同，服务器的 负载就均衡吗?当然不是，这⾥还要考虑每次调⽤的时间，⽽最⼩活跃数算法则是解决这种问题的。 活跃调⽤数越⼩，表明该服务提供者效率越⾼，单位时间内可处理更多的请求。此时应优先将请求分配给该服务提 供者。在具体实现中，每个服务提供者对应⼀个活跃数。初始情况下，所有服务提供者活跃数均为0。每收到⼀个 请求，活跃数加1，完成请求后则将活跃数减1。在服务运⾏⼀段时间后，性能好的服务提供者处理请求的速度更 快，因此活跃数下降的也越快，此时这样的服务提供者能够优先获取到新的服务请求、这就是最⼩活跃数负载均衡 算法的基本思想。除了最⼩活跃数，最⼩活跃数算法在实现上还引⼊了权重值。所以准确的来说，最⼩活跃数算 法是基于加权最⼩活跃数算法实现的。举个例⼦说明⼀下，在⼀个服务提供者集中，有两个性能优异的服务提供 者。某⼀时刻它们的活跃数相同，则会根据它们的权重去分配请求，权重越⼤，获取到新请求的概率就越⼤。如果 两个服务提供者权重相同，此时随机选择-个即可。 实现: 因为活跃数是需要服务器请求处理相关逻辑配合的，⼀次调⽤开始时活跃数+1,结束时活跃数-1，所以这⾥就不对 这部分逻辑进⾏模拟了，直接使⽤⼀个map来进⾏模拟。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServerIps</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 服务器当前活跃数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, Integer&gt; ACTIVITY_LIST = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.1&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.2&quot;</span>, <span class="number">0</span>);</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.3&quot;</span>, <span class="number">1</span>);</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.4&quot;</span>, <span class="number">3</span>);</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.5&quot;</span>, <span class="number">0</span>);</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.6&quot;</span>, <span class="number">1</span>);</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.7&quot;</span>, <span class="number">4</span>);</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.8&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.9&quot;</span>, <span class="number">7</span>);</span><br><span class="line">        ACTIVITY_LIST.put(<span class="string">&quot;192.168.0.10&quot;</span>, <span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LeastActive</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">getServer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Optional&lt;Integer&gt; minValue =</span><br><span class="line"></span><br><span class="line">                ServerIps.ACTIVITY_LIST.values().stream().min(Comparator.naturalOrder());</span><br><span class="line">        <span class="keyword">if</span> (minValue.isPresent()) &#123;</span><br><span class="line">            List&lt;String&gt; minActivityIps = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">            ServerIps.ACTIVITY_LIST.forEach((ip, activity) -&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span> (activity.equals(minValue.get())) &#123;</span><br><span class="line">                    minActivityIps.add(ip);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">if</span> (minActivityIps.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                Map&lt;String, Integer&gt; weightList = <span class="keyword">new</span> LinkedHashMap&lt;String, Integer&gt;();</span><br><span class="line">                ServerIps.WEIGHT_LIST.forEach((ip, weight) -&gt; &#123;</span><br><span class="line">                    <span class="keyword">if</span> (minActivityIps.contains(ip)) &#123;</span><br><span class="line">                        weightList.put(ip, ServerIps.WEIGHT_LIST.get(ip));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">int</span> totalWeight = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">boolean</span> sameWeight = <span class="keyword">true</span>;</span><br><span class="line">                Object[] weights = weightList.values().toArray();</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; weights.length; i++) &#123;</span><br><span class="line">                    Integer weight = (Integer) weights[i];</span><br><span class="line">                    totalWeight += weight;</span><br><span class="line">                    <span class="keyword">if</span> (sameWeight &amp;&amp; i &gt; <span class="number">0</span> &amp;&amp; !weight.equals(weights[i - <span class="number">1</span>])) &#123;</span><br><span class="line">                        sameWeight = <span class="keyword">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">int</span> randomPos = ThreadLocalRandom.current().nextInt(totalWeight);</span><br><span class="line">                <span class="keyword">if</span> (!sameWeight) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (String ip : weightList.keySet()) &#123;</span><br><span class="line">                        Integer value = weightList.get(ip);</span><br><span class="line">                        <span class="keyword">if</span> (randomPos &lt; value) &#123;</span><br><span class="line">                            <span class="keyword">return</span> ip;</span><br><span class="line">                        &#125;</span><br><span class="line">                        randomPos = randomPos - value;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> (String) weightList.keySet().toArray()</span><br><span class="line">                        [ThreadLocalRandom.current().nextInt(weightList.size())];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> minActivityIps.get(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> (String) ServerIps.WEIGHT_LIST.keySet().toArray()</span><br><span class="line">                    [ThreadLocalRandom.current().nextInt(ServerIps.WEIGHT_LIST.size())];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">130</span>; i++) &#123;</span><br><span class="line">            System.out.println(getServer());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="主流框架负载均衡"><a href="#主流框架负载均衡" class="headerlink" title="主流框架负载均衡"></a>主流框架负载均衡</h4><ul>
+<li>dubbo负载均衡 <a href="https://dubbo.apache.org/zh/docs/advanced/loadbalance/">https://dubbo.apache.org/zh/docs/advanced/loadbalance/</a></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>特性</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RandomLoadBalance</td>
+<td>加权随机</td>
+<td>默认算法，默认权重相同</td>
+</tr>
+<tr>
+<td>RoundRobinLoadBalance</td>
+<td>加权轮询</td>
+<td>借鉴于 Nginx 的平滑加权轮询算法，默认权重相 同，</td>
+</tr>
+<tr>
+<td>LeastActiveLoadBalance</td>
+<td>最少活跃优先 + 加权 随机</td>
+<td>背后是能者多劳的思想</td>
+</tr>
+<tr>
+<td>ShortestResponseLoadBalance</td>
+<td>最短响应优先 + 加权 随机</td>
+<td>更加关注响应速度</td>
+</tr>
+<tr>
+<td>ConsistentHashLoadBalance</td>
+<td>⼀致性 Hash</td>
+<td>确定的⼊参，确定的提供者，适⽤于有状态请 求</td>
+</tr>
+</tbody></table>
+<p><strong>Random</strong></p>
+<ul>
+<li><p>加权随机，按权重设置随机概率。 </p>
+</li>
+<li><p>在⼀个截⾯上碰撞的概率⾼，但调⽤量越⼤分布越均匀，⽽且按概率使⽤权重后也⽐较均匀，有利于动态调 整提供者权重。</p>
+</li>
+<li><p> 缺点：存在慢的提供者累积请求的问题，⽐如：第⼆台机器很慢，但没挂，当请求调到第⼆台时就卡在那， 久⽽久之，所有请求都卡在调到第⼆台上。 </p>
+</li>
+</ul>
+<p><strong>RoundRobin</strong></p>
+<ul>
+<li><p>加权轮询，按公约后的权重设置轮询⽐率，循环调⽤节点</p>
+</li>
+<li><p> 缺点：同样存在慢的提供者累积请求的问题。 </p>
+</li>
+</ul>
+<p><strong>LeastActive</strong></p>
+<ul>
+<li><p>加权最少活跃调⽤优先，活跃数越低，越优先调⽤，相同活跃数的进⾏加权随机。活跃数指调⽤前后计数差 （针对特定提供者：请求发送数 - 响应返回数），表示特定提供者的任务堆积量，活跃数越低，代表该提供 者处理能⼒越强。</p>
+</li>
+<li><p> 使慢的提供者收到更少请求，因为越慢的提供者的调⽤前后计数差会越⼤；相对的，处理能⼒越强的节点， 处理更多的请求。 </p>
+</li>
+</ul>
+<p><strong>ShortestResponse</strong> </p>
+<ul>
+<li><p>加权最短响应优先，在最近⼀个滑动窗⼝中，响应时间越短，越优先调⽤。相同响应时间的进⾏加权随机。 </p>
+</li>
+<li><p>使得响应时间越快的提供者，处理更多的请求。 </p>
+</li>
+<li><p>缺点：可能会造成流量过于集中于⾼性能节点的问题。 </p>
+<p>这⾥的响应时间 = 某个提供者在窗⼝时间内的平均响应时间，窗⼝时间默认是 30s。</p>
+</li>
+</ul>
+<p><strong>ConsistentHash</strong></p>
+<ul>
+<li>⼀致性 Hash，相同参数的请求总是发到同⼀提供者。 </li>
+<li>当某⼀台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。 </li>
+<li>算法参⻅：Consistent Hashing | WIKIPEDIA 缺省只对第⼀个参数 Hash，如果要修改，请配置  &lt;dubbo:parameter key=”hash.arguments” value=”0,1” /&gt;</li>
+<li>缺省⽤ 160 份虚拟节点，如果要修改，请配置 &lt;dubbo:parameter key=”hash.nodes” value=”320” /&gt;</li>
+</ul>
+<h4 id="Ribbon-负载均衡器-LoadBalancer-源码解析-https-blog-51cto-com-u-15077536-2608300"><a href="#Ribbon-负载均衡器-LoadBalancer-源码解析-https-blog-51cto-com-u-15077536-2608300" class="headerlink" title="Ribbon 负载均衡器 LoadBalancer 源码解析 https://blog.51cto.com/u_15077536/2608300"></a>Ribbon 负载均衡器 LoadBalancer 源码解析 <a href="https://blog.51cto.com/u_15077536/2608300">https://blog.51cto.com/u_15077536/2608300</a></h4><link rel="stylesheet" href="/css/markmap.css" type="text/css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">]]></content>
+      <categories>
+        <category>算法练习</category>
+      </categories>
+      <tags>
+        <tag>Demo</tag>
       </tags>
   </entry>
   <entry>

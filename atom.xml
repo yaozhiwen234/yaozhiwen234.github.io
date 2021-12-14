@@ -6,7 +6,7 @@
   <link href="https://yaozw.top/atom.xml" rel="self"/>
   
   <link href="https://yaozw.top/"/>
-  <updated>2021-10-06T11:46:46.366Z</updated>
+  <updated>2021-12-14T11:40:05.206Z</updated>
   <id>https://yaozw.top/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux常用的命令</title>
+    <link href="https://yaozw.top/2021/12/14/Linux%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4/"/>
+    <id>https://yaozw.top/2021/12/14/Linux%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4/</id>
+    <published>2021-12-14T11:39:08.000Z</published>
+    <updated>2021-12-14T11:40:05.206Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h5 id=&quot;参考网址&quot;&gt;&lt;a href=&quot;#参考网址&quot; class=&quot;headerlink&quot; title=&quot;参考网址&quot;&gt;&lt;/a&gt;参考网址&lt;/h5&gt;&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Linux" scheme="https://yaozw.top/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="https://yaozw.top/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>常见的轮询算法</title>
+    <link href="https://yaozw.top/2021/11/01/%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95/"/>
+    <id>https://yaozw.top/2021/11/01/%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95/</id>
+    <published>2021-11-01T08:21:24.000Z</published>
+    <updated>2021-11-02T02:26:45.687Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h4 id=&quot;常见的轮询算法&quot;&gt;&lt;a href=&quot;#常见的轮询算法&quot; class=&quot;headerlink&quot; title=&quot;常见的轮询算法&quot;&gt;&lt;/a&gt;常见的轮询算法&lt;/h4&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    <category term="算法练习" scheme="https://yaozw.top/categories/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/"/>
+    
+    
+    <category term="Demo" scheme="https://yaozw.top/tags/Demo/"/>
+    
+  </entry>
   
   <entry>
     <title>bitmap</title>
@@ -396,31 +446,6 @@
   </entry>
   
   <entry>
-    <title>java中基于文件的NIO</title>
-    <link href="https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/"/>
-    <id>https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/</id>
-    <published>2021-06-08T10:08:11.000Z</published>
-    <updated>2021-06-08T10:09:40.708Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;java-中文件NIO&quot;&gt;&lt;a href=&quot;#java-中文件NIO&quot; class=&quot;headerlink&quot; title=&quot;java 中文件NIO&quot;&gt;&lt;/a&gt;java 中文件NIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1.</summary>
-        
-      
-    
-    
-    
-    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
     <title>NIO</title>
     <link href="https://yaozw.top/2021/06/08/NIO/"/>
     <id>https://yaozw.top/2021/06/08/NIO/</id>
@@ -448,6 +473,31 @@
   </entry>
   
   <entry>
+    <title>java中基于文件的NIO</title>
+    <link href="https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/"/>
+    <id>https://yaozw.top/2021/06/08/java%E4%B8%AD%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6%E7%9A%84NIO/</id>
+    <published>2021-06-08T10:08:11.000Z</published>
+    <updated>2021-06-08T10:09:40.708Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;java-中文件NIO&quot;&gt;&lt;a href=&quot;#java-中文件NIO&quot; class=&quot;headerlink&quot; title=&quot;java 中文件NIO&quot;&gt;&lt;/a&gt;java 中文件NIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1.</summary>
+        
+      
+    
+    
+    
+    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>BIO</title>
     <link href="https://yaozw.top/2021/06/08/BIO/"/>
     <id>https://yaozw.top/2021/06/08/BIO/</id>
@@ -462,56 +512,6 @@
     <summary type="html">&lt;h3 id=&quot;BIO&quot;&gt;&lt;a href=&quot;#BIO&quot; class=&quot;headerlink&quot; title=&quot;BIO&quot;&gt;&lt;/a&gt;BIO&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. 什么是BIO&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;B I/O，意为Blocking</summary>
-        
-      
-    
-    
-    
-    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HashMap源码详解</title>
-    <link href="https://yaozw.top/2021/06/05/HashMap%E6%BA%90%E7%A0%81%E8%AF%A6%E8%A7%A3/"/>
-    <id>https://yaozw.top/2021/06/05/HashMap%E6%BA%90%E7%A0%81%E8%AF%A6%E8%A7%A3/</id>
-    <published>2021-06-05T04:42:36.000Z</published>
-    <updated>2021-06-05T04:50:45.365Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span</summary>
-        
-      
-    
-    
-    
-    <category term="Java基础知识" scheme="https://yaozw.top/categories/Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
-    
-    
-    <category term="随笔记录" scheme="https://yaozw.top/tags/%E9%9A%8F%E7%AC%94%E8%AE%B0%E5%BD%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>守护线程与用户线程</title>
-    <link href="https://yaozw.top/2021/06/05/%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E4%B8%8E%E7%94%A8%E6%88%B7%E7%BA%BF%E7%A8%8B/"/>
-    <id>https://yaozw.top/2021/06/05/%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E4%B8%8E%E7%94%A8%E6%88%B7%E7%BA%BF%E7%A8%8B/</id>
-    <published>2021-06-05T04:40:03.000Z</published>
-    <updated>2021-06-05T04:40:59.365Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;守护线程与用户线程&quot;&gt;&lt;a href=&quot;#守护线程与用户线程&quot; class=&quot;headerlink&quot;</summary>
         
       
     
